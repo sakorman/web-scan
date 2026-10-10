@@ -1,0 +1,213 @@
+"""Adapter for the unmodified Apache-2.0 Brush 0.3.0 command-line engine."""
+
+from __future__ import annotations
+
+import os
+import re
+import subprocess
+import time
+from pathlib import Path
+
+import numpy as np
+from PIL import Image
+
+
+def executable():
+    configured = os.environ.get("WEBSCAN_BRUSH")
+    path = (
+        Path(configured)
+        if configured
+        else Path(__file__).resolve().parent.parent / ".tools/brush/brush_app"
+    )
+    return path.resolve() if path.is_file() and os.access(path, os.X_OK) else None
+
+
+def read_ply(path):
+    with path.open("rb") as file:
+        header = []
+        fields = []
+        count = None
+        for _ in range(256):
+            line = file.readline().decode("ascii").strip()
+            header.append(line)
+            if line.startswith("element vertex "):
+                count = int(line.split()[-1])
+            elif line.startswith("property "):
+                parts = line.split()
+                if len(parts) != 3 or parts[1] not in ("float", "float32"):
+                    raise ValueError("不支持的 Gaussian PLY 属性类型")
+                fields.append((parts[2], "<f4"))
+            elif line == "end_header":
+                break
+        else:
+            raise ValueError("PLY header 无效")
+        if (
+            "format binary_little_endian 1.0" not in header
+            or count is None
+            or count > 2_000_000
+        ):
+            raise ValueError("不支持的 PLY 格式或点数")
+        data = np.fromfile(file, dtype=fields, count=count)
+        if len(data) != count:
+            raise ValueError("PLY 内容不完整")
+        for key in [
+            "x",
+            "y",
+            "z",
+            "scale_0",
+            "scale_1",
+            "scale_2",
+            "rot_0",
+            "rot_1",
+            "rot_2",
+            "rot_3",
+            "opacity",
+            "f_dc_0",
+            "f_dc_1",
+            "f_dc_2",
+        ]:
+            if key not in data.dtype.names or not np.isfinite(data[key]).all():
+                raise ValueError("PLY 参数缺失或非有限")
+    return header, data
+
+
+def convert_output(source, output, normalization):
+    header, data = read_ply(source)
+    center = np.array(normalization["center"])
+    radius = float(normalization["scale"])
+    for i, axis in enumerate("xyz"):
+        data[axis] = (data[axis] - center[i]) / radius
+        data[f"scale_{i}"] -= np.log(radius)
+    with (output / "gaussians.ply").open("wb") as f:
+        f.write(("\n".join(header) + "\n").encode())
+        f.write(data.tobytes())
+    splat = np.zeros(
+        len(data),
+        dtype=[
+            ("xyz", "<f4", 3),
+            ("scale", "<f4", 3),
+            ("rgba", "u1", 4),
+            ("quat", "u1", 4),
+        ],
+    )
+    splat["xyz"] = np.column_stack([data[x] for x in "xyz"])
+    splat["scale"] = np.exp(
+        np.clip(np.column_stack([data[f"scale_{i}"] for i in range(3)]), -20, 10)
+    )
+    rgb = (
+        np.column_stack([data[f"f_dc_{i}"] for i in range(3)]) * 0.28209479177387814
+        + 0.5
+    )
+    opacity = 1 / (1 + np.exp(-np.clip(data["opacity"], -30, 30)))
+    splat["rgba"] = np.clip(np.column_stack([rgb, opacity]) * 255, 0, 255).astype("u1")
+    quat = np.column_stack([data[f"rot_{i}"] for i in range(4)])
+    quat /= np.maximum(np.linalg.norm(quat, axis=1, keepdims=True), 1e-8)
+    splat["quat"] = np.clip(quat * 128 + 128, 0, 255).astype("u1")
+    (output / "preview.splat").write_bytes(splat.tobytes())
+    return len(data)
+
+
+def train(scene, work, output, config, progress):
+    binary = executable()
+    if not binary:
+        raise RuntimeError("未安装 Brush；请运行 scripts/install_brush.py。")
+    output.mkdir(parents=True, exist_ok=True)
+    exports = work / "brush"
+    exports.mkdir()
+    steps = config["steps"]
+    interval = min(500, steps)
+    args = [
+        str(binary),
+        str(work / "sfm/undistorted"),
+        "--total-steps",
+        str(steps),
+        "--max-splats",
+        str(config["max_points"]),
+        "--max-resolution",
+        str(config["resolution"]),
+        "--refine-every",
+        "100",
+        "--growth-stop-iter",
+        str(int(steps * 0.8)),
+        "--export-every",
+        str(interval),
+        "--export-path",
+        str(exports),
+        "--export-name",
+        "export_{iter}.ply",
+        "--eval-split-every",
+        "8",
+        "--eval-every",
+        str(steps),
+        "--eval-save-to-disk",
+    ]
+    with (work / "brush.log").open("wb") as log:
+        process = subprocess.Popen(
+            args,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            env={**os.environ, "RUST_LOG": "info"},
+        )
+        start = time.monotonic()
+        last = 0
+        try:
+            while process.poll() is None:
+                if time.monotonic() - start > 3600:
+                    raise RuntimeError("GPU 训练超过一小时限制")
+                exports_now = [
+                    int(p.stem.split("_")[-1]) for p in exports.glob("export_*.ply")
+                ]
+                completed = max(exports_now, default=0)
+                if completed != last:
+                    last = completed
+                    progress(
+                        "train",
+                        0.42 + 0.5 * completed / steps,
+                        f"GPU 已保存 {completed}/{steps} 步检查结果",
+                    )
+                else:
+                    progress(
+                        "train",
+                        0.42 + 0.5 * completed / steps,
+                        f"GPU 训练中 · {int(time.monotonic() - start)} 秒 · 每 {interval} 步保存结果",
+                    )
+                time.sleep(1)
+            if process.returncode:
+                detail = (work / "brush.log").read_text(errors="replace")[-2000:]
+                raise RuntimeError("Brush GPU 训练失败：" + detail)
+        finally:
+            if process.poll() is None:
+                process.terminate()
+                process.wait(timeout=10)
+    models = sorted(
+        exports.glob("export_*.ply"), key=lambda p: int(p.stem.split("_")[-1])
+    )
+    if not models or int(models[-1].stem.split("_")[-1]) < steps:
+        raise RuntimeError("训练器未输出最终模型")
+    count = convert_output(models[-1], output, scene["normalization"])
+    rendered = [p for p in exports.rglob("*.png") if "gt" not in p.name.lower()]
+    thumbnail = rendered[0] if rendered else Path(scene["views"][0]["image"])
+    with Image.open(thumbnail) as image:
+        image.convert("RGB").resize(
+            (480, round(image.height * 480 / image.width))
+        ).save(output / "thumbnail.jpg")
+    text = (work / "brush.log").read_text(errors="replace")
+    matches = re.findall(r"PSNR ([\d.]+), ssim ([\d.]+)", text)
+    view_counts = re.findall(
+        r"Loaded dataset with (\d+) training, (\d+) eval views", text
+    )
+    return {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "gaussians": count,
+        "steps": steps,
+        "training_views": int(view_counts[-1][0]) if view_counts else None,
+        "evaluation_views": int(view_counts[-1][1]) if view_counts else None,
+        "color_model": "SH3",
+        "preview_color_model": "SH0",
+        "thumbnail_source": "evaluation_render" if rendered else "input_photo",
+        "evaluation": {"psnr": float(matches[-1][0]), "ssim": float(matches[-1][1])}
+        if matches
+        else None,
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。预览 splat 只保留 SH0，PLY 保留高阶 SH。",
+    }

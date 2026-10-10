@@ -1,0 +1,19 @@
+{
+  "name": "web-scan",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build && node scripts/copy_licenses.mjs",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "gsplat": "1.2.9",
+    "lucide": "^0.468.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.3",
+    "vite": "^6.4.1"
+  }
+}
