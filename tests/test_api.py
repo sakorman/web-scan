@@ -106,3 +106,17 @@ def test_data_survives_app_restart(tmp_path):
     with TestClient(create_app(tmp_path, run_worker=False)) as second:
         assert len(second.get(f"/api/sessions/{sid}").json()["frames"]) == 3
         assert second.get(f"/api/sessions/{sid}").json()["status"] == "ready"
+
+
+@pytest.mark.parametrize("constant", ["NaN", "Infinity", "-Infinity", "1e999"])
+def test_invalid_sensor_metadata_cannot_break_session_reads(client, constant):
+    sid = client.post("/api/sessions", json={}).json()["id"]
+    response = client.post(
+        f"/api/sessions/{sid}/frames",
+        files={"file": ("frame.jpg", photo("red"), "image/jpeg")},
+        data={"metadata": '{"sensor":{"timestamp":' + constant + "}}"},
+    )
+    assert response.status_code == 422
+    session = client.get(f"/api/sessions/{sid}")
+    assert session.status_code == 200
+    assert session.json()["frames"] == []

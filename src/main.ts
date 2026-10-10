@@ -2,6 +2,7 @@ import './style.css';
 import { createIcons, Scan, Plus, ArrowUpRight, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Radio, FolderOpen, Cpu, X, Menu, Aperture } from 'lucide';
 import { enqueue, pending, acknowledge } from './queue';
 import { mountViewer } from './viewer';
+import { ReconstructionDrafts, defaultDraft, matchesJobTarget, type Backend, type ReconstructionDraft } from './session-state';
 
 type Job = {id:string;status:string;stage:string;progress:number;message:string;updated:number;report:Record<string,any>|null;config:Record<string,any>};
 type Frame = {id:string;width:number;height:number};
@@ -11,7 +12,8 @@ const app=document.querySelector<HTMLDivElement>('#app')!;
 let sessions:Session[]=[], selected:Session|null=null, job:Job|null=null;
 let screen='library', busy=false, cameraStream:MediaStream|null=null, captureTimer=0, capturing=false;
 let viewerCleanup:(()=>void)|null=null, health:any=null, uploadCount=0, sensor:any=null, sensorEnabled=false;
-let polling=false, menuOpen=false;
+let polling=false, menuOpen=false, navigationRequest=0;
+const drafts=new ReconstructionDrafts();
 const esc=(x:unknown)=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const icon=(name:string,cls='')=>`<i data-lucide="${name}" class="${cls}"></i>`;
 const date=(timestamp:number)=>new Date(timestamp*1000).toLocaleDateString('zh-CN',{month:'short',day:'numeric'});
@@ -52,7 +54,14 @@ function render(){
   <main>${screen==='guide'?guide():selected?detail():library(ready)}</main><footer>把真实空间，留在三维里。<span>Built for exploration · Local first</span></footer></div>
   <div id="dialog-root"></div>`;
   createIcons({icons});bind();
-  const backend=document.getElementById('backend') as HTMLSelectElement|null;if(backend){backend.value=job?.config.backend??(health?.brush_available&&selected?.kind!=='fixture'?'brush':'reference');configureBackend(backend.value,job?.config);backend.onchange=()=>configureBackend(backend.value);}
+  const backend=document.getElementById('backend') as HTMLSelectElement|null;
+  if(backend&&selected){
+    const initial=job?.config as ReconstructionDraft|undefined;
+    const draft=drafts.get(selected.id,initial??defaultDraft(health?.brush_available&&selected.kind!=='fixture'?'brush':'reference'));
+    backend.value=draft.backend;configureBackend(draft.backend,draft);
+    backend.onchange=()=>{const next=drafts.switchBackend(selected!.id,backend.value as Backend);configureBackend(next.backend,next);};
+    for(const id of ['steps','points'])document.getElementById(id)!.onchange=()=>saveSettings();
+  }
   if(cameraStream){const video=document.querySelector<HTMLVideoElement>('#camera-video');if(video){video.srcObject=cameraStream;void video.play();}}
   if(selected&&job?.status==='succeeded'){
     const container=document.querySelector<HTMLElement>('#viewer');
@@ -81,10 +90,17 @@ function detail(){const s=selected!;const frames=s.frames??[];const running=acti
 function configureBackend(backend:string,config?:Record<string,any>){
   const gpu=backend==='brush';
   const steps=document.getElementById('steps') as HTMLSelectElement,points=document.getElementById('points') as HTMLSelectElement;
-  steps.innerHTML=(gpu?[1000,3000,6000]:[60,120,300]).map(n=>`<option value="${n}">${n} 步</option>`).join('');
-  points.innerHTML=(gpu?[50000,150000,300000]:[192,384,768]).map(n=>`<option value="${n}">${n.toLocaleString()}</option>`).join('');
+  const stepOptions=[...new Set([...(gpu?[1000,3000,6000]:[60,120,300]),...(config?.steps?[config.steps]:[])])].sort((a,b)=>a-b);
+  const pointOptions=[...new Set([...(gpu?[50000,150000,300000]:[192,384,768]),...(config?.max_points?[config.max_points]:[])])].sort((a,b)=>a-b);
+  steps.innerHTML=stepOptions.map(n=>`<option value="${n}">${n} 步</option>`).join('');
+  points.innerHTML=pointOptions.map(n=>`<option value="${n}">${n.toLocaleString()}</option>`).join('');
   steps.value=String(config?.steps??(gpu?3000:120));points.value=String(config?.max_points??(gpu?150000:384));
   document.getElementById('engine-note')!.textContent=gpu?'Brush 本地 GPU 训练，包含动态增点和高阶颜色。较大场景建议更多训练步数。':'CPU / CUDA 参考训练使用低分辨率和固定高斯数量，适合调试；结果精细度有限。';
+}
+
+function saveSettings(){
+  if(!selected)return;
+  drafts.save(selected.id,{backend:(document.getElementById('backend') as HTMLSelectElement).value as Backend,steps:Number((document.getElementById('steps') as HTMLSelectElement).value),max_points:Number((document.getElementById('points') as HTMLSelectElement).value)});
 }
 
 function result(){const r=job!.report!;return `<section class="result"><div id="viewer"><div id="viewer-loading">正在加载三维模型…</div></div><div class="viewer-overlay"><span class="viewer-tag">${icon('box')}3D GAUSSIAN</span><span>拖动旋转 · 滚轮 / 双指缩放</span></div><div class="result-bar"><div><span class="mint-dot"></span>重建完成 <small>${r.gaussians} 个高斯 · ${r.seconds} 秒</small></div><a class="button secondary" download href="/api/jobs/${job!.id}/artifacts/gaussians.ply">${icon('download')}下载 PLY</a></div></section>`;}
@@ -94,8 +110,8 @@ function guide(){return `<section class="heading"><div><div class="eyebrow">A BE
 function bind(){
   const on=(id:string,fn:()=>void)=>document.getElementById(id)?.addEventListener('click',fn);
   for(const id of ['new','hero-new','empty-new','card-new','guide-new'])on(id,newDialog);
-  on('menu',()=>{menuOpen=!menuOpen;render();});on('brand',()=>goLibrary());on('back',goLibrary);
-  document.querySelectorAll<HTMLElement>('[data-nav]').forEach(b=>b.onclick=()=>{if(busy||takingFrame){toast('请等待当前照片处理完成');return;}stopCamera();selected=null;job=null;screen=b.dataset.nav!;menuOpen=false;render();});
+  on('menu',()=>{menuOpen=!menuOpen;document.querySelector('.sidebar')?.classList.toggle('open',menuOpen);});on('brand',()=>goLibrary());on('back',goLibrary);
+  document.querySelectorAll<HTMLElement>('[data-nav]').forEach(b=>b.onclick=()=>{if(busy||takingFrame){toast('请等待当前照片处理完成');return;}stopCamera();navigationRequest++;selected=null;job=null;screen=b.dataset.nav!;menuOpen=false;render();});
   document.querySelectorAll<HTMLElement>('[data-session]').forEach(b=>b.onclick=()=>void openSession(b.dataset.session!));
   on('indoor-demo',()=>void action(async()=>{selected=await api('/indoor-sample',{method:'POST'});job=null;screen='library';await refreshList();}));
   on('demo',()=>void action(async()=>{selected=await api('/fixtures',{method:'POST'});job=null;screen='library';await refreshList();}));
@@ -108,9 +124,9 @@ function bind(){
   on('log',()=>void showLog());
 }
 async function refreshList(){sessions=await api('/sessions');}
-async function openSession(id:string){if(busy||takingFrame)return;stopCamera();try{selected=await api(`/sessions/${id}`);job=selected!.jobs?.[0]??null;screen='library';render();window.scrollTo({top:0});}catch(e){toast((e as Error).message,true);}}
+async function openSession(id:string){if(busy||takingFrame)return;stopCamera();const request=++navigationRequest;try{const next:Session=await api(`/sessions/${id}`);if(request!==navigationRequest)return;selected=next;job=selected!.jobs?.[0]??null;screen='library';render();window.scrollTo({top:0});}catch(e){toast((e as Error).message,true);}}
 async function reloadSelected(redraw=true){if(selected){selected=await api(`/sessions/${selected.id}`);job=selected!.jobs?.[0]??null;}await refreshList();if(redraw)render();}
-function goLibrary(){if(busy||takingFrame){toast('请等待当前照片处理完成');return;}stopCamera();selected=null;job=null;screen='library';void refreshList().then(()=>{render();window.scrollTo({top:0});}).catch(e=>toast(e.message,true));}
+function goLibrary(){if(busy||takingFrame){toast('请等待当前照片处理完成');return;}stopCamera();navigationRequest++;selected=null;job=null;screen='library';void refreshList().then(()=>{render();window.scrollTo({top:0});}).catch(e=>toast(e.message,true));}
 
 function newDialog(){
   if(busy||takingFrame)return;
@@ -147,6 +163,30 @@ async function captureFrame(){
 }
 async function enableSensor(){try{const motion=DeviceMotionEvent as typeof DeviceMotionEvent & {requestPermission?:()=>Promise<string>};if(motion.requestPermission&&await motion.requestPermission()!=='granted')throw new Error('未获得传感器权限');window.addEventListener('devicemotion',event=>{sensor={timestamp_ms:performance.now(),acceleration:event.acceleration?{x:event.acceleration.x,y:event.acceleration.y,z:event.acceleration.z}:null,rotationRate:event.rotationRate?{alpha:event.rotationRate.alpha,beta:event.rotationRate.beta,gamma:event.rotationRate.gamma}:null};});sensorEnabled=true;render();toast('已启用运动观测记录；当前位姿仍由照片求解');}catch(e){toast((e as Error).message,true);}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&capturing){stopCamera();render();toast('页面进入后台，拍摄已暂停');}});
-setInterval(async()=>{if(polling||busy||capturing||!selected||!active(job))return;polling=true;try{const next:Job=await api(`/jobs/${job!.id}`);if(next.updated!==job!.updated){job=next;await refreshList();render();}}catch{/* An interrupted connection must not invent a completed task. */}finally{polling=false;}},1500);
+setInterval(async()=>{
+  if(polling||busy||capturing||document.querySelector('dialog[open]'))return;
+  const target=selected&&active(job)?{sessionId:selected.id,jobId:job!.id}:null;
+  const inLibrary=!selected&&screen==='library';
+  if(!target&&!inLibrary)return;
+  polling=true;
+  try{
+    if(target){
+      const next:Job=await api(`/jobs/${target.jobId}`);
+      const current=()=>selected&&job?{sessionId:selected.id,jobId:job.id}:null;
+      if(busy||!matchesJobTarget(target,current()))return;
+      if(next.updated!==job!.updated){
+        const updated:Session[]=await api('/sessions');
+        if(busy||!matchesJobTarget(target,current()))return;
+        if(document.querySelector('dialog[open]'))return;
+        job=next;sessions=updated;render();
+      }
+    }else{
+      const updated:Session[]=await api('/sessions');
+      if(!busy&&!selected&&screen==='library'&&!document.querySelector('dialog[open]')&&JSON.stringify(updated)!==JSON.stringify(sessions)){
+        sessions=updated;render();
+      }
+    }
+  }catch{/* Keep the last confirmed state when the connection drops. */}finally{polling=false;}
+},1500);
 render();
 void Promise.all([api('/health'),refreshList()]).then(([value])=>{health=value;render();}).catch(e=>toast('后端尚未连接：'+e.message,true));

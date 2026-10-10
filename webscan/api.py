@@ -7,13 +7,13 @@ import importlib.metadata
 import importlib.util
 import io
 import json
+import math
 import os
 import re
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
-from urllib.parse import urlsplit
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
@@ -209,7 +209,19 @@ def create_app(data: Path | None = None, *, run_worker=True):
         if len(metadata) > 16000:
             raise HTTPException(413, "元数据过大")
         try:
-            meta = json.loads(metadata)
+
+            def reject_nonfinite(value):
+                raise ValueError(f"Invalid JSON constant: {value}")
+
+            def finite_float(value):
+                number = float(value)
+                if not math.isfinite(number):
+                    raise ValueError("JSON number exceeds finite range")
+                return number
+
+            meta = json.loads(
+                metadata, parse_constant=reject_nonfinite, parse_float=finite_float
+            )
             if not isinstance(meta, dict):
                 raise ValueError()
         except (ValueError, TypeError):

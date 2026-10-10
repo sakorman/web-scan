@@ -17,8 +17,9 @@ export async function mountViewer(container: HTMLElement, url: string, startWalk
   container.append(toolbar,pad);
   let firstView:number[][]|null=null;
   const home=()=>{if(!firstView)return;const v=firstView;camera.position=new SPLAT.Vector3(...[0,1,2].map(i=>-v[0][i]*v[0][3]-v[1][i]*v[1][3]-v[2][i]*v[2][3]) as [number,number,number]);camera.rotation=SPLAT.Quaternion.FromMatrix3(new SPLAT.Matrix3(v[0][0],v[1][0],v[2][0],v[0][1],v[1][1],v[2][1],v[0][2],v[1][2],v[2][2]));};
-  const change=(mode:string)=>{controls.dispose();pad.hidden=mode!=='walk';if(mode==='walk'){home();controls=walkControls(camera,renderer.canvas,pad);}else controls=orbit();toolbar.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.mode===(mode==='walk'?'walk':'orbit')));};
-  toolbar.querySelectorAll('button').forEach(b=>b.onclick=()=>change(b.dataset.mode!));
+  let currentMode='orbit';
+  const change=(requested:string)=>{const mode=requested==='reset'?currentMode:requested;currentMode=mode;controls.dispose();pad.hidden=mode!=='walk';if(mode==='walk'){home();controls=walkControls(camera,renderer.canvas,pad);}else controls=orbit();toolbar.querySelectorAll('button').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);if(b.dataset.mode!=='reset')b.setAttribute('aria-pressed',String(active));});};
+  toolbar.querySelectorAll('button').forEach(b=>{b.onclick=()=>change(b.dataset.mode!);if(b.dataset.mode!=='reset')b.setAttribute('aria-pressed',String(b.dataset.mode==='orbit'));});
   let animation=0, disposed=false;
   const resize=()=>{ if (!disposed) { const w=Math.max(container.clientWidth,1),h=Math.max(container.clientHeight,1); renderer.setSize(w,h); camera.data.fx=Math.min(w,h)*0.95;camera.data.fy=Math.min(w,h)*0.95; } };
   const observer=new ResizeObserver(resize); observer.observe(container); resize();
