@@ -22,7 +22,7 @@ def photo(color):
 
 def prepared(client):
     sid = client.post("/api/sessions", json={"name": "My room"}).json()["id"]
-    for color in ["red", "green", "blue"]:
+    for color in [(i * 20, 50, 200 - i * 12) for i in range(12)]:
         response = client.post(
             f"/api/sessions/{sid}/frames",
             files={"file": ("x.jpg", photo(color), "image/jpeg")},
@@ -34,7 +34,7 @@ def prepared(client):
 
 def test_duplicate_upload_and_frozen_input(client):
     sid = prepared(client)
-    assert len(client.get(f"/api/sessions/{sid}").json()["frames"]) == 3
+    assert len(client.get(f"/api/sessions/{sid}").json()["frames"]) == 12
     assert (
         client.post(
             f"/api/sessions/{sid}/frames", files={"file": ("x.jpg", photo("yellow"))}
@@ -104,8 +104,26 @@ def test_data_survives_app_restart(tmp_path):
     with TestClient(create_app(tmp_path, run_worker=False)) as first:
         sid = prepared(first)
     with TestClient(create_app(tmp_path, run_worker=False)) as second:
-        assert len(second.get(f"/api/sessions/{sid}").json()["frames"]) == 3
+        assert len(second.get(f"/api/sessions/{sid}").json()["frames"]) == 12
         assert second.get(f"/api/sessions/{sid}").json()["status"] == "ready"
+
+
+def test_remove_preserves_files_and_can_be_restored(client):
+    sid = prepared(client)
+    first = client.get(f"/api/sessions/{sid}").json()["frames"][0]["id"]
+    expected = client.get(f"/api/sessions/{sid}/frames/{first}").content
+    assert client.delete(f"/api/sessions/{sid}").json()["files_preserved"] is True
+    assert sid not in [s["id"] for s in client.get("/api/sessions").json()]
+    assert client.get(f"/api/sessions/{sid}").status_code == 404
+    assert client.post(f"/api/sessions/{sid}/finalize").status_code == 404
+    assert client.post(f"/api/sessions/{sid}/restore").json()["status"] == "ready"
+    assert client.get(f"/api/sessions/{sid}/frames/{first}").content == expected
+
+
+def test_remove_rejects_active_reconstruction(client):
+    sid = prepared(client)
+    client.post("/api/jobs", json={"session_id": sid})
+    assert client.delete(f"/api/sessions/{sid}").status_code == 409
 
 
 @pytest.mark.parametrize("constant", ["NaN", "Infinity", "-Infinity", "1e999"])
@@ -120,3 +138,20 @@ def test_invalid_sensor_metadata_cannot_break_session_reads(client, constant):
     session = client.get(f"/api/sessions/{sid}")
     assert session.status_code == 200
     assert session.json()["frames"] == []
+
+
+def test_capture_requires_twelve_distinct_photos(client):
+    sid = client.post("/api/sessions", json={"name": "room"}).json()["id"]
+    for i in range(11):
+        client.post(
+            f"/api/sessions/{sid}/frames",
+            files={"file": ("f.jpg", photo((i * 20, 70, 40)))},
+        )
+    response = client.post(f"/api/sessions/{sid}/finalize")
+    assert response.status_code == 422
+    assert "还需 1 张" in response.json()["detail"]
+    assert client.get(f"/api/sessions/{sid}").json()["status"] == "capturing"
+    client.post(
+        f"/api/sessions/{sid}/frames", files={"file": ("f.jpg", photo("white"))}
+    )
+    assert client.post(f"/api/sessions/{sid}/finalize").status_code == 200

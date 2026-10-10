@@ -1,16 +1,18 @@
 import './style.css';
-import { createIcons, Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen } from 'lucide';
+import { createIcons, Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen, Trash2, Video } from 'lucide';
 import { enqueue, pending, acknowledge } from './queue';
 import { mountViewer } from './viewer';
+import { importVideo } from './media';
 import { ReconstructionDrafts, defaultDraft, matchesJobTarget, type Backend, type ReconstructionDraft } from './session-state';
 
 type Job = { id:string; status:string; stage:string; progress:number; message:string; updated:number; report:Record<string,any>|null; config:Record<string,any> };
 type Frame = { id:string; width:number; height:number };
 type Session = { id:string; name:string; kind:string; status:string; created:number; frame_count?:number; frames?:Frame[]; jobs?:Job[]; job?:Job };
-const icons = { Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen };
+const icons = { Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen, Trash2, Video };
 const app = document.querySelector<HTMLDivElement>('#app')!;
 const drafts = new ReconstructionDrafts();
 const compactScreen = window.matchMedia('(max-width:760px)');
+const initialProject=new URLSearchParams(location.search).get('p');
 let sessions:Session[] = [], selected:Session|null = null, job:Job|null = null;
 let health:any = null, busy = false, polling = false, menuOpen = false, inspectorOpen = false, page = 0;
 let cameraStream:MediaStream|null = null, captureTimer = 0, capturing = false, takingFrame = false;
@@ -52,17 +54,19 @@ function settingsDraft(){
   return drafts.get(selected.id,(job?.config as ReconstructionDraft|undefined)??defaultDraft(health?.brush_available&&selected.kind!=='fixture'?'brush':'reference'));
 }
 
+function isCaptureDetail(){return !!selected&&job?.status!=='succeeded';}
+function minimumPhotos(){return selected?.kind==='fixture'?3:(health?.min_capture_frames??12);}
 function render(){
   const oldStage=app.querySelector<HTMLElement>('.stage');
   const key=selected&&(job?.status==='succeeded'?`model-${job.id}`:cameraStream?`camera-${selected.id}`:'');
   const preserve=!!key&&oldStage?.dataset.key===key;
   if(preserve)oldStage!.remove();else{viewerCleanup?.();viewerCleanup=null;}
   const ready=sessions.filter(s=>s.job?.status==='succeeded').length;
-  app.innerHTML=`<div class="workbench ${selected?'project-open':''} ${menuOpen?'rail-open':''} ${inspectorOpen?'inspector-open':''}">
+  app.innerHTML=`<div class="workbench ${selected?'project-open':''} ${isCaptureDetail()?'capture-layout':''} ${menuOpen?'rail-open':''} ${inspectorOpen?'inspector-open':''}">
     <header class="topbar">
       <button class="brand" id="brand" aria-label="返回项目列表">${icon('scan')}<span>Web Scan</span></button>
       <button class="icon-button mobile-only" id="menu" aria-label="打开项目列表">${icon('menu')}</button>
-      <div class="topbar-title"><span class="title-prefix">${selected?'项目':'本地工作台'}</span>${selected?`<h1>${esc(selected.name)}</h1>${badge(job)}`:'<h1>我的采集</h1>'}</div>
+      <div class="topbar-title"><span class="title-prefix">${selected?'项目':'本地工作台'}</span>${selected?`<h1>${isCaptureDetail()?'工作台':esc(selected.name)}</h1>${isCaptureDetail()?'':badge(job)}`:'<h1>我的采集</h1>'}</div>
       <div class="topbar-actions"><span class="connection"><span class="status-dot"></span>${health?'本地已连接':'连接中'}</span><button class="icon-button" id="help" aria-label="拍摄指南">${icon('circle-help')}</button>${selected?`<button class="icon-button inspector-toggle" id="inspector-toggle" aria-label="打开重建设置">${icon('settings-2')}<span>重建</span></button>`:''}</div>
     </header>
     <aside class="project-rail" aria-label="项目导航">
@@ -76,7 +80,7 @@ function render(){
     <div class="statusbar"><span>${icon('cpu')}${health?.brush_available?'本地 GPU 可用':'本地 CPU'}<span class="status-separator"></span>${selected?(selected.kind==='fixture'?'校准示例':'照片重建'):'Web Scan 0.1'}</span><span>${busy?'正在处理…':capturing?'正在采集':selected?`${selected.frames?.length??0} 张照片`:`${ready} 个模型已完成`}</span></div>
     <button class="rail-scrim" id="rail-scrim" tabindex="-1" aria-hidden="true"></button>
     <button class="inspector-scrim" id="inspector-scrim" tabindex="-1" aria-hidden="true"></button>
-  </div><div id="dialog-root"></div><input id="file-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>`;
+  </div><div id="dialog-root"></div><input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" multiple hidden>`;
   const newStage=app.querySelector<HTMLElement>('.stage');
   if(preserve&&newStage)newStage.replaceWith(oldStage!);
   createIcons({icons});bind();bindSettings();syncPanels();
@@ -99,6 +103,7 @@ function libraryView(ready:number){
 }
 function card(s:Session){return `<button class="project-card" data-session="${s.id}"><div class="card-image">${s.job?.status==='succeeded'?`<img src="/api/jobs/${s.job.id}/artifacts/thumbnail.jpg" alt="${esc(s.name)}预览">`:`<span class="card-empty-icon">${icon(s.kind==='fixture'?'aperture':'scan')}</span>`}${badge(s.job)}</div><div class="card-caption"><strong>${esc(s.name)}</strong><div><span>${s.frame_count??0} 张照片</span><span>${date(s.created)}</span></div></div></button>`;}
 function projectView(){
+  if(isCaptureDetail())return captureDetail();
   const s=selected!,frames=s.frames??[],running=active(job),report=job?.report;
   return `<main class="project-view"><div class="viewport-area"><div class="viewport-heading"><div>${icon(job?.status==='succeeded'?'box':cameraStream?'camera':'scan')}<span>${job?.status==='succeeded'?'模型预览':cameraStream?'拍摄预览':'采集工作区'}</span></div><div><button class="tool-button" id="photos">${icon('images')}<span>照片</span><b>${frames.length}</b></button>${job?.status==='succeeded'?`<button class="tool-button download-trigger" id="viewport-downloads">${icon('download')}<span>下载模型</span></button>`:''}<button class="icon-button" id="view-help" aria-label="查看操作说明">${icon('circle-help')}</button></div></div>
       ${stageView()}
@@ -110,6 +115,26 @@ function projectView(){
       ${progressView()}
       <div class="inspector-actions">${capturing?`<button class="button danger full" id="stop">${icon('square')}结束拍摄</button>`:`<button class="button primary full" id="reconstruct" ${busy||running||frames.length<3?'disabled':''}>${icon('play')}${running?'重建进行中':job?.status==='succeeded'?'再次重建':'开始重建'}</button>`}${running?`<button class="button secondary full" id="cancel">${icon('square')}取消任务</button>`:''}${s.status==='capturing'&&!capturing?`<div class="action-pair"><button class="button secondary" id="camera" ${busy?'disabled':''}>${icon('camera')}拍摄</button><button class="button secondary" id="upload" ${busy?'disabled':''}>${icon('upload')}导入照片</button></div>`:''}${job?.status==='succeeded'?`<button class="button secondary full" id="downloads">${icon('download')}下载模型</button>`:''}<div class="inspector-links"><button class="text-button" id="photos-secondary">全部照片</button>${job?`<button class="text-button" id="log">任务日志</button>`:`<button class="text-button" id="capture-guide">拍摄指南</button>`}</div></div>
     </aside></main>`;
+}
+function captureDetail(){
+  const s=selected!,frames=s.frames??[],running=active(job),missing=Math.max(0,minimumPhotos()-frames.length);
+  return `<main class="capture-detail ${frames.length?'has-photos':''}">
+    <div class="capture-title"><button class="back-project" id="capture-back" aria-label="返回项目列表">${icon('arrow-left')}</button><h1>${esc(s.name)}</h1><button class="icon-button" id="capture-settings" aria-label="重建设置">${icon('settings-2')}</button></div>
+    <div class="capture-summary"><div class="capture-total"><strong>${frames.length}</strong><span>张</span><small>${missing?`还需 ${missing} 张`:'照片已就绪'}</small></div><div class="capture-main-action">${running?`<span class="capture-task-label">${label(job)} ${Math.round(job!.progress*100)}%</span><button class="button secondary" id="cancel">${icon('square')}取消任务</button>`:`<button class="button primary" id="reconstruct" ${busy||capturing||missing>0?'disabled':''}>${icon('layers')}完成并重建</button>`}</div></div>
+    ${cameraStream?`<div class="capture-live">${stageView()}</div>`:running?`<section class="capture-running"><div class="running-heading">${icon('aperture')}正在生成三维场景</div><div class="progress-track"><span style="width:${job!.progress*100}%"></span></div><p>${esc(job!.message)}</p><button class="text-button" id="log">查看任务日志</button></section>`:`<section class="capture-callout"><p>围绕场景缓慢移动，保持相邻画面重叠。房间的天花板和地面也记得补拍。</p><div class="capture-entry-actions"><button class="button primary" id="camera" ${busy||s.status!=='capturing'?'disabled':''}>${icon('video')}相机采集</button><button class="button secondary" id="upload" ${busy||s.status!=='capturing'?'disabled':''}>${icon('images')}导入照片 / 视频</button>${s.status==='ready'?'<button class="text-button" id="capture-settings-ready">调整重建设置</button>':''}</div>${job?.status==='failed'?`<p class="capture-error">${esc(job.message)}</p><button class="text-button" id="log">查看任务日志</button>`:''}<div class="capture-import-progress" role="status">${busy?'正在处理文件，请稍候…':''}</div></section>`}
+    ${frames.length&&!cameraStream?`<section class="capture-preview"><div><span>已采集 ${frames.length} 张</span><button class="text-button" id="photos">查看全部照片${icon('chevron-right')}</button></div><div class="capture-preview-grid">${frames.slice(0,6).map((f,i)=>`<button data-photo="${i}" aria-label="查看照片 ${i+1}"><img src="${thumb(s,f)}" alt="采集照片 ${i+1}"><small>${i+1}</small></button>`).join('')}</div></section>`:''}
+    <div class="capture-footer"><button class="delete-project" id="delete-project" ${busy||capturing||running?'disabled':''}>${icon('trash-2')}删除项目</button></div>
+  </main>`;
+}
+function showCaptureSettings(){
+  dialog('重建设置',`<div class="capture-settings-form"><label>计算模式<select id="backend" ${active(job)||busy?'disabled':''}><option value="brush" ${!health?.brush_available||selected?.kind==='fixture'?'disabled':''}>本地 GPU · 室内质量</option><option value="reference">本地 CPU · 调试</option><option value="cuda" ${!health?.cuda_backend_installed?'disabled':''}>CUDA · gsplat</option></select></label><div class="setting-row"><label>训练步数<select id="steps" ${active(job)||busy?'disabled':''}></select></label><label>高斯上限<select id="points" ${active(job)||busy?'disabled':''}></select></label></div><p class="engine-note" id="engine-note"></p><p class="dialog-intro">调整参数后关闭窗口即可。点“完成并重建”时使用这些设置。</p></div>`,'small-dialog');
+  bindSettings();
+}
+function confirmDeleteProject(){
+  if(!selected||active(job)||busy||capturing)return;const sid=selected.id;
+  const root=dialog('删除项目',`<p class="dialog-intro">确定删除“${esc(selected.name)}”吗？项目会从列表隐藏，本地照片和模型保留。</p><div class="dialog-actions"><button class="button secondary" id="keep-project">保留项目</button><button class="button danger" id="confirm-delete">删除项目</button></div>`,'small-dialog');
+  root.querySelector('#keep-project')!.addEventListener('click',closeDialog);
+  root.querySelector('#confirm-delete')!.addEventListener('click',()=>void action(async()=>{await api(`/sessions/${sid}`,{method:'DELETE'});selected=null;job=null;setProjectUrl(null);await refreshList();}));
 }
 function stageView(){
   const s=selected!;
@@ -140,7 +165,7 @@ function configureBackend(draft:ReconstructionDraft){
   document.getElementById('engine-note')!.textContent=gpu?'GPU 训练，支持动态增点。':'低分辨率参考训练，适合检查流程。';
 }
 function saveSettings(){
-  if(!selected)return;
+  if(!selected||!document.getElementById('backend'))return;
   drafts.save(selected.id,{backend:(document.getElementById('backend') as HTMLSelectElement).value as Backend,steps:Number((document.getElementById('steps') as HTMLSelectElement).value),max_points:Number((document.getElementById('points') as HTMLSelectElement).value)});
 }
 function syncPanels(){
@@ -162,9 +187,10 @@ compactScreen.addEventListener('change',()=>{if(!compactScreen.matches){toggleRa
 function bind(){
   const on=(id:string,fn:()=>void)=>document.getElementById(id)?.addEventListener('click',fn);
   for(const id of ['new','empty-new'])on(id,newDialog);
-  on('brand',goLibrary);on('library',goLibrary);on('menu',()=>toggleRail(true));
+  on('brand',()=>goLibrary());on('library',()=>goLibrary());on('capture-back',()=>goLibrary());
+  for(const id of ['capture-settings','capture-settings-ready'])on(id,showCaptureSettings);on('delete-project',confirmDeleteProject);on('menu',()=>toggleRail(true));
   for(const id of ['rail-close','rail-scrim'])on(id,()=>toggleRail(false));
-  on('inspector-toggle',()=>toggleInspector(true));for(const id of ['inspector-close','inspector-scrim'])on(id,()=>toggleInspector(false));
+  on('inspector-toggle',()=>isCaptureDetail()?showCaptureSettings():toggleInspector(true));for(const id of ['inspector-close','inspector-scrim'])on(id,()=>toggleInspector(false));
   for(const id of ['help','view-help','capture-guide'])on(id,showGuide);
   for(const id of ['samples','sample-entry','empty-sample'])on(id,showSamples);
   document.querySelectorAll<HTMLElement>('[data-session]').forEach(el=>el.onclick=()=>void openSession(el.dataset.session!));
@@ -178,25 +204,28 @@ function bind(){
   on('cancel',()=>void action(async()=>{job=await api(`/jobs/${job!.id}/cancel`,{method:'POST'});await refreshList();}));
   document.getElementById('file-input')?.addEventListener('change',event=>void uploadFiles([...(event.target as HTMLInputElement).files??[]]));
 }
+function setProjectUrl(id:string|null){const next=id?`${location.pathname}?p=${id}`:location.pathname;if(location.pathname+location.search!==next)history.pushState(null,'',next);}
+window.addEventListener('popstate',()=>{const id=new URLSearchParams(location.search).get('p');if(id&&/^[a-f0-9]{32}$/.test(id))void openSession(id,false);else goLibrary(false);});
 async function refreshList(){sessions=await api('/sessions');}
-async function openSession(id:string){
+async function openSession(id:string,updateUrl=true){
   if(busy||takingFrame)return;
   closeDialog();stopCamera();toggleRail(false);toggleInspector(false);
   const request=++navigationRequest;
-  try{const next:Session=await api(`/sessions/${id}`);if(request!==navigationRequest)return;selected=next;job=next.jobs?.[0]??null;render();}
+  try{const next:Session=await api(`/sessions/${id}`);if(request!==navigationRequest)return;selected=next;job=next.jobs?.[0]??null;if(updateUrl)setProjectUrl(id);render();}
   catch(error){toast((error as Error).message,true);}
 }
 async function reloadSelected(){
   if(selected){const sid=selected.id;const next:Session=await api(`/sessions/${sid}`);if(selected?.id!==sid)return;selected=next;job=next.jobs?.[0]??null;}
   await refreshList();render();
 }
-function goLibrary(){
+function goLibrary(updateUrl=true){
   if(busy||takingFrame){toast('请等待当前照片处理完成');return;}
-  closeDialog();stopCamera();navigationRequest++;selected=null;job=null;menuOpen=false;inspectorOpen=false;render();
+  closeDialog();stopCamera();navigationRequest++;selected=null;job=null;menuOpen=false;inspectorOpen=false;if(updateUrl)setProjectUrl(null);render();
   void refreshList().then(()=>{if(!selected)render();}).catch(error=>toast(error.message,true));
 }
 async function reconstruct(){
   if(!selected)return;
+  if(takingFrame){toast('最后一张照片正在上传，请稍候');return;}
   saveSettings();const sid=selected.id,config=settingsDraft();
   await action(async()=>{await flushPending(sid);await api(`/sessions/${sid}/finalize`,{method:'POST'});job=await api('/jobs',{method:'POST',body:JSON.stringify({session_id:sid,...config,resolution:config.backend==='brush'?512:96})});selected=await api(`/sessions/${sid}`);await refreshList();});
 }
@@ -213,13 +242,13 @@ function dialog(title:string,content:string,kind=''){
 }
 function newDialog(){
   if(busy||takingFrame)return;
-  const root=dialog('新建采集',`<form id="new-form"><p class="dialog-intro">给这次拍摄起个名字，之后方便找到。</p><label>项目名称<input id="session-name" maxlength="80" placeholder="例如：书房、窗边的椅子" required autofocus></label><div class="dialog-actions"><button class="button primary" type="submit">创建项目</button></div></form>`,'small-dialog');
+  const root=dialog('新建采集',`<form id="new-form"><p class="dialog-intro">给这次拍摄起个名字，之后方便找到。</p><label>项目名称<input id="session-name" maxlength="80" placeholder="例如：书房、窗边的椅子" value="新场景 ${new Date().toLocaleDateString('zh-CN')}" required autofocus></label><div class="dialog-actions"><button class="button primary" type="submit">创建项目</button></div></form>`,'small-dialog');
   root.querySelector<HTMLInputElement>('#session-name')!.focus();
-  root.querySelector<HTMLFormElement>('#new-form')!.onsubmit=event=>{event.preventDefault();const name=(root.querySelector('#session-name') as HTMLInputElement).value.trim();if(!name)return;void action(async()=>{stopCamera();selected=await api('/sessions',{method:'POST',body:JSON.stringify({name})});job=null;menuOpen=false;inspectorOpen=false;await refreshList();});};
+  root.querySelector<HTMLFormElement>('#new-form')!.onsubmit=event=>{event.preventDefault();const name=(root.querySelector('#session-name') as HTMLInputElement).value.trim();if(!name)return;void action(async()=>{stopCamera();selected=await api('/sessions',{method:'POST',body:JSON.stringify({name})});job=null;menuOpen=false;inspectorOpen=false;setProjectUrl(selected!.id);await refreshList();});};
 }
 function showSamples(){
   const root=dialog('示例项目',`<p class="dialog-intro">不急着拍，先用一组准备好的照片熟悉流程。</p><button class="sample-option" id="demo" ${busy?'disabled':''}>${icon('aperture')}<span><strong>校准小场景</strong><small>程序生成的 10 张图像，快速检查 CPU 训练。</small></span>${icon('chevron-right')}</button><button class="sample-option" id="indoor-demo" ${busy||!health?.indoor_sample_available?'disabled':''}>${icon('box')}<span><strong>真实办公室</strong><small>${health?.indoor_sample_available?'ETH3D 的 26 张多视角照片，适合 GPU 重建。':'先按 README 准备 ETH3D office 数据。'}</small></span>${icon('chevron-right')}</button>`,'small-dialog');
-  const load=(url:string)=>void action(async()=>{stopCamera();selected=await api(url,{method:'POST'});job=null;menuOpen=false;inspectorOpen=false;await refreshList();});
+  const load=(url:string)=>void action(async()=>{stopCamera();selected=await api(url,{method:'POST'});job=null;menuOpen=false;inspectorOpen=false;setProjectUrl(selected!.id);await refreshList();});
   root.querySelector('#demo')!.addEventListener('click',()=>load('/fixtures'));root.querySelector('#indoor-demo')!.addEventListener('click',()=>load('/indoor-sample'));
 }
 function showPhotos(){
@@ -281,7 +310,26 @@ async function flushPending(sid:string){
 }
 async function uploadFiles(files:File[]){
   if(!files.length||!selected||busy)return;const sid=selected.id;
-  await action(async()=>{let count=0;for(const file of files){if(file.size>16*1024*1024)throw new Error(`${file.name} 超过 16 MB`);await enqueue({key:crypto.randomUUID(),session:sid,blob:file,metadata:{source:'import',original_name:file.name}});await flushPending(sid);count++;const note=document.querySelector('.statusbar>span:last-child');if(note)note.textContent=`正在上传 ${count} / ${files.length}`;}selected=await api(`/sessions/${sid}`);job=selected!.jobs?.[0]??null;await refreshList();toast(`已处理 ${files.length} 张照片`);});
+  await action(async()=>{
+    let imported=0;
+    for(const file of files){
+      const isVideo=file.type.startsWith('video/')||/\.(mp4|mov|webm)$/i.test(file.name);
+      const send=async(blob:Blob,metadata:Record<string,unknown>)=>{await enqueue({key:crypto.randomUUID(),session:sid,blob,metadata});await flushPending(sid);imported++;};
+      if(isVideo){
+        const current:Session=await api(`/sessions/${sid}`);
+        await importVideo(file,200-(current.frames?.length??0),async(frame,time,index,total)=>{
+          const text=`视频抽帧并上传 ${index} / ${total}`;const note=document.querySelector('.capture-import-progress');if(note)note.textContent=text;
+          const status=document.querySelector('.statusbar>span:last-child');if(status)status.textContent=text;
+          await send(frame,{source:'video',original_name:file.name,video_time_seconds:time});
+        });
+      }else{
+        if(file.size>16*1024*1024)throw new Error(`${file.name} 超过 16 MB`);
+        await send(file,{source:'import',original_name:file.name});
+        const note=document.querySelector('.capture-import-progress');if(note)note.textContent=`已上传 ${imported} 张照片`;
+      }
+    }
+    selected=await api(`/sessions/${sid}`);job=selected!.jobs?.[0]??null;await refreshList();toast(`导入完成，现有 ${selected!.frames?.length??0} 张照片`);
+  });
   if(selected?.id===sid)await reloadSelected();
 }
 async function startCamera(){
@@ -299,7 +347,7 @@ async function captureFrame(){
     await enqueue({key:crypto.randomUUID(),session:sid,blob,metadata:{source:'camera',timestamp_ms:timestamp,clock_domain:'performance',sensor:sensorEnabled?sensor:null}});await flushPending(sid);
     const next:Session=await api(`/sessions/${sid}`);if(selected?.id!==sid)return;selected=next;
     const count=document.getElementById('capture-count');if(count)count.textContent=String(next.frames!.length);
-    if(next.frames!.length>=200){stopCamera();render();}
+    if(next.frames!.length>=200)stopCamera();render();
   }catch(error){stopCamera();toast((error as Error).message+'；可在照片面板恢复上传。',true);render();}
   finally{takingFrame=false;}
 }
@@ -321,4 +369,4 @@ setInterval(async()=>{
   }catch{/* Retain the last confirmed state during a connection interruption. */}finally{polling=false;}
 },1500);
 render();
-void Promise.all([api('/health'),refreshList()]).then(([value])=>{health=value;render();}).catch(error=>toast('后端尚未连接：'+error.message,true));
+void Promise.all([api('/health'),refreshList()]).then(([value])=>{health=value;if(initialProject&&/^[a-f0-9]{32}$/.test(initialProject))void openSession(initialProject,false);else render();}).catch(error=>toast('后端尚未连接：'+error.message,true));

@@ -47,7 +47,7 @@ class Store:
     def session(self, sid):
         with self.connect() as db:
             row = db.execute("SELECT * FROM sessions WHERE id=?", (sid,)).fetchone()
-            if not row:
+            if not row or row["status"] == "deleted":
                 raise KeyError("采集不存在")
             result = dict(row)
             result["frames"] = [

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { ReconstructionDrafts, defaultDraft, matchesJobTarget } from '../.qa/unit/session-state.js';
+import { ReconstructionDrafts, defaultDraft, matchesJobTarget, sampleVideoTimes } from '../.qa/unit/session-state.js';
 
 test('editing a new run survives a rerender with the old completed job config', () => {
   const drafts = new ReconstructionDrafts();
@@ -34,4 +34,15 @@ test('a delayed response cannot update another project or a newer run', () => {
   assert.equal(matchesJobTarget(request, null), false);
   assert.equal(matchesJobTarget(request, { sessionId: 'room-b', jobId: 'job-1' }), false);
   assert.equal(matchesJobTarget(request, { sessionId: 'room-a', jobId: 'job-2' }), false);
+});
+
+test('video sampling respects duration and available frame slots',()=>{
+  assert.equal(sampleVideoTimes(12,200).length,12);
+  assert.equal(sampleVideoTimes(300,200).length,120);
+  const times=sampleVideoTimes(20,3);
+  assert.equal(times.length,3);
+  assert.ok(times.every((t,i)=>t>=0&&t<20&&(i===0||t>times[i-1])));
+  assert.deepEqual(sampleVideoTimes(.03,20),[0]);
+  for(const duration of [0,Infinity,NaN,301])assert.throws(()=>sampleVideoTimes(duration,20));
+  assert.throws(()=>sampleVideoTimes(10,0));
 });

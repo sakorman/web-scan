@@ -350,3 +350,75 @@ select, input { width: 100%; display: block; border: 1px solid #314461; backgrou
 .file-size { display: block; color: #bad2f3; font-size: 10px; margin-top: 8px; font-variant-numeric: tabular-nums; }
 .download-note { font-size: 10px; line-height: 1.7; color: #7b94b5; margin-top: 17px; }
 .download-empty { font-size: 12px; color: #a8bdd8; grid-column: 1 / -1; }
+
+/* Collection detail: keep the next action prominent until a model exists. */
+.capture-layout { grid-template-columns: minmax(0,1fr); }
+.capture-layout .project-rail { display: none; }
+.capture-layout .topbar { padding: 0 max(24px,calc((100vw - 1112px)/2)); gap: 28px; }
+.capture-layout .brand { border: 0; width: auto; padding: 0; }
+.capture-layout .topbar-title .title-prefix { display: none; }
+.capture-layout .topbar-title h1 { color: #b9c8df; font-size: 13px; }
+.capture-layout .inspector-toggle { display: none; }
+.capture-layout .statusbar { grid-column: 1; }
+.capture-detail { width: min(1160px,100%); min-height: 0; min-width: 0; margin: 0 auto; padding: 27px 24px 18px; display: flex; flex-direction: column; gap: 20px; overflow: hidden; }
+.capture-title { display: flex; align-items: center; gap: 13px; flex-shrink: 0; }
+.capture-title h1 { font-size: 23px; font-weight: 600; letter-spacing: -.4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.capture-title>.icon-button { margin-left: auto; }
+.back-project { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid #2c3b52; background: #172131; border-radius: 8px; flex-shrink: 0; }
+.back-project:hover { background: #22344e; }
+.back-project svg { width: 20px; height: 20px; }
+.capture-summary { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-shrink: 0; margin-top: 6px; }
+.capture-total { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 5px 7px; }
+.capture-total strong { font-size: 25px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.capture-total>span { font-size: 12px; color: #a2b0c5; }
+.capture-total small { grid-column: 1/-1; font-size: 11px; color: #778ba7; }
+.capture-main-action { display: flex; align-items: center; gap: 12px; }
+.capture-main-action .button { padding: 11px 18px; min-height: 42px; font-size: 12px; border-radius: 7px; }
+.capture-task-label { font-size: 11px; color: #9cbbea; }
+.capture-callout { border: 1px solid #2b3a51; border-radius: 10px; background: #101925; padding: 24px 20px; text-align: center; flex-shrink: 0; }
+.capture-callout>p { color: #98a8be; font-size: 12px; line-height: 1.8; }
+.capture-entry-actions { display: flex; align-items: center; justify-content: center; gap: 11px; margin-top: 19px; }
+.capture-entry-actions .button { border-radius: 8px; padding: 11px 17px; min-height: 43px; font-size: 12px; }
+.capture-entry-actions .button.secondary { background: #182232; }
+.capture-import-progress { font-size: 11px; color: #9fc4fc; margin-top: 13px; }
+.capture-import-progress:empty { display: none; }
+.capture-callout>.capture-error { color: #e4a4a3; margin-top: 15px; max-height: 44px; overflow: auto; }
+.capture-preview { min-height: 0; max-height: 210px; display: flex; flex-direction: column; flex: 1; }
+.capture-preview>div:first-child { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; height: 33px; color: #8399b8; font-size: 11px; }
+.capture-preview-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); min-height: 0; gap: 11px; flex: 1; }
+.capture-preview-grid>button { min-height: 0; padding: 0; position: relative; overflow: hidden; border: 1px solid #30435e; border-radius: 6px; background: #111c2c; }
+.capture-preview-grid img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.capture-preview-grid small { position: absolute; left: 7px; bottom: 6px; background: #0b1525bd; color: #c9d8ec; padding: 2px 5px; border-radius: 3px; font-size: 9px; }
+.capture-footer { display: flex; justify-content: center; flex-shrink: 0; padding-top: 3px; }
+.delete-project { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border: 1px solid #2e3847; border-radius: 6px; background: transparent; color: #76859c; font-size: 11px; }
+.delete-project:hover:not(:disabled) { border-color: #825059; color: #e8abb2; }
+.delete-project svg { width: 14px; height: 14px; }
+.capture-live { min-height: 150px; flex: 1; max-height: calc(100dvh - 305px); }
+.capture-live>.stage { width: 100%; height: 100%; border: 1px solid #344a68; border-radius: 9px; }
+.capture-running { border: 1px solid #304665; border-radius: 9px; padding: 23px; background: #132138; }
+.running-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 14px; color: #c5dcfc; }
+.capture-running>p { margin: 13px 0; font-size: 11px; color: #91add2; }
+.capture-settings-form .dialog-intro { margin-top: 20px; margin-bottom: 0; }
+.dialog-actions { gap: 10px; }
+@media(max-width:760px) {
+  .capture-layout .topbar { padding: 0 16px; gap: 14px; }
+  .capture-layout .brand span { display: inline; font-size: 15px; }
+  .capture-layout .topbar .mobile-only { display: none; }
+  .capture-layout .topbar-title h1 { font-size: 11px; }
+  .capture-detail { padding: 22px 17px 14px; gap: 17px; }
+  .capture-title { gap: 10px; }
+  .capture-title h1 { font-size: 19px; }
+  .back-project { width: 34px; height: 34px; }
+  .capture-total strong { font-size: 24px; }
+  .capture-main-action { gap: 7px; }
+  .capture-main-action .button { font-size: 11px; padding: 10px 12px; min-height: 38px; }
+  .capture-callout { padding: 21px 14px; }
+  .capture-callout>p { font-size: 11px; text-align: left; }
+  .capture-entry-actions { gap: 8px; flex-wrap: wrap; margin-top: 17px; }
+  .capture-entry-actions .button { padding: 10px 12px; font-size: 11px; }
+  .capture-preview { max-height: 230px; }
+  .capture-preview-grid { grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); gap: 8px; }
+  .capture-preview>div:first-child { font-size: 10px; }
+  .capture-running { padding: 18px; }
+  .capture-task-label { font-size: 9px; }
+}

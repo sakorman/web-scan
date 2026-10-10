@@ -26,6 +26,7 @@ from .store import Store, uid
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_FILE = 16 * 1024 * 1024
+MIN_CAPTURE_FRAMES = 12
 Image.MAX_IMAGE_PIXELS = 24_000_000
 DOWNLOAD_TYPES = {
     "gaussians.ply": ("model.ply", "application/octet-stream"),
@@ -182,6 +183,7 @@ def create_app(data: Path | None = None, *, run_worker=True):
             "brush_available": executable() is not None,
             "indoor_sample_available": (ROOT / ".samples/eth3d-office").is_dir(),
             "max_frames": 200,
+            "min_capture_frames": MIN_CAPTURE_FRAMES,
         }
 
     @app.get("/api/sessions")
@@ -190,7 +192,7 @@ def create_app(data: Path | None = None, *, run_worker=True):
             result = [
                 dict(r)
                 for r in db.execute(
-                    """SELECT s.*, (SELECT COUNT(*) FROM frames f WHERE f.session_id=s.id) AS frame_count FROM sessions s ORDER BY created DESC"""
+                    """SELECT s.*, (SELECT COUNT(*) FROM frames f WHERE f.session_id=s.id) AS frame_count FROM sessions s WHERE s.status != 'deleted' ORDER BY created DESC"""
                 )
             ]
             for row in result:
@@ -208,6 +210,41 @@ def create_app(data: Path | None = None, *, run_worker=True):
     @app.get("/api/sessions/{sid}")
     def session(sid: str):
         return store.session(valid_id(sid))
+
+    @app.delete("/api/sessions/{sid}")
+    def remove_session(sid: str):
+        valid_id(sid)
+        with store.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            if not db.execute("SELECT id FROM sessions WHERE id=?", (sid,)).fetchone():
+                raise HTTPException(404, "采集不存在")
+            if db.execute(
+                "SELECT id FROM jobs WHERE session_id=? AND status IN ('queued','running')",
+                (sid,),
+            ).fetchone():
+                raise HTTPException(409, "请先取消正在运行的重建任务")
+            db.execute("UPDATE sessions SET status='deleted' WHERE id=?", (sid,))
+        return {"deleted": True, "files_preserved": True}
+
+    @app.post("/api/sessions/{sid}/restore")
+    def restore_session(sid: str):
+        valid_id(sid)
+        with store.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute(
+                "SELECT status,kind FROM sessions WHERE id=?", (sid,)
+            ).fetchone()
+            if not row:
+                raise HTTPException(404, "采集不存在")
+            if row["status"] == "deleted":
+                ready = (store.session_dir(sid) / "manifest.json").exists() or row[
+                    "kind"
+                ] == "fixture"
+                db.execute(
+                    "UPDATE sessions SET status=? WHERE id=?",
+                    ("ready" if ready else "capturing", sid),
+                )
+        return store.session(sid)
 
     @app.post("/api/sessions/{sid}/frames")
     async def frame(sid: str, file: UploadFile = File(...), metadata: str = Form("{}")):
@@ -257,7 +294,7 @@ def create_app(data: Path | None = None, *, run_worker=True):
         with store.connect() as db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute("SELECT * FROM sessions WHERE id=?", (sid,)).fetchone()
-            if not row:
+            if not row or row["status"] == "deleted":
                 raise HTTPException(404, "采集不存在")
             if row["status"] == "ready":
                 return {"status": "ready"}
@@ -267,8 +304,12 @@ def create_app(data: Path | None = None, *, run_worker=True):
                     "SELECT * FROM frames WHERE session_id=? ORDER BY rowid", (sid,)
                 )
             ]
-            if len(frames) < 3:
-                raise HTTPException(422, "至少需要 3 张不同的照片，建议拍摄 20–80 张")
+            minimum = 3 if row["kind"] == "fixture" else MIN_CAPTURE_FRAMES
+            if len(frames) < minimum:
+                raise HTTPException(
+                    422,
+                    f"至少需要 {minimum} 张不同的照片，还需 {minimum - len(frames)} 张",
+                )
             snapshot = store.session_dir(sid) / "manifest.json"
             snapshot.write_text(
                 json.dumps({"id": sid, "frames": frames}, ensure_ascii=False, indent=2)

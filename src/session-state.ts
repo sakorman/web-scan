@@ -37,3 +37,11 @@ export type JobTarget = { sessionId: string; jobId: string };
 export function matchesJobTarget(expected: JobTarget, current: JobTarget | null): boolean {
   return expected.sessionId === current?.sessionId && expected.jobId === current?.jobId;
 }
+
+export function sampleVideoTimes(duration:number, slots:number):number[]{
+  if(!Number.isFinite(duration)||duration<=0||duration>300)throw new Error('请使用 5 分钟以内的有效视频');
+  if(!Number.isInteger(slots)||slots<1)throw new Error('照片数量已达到上限');
+  const count=Math.min(120,slots,Math.max(1,Math.ceil(duration)));
+  const end=Math.max(0,duration-.08);
+  return Array.from({length:count},(_,index)=>count===1?0:Math.min(end,index*duration/count));
+}
