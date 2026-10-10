@@ -55,11 +55,13 @@ FastAPI / Starlette 的测试客户端仍会发出一条 httpx 弃用提示，�
 ## 截图
 
 - [项目列表](screenshots/01-workspace.png)：桌面工作台与已生成项目。
-- [照片导入](screenshots/02-photos.png)：本轮从浏览器导入的 26 张照片。
-- [训练进度](screenshots/04-training.png)：实际 GPU 训练阶段、设置与取消入口。
+- [照片列表](screenshots/02-photos.png)：导入后的 26 张办公室照片。
+- [任务状态](screenshots/04-training.png)：真实任务的完成状态与重建设置。
 - [室内结果](screenshots/03-room.png)：此前 6000 步的办公室模型，本轮复查。
 - [手机布局](screenshots/05-mobile.png)：390 像素宽的模型和漫游操作。
 
 ## 仍待测试
 
 真实 iPhone / Android 的相机和传感器授权、HTTPS、后台恢复，NVIDIA / gsplat 后端，以及更大场景和长时间弱网上传。本轮的小屏截图来自桌面浏览器调整尺寸，不冒充手机实机测试。
+
+主题更新：界面已改成蓝色，以上 5 张截图重新从本地页面截取；检查了桌面和 390 像素布局，前端构建通过。历史重建数据仍按上文记录。
