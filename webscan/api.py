@@ -27,6 +27,12 @@ from .store import Store, uid
 ROOT = Path(__file__).resolve().parent.parent
 MAX_FILE = 16 * 1024 * 1024
 Image.MAX_IMAGE_PIXELS = 24_000_000
+DOWNLOAD_TYPES = {
+    "gaussians.ply": ("model.ply", "application/octet-stream"),
+    "preview.splat": ("preview.splat", "application/octet-stream"),
+    "cameras.json": ("cameras.json", "application/json"),
+    "report.json": ("report.json", "application/json"),
+}
 
 
 class SessionInput(BaseModel):
@@ -427,8 +433,44 @@ def create_app(data: Path | None = None, *, run_worker=True):
             )
         return store.job(jid)
 
+    def completed_job(jid):
+        valid_id(jid)
+        value = store.job(jid)
+        if value["status"] != "succeeded":
+            raise HTTPException(409, "模型尚未生成")
+        return value
+
+    def download_filename(value, name):
+        with store.connect() as db:
+            row = db.execute(
+                "SELECT name FROM sessions WHERE id=?", (value["session_id"],)
+            ).fetchone()
+        # Keep readable project names, but never use them as filesystem paths.
+        title = re.sub(
+            r'[\x00-\x1f\x7f<>:"/\\|?*]', "-", row["name"] if row else "web-scan"
+        )
+        title = title.strip(" .-")[:70] or "web-scan"
+        return f"{title}-{value['id'][:8]}-{DOWNLOAD_TYPES[name][0]}"
+
+    @app.get("/api/jobs/{jid}/artifacts")
+    def artifacts(jid: str):
+        value = completed_job(jid)
+        result = []
+        for name in DOWNLOAD_TYPES:
+            file = store.job_dir(jid) / "artifacts" / name
+            if file.is_file():
+                result.append(
+                    {
+                        "name": name,
+                        "bytes": file.stat().st_size,
+                        "filename": download_filename(value, name),
+                        "url": f"/api/jobs/{jid}/artifacts/{name}?download=true",
+                    }
+                )
+        return {"job_id": jid, "files": result}
+
     @app.get("/api/jobs/{jid}/artifacts/{name}")
-    def artifact(jid: str, name: str):
+    def artifact(jid: str, name: str, download: bool = False):
         valid_id(jid)
         if name not in (
             "gaussians.ply",
@@ -438,14 +480,18 @@ def create_app(data: Path | None = None, *, run_worker=True):
             "cameras.json",
         ):
             raise HTTPException(404, "产物不存在")
-        if store.job(jid)["status"] != "succeeded":
-            raise HTTPException(409, "模型尚未生成")
+        value = completed_job(jid)
         file = store.job_dir(jid) / "artifacts" / name
         if not file.is_file():
             raise HTTPException(404, "产物不存在")
-        return FileResponse(
-            file, filename=name if name in ("gaussians.ply", "report.json") else None
+        as_download = download or name in ("gaussians.ply", "report.json")
+        filename = (
+            download_filename(value, name)
+            if as_download and name in DOWNLOAD_TYPES
+            else (name if as_download else None)
         )
+        media_type = DOWNLOAD_TYPES[name][1] if name in DOWNLOAD_TYPES else "image/jpeg"
+        return FileResponse(file, filename=filename, media_type=media_type)
 
     @app.get("/api/jobs/{jid}/log")
     def log(jid: str):

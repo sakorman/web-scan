@@ -100,7 +100,7 @@ function libraryView(ready:number){
 function card(s:Session){return `<button class="project-card" data-session="${s.id}"><div class="card-image">${s.job?.status==='succeeded'?`<img src="/api/jobs/${s.job.id}/artifacts/thumbnail.jpg" alt="${esc(s.name)}预览">`:`<span class="card-empty-icon">${icon(s.kind==='fixture'?'aperture':'scan')}</span>`}${badge(s.job)}</div><div class="card-caption"><strong>${esc(s.name)}</strong><div><span>${s.frame_count??0} 张照片</span><span>${date(s.created)}</span></div></div></button>`;}
 function projectView(){
   const s=selected!,frames=s.frames??[],running=active(job),report=job?.report;
-  return `<main class="project-view"><div class="viewport-area"><div class="viewport-heading"><div>${icon(job?.status==='succeeded'?'box':cameraStream?'camera':'scan')}<span>${job?.status==='succeeded'?'模型预览':cameraStream?'拍摄预览':'采集工作区'}</span></div><div><button class="tool-button" id="photos">${icon('images')}<span>照片</span><b>${frames.length}</b></button><button class="icon-button" id="view-help" aria-label="查看操作说明">${icon('circle-help')}</button></div></div>
+  return `<main class="project-view"><div class="viewport-area"><div class="viewport-heading"><div>${icon(job?.status==='succeeded'?'box':cameraStream?'camera':'scan')}<span>${job?.status==='succeeded'?'模型预览':cameraStream?'拍摄预览':'采集工作区'}</span></div><div><button class="tool-button" id="photos">${icon('images')}<span>照片</span><b>${frames.length}</b></button>${job?.status==='succeeded'?`<button class="tool-button download-trigger" id="viewport-downloads">${icon('download')}<span>下载模型</span></button>`:''}<button class="icon-button" id="view-help" aria-label="查看操作说明">${icon('circle-help')}</button></div></div>
       ${stageView()}
       <div class="photo-dock"><button class="dock-heading" id="all-photos">${icon('images')}<span>采集照片<strong>${frames.length} 张</strong></span></button><div class="photo-strip">${frames.slice(0,8).map((f,i)=>`<button class="strip-photo" data-photo="${i}" aria-label="查看照片 ${i+1}"><img src="${thumb(s,f)}" alt="采集照片 ${i+1}"><small>${i+1}</small></button>`).join('')||'<span class="dock-empty">照片上传后会显示在这里</span>'}</div><button class="dock-more" id="photo-more">${frames.length>8?`+${frames.length-8}`:icon('maximize-2')}<small>全部照片</small></button></div>
     </div>
@@ -173,7 +173,7 @@ function bind(){
   for(const id of ['photos','all-photos','photo-more','photos-secondary','stage-photos'])on(id,showPhotos);
   for(const id of ['upload','stage-upload'])on(id,pickFiles);
   for(const id of ['camera','stage-camera'])on(id,()=>void startCamera());for(const id of ['stop','stage-stop'])on(id,()=>{stopCamera();void reloadSelected();});
-  on('advanced',showAdvanced);on('downloads',showDownloads);on('log',()=>void showLog());
+  on('advanced',showAdvanced);for(const id of ['downloads','viewport-downloads'])on(id,()=>void showDownloads());on('log',()=>void showLog());
   on('reconstruct',()=>void reconstruct());
   on('cancel',()=>void action(async()=>{job=await api(`/jobs/${job!.id}/cancel`,{method:'POST'});await refreshList();}));
   document.getElementById('file-input')?.addEventListener('change',event=>void uploadFiles([...(event.target as HTMLInputElement).files??[]]));
@@ -238,9 +238,29 @@ function showAdvanced(){
   const root=dialog('更多设置',`<section class="detail-section"><h3>计算模式</h3><p>本地 GPU 使用 Brush，支持动态增点和高阶颜色。CPU 模式用于小规模调试，画面会更粗。参数只对下一次重建生效。</p></section><section class="detail-section"><h3>运动数据</h3><p>可记录照片附近的 IMU 观测。当前位姿仍由照片求解，传感器数据不会直接参与重建。</p><button class="button secondary" id="sensor" ${sensorEnabled?'disabled':''}>${sensorEnabled?'已开启记录':'启用运动传感器'}</button></section><section class="detail-section"><h3>采集限制</h3><p>最多 200 张照片，每张不超过 16 MB。进入后台会暂停拍摄；暂存的照片可在照片面板里恢复上传。</p></section>`,'small-dialog');
   root.querySelector('#sensor')!.addEventListener('click',()=>void enableSensor());
 }
-function showDownloads(){
+function formatFileSize(bytes:number){
+  if(bytes<1024)return `${bytes} B`;
+  if(bytes<1024*1024)return `${(bytes/1024).toFixed(1)} KB`;
+  return `${(bytes/1024/1024).toFixed(1)} MB`;
+}
+async function showDownloads(){
   if(job?.status!=='succeeded')return;
-  dialog('下载模型',`<p class="dialog-intro">模型为相对尺度。网页预览使用基础颜色，PLY 保留训练输出的颜色参数。</p><div class="download-list">${[['gaussians.ply','高斯模型 PLY','用于其他三维工具'],['preview.splat','网页预览 splat','轻量查看格式'],['cameras.json','相机参数','相机位置和坐标信息'],['report.json','训练报告','配置、耗时和质量指标']].map(([file,title,description])=>`<a class="download-option" href="/api/jobs/${job!.id}/artifacts/${file}" download>${icon('download')}<span><strong>${title}</strong><small>${description}</small></span></a>`).join('')}</div>`,'small-dialog');
+  const jid=job.id;
+  const root=dialog('下载 3DGS 模型','<p class="dialog-intro">正在读取可下载文件…</p>','small-dialog');
+  const pane=root.querySelector('dialog')!;
+  try{
+    const result:{files:{name:string;bytes:number;filename:string;url:string}[]}=await api(`/jobs/${jid}/artifacts`);
+    if(job?.id!==jid||!pane.isConnected)return;
+    const labels:Record<string,[string,string]>={
+      'gaussians.ply':['高斯模型 PLY','完整训练产物，保留高斯参数'],
+      'preview.splat':['网页模型 splat','轻量格式，适合网页查看'],
+      'cameras.json':['相机参数','相机位置与坐标信息'],
+      'report.json':['训练报告','配置、耗时和质量指标'],
+    };
+    const files=result.files.filter(file=>labels[file.name]);
+    pane.querySelector('.dialog-body')!.innerHTML=`<p class="dialog-intro">优先下载 PLY，其他 3DGS 工具也能使用。文件会带上项目名，方便区分。</p><div class="download-list">${files.map(file=>`<a class="download-option ${file.name==='gaussians.ply'?'recommended':''}" href="${esc(file.url)}" download="${esc(file.filename)}">${icon('download')}<span><strong>${labels[file.name][0]}${file.name==='gaussians.ply'?'<em>推荐</em>':''}</strong><small>${labels[file.name][1]}</small><span class="file-size">${formatFileSize(file.bytes)}</span></span></a>`).join('')||'<p class="download-empty">文件已不在本机，请重新重建。</p>'}</div><p class="download-note">模型为相对尺度。splat 只保留基础颜色，PLY 保留训练输出的颜色参数。</p>`;
+    createIcons({icons});
+  }catch(error){if(pane.isConnected)pane.querySelector('.dialog-body')!.innerHTML=`<p class="dialog-intro">无法读取下载文件：${esc((error as Error).message)}</p>`;}
 }
 async function showLog(){
   if(!job)return;const jid=job.id;
