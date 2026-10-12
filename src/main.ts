@@ -9,6 +9,7 @@ import { ReconstructionDrafts, defaultDraft, matchesJobTarget, type Backend, typ
 type Job = { id:string; status:string; stage:string; progress:number; message:string; updated:number; report:Record<string,any>|null; config:Record<string,any> };
 type Frame = { id:string; width:number; height:number };
 type Session = { id:string; name:string; kind:string; status:string; created:number; frame_count?:number; frames?:Frame[]; jobs?:Job[]; job?:Job };
+type PhotoSample = { id:string; title:string; description:string; name:string; images:number; available:boolean; previews:string[]; url:string; archive_url:string; license:string; license_url:string; prepare_command:string };
 const icons = { Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen, Trash2, Video };
 const app = document.querySelector<HTMLDivElement>('#app')!;
 const drafts = new ReconstructionDrafts();
@@ -247,10 +248,30 @@ function newDialog(){
   root.querySelector<HTMLInputElement>('#session-name')!.focus();
   root.querySelector<HTMLFormElement>('#new-form')!.onsubmit=event=>{event.preventDefault();const name=(root.querySelector('#session-name') as HTMLInputElement).value.trim();if(!name)return;void action(async()=>{stopCamera();selected=await api('/sessions',{method:'POST',body:JSON.stringify({name})});job=null;menuOpen=false;inspectorOpen=false;setProjectUrl(selected!.id);await refreshList();});};
 }
-function showSamples(){
-  const root=dialog('示例项目',`<p class="dialog-intro">不急着拍，先用一组准备好的照片熟悉流程。</p><button class="sample-option" id="demo" ${busy?'disabled':''}>${icon('aperture')}<span><strong>校准小场景</strong><small>程序生成的 10 张图像，快速检查 CPU 训练。</small></span>${icon('chevron-right')}</button><button class="sample-option" id="indoor-demo" ${busy||!health?.indoor_sample_available?'disabled':''}>${icon('box')}<span><strong>真实办公室</strong><small>${health?.indoor_sample_available?'ETH3D 的 26 张多视角照片，适合 GPU 重建。':'先按 README 准备 ETH3D office 数据。'}</small></span>${icon('chevron-right')}</button>`,'small-dialog');
-  const load=(url:string)=>void action(async()=>{stopCamera();selected=await api(url,{method:'POST'});job=null;menuOpen=false;inspectorOpen=false;setProjectUrl(selected!.id);await refreshList();});
-  root.querySelector('#demo')!.addEventListener('click',()=>load('/fixtures'));root.querySelector('#indoor-demo')!.addEventListener('click',()=>load('/indoor-sample'));
+async function showSamples(){
+  const root=dialog('公开照片示例','<p class="dialog-intro" role="status">正在检查本地照片…</p>','samples-dialog');
+  const el=root.querySelector('dialog')!;
+  try{
+    const samples=await api<PhotoSample[]>('/samples');
+    if(!el.isConnected||!el.open)return;
+    el.querySelector('.dialog-body')!.innerHTML=`<p class="dialog-intro">选一处空间，从真实拍摄的多视角照片开始。导入后点击“完成并重建”。</p>
+      <div class="sample-grid">${samples.map(sample=>`<article class="dataset-card">
+        <div class="dataset-photos">${sample.previews.length?sample.previews.map((url,i)=>`<img src="${esc(url)}" alt="${esc(sample.title)}实拍视角 ${i+1}">`).join(''):`<span>${icon('images')}照片尚未准备</span>`}</div>
+        <div class="dataset-content"><div class="dataset-title"><h3>${esc(sample.title)}</h3><span>${sample.images} 张照片</span></div>
+          <p>${esc(sample.description)}</p><a class="dataset-source" href="${esc(sample.url)}" target="_blank" rel="noopener noreferrer">${esc(sample.name)} · 查看来源</a>
+          <button class="button primary" data-sample="${esc(sample.id)}" ${busy||!sample.available?'disabled':''}>${icon('images')}${sample.available?'导入这组照片':'请先准备照片'}</button>
+          ${sample.available?'':`<details class="sample-setup"><summary>准备方法</summary><p>下载<a href="${esc(sample.archive_url)}">官方照片归档</a>到 /tmp，再在项目目录运行：</p><code>${esc(sample.prepare_command)}</code><button class="text-button" data-refresh-samples>重新检查</button></details>`}
+        </div></article>`).join('')}</div>
+      <p class="dataset-license">照片：Schöps 等，ETH3D / CVPR 2017。<a href="${esc(samples[0].license_url)}" target="_blank" rel="noopener noreferrer">${esc(samples[0].license)}</a>：署名、非商业、相同方式共享。照片已缩小尺寸，原图和生成模型保存在本机。</p>
+      <details class="sample-debug"><summary>调试用校准场景</summary><button class="sample-option" id="demo" ${busy?'disabled':''}>${icon('aperture')}<span><strong>校准小场景</strong><small>程序生成的 10 张图像，用于检查 CPU 训练。</small></span>${icon('chevron-right')}</button></details>`;
+    const load=(url:string)=>void action(async()=>{stopCamera();selected=await api(url,{method:'POST'});job=null;menuOpen=false;inspectorOpen=false;setProjectUrl(selected!.id);await refreshList();});
+    el.querySelectorAll<HTMLElement>('[data-sample]').forEach(button=>button.onclick=()=>load(`/samples/${button.dataset.sample}/import`));
+    el.querySelectorAll<HTMLElement>('[data-refresh-samples]').forEach(button=>button.onclick=()=>void showSamples());
+    el.querySelector('#demo')!.addEventListener('click',()=>load('/fixtures'));
+    createIcons({icons});
+  }catch(error){
+    if(el.isConnected&&el.open)el.querySelector('.dialog-body')!.innerHTML=`<p class="dialog-intro" role="alert">${esc((error as Error).message)}</p>`;
+  }
 }
 function showPhotos(){
   if(!selected)return;const s=selected!,frames=s.frames??[];

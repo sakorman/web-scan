@@ -24,6 +24,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .store import Store, uid
 from .frame_order import ordered_frames
+from .samples import SAMPLES, prepared_photos, sample_info
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_FILE = 16 * 1024 * 1024
@@ -111,8 +112,11 @@ def ingest_image(store, sid, raw, metadata):
     return {"id": fid, "duplicate": False, "width": width, "height": height}
 
 
-def create_app(data: Path | None = None, *, run_worker=True):
+def create_app(
+    data: Path | None = None, *, run_worker=True, sample_root: Path | None = None
+):
     store = Store(data or Path(os.environ.get("WEBSCAN_DATA", ROOT / ".data")))
+    sample_root = sample_root if sample_root is not None else ROOT / ".samples"
     fixture_lock = asyncio.Lock()
 
     @asynccontextmanager
@@ -182,7 +186,9 @@ def create_app(data: Path | None = None, *, run_worker=True):
             "reference_available": bool(versions["torch"]),
             "cuda_backend_installed": bool(versions["gsplat"]),
             "brush_available": executable() is not None,
-            "indoor_sample_available": (ROOT / ".samples/eth3d-office").is_dir(),
+            "indoor_sample_available": bool(
+                prepared_photos(sample_root, SAMPLES["eth3d-office"])
+            ),
             "max_frames": 200,
             "min_capture_frames": MIN_CAPTURE_FRAMES,
         }
@@ -361,33 +367,60 @@ def create_app(data: Path | None = None, *, run_worker=True):
                     )
                 raise
 
-    @app.post("/api/indoor-sample", status_code=201)
-    async def indoor_sample():
-        folder = ROOT / ".samples/eth3d-office"
-        photos = sorted(folder.glob("*.jpg"))
+    def known_sample(sample_id):
+        if sample_id not in SAMPLES:
+            raise HTTPException(404, "示例不存在")
+        return SAMPLES[sample_id]
+
+    @app.get("/api/samples")
+    def samples():
+        return [sample_info(sample_root, sample) for sample in SAMPLES.values()]
+
+    @app.get("/api/samples/{sample_id}/photos/{index}")
+    def sample_photo(sample_id: str, index: int):
+        photos = prepared_photos(sample_root, known_sample(sample_id))
+        if not 0 <= index < len(photos):
+            raise HTTPException(404, "示例照片不存在")
+        return FileResponse(photos[index], media_type="image/jpeg")
+
+    def read_sample(dataset):
+        photos = prepared_photos(sample_root, dataset)
         if not photos:
-            raise HTTPException(404, "室内样本尚未准备，请查看 README 数据集说明")
+            raise HTTPException(409, "示例照片尚未完整准备，请查看示例面板中的准备方法")
+        manifest = json.loads((sample_root / dataset.id / "source.json").read_text())
+        expected = {entry["name"]: entry.get("sha256") for entry in manifest["files"]}
+        payload = []
+        for photo in photos:
+            raw = photo.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != expected.get(photo.name):
+                raise HTTPException(409, "示例照片已改变，请重新运行准备脚本")
+            payload.append((photo.name, raw))
+        return payload
+
+    @app.post("/api/samples/{sample_id}/import", status_code=201)
+    async def import_sample(sample_id: str):
+        dataset = known_sample(sample_id)
         if fixture_lock.locked():
             raise HTTPException(409, "示例正在准备")
         async with fixture_lock:
-            sample = store.create_session("ETH3D · 真实办公室")
+            photos = await asyncio.to_thread(read_sample, dataset)
+            sample = store.create_session(f"ETH3D · {dataset.title}")
             try:
-                for photo in photos:
+                for index, (name, raw) in enumerate(photos):
                     await asyncio.to_thread(
                         ingest_image,
                         store,
                         sample["id"],
-                        photo.read_bytes(),
-                        {"source": "ETH3D office", "original_name": photo.name},
+                        raw,
+                        {
+                            "source": f"ETH3D {dataset.scene}",
+                            "original_name": name,
+                            "upload_batch": sample["id"],
+                            "capture_index": index,
+                        },
                     )
-                provenance = {
-                    "name": "ETH3D office",
-                    "url": "https://www.eth3d.net/datasets",
-                    "type": "real indoor multiview dataset",
-                    "images": len(photos),
-                }
                 (store.session_dir(sample["id"]) / "source.json").write_text(
-                    json.dumps(provenance)
+                    json.dumps(dataset.provenance(), ensure_ascii=False)
                 )
                 finalize(sample["id"])
                 return store.session(sample["id"])
@@ -398,6 +431,10 @@ def create_app(data: Path | None = None, *, run_worker=True):
                         (sample["id"],),
                     )
                 raise
+
+    @app.post("/api/indoor-sample", status_code=201)
+    async def indoor_sample():
+        return await import_sample("eth3d-office")
 
     @app.post("/api/jobs", status_code=201)
     def job(body: JobInput):

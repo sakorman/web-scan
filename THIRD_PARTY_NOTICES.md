@@ -24,4 +24,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 ## Test dataset
 
-ETH3D office: https://www.eth3d.net/datasets . The 26 real indoor images are downloaded separately from the official dataset archive. Dataset images and generated models are excluded from Git and are not licensed under the project MIT license. The local UI and training reports retain dataset attribution.
+ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
+
+ETH3D licenses its data under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/ ; dataset license statement: https://www.eth3d.net/ . The preparation script applies EXIF orientation, resizes to a 1600-pixel long edge and re-encodes JPEGs. The app estimates new camera poses and derives Gaussian models from these photos.
+
+Dataset photos and generated models are excluded from Git and are not covered by the project MIT license. Screenshots in `docs/screenshots/` that contain ETH3D photographs or reconstructed scenes retain this attribution and the CC BY-NC-SA 4.0 terms for that content. The sample picker, local source manifests and training reports retain dataset attribution and license links. Original project code remains MIT-licensed.
