@@ -2,7 +2,7 @@ import './style.css';
 import { createIcons, Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen, Trash2, Video } from 'lucide';
 import { enqueue, pending, acknowledge, type PendingFrame } from './queue';
 import { UploadPipeline } from './upload-pipeline';
-import { mountViewer } from './viewer';
+const mountViewer = async (...args: Parameters<typeof import('./viewer')['mountViewer']>) => (await import('./viewer')).mountViewer(...args);
 import { importVideo } from './media';
 import { ReconstructionDrafts, defaultDraft, matchesJobTarget, type Backend, type ReconstructionDraft } from './session-state';
 
@@ -89,7 +89,7 @@ function render(){
   if(cameraStream&&!preserve){const video=document.querySelector<HTMLVideoElement>('#camera-video');if(video){video.srcObject=cameraStream;void video.play().catch(()=>{});}}
   if(selected&&job?.status==='succeeded'&&!preserve){
     const container=document.querySelector<HTMLElement>('#viewer');
-    if(container)void mountViewer(container,`/api/jobs/${job.id}/artifacts/preview.splat`,job.report?.backend==='brush').then(cleanup=>{
+    if(container)void mountViewer(container,`/api/jobs/${job.id}/artifacts/gaussians.ply`,job.report?.backend==='brush').then(cleanup=>{
       if(container.isConnected){viewerCleanup=cleanup;container.querySelector('.viewer-loading')?.remove();}else cleanup();
     }).catch(error=>{const hint=container.querySelector('.viewer-loading');if(hint)hint.textContent='模型加载失败：'+error.message;});
   }
@@ -103,18 +103,18 @@ function libraryView(ready:number){
     <div class="pagination"><span>照片、模型和任务都保留在本地</span><div><button class="icon-button" id="previous-page" aria-label="上一页" ${page===0?'disabled':''}>${icon('chevron-left')}</button><span>${page+1} / ${pages}</span><button class="icon-button" id="next-page" aria-label="下一页" ${page===pages-1?'disabled':''}>${icon('chevron-right')}</button></div></div>
   </main>`;
 }
-function card(s:Session){return `<button class="project-card" data-session="${s.id}"><div class="card-image">${s.job?.status==='succeeded'?`<img src="/api/jobs/${s.job.id}/artifacts/thumbnail.jpg" alt="${esc(s.name)}预览">`:`<span class="card-empty-icon">${icon(s.kind==='fixture'?'aperture':'scan')}</span>`}${badge(s.job)}</div><div class="card-caption"><strong>${esc(s.name)}</strong><div><span>${s.frame_count??0} 张照片</span><span>${date(s.created)}</span></div></div></button>`;}
+function card(s:Session){return `<button class="project-card" data-session="${s.id}"><div class="card-image">${s.job?.status==='succeeded'?`<img src="/api/jobs/${s.job.id}/artifacts/thumbnail.jpg" alt="${esc(s.name)}${s.job?.report?.thumbnail_source==='input_photo'?'采集封面':'重建预览'}">${s.job?.report?.thumbnail_source==='input_photo'?'<span class="cover-label">采集封面</span>':''}`:`<span class="card-empty-icon">${icon(s.kind==='fixture'?'aperture':'scan')}</span>`}${badge(s.job)}</div><div class="card-caption"><strong>${esc(s.name)}</strong><div><span>${s.frame_count??0} 张照片</span><span>${date(s.created)}</span></div></div></button>`;}
 function projectView(){
   if(isCaptureDetail())return captureDetail();
   const s=selected!,frames=s.frames??[],running=active(job),report=job?.report;
-  return `<main class="project-view"><div class="viewport-area"><div class="viewport-heading"><div>${icon(job?.status==='succeeded'?'box':cameraStream?'camera':'scan')}<span>${job?.status==='succeeded'?'模型预览':cameraStream?'拍摄预览':'采集工作区'}</span></div><div><button class="tool-button" id="photos">${icon('images')}<span>照片</span><b>${frames.length}</b></button>${job?.status==='succeeded'?`<button class="tool-button download-trigger" id="viewport-downloads">${icon('download')}<span>下载模型</span></button>`:''}<button class="icon-button" id="view-help" aria-label="查看操作说明">${icon('circle-help')}</button></div></div>
+  return `<main class="project-view"><div class="viewport-area"><div class="viewport-heading"><div>${icon(job?.status==='succeeded'?'box':cameraStream?'camera':'scan')}<span>${job?.status==='succeeded'?'模型预览':cameraStream?'拍摄预览':'采集工作区'}</span></div><div><button class="tool-button" id="photos">${icon('images')}<span>照片</span><b>${frames.length}</b></button>${job?.status==='succeeded'?`<button class="tool-button" id="history">历史结果</button><button class="tool-button download-trigger" id="viewport-downloads">${icon('download')}<span>下载模型</span></button>`:''}<button class="icon-button" id="view-help" aria-label="查看操作说明">${icon('circle-help')}</button></div></div>
       ${stageView()}
       <div class="photo-dock"><button class="dock-heading" id="all-photos">${icon('images')}<span>采集照片<strong>${frames.length} 张</strong></span></button><div class="photo-strip">${frames.slice(0,8).map((f,i)=>`<button class="strip-photo" data-photo="${i}" aria-label="查看照片 ${i+1}"><img src="${thumb(s,f)}" alt="采集照片 ${i+1}"><small>${i+1}</small></button>`).join('')||'<span class="dock-empty">照片上传后会显示在这里</span>'}</div><button class="dock-more" id="photo-more">${frames.length>8?`+${frames.length-8}`:icon('maximize-2')}<small>全部照片</small></button></div>
     </div>
     <aside class="inspector" aria-label="重建设置"><div class="inspector-heading"><h2>项目概览</h2><button class="icon-button inspector-close" id="inspector-close" aria-label="关闭重建设置">${icon('x')}</button>${badge(job)}</div>
       <div class="project-metrics"><div><strong>${frames.length}</strong><span>照片</span></div><div><strong>${number(report?.gaussians)}</strong><span>高斯</span></div><div><strong>${report?.seconds?`${Math.round(report.seconds)}s`:'—'}</strong><span>重建耗时</span></div></div>
-      <section class="reconstruction-settings"><div class="section-label"><h3>重建</h3><button class="icon-button" id="advanced" aria-label="更多设置">${icon('more-horizontal')}</button></div><label>计算模式<select id="backend" ${busy||running||capturing?'disabled':''}><option value="brush" ${!health?.brush_available||s.kind==='fixture'?'disabled':''}>本地 GPU · 室内质量</option><option value="reference">本地 CPU · 调试</option><option value="cuda" ${!health?.cuda_backend_installed?'disabled':''}>CUDA · gsplat</option></select></label><div class="setting-row"><label>训练步数<select id="steps" ${busy||running||capturing?'disabled':''}></select></label><label>高斯上限<select id="points" ${busy||running||capturing?'disabled':''}></select></label></div><p class="engine-note" id="engine-note"></p></section>
-      ${progressView()}
+      <section class="reconstruction-settings"><div class="section-label"><h3>下次重建</h3><button class="icon-button" id="advanced" aria-label="更多设置">${icon('more-horizontal')}</button></div><label>计算模式<select id="backend" ${busy||running||capturing?'disabled':''}><option value="brush" ${!health?.brush_available||s.kind==='fixture'?'disabled':''}>本地 GPU · 室内质量</option><option value="reference">本地 CPU · 调试</option><option value="cuda" ${!health?.cuda_backend_installed?'disabled':''}>CUDA · gsplat</option></select></label><div class="setting-row"><label>训练步数<select id="steps" ${busy||running||capturing?'disabled':''}></select></label><label>训练分辨率<select id="resolution" ${busy||running||capturing?'disabled':''}></select></label></div><p class="engine-note" id="engine-note"></p></section>
+      ${progressView()}${job?.status==='succeeded'?`<button class="text-button quality-report-link" id="quality-report">照片定位 ${number(report?.registered_images)} / ${number(report?.input_images)} · 查看质量报告</button>`:''}
       <div class="inspector-actions">${capturing?`<button class="button danger full" id="stop">${icon('square')}结束拍摄</button>`:`<button class="button primary full" id="reconstruct" ${busy||running||frames.length<3?'disabled':''}>${icon('play')}${running?'重建进行中':job?.status==='succeeded'?'再次重建':'开始重建'}</button>`}${running?`<button class="button secondary full" id="cancel">${icon('square')}取消任务</button>`:''}${s.status==='capturing'&&!capturing?`<div class="action-pair"><button class="button secondary" id="camera" ${busy?'disabled':''}>${icon('camera')}拍摄</button><button class="button secondary" id="upload" ${busy?'disabled':''}>${icon('upload')}导入照片</button></div>`:''}${job?.status==='succeeded'?`<button class="button secondary full" id="downloads">${icon('download')}下载模型</button>`:''}<div class="inspector-links"><button class="text-button" id="photos-secondary">全部照片</button>${job?`<button class="text-button" id="log">任务日志</button>`:`<button class="text-button" id="capture-guide">拍摄指南</button>`}</div></div>
     </aside></main>`;
 }
@@ -129,7 +129,7 @@ function captureDetail(){
   </main>`;
 }
 function showCaptureSettings(){
-  dialog('重建设置',`<div class="capture-settings-form"><label>计算模式<select id="backend" ${active(job)||busy?'disabled':''}><option value="brush" ${!health?.brush_available||selected?.kind==='fixture'?'disabled':''}>本地 GPU · 室内质量</option><option value="reference">本地 CPU · 调试</option><option value="cuda" ${!health?.cuda_backend_installed?'disabled':''}>CUDA · gsplat</option></select></label><div class="setting-row"><label>训练步数<select id="steps" ${active(job)||busy?'disabled':''}></select></label><label>高斯上限<select id="points" ${active(job)||busy?'disabled':''}></select></label></div><p class="engine-note" id="engine-note"></p><p class="dialog-intro">调整参数后关闭窗口即可。点“完成并重建”时使用这些设置。</p></div>`,'small-dialog');
+  dialog('重建设置',`<div class="capture-settings-form"><label>计算模式<select id="backend" ${active(job)||busy?'disabled':''}><option value="brush" ${!health?.brush_available||selected?.kind==='fixture'?'disabled':''}>本地 GPU · 室内质量</option><option value="reference">本地 CPU · 调试</option><option value="cuda" ${!health?.cuda_backend_installed?'disabled':''}>CUDA · gsplat</option></select></label><div class="setting-row"><label>训练步数<select id="steps" ${active(job)||busy?'disabled':''}></select></label><label>训练分辨率<select id="resolution" ${active(job)||busy?'disabled':''}></select></label></div><p class="engine-note" id="engine-note"></p><p class="dialog-intro">调整参数后关闭窗口即可。点“完成并重建”时使用这些设置。</p><button class="text-button" id="quality-options">镜头与点数设置</button></div>`,'small-dialog');
   bindSettings();
 }
 function confirmDeleteProject(){
@@ -151,24 +151,25 @@ function progressView(){
   return `<section class="job-summary"><div class="section-label"><h3>任务状态</h3><span>${Math.round(job.progress*100)}%</span></div><div class="progress-track"><span style="width:${job.progress*100}%"></span></div><p class="job-message ${job.status==='failed'?'failure':''}" title="${esc(job.message)}">${esc(job.message)}</p><div class="compact-steps">${['准备','位姿','训练','导出'].map((name,i)=>`<span class="${job!.status==='succeeded'||i<current?'done':i===current?'current':''}">${job!.status==='succeeded'||i<current?icon('check'):''}${name}</span>`).join('')}</div></section>`;
 }
 function bindSettings(){
+  document.getElementById('quality-options')?.addEventListener('click',showAdvanced);
   const backend=document.querySelector<HTMLSelectElement>('#backend');
   if(!backend||!selected)return;
   const draft=settingsDraft();backend.value=draft.backend;configureBackend(draft);
   backend.onchange=()=>configureBackend(drafts.switchBackend(selected!.id,backend.value as Backend));
-  for(const id of ['steps','points'])document.getElementById(id)!.onchange=saveSettings;
+  for(const id of ['steps','resolution'])document.getElementById(id)!.onchange=saveSettings;
 }
 function configureBackend(draft:ReconstructionDraft){
   const gpu=draft.backend==='brush';
   const fill=(id:string,values:number[],value:number,suffix='')=>{
-    const select=document.getElementById(id) as HTMLSelectElement;
+    const select=document.getElementById(id) as HTMLSelectElement|null;if(!select)return;
     select.innerHTML=[...new Set([...values,value])].sort((a,b)=>a-b).map(n=>`<option value="${n}">${n.toLocaleString()}${suffix}</option>`).join('');select.value=String(value);
   };
-  fill('steps',gpu?[1000,3000,6000]:[60,120,300],draft.steps,' 步');fill('points',gpu?[50000,150000,300000]:[192,384,768],draft.max_points);
-  document.getElementById('engine-note')!.textContent=gpu?'GPU 训练，支持动态增点。':'低分辨率参考训练，适合检查流程。';
+  fill('steps',gpu?[3000,6000,10000,30000]:[60,120,300],draft.steps,' 步');fill('resolution',gpu?[512,1024,1600]:[64,96,128],draft.resolution??(gpu?512:96),' px');
+  const note=document.getElementById('engine-note');if(note)note.textContent=gpu?`${draft.resolution??512} 像素 · ${draft.camera_mode==='shared'?'同镜头':'自动镜头'} · 上限 ${number(draft.max_points)} 点`:'低分辨率参考训练，适合检查流程。';
 }
 function saveSettings(){
   if(!selected||!document.getElementById('backend'))return;
-  drafts.save(selected.id,{backend:(document.getElementById('backend') as HTMLSelectElement).value as Backend,steps:Number((document.getElementById('steps') as HTMLSelectElement).value),max_points:Number((document.getElementById('points') as HTMLSelectElement).value)});
+  drafts.save(selected.id,{...settingsDraft(),backend:(document.getElementById('backend') as HTMLSelectElement).value as Backend,steps:Number((document.getElementById('steps') as HTMLSelectElement).value),resolution:Number((document.getElementById('resolution') as HTMLSelectElement).value)});
 }
 function syncPanels(){
   const rail=document.querySelector<HTMLElement>('.project-rail');
@@ -194,6 +195,7 @@ function bind(){
   for(const id of ['rail-close','rail-scrim'])on(id,()=>toggleRail(false));
   on('inspector-toggle',()=>isCaptureDetail()?showCaptureSettings():toggleInspector(true));for(const id of ['inspector-close','inspector-scrim'])on(id,()=>toggleInspector(false));
   for(const id of ['help','view-help','capture-guide'])on(id,showGuide);
+  on('quality-report',showQualityReport);on('history',()=>void showHistory());
   for(const id of ['samples','sample-entry','empty-sample'])on(id,showSamples);
   document.querySelectorAll<HTMLElement>('[data-session]').forEach(el=>el.onclick=()=>void openSession(el.dataset.session!));
   document.querySelectorAll<HTMLElement>('[data-photo]').forEach(el=>el.onclick=()=>showPhoto(Number(el.dataset.photo)));
@@ -206,14 +208,14 @@ function bind(){
   on('cancel',()=>void action(async()=>{job=await api(`/jobs/${job!.id}/cancel`,{method:'POST'});await refreshList();}));
   document.getElementById('file-input')?.addEventListener('change',event=>void uploadFiles([...(event.target as HTMLInputElement).files??[]]));
 }
-function setProjectUrl(id:string|null){const next=id?`${location.pathname}?p=${id}`:location.pathname;if(location.pathname+location.search!==next)history.pushState(null,'',next);}
+function setProjectUrl(id:string|null,jid?:string){const next=id?`${location.pathname}?p=${id}${jid?`&j=${jid}`:''}`:location.pathname;if(location.pathname+location.search!==next)history.pushState(null,'',next);}
 window.addEventListener('popstate',()=>{const id=new URLSearchParams(location.search).get('p');if(id&&/^[a-f0-9]{32}$/.test(id))void openSession(id,false);else goLibrary(false);});
 async function refreshList(){sessions=await api('/sessions');}
 async function openSession(id:string,updateUrl=true){
   if(busy||takingFrame)return;
   closeDialog();stopCamera();toggleRail(false);toggleInspector(false);
   const request=++navigationRequest;
-  try{const next:Session=await api(`/sessions/${id}`);if(request!==navigationRequest)return;selected=next;job=next.jobs?.[0]??null;if(updateUrl)setProjectUrl(id);render();}
+  try{const next:Session=await api(`/sessions/${id}`);if(request!==navigationRequest)return;selected=next;const requested=!updateUrl?new URLSearchParams(location.search).get('j'):null;job=next.jobs?.find(j=>j.id===requested)??next.jobs?.[0]??null;if(updateUrl)setProjectUrl(id);render();}
   catch(error){toast((error as Error).message,true);}
 }
 async function reloadSelected(){
@@ -229,7 +231,7 @@ async function reconstruct(){
   if(!selected)return;
   if(takingFrame){toast('最后一张照片正在上传，请稍候');return;}
   saveSettings();const sid=selected.id,config=settingsDraft();
-  await action(async()=>{await flushPending(sid);await api(`/sessions/${sid}/finalize`,{method:'POST'});job=await api('/jobs',{method:'POST',body:JSON.stringify({session_id:sid,...config,resolution:config.backend==='brush'?512:96})});selected=await api(`/sessions/${sid}`);await refreshList();});
+  await action(async()=>{await flushPending(sid);await api(`/sessions/${sid}/finalize`,{method:'POST'});job=await api('/jobs',{method:'POST',body:JSON.stringify({session_id:sid,...config,resolution:config.resolution??(config.backend==='brush'?512:96)})});selected=await api(`/sessions/${sid}`);await refreshList();});
 }
 
 function closeDialog(){const root=document.getElementById('dialog-root');root?.querySelector('dialog')?.close();root?.replaceChildren();}
@@ -273,6 +275,19 @@ async function showSamples(){
     if(el.isConnected&&el.open)el.querySelector('.dialog-body')!.innerHTML=`<p class="dialog-intro" role="alert">${esc((error as Error).message)}</p>`;
   }
 }
+async function showHistory(){
+  if(!selected)return;const sid=selected.id;
+  try{const value=await api<Session>(`/sessions/${sid}`);if(selected?.id!==sid)return;selected=value;
+    const complete=(value.jobs??[]).filter(j=>j.status==='succeeded');
+    const root=dialog('历史重建结果',`<p class="dialog-intro">之前的模型都保留在本机。选择一次结果查看，训练参数可以继续单独调整。</p>${complete.map(j=>`<button class="sample-option" data-history-job="${j.id}"><span><strong>${j.config.steps.toLocaleString()} 步 · ${j.config.resolution} 像素 ${j.id===job?.id?'· 当前':''}</strong><small>${j.config.camera_mode==='shared'?'同镜头':'自动镜头'} · ${number(j.report?.registered_images)} 张定位 · ${number(j.report?.gaussians)} 个高斯 · ${new Date(j.updated*1000).toLocaleString('zh-CN')}</small></span></button>`).join('')}`,'small-dialog');
+    root.querySelectorAll<HTMLButtonElement>('[data-history-job]').forEach(b=>b.onclick=()=>{job=complete.find(j=>j.id===b.dataset.historyJob)!;closeDialog();setProjectUrl(sid,job.id);render();});
+  }catch(error){toast((error as Error).message,true);}
+}
+function showQualityReport(){
+  if(!job?.report)return;const r=job.report,missing=(r.unregistered_images??[]) as string[];
+  const original=(name:string)=>{const index=Number(name.slice(0,4));const frame=selected?.frames?.[index];return frame?`照片 ${index+1}`:name;};
+  dialog('重建质量',`<p class="dialog-intro">${number(r.registered_images)} / ${number(r.input_images)} 张照片成功定位。定位成功也不代表所有区域都已拍全。</p><section class="detail-section"><h3>本次训练</h3><p>${number(r.steps)} 步 · ${number(r.resolution??job.config.resolution)} 像素 · ${number(r.gaussians)} 个高斯<br>训练 ${number(r.training_views)} 张，评估 ${number(r.evaluation_views)} 张${r.evaluation_mode==='all'?' · 使用全部定位照片':''}<br>网页读取完整 PLY，保留高阶颜色。</p></section>${missing.length?`<section class="detail-section"><h3>未定位照片</h3><p>${missing.map(n=>esc(original(n))).join('、')}</p><p>补拍这些位置与相邻画面的过渡视角，避免只在原地转动相机。</p></section>`:''}<section class="detail-section"><h3>检查画质</h3><p>在模型里选择“拍摄视角”，点击“对照原照片”检查纹理和结构。再切换漫游检查相邻位置；未拍到的区域可能仍有空洞。</p><p>评估 PSNR ${typeof r.evaluation?.psnr==='number'?r.evaluation.psnr.toFixed(2):'—'} / SSIM ${typeof r.evaluation?.ssim==='number'?r.evaluation.ssim.toFixed(3):'—'}。${r.evaluation_mode==='all'?'本次使用全部定位照片训练，没有留出评估指标。':'评估照片参与过位姿计算；不同分辨率、不同视图集合的指标不直接比较。'}</p></section>`,'small-dialog');
+}
 function showPhotos(){
   if(!selected)return;const s=selected!,frames=s.frames??[];
   const root=dialog(`采集照片 · ${frames.length} 张`,`<div class="gallery-toolbar"><span>${s.status==='ready'?'照片已冻结，可开始重建':'按拍摄顺序排列'}</span><div>${s.status==='capturing'?'<button class="button secondary" id="gallery-upload">'+icon('upload')+'添加照片</button>':''}<button class="button secondary" id="resume">${icon('rotate-ccw')}恢复上传</button></div></div><div class="photo-gallery">${frames.map((f,i)=>`<button class="gallery-photo" data-gallery-photo="${i}"><img src="${thumb(s,f)}" alt="采集照片 ${i+1}" loading="lazy"><span>${i+1}<small>${f.width} × ${f.height}</small></span></button>`).join('')||'<p class="gallery-empty">还没有照片。关闭后拍摄，或在这里导入。</p>'}</div>`,'gallery-dialog');
@@ -286,7 +301,11 @@ function showPhoto(index:number){
   root.querySelector('#photo-prev')!.addEventListener('click',()=>showPhoto(index-1));root.querySelector('#photo-next')!.addEventListener('click',()=>showPhoto(index+1));root.querySelector('#photo-grid')!.addEventListener('click',showPhotos);
 }
 function showAdvanced(){
-  const root=dialog('更多设置',`<section class="detail-section"><h3>计算模式</h3><p>本地 GPU 使用 Brush，支持动态增点和高阶颜色。CPU 模式用于小规模调试，画面会更粗。参数只对下一次重建生效。</p></section><section class="detail-section"><h3>运动数据</h3><p>可记录照片附近的 IMU 观测。当前位姿仍由照片求解，传感器数据不会直接参与重建。</p><button class="button secondary" id="sensor" ${sensorEnabled?'disabled':''}>${sensorEnabled?'已开启记录':'启用运动传感器'}</button></section><section class="detail-section"><h3>采集限制</h3><p>最多 200 张照片，每张不超过 16 MB。进入后台会暂停拍摄；暂存的照片可在照片面板里恢复上传。</p></section>`,'small-dialog');
+  saveSettings();const draft=settingsDraft();
+  const root=dialog('更多设置',`${selected?`<section class="detail-section"><h3>重建参数</h3><div class="quality-presets"><button class="button secondary" id="preset-quick">快速预览</button><button class="button secondary" id="preset-detail">精细重建</button></div><label>高斯上限<select id="quality-points">${(draft.backend==='brush'?[50000,150000,300000,500000]:[192,384,768]).map(n=>`<option value="${n}" ${n===draft.max_points?'selected':''}>${number(n)}</option>`).join('')}</select></label><label>照片来自<select id="quality-camera"><option value="auto" ${draft.camera_mode!=='shared'?'selected':''}>混合照片 / 不确定</option><option value="shared" ${draft.camera_mode==='shared'?'selected':''}>同一镜头，拍摄时未变焦</option></select></label><p>同镜头模式会共享相机内参。只有照片来自同一镜头、固定焦距和相同尺寸时才使用；它不适合混合相机或变焦照片。</p><label>训练照片<select id="quality-evaluation"><option value="all" ${draft.evaluation_mode==='all'?'selected':''}>全部定位照片 · 生成最终模型</option><option value="holdout" ${draft.evaluation_mode!=='all'?'selected':''}>留出部分照片 · 做评测对照</option></select></label><p>精细重建通常需要数分钟；未拍到的区域仍需补拍。</p><p id="quality-preset-note">${draft.steps.toLocaleString()} 步 · ${draft.resolution??512} 像素</p></section>`:''}<section class="detail-section"><h3>计算模式</h3><p>本地 GPU 使用 Brush，支持动态增点和高阶颜色。CPU 模式用于小规模调试，画面会更粗。参数只对下一次重建生效。</p></section><section class="detail-section"><h3>运动数据</h3><p>可记录照片附近的 IMU 观测。当前位姿仍由照片求解，传感器数据不会直接参与重建。</p><button class="button secondary" id="sensor" ${sensorEnabled?'disabled':''}>${sensorEnabled?'已开启记录':'启用运动传感器'}</button></section><section class="detail-section"><h3>采集限制</h3><p>最多 200 张照片，每张不超过 16 MB。进入后台会暂停拍摄；暂存的照片可在照片面板里恢复上传。</p></section>`,'small-dialog');
+  const saveQuality=()=>{if(!selected)return;drafts.save(selected.id,{...settingsDraft(),max_points:Number((root.querySelector('#quality-points') as HTMLSelectElement).value),camera_mode:(root.querySelector('#quality-camera') as HTMLSelectElement).value as 'auto'|'shared',evaluation_mode:(root.querySelector('#quality-evaluation') as HTMLSelectElement).value as 'all'|'holdout'});configureBackend(settingsDraft());};
+  root.querySelector('#quality-points')?.addEventListener('change',saveQuality);root.querySelector('#quality-camera')?.addEventListener('change',saveQuality);root.querySelector('#quality-evaluation')?.addEventListener('change',saveQuality);
+  for(const [id,steps,resolution,max_points] of [['preset-quick',3000,512,50000],['preset-detail',6000,1024,150000]] as const)root.querySelector<HTMLButtonElement>('#'+id)?.addEventListener('click',()=>{if(!selected)return;const current=settingsDraft();if(current.backend!=='brush'){toast('精细重建需要选择本地 GPU 模式');return;}drafts.save(selected.id,{...current,steps,resolution,max_points});(root.querySelector('#quality-points') as HTMLSelectElement).value=String(max_points);root.querySelector('#quality-preset-note')!.textContent=`${steps.toLocaleString()} 步 · ${resolution} 像素`;configureBackend(settingsDraft());});
   root.querySelector('#sensor')!.addEventListener('click',()=>void enableSensor());
 }
 function formatFileSize(bytes:number){

@@ -16,6 +16,7 @@ def run(root: Path, jid: str):
     store = Store(root)
     job = store.job(jid)
     session = store.session(job["session_id"])
+    config = job["config"]
     work = store.job_dir(jid)
     work.mkdir(parents=True, exist_ok=True)
     source = store.session_dir(session["id"])
@@ -47,7 +48,13 @@ def run(root: Path, jid: str):
             phase = time.monotonic()
             validate_inputs(source, manifest)
             timings["input_validation_seconds"] = time.monotonic() - phase
-            snapshot_key = cache_key(manifest, pipeline_signature())
+            snapshot_key = cache_key(
+                manifest,
+                {
+                    **pipeline_signature(),
+                    "camera_mode": config.get("camera_mode", "auto"),
+                },
+            )
             cache = source / "cache" / "sfm" / snapshot_key
             phase = time.monotonic()
             sfm_reused = restore_snapshot(cache, snapshot_key, work / "sfm")
@@ -105,7 +112,11 @@ def run(root: Path, jid: str):
             report = train_scene(
                 scene,
                 artifacts,
-                **config,
+                **{
+                    k: v
+                    for k, v in config.items()
+                    if k not in ("camera_mode", "evaluation_mode")
+                },
                 progress=lambda step, total, loss: progress(
                     "train",
                     0.42 + 0.5 * step / total,
@@ -121,6 +132,17 @@ def run(root: Path, jid: str):
             registered_images=scene["registered_images"],
             input_images=scene["input_images"],
             calibrated_fixture=session["kind"] == "fixture",
+            camera_mode=scene.get("camera_mode", "auto"),
+            sparse_points=scene.get("sparse_points"),
+            reprojection_error=scene.get("reprojection_error"),
+            unregistered_images=scene.get("unregistered_images", []),
+            warnings=(
+                [
+                    f"{scene['input_images'] - scene['registered_images']} 张照片未成功定位；缺失区域建议补拍。"
+                ]
+                if scene["registered_images"] < scene["input_images"]
+                else []
+            ),
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,
             timings={name: round(value, 4) for name, value in timings.items()},

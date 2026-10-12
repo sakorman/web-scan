@@ -19,7 +19,7 @@ flowchart TB
     Scene --> Trainer[PyTorch 参考训练 / Brush GPU]
     Trainer --> Artifacts[PLY / splat / 报告]
     Artifacts --> Files
-    Files --> Viewer[gsplat.js 查看器]
+    Files --> Viewer[Spark / Three.js 查看器]
 ```
 
 ## 代码组织
@@ -29,7 +29,7 @@ flowchart TB
 | `src/main.ts` | 页面状态、采集、导入、任务操作与进度轮询 |
 | `src/queue.ts` | IndexedDB 有界上传缓存、上传确认 |
 | `src/upload-pipeline.ts` | 3路并发上传、生产背压与失败等待 |
-| `src/viewer.ts` | gsplat.js 载入与资源释放 |
+| `src/viewer.ts` | 完整 PLY / SH3 载入、相机对照与资源释放 |
 | `webscan/api.py` | 请求校验、文件处理、输入冻结、任务与产物接口 |
 | `webscan/store.py` | SQLite 表、会话和任务持久化 |
 | `webscan/runner.py` | 服务独占锁、原子领取、进程组管理、取消与退出 |
@@ -71,7 +71,7 @@ CUDA 后端把渲染替换为 gsplat.rasterization；本项目训练调度和导
 
 ## 室内 GPU 路径
 
-Brush 0.3.0 作为未修改的外部二进制，由任务子进程调用。它消费 COLMAP 去畸变数据，执行动态增点、SH3、L1 / SSIM 优化，并按固定步数导出 PLY。适配器读取真实导出检查点更新进度，解析评估日志，保留完整 SH 的 PLY，同时生成 SH0 splat 预览。模型和相机统一归一化到同一坐标。
+Brush 0.3.0 作为未修改的外部二进制，由任务子进程调用。它消费 COLMAP 去畸变数据，执行动态增点、SH3、L1 / SSIM 优化，并按固定步数导出 PLY。适配器读取真实导出检查点更新进度，解析评估日志，保留完整 SH 的 PLY，同时生成供下载兼容使用的 SH0 splat。模型和相机统一归一化到同一坐标。
 
 ETH3D office 的样本导入只读取预先准备好的本地照片；按正常上传校验流程创建会话，并记录数据源。首个采集视图用作漫游初始相机。
 
@@ -129,3 +129,14 @@ ETH3D office 的样本导入只读取预先准备好的本地照片；按正常�
 ## 重复任务与上传优化
 
 同一冻结输入可以复用经过完整摘要校验的 SfM 输出，当前 Worker 仍按任务串行调度；不改变训练参数。每次仍校验原始图像，缓存无效则重算。上传生产与最多3路网络请求重叠，按导入批次与序号恢复训练图像顺序。实测与边界见 [PERFORMANCE.md](PERFORMANCE.md)。
+
+
+## 画质与对照
+
+- 位姿求解支持自动模式和用户明确选择的同镜头模式，使用 8192 SIFT 特征及 guided matching。相机模式计入 SfM 缓存签名，训练分辨率和步数不改变缓存。
+- 新项目 GPU 训练默认 6,000 步 / 1024 像素 / 150,000 高斯预算。API 上限 30,000 步、1600 像素、500,000 高斯；CPU 调试预算保持独立限制。
+- `evaluation_mode=all` 使用全部已定位照片；`holdout` 每 8 张留出一张用于训练后的评测。旧客户端默认保留 holdout 行为，前端新项目明确提交 all。
+- `cameras.json` 保存每个去畸变视图的宽高、K、world-to-camera 矩阵及图像文件名。`GET /api/jobs/{id}/views/{index}` 仅返回完成任务内对应的去畸变照片。
+- `src/camera.ts` 把 COLMAP right/down/forward 转成 Three.js right/up/backward，保留偏心主点，用完整投影矩阵还原照片。视口按照片比例留边，不裁剪；数学测试覆盖轴向、平移、旋转和主点。
+- Spark 在 GPU 上使用 SH0–SH3，直接读取导出的 PLY。未对几何额外旋转，因此 SH 方向与模型坐标保持一致。查看器按需加载，旧任务缺少完整相机信息时禁用照片对照。
+- 历史结果通过所属项目内的任务列表选择，`?p=...&j=...` 可复现。下一次训练设置独立保存，切换结果不会覆盖正在编辑的参数。

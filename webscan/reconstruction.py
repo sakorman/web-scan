@@ -21,7 +21,7 @@ def normalize_scene(points, views):
     }
 
 
-def estimate_scene(images: Path, work: Path, progress):
+def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
     import pycolmap
 
     work.mkdir(parents=True, exist_ok=True)
@@ -31,11 +31,13 @@ def estimate_scene(images: Path, work: Path, progress):
     pycolmap.extract_features(
         database_path=db,
         image_path=images,
-        camera_mode=pycolmap.CameraMode.AUTO,
+        camera_mode=pycolmap.CameraMode.SINGLE
+        if camera_mode == "shared"
+        else pycolmap.CameraMode.AUTO,
         device=pycolmap.Device.cpu,
         extraction_options={
             "max_image_size": 1600,
-            "sift": {"max_num_features": 4096},
+            "sift": {"max_num_features": 8192},
             "num_threads": 4,
         },
     )
@@ -43,7 +45,7 @@ def estimate_scene(images: Path, work: Path, progress):
     pycolmap.match_exhaustive(
         database_path=db,
         device=pycolmap.Device.cpu,
-        matching_options={"num_threads": 4},
+        matching_options={"num_threads": 4, "guided_matching": True},
     )
     sparse = work / "sparse"
     sparse.mkdir(exist_ok=True)
@@ -94,6 +96,9 @@ def estimate_scene(images: Path, work: Path, progress):
                 "image": str(undistorted / "images" / image.name),
                 "view": matrix.tolist(),
                 "K": cam.calibration_matrix().tolist(),
+                "width": cam.width,
+                "height": cam.height,
+                "image_name": image.name,
             }
         )
     xyz, transform = normalize_scene(xyz, views)
@@ -105,6 +110,13 @@ def estimate_scene(images: Path, work: Path, progress):
         "registered_images": len(views),
         "input_images": total,
         "pose_source": "COLMAP",
+        "camera_mode": camera_mode,
+        "sparse_points": best.num_points3D(),
+        "reprojection_error": best.compute_mean_reprojection_error(),
+        "unregistered_images": sorted(
+            set(p.name for p in images.glob("*.jpg"))
+            - {image.name for image in best.images.values()}
+        ),
     }
 
 

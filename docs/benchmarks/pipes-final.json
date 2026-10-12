@@ -1,0 +1,53 @@
+{
+  "backend": "brush",
+  "engine": "Brush 0.3.0",
+  "gaussians": 72276,
+  "steps": 6000,
+  "training_views": 14,
+  "evaluation_views": 0,
+  "color_model": "SH3",
+  "preview_color_model": "SH3 (PLY)",
+  "splat_color_model": "SH0",
+  "resolution": 1024,
+  "evaluation_mode": "all",
+  "thumbnail_source": "input_photo",
+  "evaluation": null,
+  "note": "最终模型使用全部已定位照片；没有独立留出评估指标。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+  "seconds": 205.43,
+  "pose_source": "COLMAP",
+  "normalization": {
+    "center": [
+      -0.3256218135356903,
+      -2.2703042030334473,
+      9.196002960205078
+    ],
+    "scale": 15.116631507873535,
+    "units": "relative"
+  },
+  "registered_images": 14,
+  "input_images": 14,
+  "calibrated_fixture": false,
+  "camera_mode": "shared",
+  "sparse_points": 1873,
+  "reprojection_error": 0.9656202830600332,
+  "unregistered_images": [],
+  "warnings": [],
+  "sfm_reused": true,
+  "sfm_cache_key": "a6ed88e185e33ad074b46681d69e2defce5ffb569aac0caac4f656cda774aa9d",
+  "timings": {
+    "input_validation_seconds": 0.0046,
+    "sfm_seconds": 0.0221,
+    "training_and_model_export_seconds": 205.3688
+  },
+  "source": {
+    "name": "ETH3D pipes",
+    "url": "https://www.eth3d.net/datasets",
+    "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+    "authors": "Schöps et al., ETH3D, CVPR 2017",
+    "license": "CC BY-NC-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "images": 14,
+    "type": "real indoor multiview dataset",
+    "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95"
+  }
+}

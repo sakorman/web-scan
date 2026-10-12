@@ -8,7 +8,9 @@ Web Scan implements its own application, upload queue, local job orchestration, 
 | PyTorch | Tensor operations, automatic differentiation, Adam | BSD-style, https://github.com/pytorch/pytorch |
 | Brush 0.3.0 (optional binary) | Native GPU training, densification and SH3 export | Apache-2.0, https://github.com/ArthurBrussee/brush |
 | gsplat (optional) | CUDA differentiable Gaussian rasterization | Apache-2.0, https://github.com/nerfstudio-project/gsplat |
-| gsplat.js (`gsplat` npm package) | Browser Gaussian viewer | MIT, https://github.com/huggingface/gsplat.js |
+| Spark 2.3.1 | Full SH3 PLY browser rendering | MIT, https://github.com/sparkjsdev/spark |
+| Three.js 0.180.0 | WebGL scene, cameras and navigation | MIT, https://github.com/mrdoob/three.js |
+| fflate | Spark archive decoding dependency | MIT, https://github.com/101arrowz/fflate |
 | Lucide | Interface icons | ISC / Feather MIT portions, https://github.com/lucide-icons/lucide |
 | FastAPI / Starlette / Uvicorn | Local HTTP API | MIT / BSD-3-Clause, see installed distributions |
 | NumPy / Pillow | Geometry arrays and images | BSD-3-Clause / HPND, see installed distributions |

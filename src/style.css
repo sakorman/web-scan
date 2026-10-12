@@ -451,3 +451,19 @@ select, input { width: 100%; display: block; border: 1px solid #314461; backgrou
   .capture-running { padding: 18px; }
   .capture-task-label { font-size: 9px; }
 }
+
+.viewer-surface { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); }
+.viewer-surface canvas { display:block; width:100%; height:100%; }
+.viewer-reference { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:1; }
+.viewer-camera-bar { position:absolute; top:12px; left:12px; display:flex; align-items:center; gap:8px; z-index:3; padding:6px 8px; border:1px solid #3d5273; border-radius:5px; background:#101b2de8; }
+.viewer-camera-bar label { display:flex; align-items:center; gap:7px; font-size:10px; color:#c3d3ec; }
+.viewer-camera-bar select { padding:5px; background:#19253a; color:#e9eff9; border:1px solid #3d5273; border-radius:4px; font-size:10px; width:85px; }
+.viewer-camera-bar .button { min-height:28px; padding:5px 8px; font-size:10px; }
+.quality-report-link { margin:0 18px; text-align:left; justify-content:flex-start; line-height:1.6; }
+.quality-presets { display:flex; gap:8px; margin-bottom:15px; }
+.detail-section label { display:block; color:#a8beda; font-size:12px; margin:14px 0; }
+.detail-section select { width:100%; margin-top:7px; }
+@media(max-width:540px){ .viewer-camera-bar { left:8px; top:8px; gap:5px; } .viewer-controls button { padding:8px 6px; } }
+
+.cover-label { position:absolute; left:12px; bottom:10px; color:#e9eff9; font-size:10px; background:#14253be0; padding:4px 6px; border-radius:3px; }
+.quality-report-link { margin-top:-3px; }

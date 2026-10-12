@@ -20,7 +20,12 @@ def main():
     def progress(stage, fraction, message):
         store.update(args.job, stage=stage, progress=fraction, message=message)
 
-    scene = estimate_scene(args.images, args.work, progress)
+    scene = estimate_scene(
+        args.images,
+        args.work,
+        progress,
+        store.job(args.job)["config"].get("camera_mode", "auto"),
+    )
     result = {
         **scene,
         "points": scene["points"].tolist(),

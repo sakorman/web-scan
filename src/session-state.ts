@@ -1,8 +1,8 @@
 export type Backend = 'reference' | 'cuda' | 'brush';
-export type ReconstructionDraft = { backend: Backend; steps: number; max_points: number };
+export type ReconstructionDraft = { backend: Backend; steps: number; max_points: number; resolution?:number; camera_mode?:'auto'|'shared'; evaluation_mode?:'all'|'holdout' };
 
 export function defaultDraft(backend: Backend): ReconstructionDraft {
-  return { backend, steps: backend === 'brush' ? 3000 : 120, max_points: backend === 'brush' ? 150000 : 384 };
+  return { backend, steps: backend === 'brush' ? 6000 : 120, max_points: backend === 'brush' ? 150000 : 384, resolution: backend === 'brush' ? 1024 : 96, camera_mode: 'auto', evaluation_mode: 'all' };
 }
 
 /** A rerender or a background job response must not overwrite the user's next run. */

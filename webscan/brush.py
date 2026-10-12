@@ -116,6 +116,7 @@ def train(scene, work, output, config, progress):
     exports.mkdir()
     steps = config["steps"]
     interval = min(500, steps)
+    holdout = config.get("evaluation_mode", "holdout") == "holdout"
     args = [
         str(binary),
         str(work / "sfm/undistorted"),
@@ -135,12 +136,15 @@ def train(scene, work, output, config, progress):
         str(exports),
         "--export-name",
         "export_{iter}.ply",
-        "--eval-split-every",
-        "8",
-        "--eval-every",
-        str(steps),
-        "--eval-save-to-disk",
     ]
+    if holdout:
+        args += [
+            "--eval-split-every",
+            "8",
+            "--eval-every",
+            str(steps),
+            "--eval-save-to-disk",
+        ]
     with (work / "brush.log").open("wb") as log:
         process = subprocess.Popen(
             args,
@@ -204,10 +208,18 @@ def train(scene, work, output, config, progress):
         "training_views": int(view_counts[-1][0]) if view_counts else None,
         "evaluation_views": int(view_counts[-1][1]) if view_counts else None,
         "color_model": "SH3",
-        "preview_color_model": "SH0",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": config["resolution"],
+        "evaluation_mode": "holdout" if holdout else "all",
         "thumbnail_source": "evaluation_render" if rendered else "input_photo",
         "evaluation": {"psnr": float(matches[-1][0]), "ssim": float(matches[-1][1])}
         if matches
         else None,
-        "note": "每 8 张留出评估；这些图像参与过上游 SfM。预览 splat 只保留 SH0，PLY 保留高阶 SH。",
+        "note": (
+            "每 8 张留出评估；这些图像参与过上游 SfM。"
+            if holdout
+            else "最终模型使用全部已定位照片；没有独立留出评估指标。"
+        )
+        + "网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
     }

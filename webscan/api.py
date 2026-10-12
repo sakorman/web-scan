@@ -45,9 +45,11 @@ class SessionInput(BaseModel):
 class JobInput(BaseModel):
     session_id: str = Field(pattern=r"^[a-f0-9]{32}$")
     backend: Literal["reference", "cuda", "brush"] = "reference"
-    steps: int = Field(default=120, ge=10, le=10000)
+    steps: int = Field(default=120, ge=10, le=30000)
     max_points: int = Field(default=384, ge=32, le=500000)
-    resolution: int = Field(default=96, ge=32, le=1024)
+    resolution: int = Field(default=96, ge=32, le=1600)
+    camera_mode: Literal["auto", "shared"] = "auto"
+    evaluation_mode: Literal["holdout", "all"] = "holdout"
 
 
 def valid_id(value):
@@ -465,6 +467,14 @@ def create_app(
                 raise HTTPException(
                     422, "CUDA 模式需要 NVIDIA GPU 和 gsplat，当前不可用"
                 )
+        session = store.session(body.session_id)
+        if (
+            body.camera_mode == "shared"
+            and len({(f["width"], f["height"]) for f in session["frames"]}) > 1
+        ):
+            raise HTTPException(
+                422, "同镜头模式要求所有照片尺寸一致；混合照片请使用自动模式"
+            )
         config = body.model_dump(exclude={"session_id"})
         with store.connect() as db:
             db.execute("BEGIN IMMEDIATE")
@@ -570,6 +580,22 @@ def create_app(
         )
         media_type = DOWNLOAD_TYPES[name][1] if name in DOWNLOAD_TYPES else "image/jpeg"
         return FileResponse(file, filename=filename, media_type=media_type)
+
+    @app.get("/api/jobs/{jid}/views/{index}")
+    def reference_view(jid: str, index: int):
+        completed_job(jid)
+        work = store.job_dir(jid)
+        cameras = json.loads((work / "artifacts/cameras.json").read_text())
+        views = cameras.get("views", [])
+        if not 0 <= index < len(views) or not views[index].get("image_name"):
+            raise HTTPException(404, "该任务没有可对照的照片")
+        name = views[index]["image_name"]
+        if Path(name).name != name:
+            raise HTTPException(404, "照片不存在")
+        image = work / "sfm/undistorted/images" / name
+        if not image.is_file():
+            raise HTTPException(404, "照片不存在")
+        return FileResponse(image, media_type="image/jpeg")
 
     @app.get("/api/jobs/{jid}/log")
     def log(jid: str):

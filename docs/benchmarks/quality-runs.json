@@ -1,0 +1,266 @@
+[
+  {
+    "session_id": "6d9db5e501554bf99afa3e89150dde6a",
+    "preset": "quick",
+    "job_id": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+    "config": {
+      "session_id": "6d9db5e501554bf99afa3e89150dde6a",
+      "backend": "brush",
+      "steps": 3000,
+      "resolution": 512,
+      "max_points": 300000,
+      "camera_mode": "shared"
+    },
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "gaussians": 11549,
+      "steps": 3000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "thumbnail_source": "evaluation_render",
+      "evaluation": {
+        "psnr": 18.318668,
+        "ssim": 0.75493646
+      },
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 32.09,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          -0.3256218135356903,
+          -2.2703042030334473,
+          9.196002960205078
+        ],
+        "scale": 15.116631507873535,
+        "units": "relative"
+      },
+      "registered_images": 14,
+      "input_images": 14,
+      "calibrated_fixture": false,
+      "camera_mode": "shared",
+      "sparse_points": 1873,
+      "reprojection_error": 0.9656202830600332,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": false,
+      "sfm_cache_key": "a6ed88e185e33ad074b46681d69e2defce5ffb569aac0caac4f656cda774aa9d",
+      "timings": {
+        "input_validation_seconds": 0.0046,
+        "sfm_seconds": 5.8637,
+        "cache_publish_seconds": 0.0298,
+        "training_and_model_export_seconds": 26.1584
+      },
+      "source": {
+        "name": "ETH3D pipes",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 14,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95"
+      }
+    }
+  },
+  {
+    "session_id": "6d9db5e501554bf99afa3e89150dde6a",
+    "preset": "detail",
+    "job_id": "82acea65e9874f64806815a592015dec",
+    "config": {
+      "session_id": "6d9db5e501554bf99afa3e89150dde6a",
+      "backend": "brush",
+      "steps": 10000,
+      "resolution": 1024,
+      "max_points": 300000,
+      "camera_mode": "shared"
+    },
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "gaussians": 300000,
+      "steps": 10000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 1024,
+      "thumbnail_source": "evaluation_render",
+      "evaluation": {
+        "psnr": 18.369644,
+        "ssim": 0.78358954
+      },
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 503.31,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          -0.3256218135356903,
+          -2.2703042030334473,
+          9.196002960205078
+        ],
+        "scale": 15.116631507873535,
+        "units": "relative"
+      },
+      "registered_images": 14,
+      "input_images": 14,
+      "calibrated_fixture": false,
+      "camera_mode": "shared",
+      "sparse_points": 1873,
+      "reprojection_error": 0.9656202830600332,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": true,
+      "sfm_cache_key": "a6ed88e185e33ad074b46681d69e2defce5ffb569aac0caac4f656cda774aa9d",
+      "timings": {
+        "input_validation_seconds": 0.0029,
+        "sfm_seconds": 0.0225,
+        "training_and_model_export_seconds": 503.2415
+      },
+      "source": {
+        "name": "ETH3D pipes",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 14,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95"
+      }
+    }
+  },
+  {
+    "session_id": "4c9f47968362483eafbe0c3be8c8a908",
+    "preset": "quick",
+    "job_id": "98a93d1c6a824661974c57a21fc391d7",
+    "config": {
+      "session_id": "4c9f47968362483eafbe0c3be8c8a908",
+      "backend": "brush",
+      "steps": 3000,
+      "resolution": 512,
+      "max_points": 300000,
+      "camera_mode": "shared"
+    },
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "gaussians": 14394,
+      "steps": 3000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "thumbnail_source": "evaluation_render",
+      "evaluation": {
+        "psnr": 21.231905,
+        "ssim": 0.87223804
+      },
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 35.92,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          3.8235836029052734,
+          -5.734872817993164,
+          11.190999031066895
+        ],
+        "scale": 21.477710723876953,
+        "units": "relative"
+      },
+      "registered_images": 26,
+      "input_images": 26,
+      "calibrated_fixture": false,
+      "camera_mode": "shared",
+      "sparse_points": 2456,
+      "reprojection_error": 0.9681348888966158,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": false,
+      "sfm_cache_key": "a2e66f316aa25de8f7c13f716d0b7474a83e4fd42914ce01461a65654b151f6d",
+      "timings": {
+        "input_validation_seconds": 0.0082,
+        "sfm_seconds": 8.712,
+        "cache_publish_seconds": 0.0385,
+        "training_and_model_export_seconds": 27.1251
+      },
+      "source": {
+        "name": "ETH3D office",
+        "url": "https://www.eth3d.net/datasets",
+        "type": "real indoor multiview dataset",
+        "images": 26
+      }
+    }
+  },
+  {
+    "session_id": "4c9f47968362483eafbe0c3be8c8a908",
+    "preset": "detail",
+    "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+    "config": {
+      "session_id": "4c9f47968362483eafbe0c3be8c8a908",
+      "backend": "brush",
+      "steps": 10000,
+      "resolution": 1024,
+      "max_points": 300000,
+      "camera_mode": "shared"
+    },
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "gaussians": 231428,
+      "steps": 10000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 1024,
+      "thumbnail_source": "evaluation_render",
+      "evaluation": {
+        "psnr": 20.824446,
+        "ssim": 0.88969743
+      },
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 577.89,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          3.8235836029052734,
+          -5.734872817993164,
+          11.190999031066895
+        ],
+        "scale": 21.477710723876953,
+        "units": "relative"
+      },
+      "registered_images": 26,
+      "input_images": 26,
+      "calibrated_fixture": false,
+      "camera_mode": "shared",
+      "sparse_points": 2456,
+      "reprojection_error": 0.9681348888966158,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": true,
+      "sfm_cache_key": "a2e66f316aa25de8f7c13f716d0b7474a83e4fd42914ce01461a65654b151f6d",
+      "timings": {
+        "input_validation_seconds": 0.0034,
+        "sfm_seconds": 0.0273,
+        "training_and_model_export_seconds": 577.8275
+      },
+      "source": {
+        "name": "ETH3D office",
+        "url": "https://www.eth3d.net/datasets",
+        "type": "real indoor multiview dataset",
+        "images": 26
+      }
+    }
+  }
+]
