@@ -28,10 +28,13 @@ flowchart TB
 | --- | --- |
 | `src/main.ts` | 页面状态、采集、导入、任务操作与进度轮询 |
 | `src/queue.ts` | IndexedDB 有界上传缓存、上传确认 |
+| `src/upload-pipeline.ts` | 3路并发上传、生产背压与失败等待 |
 | `src/viewer.ts` | gsplat.js 载入与资源释放 |
 | `webscan/api.py` | 请求校验、文件处理、输入冻结、任务与产物接口 |
 | `webscan/store.py` | SQLite 表、会话和任务持久化 |
 | `webscan/runner.py` | 服务独占锁、原子领取、进程组管理、取消与退出 |
+| `webscan/sfm_cache.py` | 按输入与求解版本校验、发布和恢复SfM缓存 |
+| `webscan/frame_order.py` | 并发上传后的原始帧顺序 |
 | `webscan/sfm.py` | 与 PyTorch 分离的 COLMAP 进程入口 |
 | `webscan/reconstruction.py` | 位姿求解、去畸变、坐标归一化、原创测试场景 |
 | `webscan/gaussian.py` | 可微参考渲染、优化循环、PLY / splat 编码、CUDA 适配 |
@@ -121,3 +124,8 @@ ETH3D office 的样本导入只读取预先准备好的本地照片；按正常�
 普通采集 finalize 要求至少 12 张不同图像，校准示例为 3 张；已冻结的历史输入保持兼容。浏览器对最多 5 分钟 / 250 MB 的受支持视频做均匀抽帧，最多 120 帧，逐张复用 JPEG 上传队列。
 
 `DELETE /api/sessions/{id}` 在无排队 / 运行任务时将状态设为 deleted，从列表隐藏；文件保留。`POST /api/sessions/{id}/restore` 按现有冻结清单恢复 ready 或 capturing。删除中的项目不能追加照片或再次冻结。
+
+
+## 重复任务与上传优化
+
+同一冻结输入可以复用经过完整摘要校验的 SfM 输出，当前 Worker 仍按任务串行调度；不改变训练参数。每次仍校验原始图像，缓存无效则重算。上传生产与最多3路网络请求重叠，按导入批次与序号恢复训练图像顺序。实测与边界见 [PERFORMANCE.md](PERFORMANCE.md)。

@@ -1,6 +1,7 @@
 import './style.css';
 import { createIcons, Scan, Plus, ArrowLeft, Camera, Upload, Box, Layers, Activity, ChevronRight, Play, Square, Download, RotateCcw, Check, CircleHelp, Cpu, X, Menu, Aperture, Settings2, Images, FileText, MoreHorizontal, ChevronLeft, Maximize2, FolderOpen, Trash2, Video } from 'lucide';
-import { enqueue, pending, acknowledge } from './queue';
+import { enqueue, pending, acknowledge, type PendingFrame } from './queue';
+import { UploadPipeline } from './upload-pipeline';
 import { mountViewer } from './viewer';
 import { importVideo } from './media';
 import { ReconstructionDrafts, defaultDraft, matchesJobTarget, type Backend, type ReconstructionDraft } from './session-state';
@@ -300,34 +301,49 @@ function showGuide(){
   dialog('拍摄与操作',`<div class="guide-content"><section><h3>围绕目标移动</h3><p>相邻照片保留 60–80% 的共同内容，缓慢平移。只站在原地转手机，通常得不到足够的视差。</p></section><section><h3>保持场景稳定</h3><p>优先选择有纹理的静态场景，避开强反光、透明物体和移动人物。高处、低处也补拍几张。</p></section><section><h3>在模型里查看</h3><p>环绕模式：拖动旋转，滚轮或双指缩放。漫游模式：拖动看向，WASD 或方向按钮移动，Q / E 升降。目前没有碰撞检测。</p></section><section><h3>手机连接</h3><p>手机访问需要受信任的 HTTPS；电脑上的 localhost 可以直接使用相机。配置步骤见 README。</p></section></div>`,'help-dialog');
 }
 function pickFiles(){if(!selected||busy||capturing)return;document.getElementById('file-input')?.click();}
+async function uploadFrame(frame:PendingFrame){
+  const body=new FormData();body.append('file',frame.blob,'capture.jpg');body.append('metadata',JSON.stringify(frame.metadata));
+  try{await api(`/sessions/${frame.session}/frames`,{method:'POST',body});}
+  catch(error){if(error instanceof ApiError&&[404,409,413,422].includes(error.status))await acknowledge(frame.key);throw error;}
+  await acknowledge(frame.key);
+}
 async function flushPending(sid:string){
-  for(const frame of await pending(sid)){
-    const body=new FormData();body.append('file',frame.blob,'capture.jpg');body.append('metadata',JSON.stringify(frame.metadata));
-    try{await api(`/sessions/${sid}/frames`,{method:'POST',body});}
-    catch(error){if(error instanceof ApiError&&[404,409,413,422].includes(error.status))await acknowledge(frame.key);throw error;}
-    await acknowledge(frame.key);
-  }
+  const queue=new UploadPipeline(uploadFrame,3,3);
+  try{for(const frame of await pending(sid))await queue.submit(frame);}
+  finally{await queue.finish();}
 }
 async function uploadFiles(files:File[]){
   if(!files.length||!selected||busy)return;const sid=selected.id;
   await action(async()=>{
-    let imported=0;
-    for(const file of files){
-      const isVideo=file.type.startsWith('video/')||/\.(mp4|mov|webm)$/i.test(file.name);
-      const send=async(blob:Blob,metadata:Record<string,unknown>)=>{await enqueue({key:crypto.randomUUID(),session:sid,blob,metadata});await flushPending(sid);imported++;};
-      if(isVideo){
-        const current:Session=await api(`/sessions/${sid}`);
-        await importVideo(file,200-(current.frames?.length??0),async(frame,time,index,total)=>{
-          const text=`视频抽帧并上传 ${index} / ${total}`;const note=document.querySelector('.capture-import-progress');if(note)note.textContent=text;
-          const status=document.querySelector('.statusbar>span:last-child');if(status)status.textContent=text;
-          await send(frame,{source:'video',original_name:file.name,video_time_seconds:time});
-        });
-      }else{
-        if(file.size>16*1024*1024)throw new Error(`${file.name} 超过 16 MB`);
-        await send(file,{source:'import',original_name:file.name});
-        const note=document.querySelector('.capture-import-progress');if(note)note.textContent=`已上传 ${imported} 张照片`;
+    await flushPending(sid);
+    let prepared=0,uploaded=0;
+    const uploadBatch=crypto.randomUUID().replaceAll('-','');
+    const reportProgress=()=>{
+      const text=`已上传 ${uploaded} 张，待上传 ${Math.max(0,prepared-uploaded)} 张`;
+      const note=document.querySelector('.capture-import-progress');if(note)note.textContent=text;
+      const status=document.querySelector('.statusbar>span:last-child');if(status)status.textContent=text;
+    };
+    const queue=new UploadPipeline<PendingFrame>(async frame=>{await uploadFrame(frame);uploaded++;reportProgress();},3,3);
+    const send=async(blob:Blob,metadata:Record<string,unknown>)=>{
+      const frame={key:crypto.randomUUID(),session:sid,blob,metadata:{...metadata,upload_batch:uploadBatch,capture_index:prepared}};
+      // Persist before dispatch, so an interrupted request can be resumed.
+      await enqueue(frame);prepared++;reportProgress();await queue.submit(frame);
+    };
+    let budget=200-(selected?.frames?.length??0);
+    try{
+      for(const file of files){
+        if(budget<1)throw new Error('照片数量已达到上限');
+        const isVideo=file.type.startsWith('video/')||/\.(mp4|mov|webm)$/i.test(file.name);
+        if(isVideo){
+          const count=await importVideo(file,budget,async(frame,time)=>{
+            await send(frame,{source:'video',original_name:file.name,video_time_seconds:time});
+          });budget-=count;
+        }else{
+          if(file.size>16*1024*1024)throw new Error(`${file.name} 超过 16 MB`);
+          await send(file,{source:'import',original_name:file.name});budget--;
+        }
       }
-    }
+    }finally{await queue.finish();}
     selected=await api(`/sessions/${sid}`);job=selected!.jobs?.[0]??null;await refreshList();toast(`导入完成，现有 ${selected!.frames?.length??0} 张照片`);
   });
   if(selected?.id===sid)await reloadSelected();

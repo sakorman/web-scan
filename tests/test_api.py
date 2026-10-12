@@ -155,3 +155,26 @@ def test_capture_requires_twelve_distinct_photos(client):
         f"/api/sessions/{sid}/frames", files={"file": ("f.jpg", photo("white"))}
     )
     assert client.post(f"/api/sessions/{sid}/finalize").status_code == 200
+
+
+def test_parallel_arrival_keeps_capture_order_in_preview_and_frozen_manifest(client):
+    import json
+
+    sid = client.post("/api/sessions", json={"name": "ordered video"}).json()["id"]
+    batch = "a" * 32
+    for i in [3, 1, 0, 2, 8, 6, 4, 5, 7, 11, 10, 9]:
+        response = client.post(
+            f"/api/sessions/{sid}/frames",
+            files={"file": ("frame.jpg", photo((i * 20, 70, 40)))},
+            data={"metadata": json.dumps({"upload_batch": batch, "capture_index": i})},
+        )
+        assert response.status_code == 200
+    result = client.get(f"/api/sessions/{sid}").json()
+    assert [f["metadata"]["capture_index"] for f in result["frames"]] == list(range(12))
+    assert client.post(f"/api/sessions/{sid}/finalize").status_code == 200
+    manifest = json.loads(
+        (client.app.state.store.session_dir(sid) / "manifest.json").read_text()
+    )
+    assert [
+        json.loads(f["metadata"])["capture_index"] for f in manifest["frames"]
+    ] == list(range(12))

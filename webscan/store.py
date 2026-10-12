@@ -5,6 +5,7 @@ import sqlite3
 import time
 import uuid
 from pathlib import Path
+from .frame_order import ordered_frames
 
 
 def uid() -> str:
@@ -50,12 +51,11 @@ class Store:
             if not row or row["status"] == "deleted":
                 raise KeyError("采集不存在")
             result = dict(row)
-            result["frames"] = [
-                dict(x)
-                for x in db.execute(
+            result["frames"] = ordered_frames(
+                db.execute(
                     "SELECT * FROM frames WHERE session_id=? ORDER BY rowid", (sid,)
                 )
-            ]
+            )
             for frame in result["frames"]:
                 frame["metadata"] = json.loads(frame["metadata"])
             result["jobs"] = [

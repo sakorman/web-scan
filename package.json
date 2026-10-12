@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build && node scripts/copy_licenses.mjs",
     "check": "tsc --noEmit",
-    "test:web": "tsc src/session-state.ts --outDir .qa/unit --target ES2022 --module ES2022 --moduleResolution Bundler --skipLibCheck && node --test tests/session-state.test.mjs"
+    "test:web": "tsc src/session-state.ts src/upload-pipeline.ts --outDir .qa/unit --target ES2022 --module ES2022 --moduleResolution Bundler --skipLibCheck && node --test tests/session-state.test.mjs tests/upload-pipeline.test.mjs"
   },
   "dependencies": {
     "gsplat": "1.2.9",

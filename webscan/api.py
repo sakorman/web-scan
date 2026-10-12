@@ -23,6 +23,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .store import Store, uid
+from .frame_order import ordered_frames
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_FILE = 16 * 1024 * 1024
@@ -298,12 +299,11 @@ def create_app(data: Path | None = None, *, run_worker=True):
                 raise HTTPException(404, "采集不存在")
             if row["status"] == "ready":
                 return {"status": "ready"}
-            frames = [
-                dict(r)
-                for r in db.execute(
+            frames = ordered_frames(
+                db.execute(
                     "SELECT * FROM frames WHERE session_id=? ORDER BY rowid", (sid,)
                 )
-            ]
+            )
             minimum = 3 if row["kind"] == "fixture" else MIN_CAPTURE_FRAMES
             if len(frames) < minimum:
                 raise HTTPException(
