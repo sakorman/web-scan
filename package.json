@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build && node scripts/copy_licenses.mjs",
     "check": "tsc --noEmit",
-    "test:web": "tsc src/camera.ts src/session-state.ts src/upload-pipeline.ts --outDir .qa/unit --target ES2022 --module ES2022 --moduleResolution Bundler --skipLibCheck && node --test tests/camera.test.mjs tests/session-state.test.mjs tests/upload-pipeline.test.mjs"
+    "test:web": "tsc src/render-scheduler.ts src/camera.ts src/session-state.ts src/upload-pipeline.ts --outDir .qa/unit --target ES2022 --module ES2022 --moduleResolution Bundler --skipLibCheck && node --test tests/render-scheduler.test.mjs tests/camera.test.mjs tests/session-state.test.mjs tests/upload-pipeline.test.mjs"
   },
   "dependencies": {
     "@sparkjsdev/spark": "2.3.1",

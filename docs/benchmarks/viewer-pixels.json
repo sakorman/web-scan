@@ -1,0 +1,17 @@
+{
+  "viewport": [
+    1280,
+    720
+  ],
+  "region": [
+    250,
+    185,
+    980,
+    540
+  ],
+  "mean_absolute_rgb_error_255": 0.0,
+  "max_absolute_rgb_error_255": 0.0,
+  "identical_pixels_fraction": 1.0,
+  "production_mean_absolute_rgb_error_255": 0.0,
+  "production_max_absolute_rgb_error_255": 0.0
+}

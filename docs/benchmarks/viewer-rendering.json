@@ -1,0 +1,65 @@
+[
+  {
+    "mode": "baseline-idle",
+    "start": {
+      "frames": 4252,
+      "hidden": false,
+      "time": 1791896865453
+    },
+    "end": {
+      "frames": 14571,
+      "hidden": false,
+      "time": 1791896973450
+    }
+  },
+  {
+    "mode": "baseline-photo-overlay",
+    "start": {
+      "frames": 14619,
+      "hidden": false,
+      "time": 1791896973941
+    },
+    "end": {
+      "frames": 20302,
+      "hidden": false,
+      "time": 1791897031836
+    }
+  },
+  {
+    "mode": "candidate-idle",
+    "start": {
+      "frames": 3,
+      "hidden": false,
+      "time": 1791897172288
+    },
+    "end": {
+      "frames": 3,
+      "hidden": false,
+      "time": 1791897247391
+    }
+  },
+  {
+    "mode": "candidate-photo-overlay",
+    "start": {
+      "frames": 3,
+      "hidden": false,
+      "time": 1791897247918
+    },
+    "end": {
+      "frames": 3,
+      "hidden": false,
+      "time": 1791897353353
+    }
+  },
+  {
+    "mode": "candidate-orbit-after-damping",
+    "start": {
+      "frames": 216,
+      "time": 1791897777270
+    },
+    "end": {
+      "frames": 216,
+      "time": 1791897825909
+    }
+  }
+]

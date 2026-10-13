@@ -1,0 +1,94 @@
+[
+  {
+    "scene": "pipes",
+    "source_job": "82acea65e9874f64806815a592015dec",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "evaluation_mode": "holdout"
+    },
+    "input_images": 14,
+    "registered_images": 14,
+    "sfm": "Reused frozen camera geometry; no SfM timing measured",
+    "training_export_seconds": 9.0456,
+    "gaussians": 3025,
+    "ply_bytes": 715449,
+    "ply_sha256": "dcc7fad25d84eda1fc01e12ddbd94bdc7b6f605d321a8159a09f111b3d17ea1b",
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1291658,
+      "export_removed_bytes": 576209,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 715449,
+      "training_process_seconds": 9.027,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3025,
+      "steps": 1000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "evaluation": {
+        "psnr": 18.266687,
+        "ssim": 0.7187289
+      },
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  },
+  {
+    "scene": "office",
+    "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "evaluation_mode": "holdout"
+    },
+    "input_images": 26,
+    "registered_images": 26,
+    "sfm": "Reused frozen camera geometry; no SfM timing measured",
+    "training_export_seconds": 8.0335,
+    "gaussians": 3961,
+    "ply_bytes": 936345,
+    "ply_sha256": "bf3d41da2e516f8a0a58fd1adbbd6cba65cb73de9ac4339bcee3e3f2259fb216",
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1698994,
+      "export_removed_bytes": 762649,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 936345,
+      "training_process_seconds": 8.0258,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3961,
+      "steps": 1000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "evaluation": {
+        "psnr": 18.775295,
+        "ssim": 0.806923
+      },
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  }
+]
