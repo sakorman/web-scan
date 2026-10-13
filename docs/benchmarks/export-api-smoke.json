@@ -1,0 +1,312 @@
+{
+  "job_id": "2594f38ad4394caf88dc98a3020aaeb1",
+  "report": {
+    "backend": "brush",
+    "engine": "Brush 0.3.0",
+    "export_policy": "periodic_final_retained",
+    "export_written_files": 2,
+    "export_written_bytes": 1308414,
+    "export_removed_bytes": 584469,
+    "export_cleanup_errors": [],
+    "export_files": 1,
+    "export_bytes": 723945,
+    "training_process_seconds": 15.0944,
+    "progress_source": "brush_refinement_log",
+    "gaussians": 3061,
+    "steps": 1000,
+    "training_views": 12,
+    "evaluation_views": 2,
+    "color_model": "SH3",
+    "preview_color_model": "SH3 (PLY)",
+    "splat_color_model": "SH0",
+    "resolution": 512,
+    "evaluation_mode": "holdout",
+    "thumbnail_source": "evaluation_render",
+    "evaluation": {
+      "psnr": 16.649279,
+      "ssim": 0.70029503
+    },
+    "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+    "seconds": 15.17,
+    "pose_source": "COLMAP",
+    "normalization": {
+      "center": [
+        -0.3256218135356903,
+        -2.2703042030334473,
+        9.196002960205078
+      ],
+      "scale": 15.116631507873535,
+      "units": "relative"
+    },
+    "registered_images": 14,
+    "input_images": 14,
+    "calibrated_fixture": false,
+    "camera_mode": "shared",
+    "sparse_points": 1873,
+    "reprojection_error": 0.9656202830600332,
+    "unregistered_images": [],
+    "warnings": [],
+    "sfm_reused": true,
+    "sfm_cache_key": "a6ed88e185e33ad074b46681d69e2defce5ffb569aac0caac4f656cda774aa9d",
+    "timings": {
+      "input_validation_seconds": 0.003,
+      "sfm_seconds": 0.0193,
+      "training_and_model_export_seconds": 15.1126
+    },
+    "source": {
+      "name": "ETH3D pipes",
+      "url": "https://www.eth3d.net/datasets",
+      "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+      "authors": "Schöps et al., ETH3D, CVPR 2017",
+      "license": "CC BY-NC-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "images": 14,
+      "type": "real indoor multiview dataset",
+      "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95"
+    }
+  },
+  "events": [
+    {
+      "status": "queued",
+      "progress": 0.0,
+      "message": "等待本地计算",
+      "exports": 0
+    },
+    {
+      "status": "queued",
+      "progress": 0.0,
+      "message": "等待本地计算",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.42,
+      "message": "GPU 正在准备训练 · 0 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.42,
+      "message": "GPU 正在准备训练 · 0 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.42,
+      "message": "GPU 正在准备训练 · 1 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.42,
+      "message": "GPU 正在准备训练 · 1 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.42,
+      "message": "GPU 正在准备训练 · 1 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.4705,
+      "message": "GPU 训练 101/1000 步 · 2,021 个高斯 · 2 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.4705,
+      "message": "GPU 训练 101/1000 步 · 2,021 个高斯 · 2 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5205,
+      "message": "GPU 训练 201/1000 步 · 2,167 个高斯 · 3 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5205,
+      "message": "GPU 训练 201/1000 步 · 2,167 个高斯 · 3 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5205,
+      "message": "GPU 训练 201/1000 步 · 2,167 个高斯 · 3 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5205,
+      "message": "GPU 训练 201/1000 步 · 2,167 个高斯 · 4 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5205,
+      "message": "GPU 训练 201/1000 步 · 2,167 个高斯 · 4 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5705,
+      "message": "GPU 训练 301/1000 步 · 2,312 个高斯 · 5 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5705,
+      "message": "GPU 训练 301/1000 步 · 2,312 个高斯 · 5 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.5705,
+      "message": "GPU 训练 301/1000 步 · 2,312 个高斯 · 5 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.6205,
+      "message": "GPU 训练 401/1000 步 · 2,470 个高斯 · 6 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.6205,
+      "message": "GPU 训练 401/1000 步 · 2,470 个高斯 · 6 秒",
+      "exports": 0
+    },
+    {
+      "status": "running",
+      "progress": 0.6705,
+      "message": "GPU 训练 501/1000 步 · 2,648 个高斯 · 7 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.6705,
+      "message": "GPU 训练 501/1000 步 · 2,648 个高斯 · 7 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.6705,
+      "message": "GPU 训练 501/1000 步 · 2,648 个高斯 · 7 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.6705,
+      "message": "GPU 训练 501/1000 步 · 2,648 个高斯 · 8 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.6705,
+      "message": "GPU 训练 501/1000 步 · 2,648 个高斯 · 8 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7204999999999999,
+      "message": "GPU 训练 601/1000 步 · 2,845 个高斯 · 9 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7204999999999999,
+      "message": "GPU 训练 601/1000 步 · 2,845 个高斯 · 9 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7204999999999999,
+      "message": "GPU 训练 601/1000 步 · 2,845 个高斯 · 9 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7705,
+      "message": "GPU 训练 701/1000 步 · 3,061 个高斯 · 10 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7705,
+      "message": "GPU 训练 701/1000 步 · 3,061 个高斯 · 10 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7705,
+      "message": "GPU 训练 701/1000 步 · 3,061 个高斯 · 11 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7705,
+      "message": "GPU 训练 701/1000 步 · 3,061 个高斯 · 11 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.7705,
+      "message": "GPU 训练 701/1000 步 · 3,061 个高斯 · 11 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.8205,
+      "message": "GPU 训练 801/1000 步 · 3,061 个高斯 · 12 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.8205,
+      "message": "GPU 训练 801/1000 步 · 3,061 个高斯 · 12 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.8705,
+      "message": "GPU 训练 901/1000 步 · 3,061 个高斯 · 13 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.8705,
+      "message": "GPU 训练 901/1000 步 · 3,061 个高斯 · 13 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.8705,
+      "message": "GPU 训练 901/1000 步 · 3,061 个高斯 · 13 秒",
+      "exports": 1
+    },
+    {
+      "status": "running",
+      "progress": 0.8705,
+      "message": "GPU 训练 901/1000 步 · 3,061 个高斯 · 14 秒",
+      "exports": 2
+    },
+    {
+      "status": "running",
+      "progress": 0.8705,
+      "message": "GPU 训练 901/1000 步 · 3,061 个高斯 · 14 秒",
+      "exports": 2
+    },
+    {
+      "status": "succeeded",
+      "progress": 1.0,
+      "message": "模型已生成",
+      "exports": 1
+    }
+  ],
+  "download_bytes": 723945,
+  "early_progress_without_ply": true
+}

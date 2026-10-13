@@ -1,0 +1,198 @@
+{
+  "config": {
+    "steps": 6000,
+    "max_points": 150000,
+    "resolution": 1024,
+    "evaluation_mode": "holdout",
+    "backend": "brush"
+  },
+  "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+  "comparisons": [
+    {
+      "scene": "pipes",
+      "steps": 6000,
+      "resolution": 1024,
+      "runs": {
+        "baseline": {
+          "scene_index": 0,
+          "source_job": "82acea65e9874f64806815a592015dec",
+          "variant": "baseline",
+          "seconds": 334.215,
+          "adapter_sha256": "ae77db89fc6c2fe327c42762abf8ad6679b628c50ca493d3f5ac19fbc6bef6cb",
+          "input_sha256": "1c6ab0479ddbb7c2012ff1fefb34d23d1a61e5f617595511757f351168917017",
+          "gaussians": 76780,
+          "evaluation": {
+            "psnr": 18.548862,
+            "ssim": 0.78584087
+          },
+          "training_views": 12,
+          "evaluation_views": 2,
+          "exports": 12,
+          "export_bytes": 98503992,
+          "first_progress_seconds": 25.09
+        },
+        "candidate": {
+          "scene_index": 0,
+          "source_job": "82acea65e9874f64806815a592015dec",
+          "variant": "candidate",
+          "seconds": 322.1187,
+          "adapter_sha256": "d47f4430d6e2ee7c929ce764ddd5e57e1d1b2a4e1bdc9df3c48c49a8333fec28",
+          "input_sha256": "1c6ab0479ddbb7c2012ff1fefb34d23d1a61e5f617595511757f351168917017",
+          "gaussians": 78082,
+          "evaluation": {
+            "psnr": 16.600117,
+            "ssim": 0.77278894
+          },
+          "training_views": 12,
+          "evaluation_views": 2,
+          "exports": 1,
+          "export_bytes": 18428902,
+          "first_progress_seconds": 5.0194
+        }
+      },
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "baseline": {
+            "psnr": 21.884236760498197,
+            "ssim": 0.8301844000816345
+          },
+          "candidate": {
+            "psnr": 18.29116995981964,
+            "ssim": 0.8114519119262695
+          },
+          "render_mae_255": 14.916492055937345
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "baseline": {
+            "psnr": 14.993381895973034,
+            "ssim": 0.707819402217865
+          },
+          "candidate": {
+            "psnr": 14.799691626597667,
+            "ssim": 0.7015658617019653
+          },
+          "render_mae_255": 11.670068431927934
+        }
+      ],
+      "mean": {
+        "baseline": {
+          "psnr": 18.438809328235614,
+          "ssim": 0.7690019011497498
+        },
+        "candidate": {
+          "psnr": 16.545430793208652,
+          "ssim": 0.7565088868141174
+        }
+      },
+      "runtime_change_percent": -3.62,
+      "export_bytes_change_percent": -81.29
+    },
+    {
+      "scene": "office",
+      "steps": 6000,
+      "resolution": 1024,
+      "runs": {
+        "candidate": {
+          "scene_index": 1,
+          "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+          "variant": "candidate",
+          "seconds": 301.0278,
+          "adapter_sha256": "d47f4430d6e2ee7c929ce764ddd5e57e1d1b2a4e1bdc9df3c48c49a8333fec28",
+          "input_sha256": "88ae250d18067057a803c90fe9be60cdb1ff3f1d8d72f3ecbcc5ff25277a0e51",
+          "gaussians": 74520,
+          "evaluation": {
+            "psnr": 21.38197,
+            "ssim": 0.89380276
+          },
+          "training_views": 22,
+          "evaluation_views": 4,
+          "exports": 1,
+          "export_bytes": 17588270,
+          "first_progress_seconds": 5.0204
+        },
+        "baseline": {
+          "scene_index": 1,
+          "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+          "variant": "baseline",
+          "seconds": 305.0792,
+          "adapter_sha256": "ae77db89fc6c2fe327c42762abf8ad6679b628c50ca493d3f5ac19fbc6bef6cb",
+          "input_sha256": "88ae250d18067057a803c90fe9be60cdb1ff3f1d8d72f3ecbcc5ff25277a0e51",
+          "gaussians": 73304,
+          "evaluation": {
+            "psnr": 21.028461,
+            "ssim": 0.8950386
+          },
+          "training_views": 22,
+          "evaluation_views": 4,
+          "exports": 12,
+          "export_bytes": 100096757,
+          "first_progress_seconds": 21.0736
+        }
+      },
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "baseline": {
+            "psnr": 22.731384238929955,
+            "ssim": 0.9080848097801208
+          },
+          "candidate": {
+            "psnr": 23.195674977454928,
+            "ssim": 0.9086947441101074
+          },
+          "render_mae_255": 9.506711976043228
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "baseline": {
+            "psnr": 21.35880735505532,
+            "ssim": 0.9418273568153381
+          },
+          "candidate": {
+            "psnr": 22.30879543395792,
+            "ssim": 0.9432616233825684
+          },
+          "render_mae_255": 11.303540124469016
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "baseline": {
+            "psnr": 17.070682890439414,
+            "ssim": 0.821969747543335
+          },
+          "candidate": {
+            "psnr": 16.896463688022823,
+            "ssim": 0.8180153965950012
+          },
+          "render_mae_255": 12.620036661356822
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "baseline": {
+            "psnr": 22.708591332345854,
+            "ssim": 0.8712829351425171
+          },
+          "candidate": {
+            "psnr": 22.857823392581057,
+            "ssim": 0.8686085343360901
+          },
+          "render_mae_255": 8.851120338268366
+        }
+      ],
+      "mean": {
+        "baseline": {
+          "psnr": 20.967366454192636,
+          "ssim": 0.8857912123203278
+        },
+        "candidate": {
+          "psnr": 21.31468937300418,
+          "ssim": 0.8846450746059418
+        }
+      },
+      "runtime_change_percent": -1.33,
+      "export_bytes_change_percent": -82.43
+    }
+  ]
+}

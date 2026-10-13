@@ -1,0 +1,24 @@
+[
+  {
+    "scene": "pipes",
+    "written_files": 12,
+    "retained_files": 1,
+    "before_bytes": 98503992,
+    "after_bytes": 18121630,
+    "removed_bytes": 80382362,
+    "reduction_percent": 81.6,
+    "final_sha256": "06e532226a0915418ad1e6648b44e73b5ad6955ba00eee5aedb4c8f0172c67ca",
+    "final_bytes_unchanged": true
+  },
+  {
+    "scene": "office",
+    "written_files": 12,
+    "retained_files": 1,
+    "before_bytes": 100096757,
+    "after_bytes": 17301294,
+    "removed_bytes": 82795463,
+    "reduction_percent": 82.72,
+    "final_sha256": "7871d9c70f80d5ee1901be934c6ae629f078e00bf57f725c310a3d67c3af9037",
+    "final_bytes_unchanged": true
+  }
+]

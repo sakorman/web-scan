@@ -1,0 +1,84 @@
+{
+  "config": {
+    "steps": 6000,
+    "max_points": 150000,
+    "resolution": 1024,
+    "evaluation_mode": "holdout",
+    "backend": "brush"
+  },
+  "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+  "runs": [
+    {
+      "scene_index": 0,
+      "source_job": "82acea65e9874f64806815a592015dec",
+      "variant": "baseline",
+      "seconds": 334.215,
+      "adapter_sha256": "ae77db89fc6c2fe327c42762abf8ad6679b628c50ca493d3f5ac19fbc6bef6cb",
+      "input_sha256": "1c6ab0479ddbb7c2012ff1fefb34d23d1a61e5f617595511757f351168917017",
+      "gaussians": 76780,
+      "evaluation": {
+        "psnr": 18.548862,
+        "ssim": 0.78584087
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "exports": 12,
+      "export_bytes": 98503992,
+      "first_progress_seconds": 25.09
+    },
+    {
+      "scene_index": 0,
+      "source_job": "82acea65e9874f64806815a592015dec",
+      "variant": "candidate",
+      "seconds": 322.1187,
+      "adapter_sha256": "d47f4430d6e2ee7c929ce764ddd5e57e1d1b2a4e1bdc9df3c48c49a8333fec28",
+      "input_sha256": "1c6ab0479ddbb7c2012ff1fefb34d23d1a61e5f617595511757f351168917017",
+      "gaussians": 78082,
+      "evaluation": {
+        "psnr": 16.600117,
+        "ssim": 0.77278894
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "exports": 1,
+      "export_bytes": 18428902,
+      "first_progress_seconds": 5.0194
+    },
+    {
+      "scene_index": 1,
+      "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "candidate",
+      "seconds": 301.0278,
+      "adapter_sha256": "d47f4430d6e2ee7c929ce764ddd5e57e1d1b2a4e1bdc9df3c48c49a8333fec28",
+      "input_sha256": "88ae250d18067057a803c90fe9be60cdb1ff3f1d8d72f3ecbcc5ff25277a0e51",
+      "gaussians": 74520,
+      "evaluation": {
+        "psnr": 21.38197,
+        "ssim": 0.89380276
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "exports": 1,
+      "export_bytes": 17588270,
+      "first_progress_seconds": 5.0204
+    },
+    {
+      "scene_index": 1,
+      "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "baseline",
+      "seconds": 305.0792,
+      "adapter_sha256": "ae77db89fc6c2fe327c42762abf8ad6679b628c50ca493d3f5ac19fbc6bef6cb",
+      "input_sha256": "88ae250d18067057a803c90fe9be60cdb1ff3f1d8d72f3ecbcc5ff25277a0e51",
+      "gaussians": 73304,
+      "evaluation": {
+        "psnr": 21.028461,
+        "ssim": 0.8950386
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "exports": 12,
+      "export_bytes": 100096757,
+      "first_progress_seconds": 21.0736
+    }
+  ]
+}

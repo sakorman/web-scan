@@ -107,6 +107,65 @@ def convert_output(source, output, normalization):
     return len(data)
 
 
+class TrainingProgress:
+    """Read bounded chunks of complete Brush 0.3.0 refinement log lines."""
+
+    pattern = re.compile(rb"\bbrush_cli\] Refine iter (\d+), (\d+) splats\.")
+
+    def __init__(self, total_steps):
+        self.total_steps = total_steps
+        self.step = 0
+        self.splats = None
+        self.offset = 0
+        self.pending = b""
+
+    def read(self, path):
+        try:
+            with path.open("rb") as stream:
+                stream.seek(self.offset)
+                chunk = stream.read(64 * 1024)
+                self.offset = stream.tell()
+        except FileNotFoundError:
+            return
+        lines = (self.pending + chunk).split(b"\n")
+        # Dataset debug lines can be very long; only the tail of an unfinished
+        # line is needed to identify the small refinement message.
+        self.pending = lines.pop()[-512:]
+        for line in lines:
+            match = self.pattern.search(line)
+            if match:
+                step, splats = map(int, match.groups())
+                if self.step < step <= self.total_steps and 0 < splats <= 2_000_000:
+                    self.step, self.splats = step, splats
+
+
+def log_tail(path, limit=2000):
+    with path.open("rb") as stream:
+        stream.seek(0, os.SEEK_END)
+        stream.seek(max(0, stream.tell() - limit))
+        return stream.read(limit).decode(errors="replace")
+
+
+def prune_intermediate_exports(exports, steps):
+    """Clean only files produced by this fresh training run; preserve the final PLY."""
+    removed_bytes = 0
+    errors = []
+    for file in exports.iterdir():
+        match = re.fullmatch(r"export_(\d+)\.ply", file.name)
+        if not match or not 0 < int(match[1]) < steps:
+            continue
+        if file.is_symlink() or not file.is_file():
+            continue
+        try:
+            size = file.stat().st_size
+            file.unlink()
+            removed_bytes += size
+        except OSError:
+            # Housekeeping failure must not discard a successfully trained model.
+            errors.append(file.name)
+    return removed_bytes, errors
+
+
 def train(scene, work, output, config, progress):
     binary = executable()
     if not binary:
@@ -115,6 +174,8 @@ def train(scene, work, output, config, progress):
     exports = work / "brush"
     exports.mkdir()
     steps = config["steps"]
+    # Keep the engine's established export cadence. Only remove intermediate
+    # files after the final model has been validated and converted successfully.
     interval = min(500, steps)
     holdout = config.get("evaluation_mode", "holdout") == "holdout"
     args = [
@@ -145,7 +206,9 @@ def train(scene, work, output, config, progress):
             str(steps),
             "--eval-save-to-disk",
         ]
-    with (work / "brush.log").open("wb") as log:
+    log_path = work / "brush.log"
+    tracker = TrainingProgress(steps)
+    with log_path.open("wb") as log:
         process = subprocess.Popen(
             args,
             stdout=log,
@@ -153,42 +216,35 @@ def train(scene, work, output, config, progress):
             env={**os.environ, "RUST_LOG": "info"},
         )
         start = time.monotonic()
-        last = 0
         try:
             while process.poll() is None:
                 if time.monotonic() - start > 3600:
                     raise RuntimeError("GPU 训练超过一小时限制")
-                exports_now = [
-                    int(p.stem.split("_")[-1]) for p in exports.glob("export_*.ply")
-                ]
-                completed = max(exports_now, default=0)
-                if completed != last:
-                    last = completed
-                    progress(
-                        "train",
-                        0.42 + 0.5 * completed / steps,
-                        f"GPU 已保存 {completed}/{steps} 步检查结果",
-                    )
-                else:
-                    progress(
-                        "train",
-                        0.42 + 0.5 * completed / steps,
-                        f"GPU 训练中 · {int(time.monotonic() - start)} 秒 · 每 {interval} 步保存结果",
-                    )
+                tracker.read(log_path)
+                message = (
+                    f"GPU 训练 {tracker.step}/{steps} 步 · {tracker.splats:,} 个高斯"
+                    if tracker.step
+                    else "GPU 正在准备训练"
+                )
+                progress(
+                    "train",
+                    0.42 + 0.5 * tracker.step / steps,
+                    f"{message} · {int(time.monotonic() - start)} 秒",
+                )
                 time.sleep(1)
             if process.returncode:
-                detail = (work / "brush.log").read_text(errors="replace")[-2000:]
+                detail = log_tail(log_path)
                 raise RuntimeError("Brush GPU 训练失败：" + detail)
         finally:
             if process.poll() is None:
                 process.terminate()
                 process.wait(timeout=10)
-    models = sorted(
-        exports.glob("export_*.ply"), key=lambda p: int(p.stem.split("_")[-1])
-    )
-    if not models or int(models[-1].stem.split("_")[-1]) < steps:
+    process_seconds = time.monotonic() - start
+    final_model = exports / f"export_{steps:0{len(str(steps))}d}.ply"
+    if not final_model.is_file():
         raise RuntimeError("训练器未输出最终模型")
-    count = convert_output(models[-1], output, scene["normalization"])
+    progress("train", 0.92, "训练完成，正在校验并转换模型")
+    count = convert_output(final_model, output, scene["normalization"])
     rendered = [p for p in exports.rglob("*.png") if "gt" not in p.name.lower()]
     thumbnail = rendered[0] if rendered else Path(scene["views"][0]["image"])
     with Image.open(thumbnail) as image:
@@ -200,9 +256,21 @@ def train(scene, work, output, config, progress):
     view_counts = re.findall(
         r"Loaded dataset with (\d+) training, (\d+) eval views", text
     )
+    written = list(exports.glob("export_*.ply"))
+    written_bytes = sum(file.stat().st_size for file in written)
+    removed_bytes, cleanup_errors = prune_intermediate_exports(exports, steps)
     return {
         "backend": "brush",
         "engine": "Brush 0.3.0",
+        "export_policy": "periodic_final_retained",
+        "export_written_files": len(written),
+        "export_written_bytes": written_bytes,
+        "export_removed_bytes": removed_bytes,
+        "export_cleanup_errors": cleanup_errors,
+        "export_files": len(list(exports.glob("export_*.ply"))),
+        "export_bytes": sum(p.stat().st_size for p in exports.glob("export_*.ply")),
+        "training_process_seconds": round(process_seconds, 4),
+        "progress_source": "brush_refinement_log",
         "gaussians": count,
         "steps": steps,
         "training_views": int(view_counts[-1][0]) if view_counts else None,
