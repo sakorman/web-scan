@@ -121,11 +121,6 @@ h1, h2, h3, p { margin: 0; }
 .viewer-controls button { border: 0; background: transparent; color: #aabdd9; border-radius: 3px; padding: 8px 10px; font-size: 10px; }
 .viewer-controls button.active { background: #326ac5; color: #f1f6ff; }
 .viewer-controls button:hover { background: #254571; }
-.walk-pad { position: absolute; bottom: 70px; right: 15px; z-index: 3; color: #d2def0; text-shadow: 0 1px 4px #000; font-size: 9px; text-align: right; max-width: calc(100% - 30px); }
-.walk-pad[hidden] { display: none; }
-.walk-pad>div { display: flex; gap: 5px; justify-content: flex-end; margin-top: 8px; }
-.walk-pad button { width: 33px; height: 33px; background: #14253be0; border: 1px solid #506c96; border-radius: 4px; color: #d6e5fa; font-size: 17px; touch-action: none; }
-.walk-pad button:active { background: #326ac5; }
 .stage-grid { position: absolute; inset: 0; opacity: .3; background-image: linear-gradient(#2c416633 1px,transparent 1px),linear-gradient(90deg,#2c416633 1px,transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(ellipse,#000,transparent 75%); }
 .empty-stage { display: flex; align-items: center; justify-content: center; }
 .stage-prompt { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px; padding: 20px; max-width: 480px; position: relative; }
@@ -336,8 +331,6 @@ select, input { width: 100%; display: block; border: 1px solid #314461; backgrou
   .pagination>span { max-width: 190px; }
   .viewer-controls { left: 10px; bottom: 10px; gap: 2px; }
   .viewer-controls button { padding: 8px; font-size: 9px; }
-  .walk-pad { right: 10px; bottom: 61px; font-size: 8px; }
-  .walk-pad button { width: 32px; height: 32px; }
   .stage-prompt { padding: 22px; gap: 13px; }
   .stage-prompt h2 { font-size: 17px; }
   .stage-prompt p { font-size: 11px; }

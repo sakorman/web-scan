@@ -338,7 +338,7 @@ async function showLog(){
   catch(error){toast((error as Error).message,true);}
 }
 function showGuide(){
-  dialog('拍摄与操作',`<div class="guide-content"><section><h3>围绕目标移动</h3><p>相邻照片保留 60–80% 的共同内容，缓慢平移。只站在原地转手机，通常得不到足够的视差。</p></section><section><h3>保持场景稳定</h3><p>优先选择有纹理的静态场景，避开强反光、透明物体和移动人物。高处、低处也补拍几张。</p></section><section><h3>在模型里查看</h3><p>环绕模式：拖动旋转，滚轮或双指缩放。漫游模式：拖动看向，WASD 或方向按钮移动，Q / E 升降。目前没有碰撞检测。</p></section><section><h3>手机连接</h3><p>手机访问需要受信任的 HTTPS；电脑上的 localhost 可以直接使用相机。配置步骤见 README。</p></section></div>`,'help-dialog');
+  dialog('拍摄与操作',`<div class="guide-content"><section><h3>围绕目标移动</h3><p>相邻照片保留 60–80% 的共同内容，缓慢平移。只站在原地转手机，通常得不到足够的视差。</p></section><section><h3>保持场景稳定</h3><p>优先选择有纹理的静态场景，避开强反光、透明物体和移动人物。高处、低处也补拍几张。</p></section><section><h3>在模型里查看</h3><p>环绕模式：拖动旋转，滚轮或双指缩放。漫游模式：拖动看向，WASD 或方向键移动，Q / E 升降。目前没有碰撞检测。</p></section><section><h3>手机连接</h3><p>手机访问需要受信任的 HTTPS；电脑上的 localhost 可以直接使用相机。配置步骤见 README。</p></section></div>`,'help-dialog');
 }
 function pickFiles(){if(!selected||busy||capturing)return;document.getElementById('file-input')?.click();}
 async function uploadFrame(frame:PendingFrame){

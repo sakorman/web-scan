@@ -18,10 +18,8 @@ export async function mountViewer(container:HTMLElement,url:string,startWalk=fal
   const cameraBar=document.createElement('div');cameraBar.className='viewer-camera-bar';cameraBar.hidden=true;
   cameraBar.innerHTML='<label>拍摄视角 <select aria-label="选择拍摄视角"></select></label><button class="button secondary" aria-pressed="false">对照原照片</button>';
   const select=cameraBar.querySelector('select')!,compare=cameraBar.querySelector('button')!;
-  const pad=document.createElement('div');pad.className='walk-pad';pad.hidden=true;
-  pad.innerHTML='<span>拖动看向 · WASD / 方向按钮移动 · 无碰撞检测</span><div><button data-key="KeyW" aria-label="向前移动">↑</button><button data-key="KeyA" aria-label="向左移动">←</button><button data-key="KeyS" aria-label="向后移动">↓</button><button data-key="KeyD" aria-label="向右移动">→</button></div>';
   const status=document.createElement('div');status.className='viewer-loading';status.textContent='加载完整高斯模型…';status.setAttribute('role','status');
-  container.append(toolbar,cameraBar,pad,status);
+  container.append(toolbar,cameraBar,status);
   let views:PhotoView[]=[],index=0,mode='orbit',disposed=false,mesh:SplatMesh|undefined;
   let controls:{update:()=>void;dispose:()=>void}|undefined;
   const selected=()=>views[index];
@@ -41,10 +39,10 @@ export async function mountViewer(container:HTMLElement,url:string,startWalk=fal
   };
   const change=(requested:string)=>{
     mode=requested==='reset'?mode:requested;controls?.dispose();controls=undefined;
-    pad.hidden=mode!=='walk';cameraBar.hidden=mode!=='photo';photo.hidden=true;
+    cameraBar.hidden=mode!=='photo';photo.hidden=true;
     if((mode==='photo'||mode==='walk')&&selected()){
       showPhoto();
-      if(mode==='walk')controls=walkControls(camera,renderer.domElement,pad);
+      if(mode==='walk')controls=walkControls(camera,renderer.domElement);
     }else{
       camera.up.set(0,-1,0);camera.position.set(0,-.8,-3.5);camera.lookAt(0,0,0);
       const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;orbit.minDistance=.03;orbit.maxDistance=30;controls=orbit;
@@ -58,7 +56,7 @@ export async function mountViewer(container:HTMLElement,url:string,startWalk=fal
   select.onchange=()=>{index=Number(select.value);change('photo');};
   compare.onclick=()=>{photo.hidden=!photo.hidden;compare.textContent=photo.hidden?'对照原照片':'返回模型';compare.setAttribute('aria-pressed',String(!photo.hidden));};
   const observer=new ResizeObserver(resize);observer.observe(container);resize();
-  const cleanup=()=>{if(disposed)return;disposed=true;renderer.setAnimationLoop(null);observer.disconnect();controls?.dispose();mesh?.dispose();spark.dispose();renderer.dispose();surface.remove();toolbar.remove();cameraBar.remove();pad.remove();status.remove();};
+  const cleanup=()=>{if(disposed)return;disposed=true;renderer.setAnimationLoop(null);observer.disconnect();controls?.dispose();mesh?.dispose();spark.dispose();renderer.dispose();surface.remove();toolbar.remove();cameraBar.remove();status.remove();};
   try{
     mesh=new SplatMesh({url,enableLod:false,lod:false,extSplats:true});scene.add(mesh);
     const response=await fetch(url.replace('gaussians.ply','cameras.json'));
@@ -76,7 +74,7 @@ export async function mountViewer(container:HTMLElement,url:string,startWalk=fal
   }catch(error){cleanup();throw error;}
 }
 
-function walkControls(camera:THREE.PerspectiveCamera,canvas:HTMLCanvasElement,pad:HTMLElement){
+function walkControls(camera:THREE.PerspectiveCamera,canvas:HTMLCanvasElement){
   const keys=new Set<string>();let dragging=false,x=0,y=0,last=performance.now();
   const localUp=new THREE.Vector3(0,1,0).applyQuaternion(camera.quaternion);
   canvas.tabIndex=0;canvas.focus({preventScroll:true});
@@ -89,9 +87,7 @@ function walkControls(camera:THREE.PerspectiveCamera,canvas:HTMLCanvasElement,pa
   const up=()=>{dragging=false;};
   const keydown=(e:KeyboardEvent)=>{if(document.activeElement!==canvas)return;if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','KeyQ','KeyE'].includes(e.code)){e.preventDefault();keys.add(e.code);}};
   const keyup=(e:KeyboardEvent)=>keys.delete(e.code),clear=()=>keys.clear();
-  const buttons=[...pad.querySelectorAll<HTMLButtonElement>('button')];
-  for(const b of buttons){b.onpointerdown=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);keys.add(b.dataset.key!);};b.onpointerup=b.onpointercancel=()=>keys.delete(b.dataset.key!);}
   canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
   window.addEventListener('keydown',keydown);window.addEventListener('keyup',keyup);window.addEventListener('blur',clear);
-  return {update:()=>{const now=performance.now(),dt=Math.min(.05,(now-last)/1000);last=now;const f=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));const r=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'));const u=Number(keys.has('KeyQ'))-Number(keys.has('KeyE'));camera.translateZ(-f*dt*.6);camera.translateX(r*dt*.6);camera.position.addScaledVector(localUp,u*dt*.6);},dispose:()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('blur',clear);for(const b of buttons)b.onpointerdown=b.onpointerup=b.onpointercancel=null;keys.clear();}};
+  return {update:()=>{const now=performance.now(),dt=Math.min(.05,(now-last)/1000);last=now;const f=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));const r=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'));const u=Number(keys.has('KeyQ'))-Number(keys.has('KeyE'));camera.translateZ(-f*dt*.6);camera.translateX(r*dt*.6);camera.position.addScaledVector(localUp,u*dt*.6);},dispose:()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('blur',clear);keys.clear();}};
 }
