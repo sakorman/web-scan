@@ -1,0 +1,12 @@
+[
+  {
+    "version": "before",
+    "accepted": true,
+    "view_count": 1
+  },
+  {
+    "version": "after",
+    "accepted": false,
+    "reason": "评测图片不完整：缺少 1 张，多出 0 张"
+  }
+]

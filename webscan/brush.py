@@ -11,6 +11,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+from webscan.evaluation import validate_evaluation
+
 
 def executable():
     configured = os.environ.get("WEBSCAN_BRUSH")
@@ -244,18 +246,14 @@ def train(scene, work, output, config, progress):
     if not final_model.is_file():
         raise RuntimeError("训练器未输出最终模型")
     progress("train", 0.92, "训练完成，正在校验并转换模型")
+    text = log_path.read_text(errors="replace")
+    evaluation, rendered = validate_evaluation(scene, exports, config, text)
     count = convert_output(final_model, output, scene["normalization"])
-    rendered = [p for p in exports.rglob("*.png") if "gt" not in p.name.lower()]
     thumbnail = rendered[0] if rendered else Path(scene["views"][0]["image"])
     with Image.open(thumbnail) as image:
         image.convert("RGB").resize(
             (480, round(image.height * 480 / image.width))
         ).save(output / "thumbnail.jpg")
-    text = (work / "brush.log").read_text(errors="replace")
-    matches = re.findall(r"PSNR ([\d.]+), ssim ([\d.]+)", text)
-    view_counts = re.findall(
-        r"Loaded dataset with (\d+) training, (\d+) eval views", text
-    )
     written = list(exports.glob("export_*.ply"))
     written_bytes = sum(file.stat().st_size for file in written)
     removed_bytes, cleanup_errors = prune_intermediate_exports(exports, steps)
@@ -273,17 +271,13 @@ def train(scene, work, output, config, progress):
         "progress_source": "brush_refinement_log",
         "gaussians": count,
         "steps": steps,
-        "training_views": int(view_counts[-1][0]) if view_counts else None,
-        "evaluation_views": int(view_counts[-1][1]) if view_counts else None,
+        **evaluation,
         "color_model": "SH3",
         "preview_color_model": "SH3 (PLY)",
         "splat_color_model": "SH0",
         "resolution": config["resolution"],
         "evaluation_mode": "holdout" if holdout else "all",
         "thumbnail_source": "evaluation_render" if rendered else "input_photo",
-        "evaluation": {"psnr": float(matches[-1][0]), "ssim": float(matches[-1][1])}
-        if matches
-        else None,
         "note": (
             "每 8 张留出评估；这些图像参与过上游 SfM。"
             if holdout

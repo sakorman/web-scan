@@ -1,0 +1,23 @@
+[
+  {
+    "job": "82acea65e9874f64806815a592015dec",
+    "seconds": 0.02368,
+    "verified": true,
+    "images": 2,
+    "scores_unchanged": true
+  },
+  {
+    "job": "59bb5740d2e945d9a459ca2514c66bb2",
+    "seconds": 0.03492,
+    "verified": true,
+    "images": 4,
+    "scores_unchanged": true
+  },
+  {
+    "job": "0d7d2cb4e3474d1aaa05036de6f49aa7",
+    "seconds": 0.00059,
+    "verified": false,
+    "images": 0,
+    "scores_unchanged": true
+  }
+]

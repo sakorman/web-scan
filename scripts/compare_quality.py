@@ -9,6 +9,8 @@ import torch
 import torch.nn.functional as F
 from PIL import Image
 
+from webscan.evaluation import validate_evaluation
+
 
 def metrics(render, reference):
     a = np.asarray(render).astype(np.float64) / 255
@@ -44,13 +46,44 @@ def compare(data, quick, detail, size=512):
         raise ValueError("Camera geometry must be identical")
     qr = json.loads((qa / "artifacts/report.json").read_text())
     dr = json.loads((de / "artifacts/report.json").read_text())
+    records = []
+    for work, report in ((qa, qr), (de, dr)):
+        if report.get("evaluation_mode", "holdout") != "holdout":
+            raise ValueError("Comparison requires held-out evaluation")
+        scene = json.loads((work / "sfm/scene.json").read_text())
+        # Earlier reports did not record resolution; recover it from the actual PNG.
+        resolution = report.get("resolution")
+        if resolution is None:
+            first = next(
+                (work / "brush" / f"eval_{report['steps']}").glob("*.png"), None
+            )
+            if first is None:
+                raise ValueError("No evaluation renders")
+            with Image.open(first) as image:
+                resolution = max(image.size)
+        checked, _ = validate_evaluation(
+            scene,
+            work / "brush",
+            {
+                "steps": report["steps"],
+                "resolution": resolution,
+                "evaluation_mode": "holdout",
+            },
+            (work / "brush.log").read_text(errors="replace"),
+        )
+        if (
+            "evaluation_images" in report
+            and report["evaluation_images"] != checked["evaluation_images"]
+        ):
+            raise ValueError("Evaluation images or references changed since training")
+        records.append(checked["evaluation_images"])
+    if [(x["name"], x["reference_sha256"]) for x in records[0]] != [
+        (x["name"], x["reference_sha256"]) for x in records[1]
+    ]:
+        raise ValueError("Evaluation views or reference images differ")
     qdir = qa / "brush" / f"eval_{qr['steps']}"
     ddir = de / "brush" / f"eval_{dr['steps']}"
-    names = sorted(path.name for path in qdir.glob("*.png"))
-    if not names:
-        raise ValueError("No held-out evaluation renders; use evaluation_mode=holdout")
-    if names != sorted(path.name for path in ddir.glob("*.png")):
-        raise ValueError("Evaluation views differ")
+    names = [record["name"] for record in records[0]]
     rows = []
     for name in names:
         with Image.open(

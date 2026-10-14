@@ -1,0 +1,187 @@
+[
+  {
+    "scene": "pipes",
+    "source_job": "82acea65e9874f64806815a592015dec",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "evaluation_mode": "holdout"
+    },
+    "input_images": 14,
+    "registered_images": 14,
+    "sfm": "Reused frozen camera geometry; no SfM timing measured",
+    "training_export_seconds": 7.0565,
+    "gaussians": 2968,
+    "ply_bytes": 701997,
+    "ply_sha256": "485290017e4e59db3f4b234b4f57f52fa23ae8708ec70eea5bc7e61b779d7248",
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1271598,
+      "export_removed_bytes": 569601,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 701997,
+      "training_process_seconds": 7.0358,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 2968,
+      "steps": 1000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 18.065449,
+        "ssim": 0.711925
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "1f8abdfa87db431a9641cccd7d4cbc3e855cfc7b8502df3518059a81e820be4a",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "93e2abdc37548c00722b48a27a45a5919e1ce153e7231fed0daa100eee317683",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  },
+  {
+    "scene": "office",
+    "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "evaluation_mode": "holdout"
+    },
+    "input_images": 26,
+    "registered_images": 26,
+    "sfm": "Reused frozen camera geometry; no SfM timing measured",
+    "training_export_seconds": 7.0466,
+    "gaussians": 3964,
+    "ply_bytes": 937053,
+    "ply_sha256": "122c12336b279ecb022a63dcf008c3999e42dd9446f773f414a1dd48e91df468",
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1700646,
+      "export_removed_bytes": 763593,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 937053,
+      "training_process_seconds": 7.0289,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3964,
+      "steps": 1000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {
+        "psnr": 19.601042,
+        "ssim": 0.81831235
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "0bf76b887c4ca3b9a7e8294dc9a69a6cd5370dda3207c3764873baf0f383ee40",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "51bc4ae595502c8610d0941e378490dae13a4da396280607571be0640b2afa8b",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "e2ca53afa48a376ad061b318a573083929b59e8654af64909554cca52b0e61f6",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "afe698baa7d8fd140d04805293b3161ae8819578bd203cd24ed1512bf7682b51",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  },
+  {
+    "scene": "pipes-all",
+    "source_job": "82acea65e9874f64806815a592015dec",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "evaluation_mode": "all"
+    },
+    "input_images": 14,
+    "registered_images": 14,
+    "sfm": "Reused frozen camera geometry; no SfM timing measured",
+    "training_export_seconds": 7.0659,
+    "gaussians": 2905,
+    "ply_bytes": 687129,
+    "ply_sha256": "a4d53cf9bb3e471c2746e21084f7e0d3754d39e24a98f66f7344db250b833d6c",
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1252246,
+      "export_removed_bytes": 565117,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 687129,
+      "training_process_seconds": 7.05,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 2905,
+      "steps": 1000,
+      "training_views": 14,
+      "evaluation_views": 0,
+      "evaluation": null,
+      "evaluation_verified": false,
+      "evaluation_images": [],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "all",
+      "thumbnail_source": "input_photo",
+      "note": "最终模型使用全部已定位照片；没有独立留出评估指标。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  }
+]
