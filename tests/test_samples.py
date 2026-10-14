@@ -11,12 +11,17 @@ from webscan.api import create_app
 from webscan.samples import SAMPLES, prepared_photos
 
 
-def archive(tmp_path, count=14):
+def archive(tmp_path, count=14, focal=None):
     path = tmp_path / "pipes.tar"
     with tarfile.open(path, "w") as bundle:
         for index in range(count):
             stream = io.BytesIO()
-            Image.new("RGB", (1800, 40), (index * 17, 45, 120)).save(stream, "JPEG")
+            exif = Image.Exif()
+            if focal is not None:
+                exif[34665] = {41989: focal}
+            Image.new("RGB", (1800, 40), (index * 17, 45, 120)).save(
+                stream, "JPEG", exif=exif
+            )
             raw = stream.getvalue()
             entry = tarfile.TarInfo(f"pipes/images/dslr_images/{index:03d}.JPG")
             entry.size = len(raw)
@@ -26,7 +31,7 @@ def archive(tmp_path, count=14):
 
 def test_prepare_and_import_real_photo_path(tmp_path):
     root = tmp_path / "samples"
-    folder = prepare(archive(tmp_path), "pipes", root)
+    folder = prepare(archive(tmp_path, focal=20), "pipes", root)
     manifest = json.loads((folder / "source.json").read_text())
     assert manifest["images"] == 14
     assert manifest["license"] == "CC BY-NC-SA 4.0"
@@ -34,6 +39,7 @@ def test_prepare_and_import_real_photo_path(tmp_path):
         path = folder / entry["name"]
         with Image.open(path) as image:
             assert max(image.size) == 1600
+            assert image.getexif().get_ifd(34665)[41989] == 20
         assert hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"]
 
     app = create_app(tmp_path / "data", run_worker=False, sample_root=root)
@@ -50,6 +56,12 @@ def test_prepare_and_import_real_photo_path(tmp_path):
         session = response.json()
         assert session["kind"] == "photos" and session["status"] == "ready"
         assert len(session["frames"]) == 14
+        first_frame = session["frames"][0]["id"]
+        saved = client.get(
+            f"/api/sessions/{session['id']}/frames/{first_frame}"
+        ).content
+        with Image.open(io.BytesIO(saved)) as image:
+            assert image.getexif().get_ifd(34665)[41989] == 20
         assert [frame["metadata"]["original_name"] for frame in session["frames"]] == [
             f"{i:03d}.jpg" for i in range(14)
         ]

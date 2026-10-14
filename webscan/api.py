@@ -24,6 +24,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .store import Store, uid
 from .frame_order import ordered_frames
+from .image_metadata import focal_length_exif
 from .samples import SAMPLES, prepared_photos, sample_info
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -64,12 +65,13 @@ def ingest_image(store, sid, raw, metadata):
         with Image.open(io.BytesIO(raw)) as original:
             if original.width * original.height > 24_000_000:
                 raise ValueError("图片超过 2400 万像素")
+            focal_exif = focal_length_exif(original)
             image = ImageOps.exif_transpose(original).convert("RGB")
             image.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
             if min(image.size) < 32:
                 raise ValueError("图片尺寸过小")
             out = io.BytesIO()
-            image.save(out, format="JPEG", quality=94)
+            image.save(out, format="JPEG", quality=94, exif=focal_exif)
             content = out.getvalue()
             width, height = image.size
     except (

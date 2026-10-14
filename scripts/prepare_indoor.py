@@ -14,6 +14,7 @@ from pathlib import Path, PurePosixPath
 
 from PIL import Image, ImageOps
 
+from webscan.image_metadata import focal_length_exif
 from webscan.samples import SAMPLES
 
 
@@ -43,10 +44,11 @@ def prepare(archive: Path, scene: str, root: Path):
             # Read bytes via stdout: archive paths and links are never extracted.
             raw = subprocess.check_output(["tar", "-xOf", str(archive), name])
             with Image.open(io.BytesIO(raw)) as source:
+                focal_exif = focal_length_exif(source)
                 image = ImageOps.exif_transpose(source).convert("RGB")
                 image.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
                 target = staged / (PurePosixPath(name).stem + ".jpg")
-                image.save(target, quality=95)
+                image.save(target, quality=95, exif=focal_exif)
             files.append(
                 {
                     "name": target.name,

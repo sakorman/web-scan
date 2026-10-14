@@ -26,7 +26,7 @@ class PhotoSample:
             "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
             "images": self.count,
             "type": "real indoor multiview dataset",
-            "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95",
+            "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint",
         }
 
 

@@ -1,0 +1,710 @@
+[
+  {
+    "scene": "pipes",
+    "variant": "baseline",
+    "camera_mode": "auto",
+    "sfm": {
+      "seconds": 5.899329625070095,
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1856,
+      "reprojection_error": 0.8771700170543014,
+      "cameras": [
+        {
+          "id": 1,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 2,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 3,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 4,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 5,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 6,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 7,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 8,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 9,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 10,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 11,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 12,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 13,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 14,
+          "focal_px": 1920.0,
+          "prior": false
+        }
+      ]
+    },
+    "training_export_seconds": 8.099282665876672,
+    "total_seconds": 13.998612290946767,
+    "config": {
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "backend": "brush",
+      "evaluation_mode": "holdout"
+    },
+    "gaussians": 3009,
+    "ply_bytes": 711673,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1285994,
+      "export_removed_bytes": 574321,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 711673,
+      "training_process_seconds": 8.0626,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3009,
+      "steps": 1000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 17.361351,
+        "ssim": 0.70340824
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "DSC_0634.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "3e65a97a17856df2b298024b62e908ae15aec04d88427724294c8e30fa0c1c2c",
+          "reference_sha256": "a1b2ffb034f52efcbdf584bac3d8fd7f9ce1f326ee1f2424777071c21aa2f367"
+        },
+        {
+          "name": "DSC_0642.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "6ebb682ff1597be2e25151ef2d7b60ff44c223a4f41234106eccd89ee62e4a05",
+          "reference_sha256": "3ab2511db9457db38ac17c229388aaa2ce961a75e473ecbaab6d5aec5b437c07"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  },
+  {
+    "scene": "pipes",
+    "variant": "focal",
+    "camera_mode": "auto",
+    "sfm": {
+      "seconds": 5.80057508405298,
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1849,
+      "reprojection_error": 0.8784800693138488,
+      "cameras": [
+        {
+          "id": 1,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 2,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 3,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 4,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 5,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 6,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 7,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 8,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 9,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 10,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 11,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 12,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 13,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 14,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        }
+      ]
+    },
+    "training_export_seconds": 7.094109874917194,
+    "total_seconds": 12.894684958970174,
+    "config": {
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "backend": "brush",
+      "evaluation_mode": "holdout"
+    },
+    "gaussians": 3077,
+    "ply_bytes": 727721,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1311010,
+      "export_removed_bytes": 583289,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 727721,
+      "training_process_seconds": 7.068,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3077,
+      "steps": 1000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 16.135279,
+        "ssim": 0.68957293
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "DSC_0634.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "6fc7bd7ff2306d47a90a47a897f2e81556ca32e96ca2c23a3f61ba0a1b17b066",
+          "reference_sha256": "b67b03e50fcd0c78433477795815f9b703b8adf427f92e92622f9997b5f9f5cc"
+        },
+        {
+          "name": "DSC_0642.png",
+          "width": 512,
+          "height": 335,
+          "sha256": "fd5d55ae9fa27e53aee9c0135e0a92a96e1fdfab5aa40c3766d811b532fc4ee2",
+          "reference_sha256": "973407e4c8383f603c2f382649f481bf2bde97200b63d55cd1480a9cb8f6ef18"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  },
+  {
+    "scene": "office",
+    "variant": "baseline",
+    "camera_mode": "auto",
+    "sfm": {
+      "seconds": 8.402874208055437,
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2479,
+      "reprojection_error": 0.9238240385907383,
+      "cameras": [
+        {
+          "id": 1,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 2,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 3,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 4,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 5,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 6,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 7,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 8,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 9,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 10,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 11,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 12,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 13,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 14,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 15,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 16,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 17,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 18,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 19,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 20,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 21,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 22,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 23,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 24,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 25,
+          "focal_px": 1920.0,
+          "prior": false
+        },
+        {
+          "id": 26,
+          "focal_px": 1920.0,
+          "prior": false
+        }
+      ]
+    },
+    "training_export_seconds": 8.099138332996517,
+    "total_seconds": 16.502012541051954,
+    "config": {
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "backend": "brush",
+      "evaluation_mode": "holdout"
+    },
+    "gaussians": 4055,
+    "ply_bytes": 958529,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1734394,
+      "export_removed_bytes": 775865,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 958529,
+      "training_process_seconds": 8.0642,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 4055,
+      "steps": 1000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {
+        "psnr": 18.978718,
+        "ssim": 0.8033346
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "DSC_0219.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "6456facb44da3d1911c839eff8e731e136352d802fe9b94eeb23bc17f08bf570",
+          "reference_sha256": "bddf1f6629660f4fd0309bfa105f9fb89589489059218f2d095b815c9485fef5"
+        },
+        {
+          "name": "DSC_0231.png",
+          "width": 512,
+          "height": 339,
+          "sha256": "8745aa34036352d245a46b016c08eac95c736b8aee49e3059d969905125c44d4",
+          "reference_sha256": "5f8a71e3c3f6ca47c689f5fcbcb09b0b2fffeeca11e4ad14049789d802c34869"
+        },
+        {
+          "name": "DSC_0242.png",
+          "width": 512,
+          "height": 330,
+          "sha256": "11736eb721401ab43d01da92fe855f95b7ec0bca01972c84a188a75230dd134d",
+          "reference_sha256": "dc4ad71ae789e72c1810f659aff2fc9b2de0aa9ae424d2f87bb21eaa9a963c2a"
+        },
+        {
+          "name": "DSC_0254.png",
+          "width": 512,
+          "height": 337,
+          "sha256": "6da193af04c5b3a0f222f630a68fe2f8f2896802bbfca7de6313c5a279023954",
+          "reference_sha256": "2749d1cc0196c47b9d4c09c8c9cda77e4a97757f81c5a59b889f2832e6685893"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  },
+  {
+    "scene": "office",
+    "variant": "focal",
+    "camera_mode": "auto",
+    "sfm": {
+      "seconds": 8.469137292122468,
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2507,
+      "reprojection_error": 0.9076939043492838,
+      "cameras": [
+        {
+          "id": 1,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 2,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 3,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 4,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 5,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 6,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 7,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 8,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 9,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 10,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 11,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 12,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 13,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 14,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 15,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 16,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 17,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 18,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 19,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 20,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 21,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 22,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 23,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 24,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 25,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        },
+        {
+          "id": 26,
+          "focal_px": 888.9048302806356,
+          "prior": true
+        }
+      ]
+    },
+    "training_export_seconds": 7.061034333193675,
+    "total_seconds": 15.530171625316143,
+    "config": {
+      "steps": 1000,
+      "resolution": 512,
+      "max_points": 50000,
+      "backend": "brush",
+      "evaluation_mode": "holdout"
+    },
+    "gaussians": 4055,
+    "ply_bytes": 958529,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1738170,
+      "export_removed_bytes": 779641,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 958529,
+      "training_process_seconds": 7.0437,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 4055,
+      "steps": 1000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {
+        "psnr": 19.7177,
+        "ssim": 0.81170875
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "DSC_0219.png",
+          "width": 512,
+          "height": 334,
+          "sha256": "6123ba300adb5ac24281a4ee6bb4ca6cd4639350337d1dde642b99d95c82ca81",
+          "reference_sha256": "25d5504a570b73c87e4b26c96054079cf2ec89dc1b715d346a9692a740a6217c"
+        },
+        {
+          "name": "DSC_0231.png",
+          "width": 512,
+          "height": 338,
+          "sha256": "f8333b979287525bb4097ef4f453443af1f9373dffc7066e08f31349c9c3e4b9",
+          "reference_sha256": "eee4431aacb9edeb890e12a849e3f08679fae5e265144adc258d2875ba4c9f45"
+        },
+        {
+          "name": "DSC_0242.png",
+          "width": 512,
+          "height": 329,
+          "sha256": "43b0353515912ea2a61d8c8eda91c092663f04e9bfcc6a3de225d559641f2d87",
+          "reference_sha256": "0e2cee079666f78088172ca1aec0a0ec4e85b216fd7ead93b8bdb37a845e0d25"
+        },
+        {
+          "name": "DSC_0254.png",
+          "width": 512,
+          "height": 337,
+          "sha256": "3c5b77646e0f803f88b811b8f2b1f441fa0d363e0da08156b8c31b91b5939cc9",
+          "reference_sha256": "4d01883e41f83a6c95140696ace0e3ee75209932235ffd2a9eefb9fb6f3aadf5"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+    }
+  }
+]
