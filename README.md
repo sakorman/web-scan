@@ -155,6 +155,8 @@ curl -L --fail --continue-at - \
 .venv/bin/python scripts/prepare_indoor.py /tmp/pipes_dslr_jpg.7z --scene pipes
 ```
 
+准备脚本单次读取归档，本机 pipes / office 分别约 5.5 / 11.2 秒，输出照片与旧版逐字节相同。[准备速度与重建回归](docs/SAMPLE-PREPARATION.md)
+
 准备脚本需要支持 7z 的 libarchive `tar`，macOS 自带。它会把照片缩到长边 1600 像素，保存原文件名、来源和 SHA-256 清单。准备好后重新打开「示例项目」，点「导入这组照片」；不用重启后端。照片不完整时按钮不会启用，导入前还会校验文件有没有改变。
 
 重建只使用照片，不读取数据集自带的相机标定或模型。程序生成的校准图保留在面板底部的调试选项中。

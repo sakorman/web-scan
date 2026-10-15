@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-15",
+  "environment": {
+    "cpu": "Apple M5",
+    "ram_gib": 32,
+    "python": "3.12",
+    "pillow": "12.3.0",
+    "tar": "bsdtar 3.5.3 / libarchive 3.7.4"
+  },
+  "baseline_commit": "d0592cc05c1e4a4040b447441d948e1d303f04f9",
+  "baseline_source_sha256": "9c7b0c508a25dfb1fbfed442deaf610073d285556b3f484b3bb4bb057c583a9e",
+  "candidate_source_sha256": "b888112e38b767d261e36edc5aeaf834181d82e3a8fefec069036cc433ea948a",
+  "runs_per_version_per_scene": 1,
+  "order": [
+    "baseline-pipes",
+    "baseline-office",
+    "candidate-pipes",
+    "candidate-office"
+  ],
+  "scope": "archive read, JPEG normalization, focal EXIF, checksum and publication; excludes network download, API import, SfM, training",
+  "cache": "new output directories; OS file caches not cleared",
+  "results": [
+    {
+      "scene": "pipes",
+      "archive_bytes": 109668393,
+      "archive_sha256": "e2f81386e24dbefcd7090b02431e510b288f61df69591c04fb483056ad0f6ab6",
+      "all_bytes_identical": true,
+      "current_samples_identical": true,
+      "focal_35mm": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "manifest": {
+        "name": "ETH3D pipes",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 14,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint",
+        "files": [
+          {
+            "name": "DSC_0634.jpg",
+            "sha256": "509897b9b896507fd4e52f527a3052f2d91965af96631c6f3ff899a6014c465f"
+          },
+          {
+            "name": "DSC_0635.jpg",
+            "sha256": "c9145b03bf209b2d24de73db48b728caeefc1668e98e96c185c27fb15b349f21"
+          },
+          {
+            "name": "DSC_0636.jpg",
+            "sha256": "80c9df69cba19a6686b870818d102d853ba660414d00d08353507c0d0de71101"
+          },
+          {
+            "name": "DSC_0637.jpg",
+            "sha256": "a7115cf3e21006602dbd0e0eed6e76931115416e1b4e9130e63681eb452e1526"
+          },
+          {
+            "name": "DSC_0638.jpg",
+            "sha256": "ff988510c05cf7fe919ee60a2357915d332819c73bacae9536998de481b8369b"
+          },
+          {
+            "name": "DSC_0639.jpg",
+            "sha256": "98e4dc78b5e93c317e3b92e7fcf5650effb1a5e9fcb7909d9aa41ced68f589c3"
+          },
+          {
+            "name": "DSC_0640.jpg",
+            "sha256": "da0414bb9c7ea868d3844a1cd865342cb0f7ccc05a42eeb3f80b10731ee2d70d"
+          },
+          {
+            "name": "DSC_0641.jpg",
+            "sha256": "8586d9aa8025f05197f11e74849781b365971106fa4bef919d46e4fd242de8fa"
+          },
+          {
+            "name": "DSC_0642.jpg",
+            "sha256": "345e09bd7fa42795e98eee829125eb1c377125b6126659e629e6b24d52a43b2f"
+          },
+          {
+            "name": "DSC_0643.jpg",
+            "sha256": "5e7be5a2fcc7e78d145a4cd0a25068b072ed28db75472747e9bd41d6aaa8bc1a"
+          },
+          {
+            "name": "DSC_0644.jpg",
+            "sha256": "4b03388c21a7d73f781eb91bfc77908d6c4a39e9a2f623bf174f509852f87a62"
+          },
+          {
+            "name": "DSC_0645.jpg",
+            "sha256": "10baec22ba8e0b0604f1e6596b351a5a0d8ae2a45d5518c8080f5d93d4fcae02"
+          },
+          {
+            "name": "DSC_0646.jpg",
+            "sha256": "81a532cd7e0fde3f3023d95f6915fb8d7eea9c24f3614a650b37d6fff009756e"
+          },
+          {
+            "name": "DSC_0647.jpg",
+            "sha256": "7d42e212521aa0c594f9d0395febbdec9342090af5a2586ad085d9c51ed40856"
+          }
+        ]
+      },
+      "baseline_seconds": 54.86793608381413,
+      "candidate_seconds": 5.536821125075221,
+      "reduction_percent": 89.90882194544845,
+      "baseline_tar_processes": 15,
+      "candidate_tar_processes": 1
+    },
+    {
+      "scene": "office",
+      "archive_bytes": 231734054,
+      "archive_sha256": "bc2bfdf784b0cb8139832b8339ad533be022901a635969fefe9d8bc2b9fff07d",
+      "all_bytes_identical": true,
+      "current_samples_identical": true,
+      "focal_35mm": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "manifest": {
+        "name": "ETH3D office",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/office_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 26,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint",
+        "files": [
+          {
+            "name": "DSC_0219.jpg",
+            "sha256": "386d2cf627b037e3f52962fa81c40aea51f4c46ac5ab378c08ef560c4164c122"
+          },
+          {
+            "name": "DSC_0220.jpg",
+            "sha256": "07386731caf3b70cecc35531c78ebd92dcdd13115e910abcff9dc62e8a800023"
+          },
+          {
+            "name": "DSC_0221.jpg",
+            "sha256": "87c8e643434fd26914195c8a646020f316d4996170e04aba4565aa4cf4641674"
+          },
+          {
+            "name": "DSC_0222.jpg",
+            "sha256": "bfe92dbbccf3c77cd67a99b8d3d851254b590c65e9e3dcfad6a9de2f0cac1169"
+          },
+          {
+            "name": "DSC_0223.jpg",
+            "sha256": "e74057c200601956fdbc6cd11880d935bf4bd9cd785631eb2f6ec69ac72d5289"
+          },
+          {
+            "name": "DSC_0228.jpg",
+            "sha256": "1469e564e3e204d8bebdf2203511b6b72ddd48b85dd8047475ea20a3eb38b112"
+          },
+          {
+            "name": "DSC_0229.jpg",
+            "sha256": "de517270e9cea733fcd28ce8d2612610744a598e05140ff8d31acc6f0774e81b"
+          },
+          {
+            "name": "DSC_0230.jpg",
+            "sha256": "df9210859bcda95bf566de761eb2d6e88906c8eb251227bf698ef942a243e661"
+          },
+          {
+            "name": "DSC_0231.jpg",
+            "sha256": "1dfae28cfd67729bd4722400d2586680ad35d00eaf15e17499f4fcbfb2e9d8d3"
+          },
+          {
+            "name": "DSC_0235.jpg",
+            "sha256": "a97a79f75fa91f029d13bc329f773d71114a73cfa4ddd61b33382ce464f56fbe"
+          },
+          {
+            "name": "DSC_0236.jpg",
+            "sha256": "91cf3ce6e736158c5d20ed419ee156ab06aa7ffac20990ac22eb9c1842dd675a"
+          },
+          {
+            "name": "DSC_0237.jpg",
+            "sha256": "cd73ec3b1c4bdcbb32a385e8a159ad9c1fed64351e8cae8a4af4355d57fa4cb3"
+          },
+          {
+            "name": "DSC_0238.jpg",
+            "sha256": "0333ed1f5ef7cd161f82a8cae027a954af3c325abf252eef6c1a67b1ee40b298"
+          },
+          {
+            "name": "DSC_0239.jpg",
+            "sha256": "ecdb8eb726c3be24ecd920577fc8715d16fe6d36f4c4ebe2a0c3b202aa6e2e99"
+          },
+          {
+            "name": "DSC_0240.jpg",
+            "sha256": "8b7083a275ab32d0fde07d7bb549564d874bbf7f703b6529ce7d8d6f2400fd29"
+          },
+          {
+            "name": "DSC_0241.jpg",
+            "sha256": "37a58c8e6ca0285a57d9a9b3e18478762ff4a64c20c09fb331fa7712955d9be6"
+          },
+          {
+            "name": "DSC_0242.jpg",
+            "sha256": "ee4307064ebc578b091c2736624d24146f0a15db61b00deaeee781653f67b742"
+          },
+          {
+            "name": "DSC_0243.jpg",
+            "sha256": "bbe55c52732a9d13829648606e616ea1a0be545fe329ca58ed3b9011b8ef9fae"
+          },
+          {
+            "name": "DSC_0248.jpg",
+            "sha256": "d18bd127f056d47221e7a8403f7e7bffe3a9e24b402e3526a25f483ce8779471"
+          },
+          {
+            "name": "DSC_0249.jpg",
+            "sha256": "ab8451521b4085016503a9d7a9b16a7d4e054c273ee2eb0f1e09d8cfc5c01c88"
+          },
+          {
+            "name": "DSC_0250.jpg",
+            "sha256": "d6a28b3167442aedbc1f4e45bf80021d03d02a1847451cc329c1fa19d709d3ab"
+          },
+          {
+            "name": "DSC_0251.jpg",
+            "sha256": "e88db1281c0172d999b8a30136386ff0558211ca4ba72e0c7b7f2329753c7f10"
+          },
+          {
+            "name": "DSC_0252.jpg",
+            "sha256": "c046c0228bc169f3f9253bf4f6dabea97c669a5ddbcdd0afc29d3cb00ed26a3c"
+          },
+          {
+            "name": "DSC_0253.jpg",
+            "sha256": "f3574579049c0d53316b6b83f17952387078978f75ec696bbdb4528ab0dd07a9"
+          },
+          {
+            "name": "DSC_0254.jpg",
+            "sha256": "5ff41dafc647400f2cb25bc20e9aa559804985f60f1a6ad3db1478a23e838464"
+          },
+          {
+            "name": "DSC_0255.jpg",
+            "sha256": "bf313582d39d6fdfc2db94b8ef9f65d37e5473dcfafd46f796ef340d4dd76b77"
+          }
+        ]
+      },
+      "baseline_seconds": 183.94097529212013,
+      "candidate_seconds": 11.245722000021487,
+      "reduction_percent": 93.88623335167058,
+      "baseline_tar_processes": 27,
+      "candidate_tar_processes": 1
+    }
+  ],
+  "final_source_sha256": "71cbc889a58bc0107b9cd469428074614d7171572d210832b94325d64adce75d",
+  "source_note": "Timing snapshot differs from the final source only in import order and blank lines."
+}

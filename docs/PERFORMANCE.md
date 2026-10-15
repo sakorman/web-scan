@@ -63,3 +63,8 @@ Apple Silicon macOS，同一组 26 张办公室照片，Brush 0.3.0，1000 步�
 ## 重复对照
 
 `scripts/benchmark_exports.py` 可用 `--repeats 2 --resolution 512` 重复比较候选适配器。每组输入固定，顺序交错，启动前保存适配器源码快照；汇总展示每种设置的均值及范围。一次或两次运行仍不足以建立一般性能结论。默认参数保持原有行为，增点策略的实际对照见 [REFINEMENT.md](REFINEMENT.md)。
+
+
+## 公开示例准备
+
+ETH3D 7z 归档改为单次流式读取。本机 pipes 从 54.87 秒降到 5.54 秒，office 从 183.94 秒降到 11.25 秒；40 张照片和来源清单逐字节相同。计时仅覆盖归档准备，不含下载、SfM 和训练，未清理操作系统文件缓存。[完整记录与复现](SAMPLE-PREPARATION.md)
