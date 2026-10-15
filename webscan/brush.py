@@ -24,7 +24,7 @@ def executable():
     return path.resolve() if path.is_file() and os.access(path, os.X_OK) else None
 
 
-def read_ply(path):
+def read_ply(path, *, expected_sh_degree=None):
     with path.open("rb") as file:
         header = []
         fields = []
@@ -46,9 +46,18 @@ def read_ply(path):
         if (
             "format binary_little_endian 1.0" not in header
             or count is None
-            or count > 2_000_000
+            or not 0 < count <= 2_000_000
         ):
             raise ValueError("不支持的 PLY 格式或点数")
+        sh_fields = {name for name, _ in fields if name.startswith("f_rest_")}
+        if len(sh_fields) not in (0, 9, 24, 45) or sh_fields != {
+            f"f_rest_{i}" for i in range(len(sh_fields))
+        }:
+            raise ValueError("PLY 球谐系数不完整")
+        if expected_sh_degree is not None and len(sh_fields) != 3 * (
+            (expected_sh_degree + 1) ** 2 - 1
+        ):
+            raise ValueError(f"训练输出必须包含完整 SH{expected_sh_degree} 系数")
         data = np.fromfile(file, dtype=fields, count=count)
         if len(data) != count:
             raise ValueError("PLY 内容不完整")
@@ -67,14 +76,15 @@ def read_ply(path):
             "f_dc_0",
             "f_dc_1",
             "f_dc_2",
+            *sorted(sh_fields),
         ]:
             if key not in data.dtype.names or not np.isfinite(data[key]).all():
                 raise ValueError("PLY 参数缺失或非有限")
     return header, data
 
 
-def convert_output(source, output, normalization):
-    header, data = read_ply(source)
+def convert_output(source, output, normalization, *, expected_sh_degree=None):
+    header, data = read_ply(source, expected_sh_degree=expected_sh_degree)
     center = np.array(normalization["center"])
     radius = float(normalization["scale"])
     for i, axis in enumerate("xyz"):
@@ -248,7 +258,9 @@ def train(scene, work, output, config, progress):
     progress("train", 0.92, "训练完成，正在校验并转换模型")
     text = log_path.read_text(errors="replace")
     evaluation, rendered = validate_evaluation(scene, exports, config, text)
-    count = convert_output(final_model, output, scene["normalization"])
+    count = convert_output(
+        final_model, output, scene["normalization"], expected_sh_degree=3
+    )
     thumbnail = rendered[0] if rendered else Path(scene["views"][0]["image"])
     with Image.open(thumbnail) as image:
         image.convert("RGB").resize(

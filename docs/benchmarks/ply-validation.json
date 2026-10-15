@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-15",
+  "baseline_commit": "f56c7b45c31454e48c512b2b423d9acfac149aed",
+  "baseline_adapter_sha256": "863cc32eb1f0a672a6ae12bea33ec13a762b741a993beab3eecec9c4d369e174",
+  "candidate_adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+  "fault_source": {
+    "job": "0d7d2cb4e3474d1aaa05036de6f49aa7",
+    "vertices": 72276,
+    "sha256": "989d8b71d9d49ac8c56926cdc186ba01d9d32f8c288d0d35b34b967a7b3bf555"
+  },
+  "fault_injection": [
+    {
+      "case": "nonfinite_sh",
+      "baseline_accepted": true,
+      "candidate_accepted": false,
+      "reason": "PLY 参数缺失或非有限"
+    },
+    {
+      "case": "partial_sh",
+      "baseline_accepted": true,
+      "candidate_accepted": false,
+      "reason": "PLY 球谐系数不完整"
+    },
+    {
+      "case": "empty_model",
+      "baseline_accepted": true,
+      "candidate_accepted": false,
+      "reason": "不支持的 PLY 格式或点数"
+    }
+  ],
+  "read_benchmark": [
+    {
+      "scene": "pipes",
+      "source_job": "82acea65e9874f64806815a592015dec",
+      "file_bytes": 70801551,
+      "milliseconds": {
+        "baseline": {
+          "median": 18.835833063349128,
+          "runs": [
+            24.381875060498714,
+            22.649999940767884,
+            20.85049985907972,
+            18.835833063349128,
+            17.309874994680285,
+            15.288583934307098,
+            14.79925005696714
+          ]
+        },
+        "candidate": {
+          "median": 48.490499844774604,
+          "runs": [
+            48.490499844774604,
+            48.60920808278024,
+            48.26216585934162,
+            48.3726249076426,
+            49.84812485054135,
+            48.78045804798603,
+            48.14833402633667
+          ]
+        }
+      },
+      "vertices": 300000
+    },
+    {
+      "scene": "office",
+      "source_job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "file_bytes": 54618559,
+      "milliseconds": {
+        "baseline": {
+          "median": 10.861249873414636,
+          "runs": [
+            15.146208927035332,
+            10.651333024725318,
+            10.861249873414636,
+            10.68799989297986,
+            10.998166864737868,
+            10.861416114494205,
+            10.606458177790046
+          ]
+        },
+        "candidate": {
+          "median": 30.905041843652725,
+          "runs": [
+            30.905041843652725,
+            30.885874992236495,
+            32.258709194138646,
+            30.560707906261086,
+            31.114500015974045,
+            30.825417023152113,
+            32.67308394424617
+          ]
+        }
+      },
+      "vertices": 231428
+    }
+  ],
+  "read_benchmark_scope": "7 reads per version and scene; baseline then candidate; OS cache not cleared; includes file I/O and validation; milliseconds"
+}
