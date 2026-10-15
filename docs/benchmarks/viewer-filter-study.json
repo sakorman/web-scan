@@ -1,0 +1,215 @@
+{
+  "background": "0x000000",
+  "configurations": {
+    "baseline": {
+      "preBlurAmount": 0,
+      "blurAmount": 0.3,
+      "accumExtSplats": false
+    },
+    "brush": {
+      "preBlurAmount": 0.3,
+      "blurAmount": 0,
+      "accumExtSplats": false
+    },
+    "extended": {
+      "preBlurAmount": 0,
+      "blurAmount": 0.3,
+      "accumExtSplats": true
+    },
+    "matched": {
+      "preBlurAmount": 0.3,
+      "blurAmount": 0,
+      "accumExtSplats": true
+    }
+  },
+  "results": [
+    {
+      "scene": "pipes",
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "model_sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf",
+      "rows": [
+        {
+          "index": 0,
+          "reference_name": "0000-2bd85cc2e3134090b614199e2671400c.jpg",
+          "width": 512,
+          "height": 336,
+          "baseline": {
+            "psnr": 18.441534479686077,
+            "ssim": 0.7709660530090332
+          },
+          "brush": {
+            "psnr": 18.497245069984665,
+            "ssim": 0.7964162230491638
+          },
+          "extended": {
+            "psnr": 18.901140022709257,
+            "ssim": 0.774301290512085
+          },
+          "matched": {
+            "psnr": 18.930233380596164,
+            "ssim": 0.7965640425682068
+          },
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "index": 8,
+          "reference_name": "0008-c7b3f806b12a4caf9962b87c64e03392.jpg",
+          "width": 512,
+          "height": 336,
+          "baseline": {
+            "psnr": 13.594938060913893,
+            "ssim": 0.6525352001190186
+          },
+          "brush": {
+            "psnr": 13.402536018912718,
+            "ssim": 0.6326971054077148
+          },
+          "extended": {
+            "psnr": 14.003663298187007,
+            "ssim": 0.6571021676063538
+          },
+          "matched": {
+            "psnr": 13.80710350773108,
+            "ssim": 0.6330610513687134
+          },
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ],
+      "mean": {
+        "baseline": {
+          "psnr": 16.018236270299987,
+          "ssim": 0.7117506265640259
+        },
+        "brush": {
+          "psnr": 15.949890544448692,
+          "ssim": 0.7145566642284393
+        },
+        "extended": {
+          "psnr": 16.452401660448132,
+          "ssim": 0.7157017290592194
+        },
+        "matched": {
+          "psnr": 16.36866844416362,
+          "ssim": 0.7148125469684601
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "model_sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276",
+      "rows": [
+        {
+          "index": 0,
+          "reference_name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.jpg",
+          "width": 512,
+          "height": 333,
+          "baseline": {
+            "psnr": 20.775340714479817,
+            "ssim": 0.8512511849403381
+          },
+          "brush": {
+            "psnr": 20.82777227655386,
+            "ssim": 0.864841103553772
+          },
+          "extended": {
+            "psnr": 20.95482401748779,
+            "ssim": 0.8556665778160095
+          },
+          "matched": {
+            "psnr": 20.86728362128275,
+            "ssim": 0.8659135103225708
+          },
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "index": 8,
+          "reference_name": "0008-1c6da61406eb4744893572435799058c.jpg",
+          "width": 512,
+          "height": 333,
+          "baseline": {
+            "psnr": 19.407636495234037,
+            "ssim": 0.9001560211181641
+          },
+          "brush": {
+            "psnr": 19.345278569182145,
+            "ssim": 0.9012708067893982
+          },
+          "extended": {
+            "psnr": 20.002875342085886,
+            "ssim": 0.9048976898193359
+          },
+          "matched": {
+            "psnr": 19.93894260725628,
+            "ssim": 0.9052742719650269
+          },
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "index": 16,
+          "reference_name": "0016-69c038bffab749d38aa143d9c0f0d1fe.jpg",
+          "width": 512,
+          "height": 333,
+          "baseline": {
+            "psnr": 15.361735121684994,
+            "ssim": 0.7556278109550476
+          },
+          "brush": {
+            "psnr": 15.43001651780263,
+            "ssim": 0.758328378200531
+          },
+          "extended": {
+            "psnr": 15.838429600812184,
+            "ssim": 0.7615699768066406
+          },
+          "matched": {
+            "psnr": 15.886202498707004,
+            "ssim": 0.7600836753845215
+          },
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "index": 24,
+          "reference_name": "0024-3c37121ca00f4afb9fe71c76daf95848.jpg",
+          "width": 512,
+          "height": 333,
+          "baseline": {
+            "psnr": 21.79571180953314,
+            "ssim": 0.8201998472213745
+          },
+          "brush": {
+            "psnr": 21.574131507231282,
+            "ssim": 0.8281246423721313
+          },
+          "extended": {
+            "psnr": 21.878990885067896,
+            "ssim": 0.8229113817214966
+          },
+          "matched": {
+            "psnr": 21.591675319428063,
+            "ssim": 0.8290706276893616
+          },
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ],
+      "mean": {
+        "baseline": {
+          "psnr": 19.335106035232997,
+          "ssim": 0.8318087160587311
+        },
+        "brush": {
+          "psnr": 19.29429971769248,
+          "ssim": 0.8381412327289581
+        },
+        "extended": {
+          "psnr": 19.66877996136344,
+          "ssim": 0.8362614065408707
+        },
+        "matched": {
+          "psnr": 19.571026011668526,
+          "ssim": 0.8400855213403702
+        }
+      }
+    }
+  ]
+}

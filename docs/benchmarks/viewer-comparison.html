@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Viewer comparison</title><style>body{margin:20px;background:#fff;color:#111;font:16px sans-serif}canvas{display:block;margin:12px 0}button,select{font:inherit;padding:6px}a{margin-left:12px}#status{white-space:pre-wrap}</style></head><body>
+<label>Scene <select id="scene"><option value="82acea65e9874f64806815a592015dec">pipes</option><option value="59bb5740d2e945d9a459ca2514c66bb2">office</option></select></label>
+<label>View <select id="view"><option value="0">0</option><option value="8">8</option><option value="16">16</option><option value="24">24</option></select></label>
+<label>Filter <select id="filter"><option value="baseline">baseline</option><option value="brush">brush</option><option value="extended">extended</option><option value="matched">matched</option></select></label>
+<button id="render">Render</button><a id="png">PNG</a><pre id="status">Choose a scene and render.</pre><div id="surface"></div>
+<script type="module">
+import * as THREE from 'three';
+import {SparkRenderer,SplatMesh} from '@sparkjsdev/spark';
+import {applyPhotoPose,applyPhotoProjection} from '/src/camera.ts';
+let renderer, spark, mesh;
+document.querySelector('#render').onclick=async()=>{
+ const status=document.querySelector('#status');status.textContent='Rendering';document.querySelector('#png').removeAttribute('href');
+ try{
+  mesh?.dispose();spark?.dispose();renderer?.dispose();document.querySelector('#surface').replaceChildren();
+  const job=document.querySelector('#scene').value,index=+document.querySelector('#view').value,filter=document.querySelector('#filter').value;
+  const cameras=await fetch(`/api/jobs/${job}/artifacts/cameras.json`).then(r=>r.json());const pose=cameras.views[index];
+  if(!pose)throw new Error('View not available');
+  const size=512,w=Math.round(pose.width*size/Math.max(pose.width,pose.height)),h=Math.round(pose.height*size/Math.max(pose.width,pose.height));
+  renderer=new THREE.WebGLRenderer({antialias:false,preserveDrawingBuffer:true});renderer.setPixelRatio(1);renderer.setSize(w,h);renderer.setClearColor(0x0b111c,1);renderer.outputColorSpace=THREE.SRGBColorSpace;
+  document.querySelector('#surface').append(renderer.domElement);
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(60,w/h,.01,1000);applyPhotoPose(camera,pose);applyPhotoProjection(camera,pose);
+  let dirty=performance.now();spark=new SparkRenderer({renderer,enableLod:false,sortRadial:false,onDirty:()=>dirty=performance.now(),...(['brush','matched'].includes(filter)?{preBlurAmount:.3,blurAmount:0}:{}),accumExtSplats:['extended','matched'].includes(filter)});scene.add(spark);
+  mesh=new SplatMesh({url:`/api/jobs/${job}/artifacts/gaussians.ply`,enableLod:false,lod:false,extSplats:true});scene.add(mesh);await mesh.initialized;mesh.maxSh=3;mesh.updateGenerator();
+  const started=performance.now();let frames=0;
+  await new Promise(resolve=>{function draw(){renderer.render(scene,camera);frames++;if(frames>=10&&performance.now()-dirty>500&&performance.now()-started>1200)resolve();else requestAnimationFrame(draw)}draw()});
+  const anchor=document.querySelector('#png');anchor.href=renderer.domElement.toDataURL('image/png');anchor.download=`${job}-${index}-${filter}.png`;
+  const accumulators=[...new Set([spark.display,...spark.accumulators])];
+  const accumulatorBytes=accumulators.reduce((total,acc)=>total+(acc.target?acc.target.width*acc.target.height*acc.target.depth*acc.target.textures.reduce((bytes,texture)=>bytes+(texture.type===THREE.UnsignedIntType?16:4),0):0),0);
+  status.textContent=JSON.stringify({ready:true,job,index,filter,width:w,height:h,frames,accumulatorBytes});
+ }catch(error){status.textContent='Error: '+error.message}
+};
+</script></body></html>

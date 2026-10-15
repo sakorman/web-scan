@@ -1,0 +1,292 @@
+{
+  "date": "2026-10-16",
+  "baseline_commit": "b9bff4828b00f8889d33ab8db38fb602d20a4bb6",
+  "spark": "2.3.1",
+  "three": "0.180.0",
+  "width": 512,
+  "pixel_ratio": 1,
+  "background": "0x0b111c",
+  "change": {
+    "baseline": {
+      "accumExtSplats": false
+    },
+    "extended": {
+      "accumExtSplats": true
+    }
+  },
+  "measurement": "Native browser canvas PNG vs identically sized undistorted photo; fixed model, camera and view; not Brush training metrics",
+  "results": [
+    {
+      "scene": "pipes",
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "model_sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf",
+      "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+      "rows": [
+        {
+          "index": 0,
+          "reference_name": "0000-2bd85cc2e3134090b614199e2671400c.jpg",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b",
+          "baseline": {
+            "psnr": 18.685448696728006,
+            "ssim": 0.7737725973129272
+          },
+          "baseline_sha256": "766920e2d812c6fdc4084a3597ad3e0c6fd12010accd93c974decba2addd6601",
+          "extended": {
+            "psnr": 19.163249251895373,
+            "ssim": 0.7772729396820068
+          },
+          "extended_sha256": "082cfe41f3f9edeba8d0159c518df1041f503c1687b9102f84c9246349ffb71b",
+          "width": 512,
+          "height": 336
+        },
+        {
+          "index": 8,
+          "reference_name": "0008-c7b3f806b12a4caf9962b87c64e03392.jpg",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79",
+          "baseline": {
+            "psnr": 13.783601014882693,
+            "ssim": 0.6562838554382324
+          },
+          "baseline_sha256": "eef91e85a80bbfbf78110bd07036a9b9fb7f972204c214a6d80fb870f638215c",
+          "extended": {
+            "psnr": 14.202193380412185,
+            "ssim": 0.6609055399894714
+          },
+          "extended_sha256": "c36b71e82c12fda9326f4563fc0571bd47a2051bd18a182647eaf6b17a8842d4",
+          "width": 512,
+          "height": 336
+        }
+      ],
+      "mean": {
+        "baseline": {
+          "psnr": 16.23452485580535,
+          "ssim": 0.7150282263755798
+        },
+        "extended": {
+          "psnr": 16.682721316153778,
+          "ssim": 0.7190892398357391
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "model_sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276",
+      "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+      "rows": [
+        {
+          "index": 0,
+          "reference_name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.jpg",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157",
+          "baseline": {
+            "psnr": 21.078959743333883,
+            "ssim": 0.8546605110168457
+          },
+          "baseline_sha256": "e972064992f9ee34b6d2c921cfdaec8b54e97f0b9e6eb38c7a47cf0ceb6e605d",
+          "extended": {
+            "psnr": 21.20124969174542,
+            "ssim": 0.8585608005523682
+          },
+          "extended_sha256": "6813cdbc25c498f1285b6689827746d537fa28f03e63a9f327404958c5e5c06e",
+          "width": 512,
+          "height": 333
+        },
+        {
+          "index": 8,
+          "reference_name": "0008-1c6da61406eb4744893572435799058c.jpg",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026",
+          "baseline": {
+            "psnr": 20.166751035384944,
+            "ssim": 0.910839855670929
+          },
+          "baseline_sha256": "3b4e9b629e3d0195b2f5def92c5b35f3b90ca4bcbab1e4a8606cebc73c21a8fe",
+          "extended": {
+            "psnr": 20.807747885792907,
+            "ssim": 0.9152681231498718
+          },
+          "extended_sha256": "c804a1a793fcf22006a54c98768f2eba28c3d0ea5cf3c68b6a19fbdc4d907d2b",
+          "width": 512,
+          "height": 333
+        },
+        {
+          "index": 16,
+          "reference_name": "0016-69c038bffab749d38aa143d9c0f0d1fe.jpg",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766",
+          "baseline": {
+            "psnr": 15.533445681497453,
+            "ssim": 0.7603796720504761
+          },
+          "baseline_sha256": "fa453795839a04642a87cfdccee318491741a9995c1a56f27b441555be533e34",
+          "extended": {
+            "psnr": 16.022690801111686,
+            "ssim": 0.7662894129753113
+          },
+          "extended_sha256": "4513ecd0740010a92e17a5d3f5a4e31e853d2ffd186cc3cdef82ab0845a2e883",
+          "width": 512,
+          "height": 333
+        },
+        {
+          "index": 24,
+          "reference_name": "0024-3c37121ca00f4afb9fe71c76daf95848.jpg",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669",
+          "baseline": {
+            "psnr": 22.19058091775297,
+            "ssim": 0.822813868522644
+          },
+          "baseline_sha256": "90b41847a6fd63e034d08afc75f073032d2314f82160039c9275ed892155b5c1",
+          "extended": {
+            "psnr": 22.251296965982633,
+            "ssim": 0.8255192637443542
+          },
+          "extended_sha256": "229524db2f6e5e2f53afe97f6f900e425e15e1fe2add1eef7c120148ccc9d14f",
+          "width": 512,
+          "height": 333
+        }
+      ],
+      "mean": {
+        "baseline": {
+          "psnr": 19.742434344492313,
+          "ssim": 0.8371734768152237
+        },
+        "extended": {
+          "psnr": 20.07074633615816,
+          "ssim": 0.8414094001054764
+        }
+      }
+    }
+  ],
+  "render_records": [
+    {
+      "scene": "pipes",
+      "ready": true,
+      "job": "82acea65e9874f64806815a592015dec",
+      "index": 0,
+      "filter": "baseline",
+      "width": 512,
+      "height": 336,
+      "frames": 146,
+      "accumulatorBytes": 6021120
+    },
+    {
+      "scene": "pipes",
+      "ready": true,
+      "job": "82acea65e9874f64806815a592015dec",
+      "index": 0,
+      "filter": "extended",
+      "width": 512,
+      "height": 336,
+      "frames": 146,
+      "accumulatorBytes": 10838016
+    },
+    {
+      "scene": "pipes",
+      "ready": true,
+      "job": "82acea65e9874f64806815a592015dec",
+      "index": 8,
+      "filter": "baseline",
+      "width": 512,
+      "height": 336,
+      "frames": 147,
+      "accumulatorBytes": 6021120
+    },
+    {
+      "scene": "pipes",
+      "ready": true,
+      "job": "82acea65e9874f64806815a592015dec",
+      "index": 8,
+      "filter": "extended",
+      "width": 512,
+      "height": 336,
+      "frames": 147,
+      "accumulatorBytes": 10838016
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 0,
+      "filter": "baseline",
+      "width": 512,
+      "height": 333,
+      "frames": 147,
+      "accumulatorBytes": 4669440
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 0,
+      "filter": "extended",
+      "width": 512,
+      "height": 333,
+      "frames": 147,
+      "accumulatorBytes": 8404992
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 8,
+      "filter": "baseline",
+      "width": 512,
+      "height": 333,
+      "frames": 147,
+      "accumulatorBytes": 4669440
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 8,
+      "filter": "extended",
+      "width": 512,
+      "height": 333,
+      "frames": 146,
+      "accumulatorBytes": 8404992
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 16,
+      "filter": "baseline",
+      "width": 512,
+      "height": 333,
+      "frames": 147,
+      "accumulatorBytes": 4669440
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 16,
+      "filter": "extended",
+      "width": 512,
+      "height": 333,
+      "frames": 147,
+      "accumulatorBytes": 8404992
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 24,
+      "filter": "baseline",
+      "width": 512,
+      "height": 333,
+      "frames": 146,
+      "accumulatorBytes": 4669440
+    },
+    {
+      "scene": "office",
+      "ready": true,
+      "job": "59bb5740d2e945d9a459ca2514c66bb2",
+      "index": 24,
+      "filter": "extended",
+      "width": 512,
+      "height": 333,
+      "frames": 146,
+      "accumulatorBytes": 8404992
+    }
+  ]
+}

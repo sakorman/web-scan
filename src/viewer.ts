@@ -21,7 +21,8 @@ export async function mountViewer(container:HTMLElement,url:string,startWalk=fal
     return controlsMoving;
   });
   const requestControlsFrame=()=>{controlsMoving=true;frames.invalidate();};
-  const spark=new SparkRenderer({renderer,enableLod:false,sortRadial:false,onDirty:frames.invalidate});scene.add(spark);
+  // Keep extended precision through the intermediate splat accumulator as well.
+  const spark=new SparkRenderer({renderer,enableLod:false,sortRadial:false,accumExtSplats:true,onDirty:frames.invalidate});scene.add(spark);
   const toolbar=document.createElement('div');toolbar.className='viewer-controls';
   toolbar.innerHTML='<button data-mode="orbit">环绕查看</button><button data-mode="walk">室内漫游</button><button data-mode="photo" disabled>拍摄视角</button><button data-mode="reset">重置视角</button>';
   const cameraBar=document.createElement('div');cameraBar.className='viewer-camera-bar';cameraBar.hidden=true;
