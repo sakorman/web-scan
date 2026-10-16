@@ -1,0 +1,745 @@
+{
+  "config": {
+    "steps": 3000,
+    "max_points": 150000,
+    "resolution": 512,
+    "evaluation_mode": "holdout",
+    "backend": "brush"
+  },
+  "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+  "seed": 42,
+  "repeats": 2,
+  "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+  "runs": [
+    {
+      "scene_index": 0,
+      "repeat": 0,
+      "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "variant": "baseline",
+      "seconds": 24.1344,
+      "adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "gaussians": 11644,
+      "evaluation": {
+        "psnr": 18.134394,
+        "ssim": 0.76237535
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "exports": 1,
+      "export_bytes": 2749534,
+      "first_progress_seconds": 2.0135,
+      "growth_stop_iter": 2400,
+      "model_bytes": 2749534,
+      "model_sha256": "cbf4c5f6e47b9fed7bace9c0d43820335d715d7faff7ef6dc060783c98e336c3",
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "5f29b9bc20d27f4c2fb1db31c6ebdefe44ba404dc581d4837abf79a745e37c96",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "3818f5957aed7efd5f7512b577f1af36dfd4c87bebb124bc4da6d60a8ab02c3c",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b",
+          "psnr": 20.90697730471849,
+          "ssim": 0.8100271224975586
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79",
+          "psnr": 15.087168926287976,
+          "ssim": 0.6628283858299255
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 17.997073115503234,
+        "ssim": 0.7364277541637421
+      }
+    },
+    {
+      "scene_index": 0,
+      "repeat": 0,
+      "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "variant": "candidate",
+      "seconds": 23.1127,
+      "adapter_sha256": "3a392a527c7841920c88729ae4212a7aa8aa83231937fee57c269e0523495270",
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "gaussians": 5311,
+      "evaluation": {
+        "psnr": 18.207352,
+        "ssim": 0.74743587
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "exports": 1,
+      "export_bytes": 1254945,
+      "first_progress_seconds": 2.0139,
+      "growth_stop_iter": 1500,
+      "model_bytes": 1254945,
+      "model_sha256": "99a5d2a5739e5a0ac1e792394cd6865921453c96fcdb98b0f30dc3dc453c0d26",
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "5e31f97bdfb1e92e35d81454645e486e39cf99f6a26fcb51461963bdd0a588c6",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "7930895ebc928d2c649b6cfde7183b97ee48e088b92f6851612a15cccaf31a56",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b",
+          "psnr": 20.97358698540097,
+          "ssim": 0.7845797538757324
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79",
+          "psnr": 15.14159735914621,
+          "ssim": 0.6582273244857788
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 18.05759217227359,
+        "ssim": 0.7214035391807556
+      }
+    },
+    {
+      "scene_index": 0,
+      "repeat": 1,
+      "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "variant": "candidate",
+      "seconds": 23.127,
+      "adapter_sha256": "3a392a527c7841920c88729ae4212a7aa8aa83231937fee57c269e0523495270",
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "gaussians": 5397,
+      "evaluation": {
+        "psnr": 16.920721,
+        "ssim": 0.74135184
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "exports": 1,
+      "export_bytes": 1275241,
+      "first_progress_seconds": 2.0137,
+      "growth_stop_iter": 1500,
+      "model_bytes": 1275241,
+      "model_sha256": "19dc55c71b05ab7c8de4cc182ca4a3f9796cf54fc66ff54109ca6397b1f2cbd8",
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "bb9b2eec1c31e3a5ffa0813bdc5b4673104e0df098d42d3092a57a99faa2efa8",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "3c386c446a08ca5aaffcaed8ca08473c848ad54309fcf68b41ba053720470148",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b",
+          "psnr": 18.11105811335201,
+          "ssim": 0.7668586373329163
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79",
+          "psnr": 15.530852832396977,
+          "ssim": 0.6612856388092041
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 16.820955472874495,
+        "ssim": 0.7140721380710602
+      }
+    },
+    {
+      "scene_index": 0,
+      "repeat": 1,
+      "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "variant": "baseline",
+      "seconds": 24.1052,
+      "adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "gaussians": 11498,
+      "evaluation": {
+        "psnr": 19.195044,
+        "ssim": 0.7696656
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "exports": 1,
+      "export_bytes": 2715078,
+      "first_progress_seconds": 2.0104,
+      "growth_stop_iter": 2400,
+      "model_bytes": 2715078,
+      "model_sha256": "e8284caee7d56c3e3a9f2be6cf8216e66a4cfcd17b77abe70ae8eb8198d3a9af",
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "565ca674730c5b32d46a523ccfa3173acecccb256a15ac536246591e0fb2382f",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "e09f282a58822c01866747cf1ce50d90f6ddca414661d8f26f6e8f2385f00bd8",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b",
+          "psnr": 23.08420193051188,
+          "ssim": 0.8210782408714294
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79",
+          "psnr": 14.89099540672325,
+          "ssim": 0.6674375534057617
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 18.987598668617565,
+        "ssim": 0.7442578971385956
+      }
+    },
+    {
+      "scene_index": 1,
+      "repeat": 0,
+      "source_job": "98a93d1c6a824661974c57a21fc391d7",
+      "variant": "candidate",
+      "seconds": 23.0987,
+      "adapter_sha256": "3a392a527c7841920c88729ae4212a7aa8aa83231937fee57c269e0523495270",
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "gaussians": 6752,
+      "evaluation": {
+        "psnr": 21.004824,
+        "ssim": 0.86243916
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "exports": 1,
+      "export_bytes": 1595021,
+      "first_progress_seconds": 3.0175,
+      "growth_stop_iter": 1500,
+      "model_bytes": 1595021,
+      "model_sha256": "7c6908dd80b351102cb2fdc89c66fe021b32ab7ed1a269ed58a34bec01d2b521",
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "4c0f7799bafe1bc7f61e683178cda0191fae9882e1a41da2e204f5a91af8de31",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "3417d7608c3ca1c742856b0bf016d8ddcda8a59b170307b1d97d4baa4953a593",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "cd67825ee71a28890626c2d6f51472ee4f501ee40a4e04214b789622e3bd60f1",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "081efd1f50d74909551ed874e7bb12bdbfff0db51bd86f0c3f707a41d0c73bf5",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157",
+          "psnr": 22.443543547420113,
+          "ssim": 0.8769094347953796
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026",
+          "psnr": 22.312932169777156,
+          "ssim": 0.9212137460708618
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766",
+          "psnr": 16.695395782412206,
+          "ssim": 0.7645822763442993
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669",
+          "psnr": 21.989313837922786,
+          "ssim": 0.8239935040473938
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 20.860296334383065,
+        "ssim": 0.8466747403144836
+      }
+    },
+    {
+      "scene_index": 1,
+      "repeat": 0,
+      "source_job": "98a93d1c6a824661974c57a21fc391d7",
+      "variant": "baseline",
+      "seconds": 24.1155,
+      "adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "gaussians": 14137,
+      "evaluation": {
+        "psnr": 20.697216,
+        "ssim": 0.8707355
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "exports": 1,
+      "export_bytes": 3337882,
+      "first_progress_seconds": 3.0162,
+      "growth_stop_iter": 2400,
+      "model_bytes": 3337882,
+      "model_sha256": "12c659882d6331fc26f86434233a245556303e4a501a487063b4eca60553c245",
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "9de5d1bc3f40ceb485561cf64489d02a2ec6466fc20dc2ad9b799368b9a74b4e",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "8c53f4e28524e6a92719cec7b4b84f1845dc7283765c620cbeb382d83525f713",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "a9884a6d021ce52a9d5d41a591d27d35a29badd5eb8c77ed43290145bd995cc7",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "aaece5ab712a963ccad85e1c2c7a8e0f0e1491a73437ee03404ea972b135436f",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157",
+          "psnr": 21.848869511322604,
+          "ssim": 0.8888245820999146
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026",
+          "psnr": 22.73849428195057,
+          "ssim": 0.9327763915061951
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766",
+          "psnr": 16.93187891206077,
+          "ssim": 0.7790570259094238
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669",
+          "psnr": 20.818402193121827,
+          "ssim": 0.8232342600822449
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 20.58441122461394,
+        "ssim": 0.8559730648994446
+      }
+    },
+    {
+      "scene_index": 1,
+      "repeat": 1,
+      "source_job": "98a93d1c6a824661974c57a21fc391d7",
+      "variant": "baseline",
+      "seconds": 24.1187,
+      "adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "gaussians": 14112,
+      "evaluation": {
+        "psnr": 21.377583,
+        "ssim": 0.87486434
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "exports": 1,
+      "export_bytes": 3331982,
+      "first_progress_seconds": 3.0141,
+      "growth_stop_iter": 2400,
+      "model_bytes": 3331982,
+      "model_sha256": "1a848d47fcfcee3da38b40f9a6e7f88a2c125144c4077cb089aa2e0fe2874be7",
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "0426acda93913e2f063447d2dc98d9f7927fedd45eb28e45c96bbd9367ef3e4a",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "f9142d614c9ad919a47ce5dcab5319a84cbdb6ab4803bdac5f837f19e87af640",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "94f8c3a59291b4e9453a92aeb048e03524d8f16d74187221f382e9de1254422e",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "dc8805ab850773bf79ae4fb1cc4e88748a038ec64695512041d7539cdc03175f",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157",
+          "psnr": 23.96595669855703,
+          "ssim": 0.8975434303283691
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026",
+          "psnr": 21.876056008790382,
+          "ssim": 0.9297215342521667
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766",
+          "psnr": 16.574596280155372,
+          "ssim": 0.7792627215385437
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669",
+          "psnr": 22.484461579682666,
+          "ssim": 0.832461416721344
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 21.225267641796364,
+        "ssim": 0.8597472757101059
+      }
+    },
+    {
+      "scene_index": 1,
+      "repeat": 1,
+      "source_job": "98a93d1c6a824661974c57a21fc391d7",
+      "variant": "candidate",
+      "seconds": 23.1104,
+      "adapter_sha256": "3a392a527c7841920c88729ae4212a7aa8aa83231937fee57c269e0523495270",
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "gaussians": 6779,
+      "evaluation": {
+        "psnr": 20.535988,
+        "ssim": 0.85873497
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "exports": 1,
+      "export_bytes": 1601393,
+      "first_progress_seconds": 3.0177,
+      "growth_stop_iter": 1500,
+      "model_bytes": 1601393,
+      "model_sha256": "e8c7901a0d0ab395665e9af3a7eded8bb00bb84ce940d782988dbb5245367554",
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "a95872082b49e46fb30fbec9991104b414b525c4de0d5639503ae39433af681e",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "9d31e2653f5f7cbfc460c64b5aa2793a3e506cf7d2da497122684a3729313c97",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "b7d2bf69716f6dd687ad22ed830fd9084c0bd5db1b8c3c57af869926397a68b7",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "14ca0b94f17cec2eaa051c48c7a713c64812ee54ba372d629ed2314842954bf5",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ],
+      "rescored_views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157",
+          "psnr": 23.000182667351005,
+          "ssim": 0.8826413154602051
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026",
+          "psnr": 20.732953359482856,
+          "ssim": 0.9147666096687317
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766",
+          "psnr": 17.131957919178255,
+          "ssim": 0.7673490643501282
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669",
+          "psnr": 20.73571785652236,
+          "ssim": 0.8103242516517639
+        }
+      ],
+      "rescored_mean": {
+        "psnr": 20.40020295063362,
+        "ssim": 0.8437703102827072
+      }
+    }
+  ],
+  "summary": [
+    {
+      "scene_index": 0,
+      "runs_per_variant": 2,
+      "baseline": {
+        "seconds": {
+          "mean": 24.119799999999998,
+          "min": 24.1052,
+          "max": 24.1344
+        },
+        "gaussians": {
+          "mean": 11571,
+          "min": 11498,
+          "max": 11644
+        },
+        "psnr": {
+          "mean": 18.664718999999998,
+          "min": 18.134394,
+          "max": 19.195044
+        },
+        "ssim": {
+          "mean": 0.7660204749999999,
+          "min": 0.76237535,
+          "max": 0.7696656
+        }
+      },
+      "candidate": {
+        "seconds": {
+          "mean": 23.11985,
+          "min": 23.1127,
+          "max": 23.127
+        },
+        "gaussians": {
+          "mean": 5354,
+          "min": 5311,
+          "max": 5397
+        },
+        "psnr": {
+          "mean": 17.5640365,
+          "min": 16.920721,
+          "max": 18.207352
+        },
+        "ssim": {
+          "mean": 0.744393855,
+          "min": 0.74135184,
+          "max": 0.74743587
+        }
+      }
+    },
+    {
+      "scene_index": 1,
+      "runs_per_variant": 2,
+      "baseline": {
+        "seconds": {
+          "mean": 24.1171,
+          "min": 24.1155,
+          "max": 24.1187
+        },
+        "gaussians": {
+          "mean": 14124.5,
+          "min": 14112,
+          "max": 14137
+        },
+        "psnr": {
+          "mean": 21.0373995,
+          "min": 20.697216,
+          "max": 21.377583
+        },
+        "ssim": {
+          "mean": 0.8727999200000001,
+          "min": 0.8707355,
+          "max": 0.87486434
+        }
+      },
+      "candidate": {
+        "seconds": {
+          "mean": 23.10455,
+          "min": 23.0987,
+          "max": 23.1104
+        },
+        "gaussians": {
+          "mean": 6765.5,
+          "min": 6752,
+          "max": 6779
+        },
+        "psnr": {
+          "mean": 20.770406,
+          "min": 20.535988,
+          "max": 21.004824
+        },
+        "ssim": {
+          "mean": 0.860587065,
+          "min": 0.85873497,
+          "max": 0.86243916
+        }
+      }
+    }
+  ],
+  "date": "2026-10-16",
+  "baseline_commit": "8d47231716451965fc3dea3c015e2e97a1afa90e",
+  "hardware": "Apple M5 / 32 GiB / Metal",
+  "scenes": [
+    {
+      "scene": "pipes",
+      "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "input_images": 14,
+      "registered_images": 14,
+      "failed_views": [],
+      "camera_mode": "shared",
+      "sparse_points": 1873,
+      "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+      "sfm_seconds": null,
+      "sfm_note": "Reused identical precomputed geometry; SfM not executed or timed in this experiment"
+    },
+    {
+      "scene": "office",
+      "source_job": "98a93d1c6a824661974c57a21fc391d7",
+      "input_images": 26,
+      "registered_images": 26,
+      "failed_views": [],
+      "camera_mode": "shared",
+      "sparse_points": 2456,
+      "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+      "sfm_seconds": null,
+      "sfm_note": "Reused identical precomputed geometry; SfM not executed or timed in this experiment"
+    }
+  ],
+  "hypothesis": "An earlier end to growth leaves more steps to optimize existing splats; pruning and replacement still continue.",
+  "cold_or_cached": "Fixed precomputed SfM, fresh training processes; no model checkpoints reused. First training in this experiment is the cold process start; GPU/OS caches not reset.",
+  "timing_scope": "All times are adapter training, evaluation and export only, not cold end-to-end reconstruction."
+}

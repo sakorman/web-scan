@@ -1,0 +1,11 @@
+--- a/webscan/brush.py
++++ b/webscan/brush.py
+@@ -202,7 +202,7 @@
+         "--refine-every",
+         "100",
+         "--growth-stop-iter",
+-        str(int(steps * 0.8)),
++        str(int(steps * 0.5)),
+         "--export-every",
+         str(interval),
+         "--export-path",
