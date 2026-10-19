@@ -24,9 +24,9 @@ Web Scan 是一个在本地运行的三维重建工具。导入同一处空间�
 
 ## 重建示例
 
-没有现成的照片，可以点 **示例项目**。里面放了 [ETH3D 公开数据集](https://www.eth3d.net/datasets)的两处室内场景：办公室 26 张、管道房 14 张。每组都是同一空间的连续多视角实拍，导入后照常计算相机位姿、训练高斯，再下载模型。
+没有现成的照片，可以点 **示例项目**。目前提供 [ETH3D](https://www.eth3d.net/datasets) 办公室 26 张、管道房 14 张，以及 [TUM RGB-D](https://cvg.cit.tum.de/data/datasets/rgbd-dataset) 连续桌面 96 帧。每组都是同一空间的多视角实拍，导入后计算相机位姿、训练高斯，再下载模型。TUM 示例只使用彩色照片，原生分辨率为 640×480。
 
-![公开照片示例，包含办公室和管道房的实拍预览](docs/screenshots/09-public-samples.jpg)
+![办公室、管道房和连续桌面三组实拍示例](docs/screenshots/35-three-photo-samples.jpg)
 
 下面是 ETH3D 的一间办公室。26 张照片，COLMAP 全部定位成功；在本机训练 6,000 步后，生成了 50,223 个高斯。截图来自实际运行的页面，可以看到桌椅、显示器和窗户，也能拖动视角走到旁边看看。
 
@@ -134,12 +134,13 @@ npm run build
 
 ### 准备公开数据集照片
 
-下载一次即可。两组照片独立准备，先选一组就能开始：
+下载一次即可。三组照片独立准备，先选一组就能开始：
 
 | 示例 | 实拍照片 | 官方归档大小 | 本地位置 |
 | --- | --- | --- | --- |
 | ETH3D office · 办公室 | 26 张 | 约 220 MiB | `.samples/eth3d-office/` |
 | ETH3D pipes · 管道房 | 14 张 | 约 105 MiB | `.samples/eth3d-pipes/` |
+| TUM freiburg1_desk · 连续桌面 | 96 帧 | 约 328 MiB | `.samples/tum-freiburg1_desk/` |
 
 办公室：
 
@@ -165,9 +166,22 @@ curl -L --fail --continue-at - \
 
 准备脚本需要支持 7z 的 libarchive `tar`，macOS 自带。它会把照片缩到长边 1600 像素，保存原文件名、来源和 SHA-256 清单。准备好后重新打开「示例项目」，点「导入这组照片」；不用重启后端。照片不完整时按钮不会启用，导入前还会校验文件有没有改变。
 
+连续桌面：
+
+```bash
+curl -L --fail --continue-at - \
+  https://cvg.cit.tum.de/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_desk.tgz \
+  -o /tmp/rgbd_dataset_freiburg1_desk.tgz
+.venv/bin/python scripts/prepare_tum.py /tmp/rgbd_dataset_freiburg1_desk.tgz
+```
+
+按时间戳顺序均匀选择 96 帧 RGB，保持 640×480 原始尺寸。这组照片来自同一镜头，可在更多设置中选择“同镜头”。归档里的深度、真值位姿和原始标定不参与重建。[来源、采样和实测](docs/TUM-DESK.md)
+
 重建只使用照片，不读取数据集自带的相机标定或模型。程序生成的校准图保留在面板底部的调试选项中。
 
-照片来源：Schöps 等人的 ETH3D / CVPR 2017 数据集，采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)（署名、非商业、相同方式共享）。照片及其衍生模型不在本项目 MIT 许可证的范围内；README 中含这些照片或重建结果的截图同样保留数据集许可。原图和模型不提交到 Git，下载的训练报告会记录来源与许可。
+ETH3D 照片来源：Schöps 等人的 ETH3D / CVPR 2017 数据集，采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)（署名、非商业、相同方式共享）。照片及其衍生模型不在本项目 MIT 许可证的范围内；README 中含这些照片或重建结果的截图同样保留数据集许可。原图和模型不提交到 Git，下载的训练报告会记录来源与许可。
+
+TUM 照片来源：Sturm 等人的 TUM RGB-D Benchmark / IROS 2012，遵循 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)。示例面板、来源清单和训练报告分别保留两种数据集的作者与许可。
 
 ### 用手机拍
 

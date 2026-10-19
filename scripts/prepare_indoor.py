@@ -123,7 +123,9 @@ def main():
     parser.add_argument("archive", type=Path, help="Official <scene>_dslr_jpg.7z file")
     parser.add_argument(
         "--scene",
-        choices=[sample.scene for sample in SAMPLES.values()],
+        choices=[
+            sample.scene for sample in SAMPLES.values() if sample.family == "eth3d"
+        ],
         default="office",
     )
     args = parser.parse_args()

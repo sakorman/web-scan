@@ -212,8 +212,11 @@ select, input { width: 100%; display: block; border: 1px solid #314461; backgrou
 .sample-option>svg:last-child { margin-left: auto; width: 14px; color: #738cae; }
 .sample-option strong, .download-option strong { font-size: 12px; font-weight: 500; display: block; }
 .sample-option small, .download-option small { display: block; color: #86a1c4; font-size: 10px; line-height: 1.7; margin-top: 6px; }
-.samples-dialog { width: min(760px,calc(100vw - 32px)); }
-.sample-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.samples-dialog { width: min(1080px,calc(100vw - 32px)); }
+.sample-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.dataset-content>.dataset-attribution { font-size: 10px; line-height: 1.6; min-height: 32px; }
+.dataset-attribution a { text-decoration: underline; }
+@media(max-width:850px) { .sample-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 .dataset-card { min-width: 0; overflow: hidden; border: 1px solid #304969; border-radius: 6px; background: #192940; }
 .dataset-photos { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 84px 84px; gap: 3px; background: #0b1525; }
 .dataset-photos img { width: 100%; height: 100%; object-fit: cover; display: block; }

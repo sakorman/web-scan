@@ -31,3 +31,12 @@ ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets .
 ETH3D licenses its data under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/ ; dataset license statement: https://www.eth3d.net/ . The preparation script applies EXIF orientation, resizes to a 1600-pixel long edge and re-encodes JPEGs. The app estimates new camera poses and derives Gaussian models from these photos.
 
 Dataset photos and generated models are excluded from Git and are not covered by the project MIT license. Screenshots in `docs/screenshots/` that contain ETH3D photographs or reconstructed scenes retain this attribution and the CC BY-NC-SA 4.0 terms for that content. The sample picker, local source manifests and training reports retain dataset attribution and license links. Original project code remains MIT-licensed.
+
+
+## TUM RGB-D desk sample
+
+TUM RGB-D `freiburg1_desk`: https://cvg.cit.tum.de/data/datasets/rgbd-dataset . Attribution: Jürgen Sturm, Nikolas Engelhard, Felix Endres, Wolfram Burgard, and Daniel Cremers, *A Benchmark for the Evaluation of RGB-D SLAM Systems*, IROS 2012.
+
+The official dataset page currently licenses benchmark data under CC BY 4.0 unless stated otherwise: https://cvg.cit.tum.de/data/datasets/rgbd-dataset#license ; license: https://creativecommons.org/licenses/by/4.0/ . This is distinct from the ETH3D dataset's noncommercial/share-alike terms.
+
+The preparation script selects 96 evenly spaced entries from timestamp-sorted RGB frames, keeps the original 640×480 dimensions, and converts PNG to JPEG quality 95. Depth images, supplied calibration, accelerometer data and ground-truth poses are not used. The application estimates camera poses from RGB photos. Original data and generated models remain local and are excluded from Git. TUM-derived preview images retain this attribution and CC BY 4.0 terms; the project MIT license does not replace the dataset license.

@@ -1,0 +1,32 @@
+{
+  "input_sha256_sequence_identical_to_prior_run": true,
+  "ordered_input_sha256": [
+    "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+    "02efb93314a750abcabc008ad7e55a6200cb18e02c8bee747f2bf665c649ecab",
+    "70e93cc0df437669bfb6039b4a647160e5057754557f2859b362db326336e317",
+    "e23b78cf1589092cc4a6afc57eef3ce31c3bdd1e953d4bb727526f64f655c7b5",
+    "4ca31b438c577458b2c28eb1a008051f4a9966b45b61357b61718ac522cf767f",
+    "35b9d1cf2ba4c7c1ed7225631fccfdce5b92963b27529fd5962c64afd8dab87a",
+    "8abd6c03e5ddffce250b3a50d678461f5831dcfde79eb332b8ceba896dd67e4e",
+    "7e2b4cf99c06a8e75adcab9857ce7970936170265dc9f04430775fef4f801331",
+    "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+    "84c01b55c3f7e7b4ac2432477a4f37c458d354e8cf494f9fbe4c13229c15a34a",
+    "33292759aa81691512443be93bdeedf4de62cd495250edf0f29998c7a1693bda",
+    "599e0018122130cd34056f5dc69c19da53f6de4251f5bb768708ada715c6dea0",
+    "9b49f80ee59a445533df86f3a8a2dcdd4aad158f172e94f13695b814bbdb50cc",
+    "739c0945ddd55d288720ff749b7d96da53bb10d6a9a3acf15e5eb495b9a41886"
+  ],
+  "prior_run": "883091afd9d34fa58e4a2ff787d87410",
+  "first_run": "a09654a0b7534fbb8877b4986f88846b",
+  "first_registered_images": 11,
+  "same_input_sfm_repeat": {
+    "input_images": 14,
+    "registered_images": 14,
+    "unregistered_images": [],
+    "sparse_points": 1899,
+    "reprojection_error": 0.8505418378109716,
+    "camera_mode": "auto",
+    "seconds": 7.410453999880701
+  },
+  "conclusion": "Registration varied on identical images with unchanged SfM code; this dataset addition is not evidence of pose-quality improvement."
+}

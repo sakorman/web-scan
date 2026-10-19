@@ -48,7 +48,7 @@ def test_prepare_and_import_real_photo_path(tmp_path):
     app = create_app(tmp_path / "data", run_worker=False, sample_root=root)
     with TestClient(app) as client:
         samples = client.get("/api/samples").json()
-        assert [item["available"] for item in samples] == [False, True]
+        assert [item["available"] for item in samples] == [False, True, False]
         assert len(samples[1]["previews"]) == 3
         assert (
             client.get(samples[1]["previews"][0]).content

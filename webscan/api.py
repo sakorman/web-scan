@@ -408,7 +408,7 @@ def create_app(
             raise HTTPException(409, "示例正在准备")
         async with fixture_lock:
             photos = await asyncio.to_thread(read_sample, dataset)
-            sample = store.create_session(f"ETH3D · {dataset.title}")
+            sample = store.create_session(f"{dataset.collection} · {dataset.title}")
             try:
                 for index, (name, raw) in enumerate(photos):
                     await asyncio.to_thread(
@@ -417,7 +417,7 @@ def create_app(
                         sample["id"],
                         raw,
                         {
-                            "source": f"ETH3D {dataset.scene}",
+                            "source": dataset.name,
                             "original_name": name,
                             "upload_batch": sample["id"],
                             "capture_index": index,
