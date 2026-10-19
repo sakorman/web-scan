@@ -133,6 +133,7 @@ def run(root: Path, jid: str):
             input_images=scene["input_images"],
             calibrated_fixture=session["kind"] == "fixture",
             camera_mode=scene.get("camera_mode", "auto"),
+            matching_seed=scene.get("matching_seed"),
             sparse_points=scene.get("sparse_points"),
             reprojection_error=scene.get("reprojection_error"),
             unregistered_images=scene.get("unregistered_images", []),

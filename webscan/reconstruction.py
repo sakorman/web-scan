@@ -61,6 +61,7 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
         database_path=db,
         device=pycolmap.Device.cpu,
         matching_options={"num_threads": 4, "guided_matching": True},
+        verification_options={"ransac": {"random_seed": 42}},
     )
     sparse = work / "sparse"
     sparse.mkdir(exist_ok=True)
@@ -126,6 +127,7 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
         "input_images": total,
         "pose_source": "COLMAP",
         "camera_mode": camera_mode,
+        "matching_seed": 42,
         "sparse_points": best.num_points3D(),
         "reprojection_error": best.compute_mean_reprojection_error(),
         "unregistered_images": sorted(

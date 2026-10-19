@@ -1,0 +1,2007 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "1972308663c08e831cbe60652d05483aa812bc14",
+  "hardware": "Apple M5 / 32 GiB",
+  "pycolmap": "3.13.0",
+  "change": "Two-view geometric verification RANSAC random_seed -1 to 42. Mapper seed remains unchanged.",
+  "timing_scope": "Full fresh SfM including feature extraction, matching, mapping and undistortion. No GPU training; OS caches not cleared.",
+  "geometry_digest_scope": "Every column in two_view_geometries, ordered by pair_id; includes inliers and E/F/H/relative pose values.",
+  "baseline_sha256": "cd8b46ab8c440644c6033ddca216dba527422dc6370c6fcdf95a1b950fa63b81",
+  "candidate_sha256": "4aa1434deff60239b0e37ffb79223c36eb043ba74192a7e9b52a2d7b46da7008",
+  "final_sha256": "91d117ddd34632b7b2264ec7fd9a040a99639bbecabd2d62b29cf53c08c5228f",
+  "summary": [
+    {
+      "scene": "pipes",
+      "baseline": {
+        "registered": [
+          14,
+          14,
+          14
+        ],
+        "full_geometry_solutions": 3,
+        "camera_solutions": 3,
+        "seconds_mean": 6.583900569705293,
+        "seconds_min": 6.116406667046249,
+        "seconds_max": 6.832518209004775
+      },
+      "candidate": {
+        "registered": [
+          14,
+          14,
+          14
+        ],
+        "full_geometry_solutions": 1,
+        "camera_solutions": 1,
+        "seconds_mean": 5.953168152288224,
+        "seconds_min": 5.809999832883477,
+        "seconds_max": 6.1961325409356505
+      }
+    },
+    {
+      "scene": "office",
+      "baseline": {
+        "registered": [
+          26,
+          26,
+          26
+        ],
+        "full_geometry_solutions": 3,
+        "camera_solutions": 3,
+        "seconds_mean": 9.317919416197887,
+        "seconds_min": 8.99638033285737,
+        "seconds_max": 9.870052249869332
+      },
+      "candidate": {
+        "registered": [
+          26,
+          26,
+          26
+        ],
+        "full_geometry_solutions": 1,
+        "camera_solutions": 3,
+        "seconds_mean": 8.908196819247678,
+        "seconds_min": 8.790875415783376,
+        "seconds_max": 9.113216292113066
+      }
+    }
+  ],
+  "runs": [
+    {
+      "scene": "pipes",
+      "repeat": 0,
+      "variant": "baseline",
+      "seconds": 6.116406667046249,
+      "image_ids": [
+        [
+          1,
+          "0000-247ffb1d46574e68a2fb7faafc3aef46.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-fe8d3a8086b940308d53dfbe748fbfa9.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-b7c78f715de04c34aa1a9ceace43bb85.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-dec7ab8f2f8a46a9914751260c749508.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-1b9b5a29d5354a3abe074d3b9f825d71.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-1efaf596545b4933ac1c53dcc986e98e.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-cc3826674e4b427db1311c93cacdb4d3.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-4c2e36a4e8f04df4ad9d9b382ad6b741.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-4630daa1e3e84ea2b0964e092abd3182.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c390af1ddd664b31860e32f65a3af02e.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-83a105425bff4d199226e9cbf6dc1dd0.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-5ad3bc99280c4cab9798f2dfc1e7c6bf.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-7fc657f9ab40485caeae719d3e638182.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-967aa3dc357c4b22bb1461b181c06ccc.jpg",
+          14
+        ]
+      ],
+      "features": {
+        "keypoints": "99d6049a77f115af02fea1aee5ea0105056cfee9b9ca421dcf086ffe77fff3d6",
+        "descriptors": "c1bdb55c03ed40ed6b5358e1e3cc6d5d2d54de3b66d12021481f8d080a403b58"
+      },
+      "two_view_sha256": "2f7035b022794a233add049901b966b8c7404a2fa0ef7e53fa9df3c681f0f655",
+      "camera_sha256": "719f261a8c3e0ef368621e7d1a7078e4e5af3f1901d8b2390ac3d61b6368dc99",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "sparse_points": 1888,
+      "reprojection_error": 0.8472809334472019,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "pipes",
+      "repeat": 0,
+      "variant": "candidate",
+      "seconds": 5.809999832883477,
+      "image_ids": [
+        [
+          1,
+          "0000-247ffb1d46574e68a2fb7faafc3aef46.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-fe8d3a8086b940308d53dfbe748fbfa9.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-b7c78f715de04c34aa1a9ceace43bb85.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-dec7ab8f2f8a46a9914751260c749508.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-1b9b5a29d5354a3abe074d3b9f825d71.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-1efaf596545b4933ac1c53dcc986e98e.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-cc3826674e4b427db1311c93cacdb4d3.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-4c2e36a4e8f04df4ad9d9b382ad6b741.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-4630daa1e3e84ea2b0964e092abd3182.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c390af1ddd664b31860e32f65a3af02e.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-83a105425bff4d199226e9cbf6dc1dd0.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-5ad3bc99280c4cab9798f2dfc1e7c6bf.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-7fc657f9ab40485caeae719d3e638182.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-967aa3dc357c4b22bb1461b181c06ccc.jpg",
+          14
+        ]
+      ],
+      "features": {
+        "keypoints": "99d6049a77f115af02fea1aee5ea0105056cfee9b9ca421dcf086ffe77fff3d6",
+        "descriptors": "c1bdb55c03ed40ed6b5358e1e3cc6d5d2d54de3b66d12021481f8d080a403b58"
+      },
+      "two_view_sha256": "cc5314bd6d6de1d9a1fa5050119fb64a2cff6cf588da7570209f6e88cb6414e2",
+      "camera_sha256": "34c73c7a52ede4cb60cda456baee7a36929eee5546f247af774f06f04ce83bdd",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "sparse_points": 1874,
+      "reprojection_error": 0.8365261734625319,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "pipes",
+      "repeat": 1,
+      "variant": "candidate",
+      "seconds": 6.1961325409356505,
+      "image_ids": [
+        [
+          1,
+          "0000-247ffb1d46574e68a2fb7faafc3aef46.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-fe8d3a8086b940308d53dfbe748fbfa9.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-b7c78f715de04c34aa1a9ceace43bb85.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-dec7ab8f2f8a46a9914751260c749508.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-1b9b5a29d5354a3abe074d3b9f825d71.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-1efaf596545b4933ac1c53dcc986e98e.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-cc3826674e4b427db1311c93cacdb4d3.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-4c2e36a4e8f04df4ad9d9b382ad6b741.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-4630daa1e3e84ea2b0964e092abd3182.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c390af1ddd664b31860e32f65a3af02e.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-83a105425bff4d199226e9cbf6dc1dd0.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-5ad3bc99280c4cab9798f2dfc1e7c6bf.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-7fc657f9ab40485caeae719d3e638182.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-967aa3dc357c4b22bb1461b181c06ccc.jpg",
+          14
+        ]
+      ],
+      "features": {
+        "keypoints": "99d6049a77f115af02fea1aee5ea0105056cfee9b9ca421dcf086ffe77fff3d6",
+        "descriptors": "c1bdb55c03ed40ed6b5358e1e3cc6d5d2d54de3b66d12021481f8d080a403b58"
+      },
+      "two_view_sha256": "cc5314bd6d6de1d9a1fa5050119fb64a2cff6cf588da7570209f6e88cb6414e2",
+      "camera_sha256": "34c73c7a52ede4cb60cda456baee7a36929eee5546f247af774f06f04ce83bdd",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "sparse_points": 1874,
+      "reprojection_error": 0.8365261734625319,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "pipes",
+      "repeat": 1,
+      "variant": "baseline",
+      "seconds": 6.802776833064854,
+      "image_ids": [
+        [
+          1,
+          "0000-247ffb1d46574e68a2fb7faafc3aef46.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-fe8d3a8086b940308d53dfbe748fbfa9.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-b7c78f715de04c34aa1a9ceace43bb85.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-dec7ab8f2f8a46a9914751260c749508.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-1b9b5a29d5354a3abe074d3b9f825d71.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-1efaf596545b4933ac1c53dcc986e98e.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-cc3826674e4b427db1311c93cacdb4d3.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-4c2e36a4e8f04df4ad9d9b382ad6b741.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-4630daa1e3e84ea2b0964e092abd3182.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c390af1ddd664b31860e32f65a3af02e.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-83a105425bff4d199226e9cbf6dc1dd0.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-5ad3bc99280c4cab9798f2dfc1e7c6bf.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-7fc657f9ab40485caeae719d3e638182.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-967aa3dc357c4b22bb1461b181c06ccc.jpg",
+          14
+        ]
+      ],
+      "features": {
+        "keypoints": "99d6049a77f115af02fea1aee5ea0105056cfee9b9ca421dcf086ffe77fff3d6",
+        "descriptors": "c1bdb55c03ed40ed6b5358e1e3cc6d5d2d54de3b66d12021481f8d080a403b58"
+      },
+      "two_view_sha256": "ec8f6b7463f6b5dde9eee06647e3cf33f496be9234291268774a52361ee1af55",
+      "camera_sha256": "14ef6091038aa84078cab75dad1c917ac72485ab48bab5d0aa128801a2efc973",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "sparse_points": 1864,
+      "reprojection_error": 0.8564370991757577,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "pipes",
+      "repeat": 2,
+      "variant": "baseline",
+      "seconds": 6.832518209004775,
+      "image_ids": [
+        [
+          1,
+          "0000-247ffb1d46574e68a2fb7faafc3aef46.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-fe8d3a8086b940308d53dfbe748fbfa9.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-b7c78f715de04c34aa1a9ceace43bb85.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-dec7ab8f2f8a46a9914751260c749508.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-1b9b5a29d5354a3abe074d3b9f825d71.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-1efaf596545b4933ac1c53dcc986e98e.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-cc3826674e4b427db1311c93cacdb4d3.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-4c2e36a4e8f04df4ad9d9b382ad6b741.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-4630daa1e3e84ea2b0964e092abd3182.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c390af1ddd664b31860e32f65a3af02e.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-83a105425bff4d199226e9cbf6dc1dd0.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-5ad3bc99280c4cab9798f2dfc1e7c6bf.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-7fc657f9ab40485caeae719d3e638182.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-967aa3dc357c4b22bb1461b181c06ccc.jpg",
+          14
+        ]
+      ],
+      "features": {
+        "keypoints": "99d6049a77f115af02fea1aee5ea0105056cfee9b9ca421dcf086ffe77fff3d6",
+        "descriptors": "c1bdb55c03ed40ed6b5358e1e3cc6d5d2d54de3b66d12021481f8d080a403b58"
+      },
+      "two_view_sha256": "8ca4d54dde850a8134a9762eb7426bd434ca1b917971ca00af888f34e7a56899",
+      "camera_sha256": "ec6f3571b4ba4cd48f52a1b10d562c7a463c04626639cf22ca9b42cc68e3dac5",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "sparse_points": 1890,
+      "reprojection_error": 0.8623069871559701,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "pipes",
+      "repeat": 2,
+      "variant": "candidate",
+      "seconds": 5.853372083045542,
+      "image_ids": [
+        [
+          1,
+          "0000-247ffb1d46574e68a2fb7faafc3aef46.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-fe8d3a8086b940308d53dfbe748fbfa9.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-b7c78f715de04c34aa1a9ceace43bb85.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-dec7ab8f2f8a46a9914751260c749508.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-1b9b5a29d5354a3abe074d3b9f825d71.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-1efaf596545b4933ac1c53dcc986e98e.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-cc3826674e4b427db1311c93cacdb4d3.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-4c2e36a4e8f04df4ad9d9b382ad6b741.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-4630daa1e3e84ea2b0964e092abd3182.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c390af1ddd664b31860e32f65a3af02e.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-83a105425bff4d199226e9cbf6dc1dd0.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-5ad3bc99280c4cab9798f2dfc1e7c6bf.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-7fc657f9ab40485caeae719d3e638182.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-967aa3dc357c4b22bb1461b181c06ccc.jpg",
+          14
+        ]
+      ],
+      "features": {
+        "keypoints": "99d6049a77f115af02fea1aee5ea0105056cfee9b9ca421dcf086ffe77fff3d6",
+        "descriptors": "c1bdb55c03ed40ed6b5358e1e3cc6d5d2d54de3b66d12021481f8d080a403b58"
+      },
+      "two_view_sha256": "cc5314bd6d6de1d9a1fa5050119fb64a2cff6cf588da7570209f6e88cb6414e2",
+      "camera_sha256": "34c73c7a52ede4cb60cda456baee7a36929eee5546f247af774f06f04ce83bdd",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "sparse_points": 1874,
+      "reprojection_error": 0.8365261734625319,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "office",
+      "repeat": 0,
+      "variant": "candidate",
+      "seconds": 9.113216292113066,
+      "image_ids": [
+        [
+          1,
+          "0000-5bbc3184d3b8459f88139d03a29f05f8.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-68f0045be9094c438ac73cf41ab96dec.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-baadf885261c4e23a54f4066399e71f5.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-c848bd3cd76a484188f1bb025f7402ee.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-bbc2967644f947909cc4f93e12c0e654.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-a251a92f7ab94c7d857408cfda3b3c28.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-58b21c259dd94400b7c22391f6a6e20d.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-f6bcfe303d5f499a8cc9e62083afd51e.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-494fedfdce514ba68dd10fcfbeb97f8f.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c9c14c6b50f34a66ac39fc831e012fd9.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-4eaf3fd3840f4d70b76e3dcd91154fb1.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-d1e7eca1f58d4cd2914cb598c93a1ab2.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-667f930f790647799e2d986bd3f3c8c5.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-0df0e21a22ab426ead7a4c7d7c00e2f6.jpg",
+          14
+        ],
+        [
+          15,
+          "0014-7fe858c23af5403a87f792bb34fc2481.jpg",
+          15
+        ],
+        [
+          16,
+          "0015-cd744be562cb4ada903e978a4849709f.jpg",
+          16
+        ],
+        [
+          17,
+          "0016-afcf0d95915549ecbb875ef42638d766.jpg",
+          17
+        ],
+        [
+          18,
+          "0017-b1f90e31935e47daa1d21c8d652451cc.jpg",
+          18
+        ],
+        [
+          19,
+          "0018-92c16d2ac5d94d2498a896543c6f669b.jpg",
+          19
+        ],
+        [
+          20,
+          "0019-9f87c0b4d8574304ac74b20b20f871a5.jpg",
+          20
+        ],
+        [
+          21,
+          "0020-5d6c9ac889754b3fb6c3bc2db6e20f70.jpg",
+          21
+        ],
+        [
+          22,
+          "0021-6773374ab754483fb221c42580bc0475.jpg",
+          22
+        ],
+        [
+          23,
+          "0022-ba546ea8eb4844aabab880d016816768.jpg",
+          23
+        ],
+        [
+          24,
+          "0023-92aa69dcc4f641d8a97046f1a4accdc6.jpg",
+          24
+        ],
+        [
+          25,
+          "0024-0a80a528ccb144ef86e305a7f946a95f.jpg",
+          25
+        ],
+        [
+          26,
+          "0025-162235d963704ea681aead991079136f.jpg",
+          26
+        ]
+      ],
+      "features": {
+        "keypoints": "676572992fca21b3e615c7623753ab59cbbc5c45c1023e49462c1d15fe504dd9",
+        "descriptors": "bfbf391715b770c30d388f2ff55e1fe2e192b206a0b061cbccf5c2994b24a8d2"
+      },
+      "two_view_sha256": "e26e28b2e9a4c70f087196d1dd7a041807cea68e4ca233a3d4e3cf4edb2faaae",
+      "camera_sha256": "b70e3f864177aa12d35795539695d43cadbd9e5786f7402c28329aa73481b7c0",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "sparse_points": 2496,
+      "reprojection_error": 0.9325862829675301,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "office",
+      "repeat": 0,
+      "variant": "baseline",
+      "seconds": 9.870052249869332,
+      "image_ids": [
+        [
+          1,
+          "0000-5bbc3184d3b8459f88139d03a29f05f8.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-68f0045be9094c438ac73cf41ab96dec.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-baadf885261c4e23a54f4066399e71f5.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-c848bd3cd76a484188f1bb025f7402ee.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-bbc2967644f947909cc4f93e12c0e654.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-a251a92f7ab94c7d857408cfda3b3c28.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-58b21c259dd94400b7c22391f6a6e20d.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-f6bcfe303d5f499a8cc9e62083afd51e.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-494fedfdce514ba68dd10fcfbeb97f8f.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c9c14c6b50f34a66ac39fc831e012fd9.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-4eaf3fd3840f4d70b76e3dcd91154fb1.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-d1e7eca1f58d4cd2914cb598c93a1ab2.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-667f930f790647799e2d986bd3f3c8c5.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-0df0e21a22ab426ead7a4c7d7c00e2f6.jpg",
+          14
+        ],
+        [
+          15,
+          "0014-7fe858c23af5403a87f792bb34fc2481.jpg",
+          15
+        ],
+        [
+          16,
+          "0015-cd744be562cb4ada903e978a4849709f.jpg",
+          16
+        ],
+        [
+          17,
+          "0016-afcf0d95915549ecbb875ef42638d766.jpg",
+          17
+        ],
+        [
+          18,
+          "0017-b1f90e31935e47daa1d21c8d652451cc.jpg",
+          18
+        ],
+        [
+          19,
+          "0018-92c16d2ac5d94d2498a896543c6f669b.jpg",
+          19
+        ],
+        [
+          20,
+          "0019-9f87c0b4d8574304ac74b20b20f871a5.jpg",
+          20
+        ],
+        [
+          21,
+          "0020-5d6c9ac889754b3fb6c3bc2db6e20f70.jpg",
+          21
+        ],
+        [
+          22,
+          "0021-6773374ab754483fb221c42580bc0475.jpg",
+          22
+        ],
+        [
+          23,
+          "0022-ba546ea8eb4844aabab880d016816768.jpg",
+          23
+        ],
+        [
+          24,
+          "0023-92aa69dcc4f641d8a97046f1a4accdc6.jpg",
+          24
+        ],
+        [
+          25,
+          "0024-0a80a528ccb144ef86e305a7f946a95f.jpg",
+          25
+        ],
+        [
+          26,
+          "0025-162235d963704ea681aead991079136f.jpg",
+          26
+        ]
+      ],
+      "features": {
+        "keypoints": "676572992fca21b3e615c7623753ab59cbbc5c45c1023e49462c1d15fe504dd9",
+        "descriptors": "bfbf391715b770c30d388f2ff55e1fe2e192b206a0b061cbccf5c2994b24a8d2"
+      },
+      "two_view_sha256": "641061ce76e5f4adb9ba1d640969e1955d3ba89a17c91fe52c8b214f7604dad5",
+      "camera_sha256": "81e3d03a302c11796106e3eb944d4468b8fa9862cc5e7aaa76f6e305ed4d4036",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "sparse_points": 2471,
+      "reprojection_error": 0.9153559469467423,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "office",
+      "repeat": 1,
+      "variant": "baseline",
+      "seconds": 8.99638033285737,
+      "image_ids": [
+        [
+          1,
+          "0000-5bbc3184d3b8459f88139d03a29f05f8.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-68f0045be9094c438ac73cf41ab96dec.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-baadf885261c4e23a54f4066399e71f5.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-c848bd3cd76a484188f1bb025f7402ee.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-bbc2967644f947909cc4f93e12c0e654.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-a251a92f7ab94c7d857408cfda3b3c28.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-58b21c259dd94400b7c22391f6a6e20d.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-f6bcfe303d5f499a8cc9e62083afd51e.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-494fedfdce514ba68dd10fcfbeb97f8f.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c9c14c6b50f34a66ac39fc831e012fd9.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-4eaf3fd3840f4d70b76e3dcd91154fb1.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-d1e7eca1f58d4cd2914cb598c93a1ab2.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-667f930f790647799e2d986bd3f3c8c5.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-0df0e21a22ab426ead7a4c7d7c00e2f6.jpg",
+          14
+        ],
+        [
+          15,
+          "0014-7fe858c23af5403a87f792bb34fc2481.jpg",
+          15
+        ],
+        [
+          16,
+          "0015-cd744be562cb4ada903e978a4849709f.jpg",
+          16
+        ],
+        [
+          17,
+          "0016-afcf0d95915549ecbb875ef42638d766.jpg",
+          17
+        ],
+        [
+          18,
+          "0017-b1f90e31935e47daa1d21c8d652451cc.jpg",
+          18
+        ],
+        [
+          19,
+          "0018-92c16d2ac5d94d2498a896543c6f669b.jpg",
+          19
+        ],
+        [
+          20,
+          "0019-9f87c0b4d8574304ac74b20b20f871a5.jpg",
+          20
+        ],
+        [
+          21,
+          "0020-5d6c9ac889754b3fb6c3bc2db6e20f70.jpg",
+          21
+        ],
+        [
+          22,
+          "0021-6773374ab754483fb221c42580bc0475.jpg",
+          22
+        ],
+        [
+          23,
+          "0022-ba546ea8eb4844aabab880d016816768.jpg",
+          23
+        ],
+        [
+          24,
+          "0023-92aa69dcc4f641d8a97046f1a4accdc6.jpg",
+          24
+        ],
+        [
+          25,
+          "0024-0a80a528ccb144ef86e305a7f946a95f.jpg",
+          25
+        ],
+        [
+          26,
+          "0025-162235d963704ea681aead991079136f.jpg",
+          26
+        ]
+      ],
+      "features": {
+        "keypoints": "676572992fca21b3e615c7623753ab59cbbc5c45c1023e49462c1d15fe504dd9",
+        "descriptors": "bfbf391715b770c30d388f2ff55e1fe2e192b206a0b061cbccf5c2994b24a8d2"
+      },
+      "two_view_sha256": "5b7f82da2228e60d224d3a69ac5a82eedfa16a890738d1c6aaad7456b09e565f",
+      "camera_sha256": "1c2063f2137e2e3b793f963dbb33b06175d5c79dfbfcf39f76fe542dcea7f744",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "sparse_points": 2510,
+      "reprojection_error": 0.9064793051709132,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "office",
+      "repeat": 1,
+      "variant": "candidate",
+      "seconds": 8.820498749846593,
+      "image_ids": [
+        [
+          1,
+          "0000-5bbc3184d3b8459f88139d03a29f05f8.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-68f0045be9094c438ac73cf41ab96dec.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-baadf885261c4e23a54f4066399e71f5.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-c848bd3cd76a484188f1bb025f7402ee.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-bbc2967644f947909cc4f93e12c0e654.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-a251a92f7ab94c7d857408cfda3b3c28.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-58b21c259dd94400b7c22391f6a6e20d.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-f6bcfe303d5f499a8cc9e62083afd51e.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-494fedfdce514ba68dd10fcfbeb97f8f.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c9c14c6b50f34a66ac39fc831e012fd9.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-4eaf3fd3840f4d70b76e3dcd91154fb1.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-d1e7eca1f58d4cd2914cb598c93a1ab2.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-667f930f790647799e2d986bd3f3c8c5.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-0df0e21a22ab426ead7a4c7d7c00e2f6.jpg",
+          14
+        ],
+        [
+          15,
+          "0014-7fe858c23af5403a87f792bb34fc2481.jpg",
+          15
+        ],
+        [
+          16,
+          "0015-cd744be562cb4ada903e978a4849709f.jpg",
+          16
+        ],
+        [
+          17,
+          "0016-afcf0d95915549ecbb875ef42638d766.jpg",
+          17
+        ],
+        [
+          18,
+          "0017-b1f90e31935e47daa1d21c8d652451cc.jpg",
+          18
+        ],
+        [
+          19,
+          "0018-92c16d2ac5d94d2498a896543c6f669b.jpg",
+          19
+        ],
+        [
+          20,
+          "0019-9f87c0b4d8574304ac74b20b20f871a5.jpg",
+          20
+        ],
+        [
+          21,
+          "0020-5d6c9ac889754b3fb6c3bc2db6e20f70.jpg",
+          21
+        ],
+        [
+          22,
+          "0021-6773374ab754483fb221c42580bc0475.jpg",
+          22
+        ],
+        [
+          23,
+          "0022-ba546ea8eb4844aabab880d016816768.jpg",
+          23
+        ],
+        [
+          24,
+          "0023-92aa69dcc4f641d8a97046f1a4accdc6.jpg",
+          24
+        ],
+        [
+          25,
+          "0024-0a80a528ccb144ef86e305a7f946a95f.jpg",
+          25
+        ],
+        [
+          26,
+          "0025-162235d963704ea681aead991079136f.jpg",
+          26
+        ]
+      ],
+      "features": {
+        "keypoints": "676572992fca21b3e615c7623753ab59cbbc5c45c1023e49462c1d15fe504dd9",
+        "descriptors": "bfbf391715b770c30d388f2ff55e1fe2e192b206a0b061cbccf5c2994b24a8d2"
+      },
+      "two_view_sha256": "e26e28b2e9a4c70f087196d1dd7a041807cea68e4ca233a3d4e3cf4edb2faaae",
+      "camera_sha256": "fea84ad8d96eef77c442b1c19e67909e756069ff15e0869b28a33cb6c178b5fd",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "sparse_points": 2495,
+      "reprojection_error": 0.9041386546412138,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "office",
+      "repeat": 2,
+      "variant": "candidate",
+      "seconds": 8.790875415783376,
+      "image_ids": [
+        [
+          1,
+          "0000-5bbc3184d3b8459f88139d03a29f05f8.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-68f0045be9094c438ac73cf41ab96dec.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-baadf885261c4e23a54f4066399e71f5.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-c848bd3cd76a484188f1bb025f7402ee.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-bbc2967644f947909cc4f93e12c0e654.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-a251a92f7ab94c7d857408cfda3b3c28.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-58b21c259dd94400b7c22391f6a6e20d.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-f6bcfe303d5f499a8cc9e62083afd51e.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-494fedfdce514ba68dd10fcfbeb97f8f.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c9c14c6b50f34a66ac39fc831e012fd9.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-4eaf3fd3840f4d70b76e3dcd91154fb1.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-d1e7eca1f58d4cd2914cb598c93a1ab2.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-667f930f790647799e2d986bd3f3c8c5.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-0df0e21a22ab426ead7a4c7d7c00e2f6.jpg",
+          14
+        ],
+        [
+          15,
+          "0014-7fe858c23af5403a87f792bb34fc2481.jpg",
+          15
+        ],
+        [
+          16,
+          "0015-cd744be562cb4ada903e978a4849709f.jpg",
+          16
+        ],
+        [
+          17,
+          "0016-afcf0d95915549ecbb875ef42638d766.jpg",
+          17
+        ],
+        [
+          18,
+          "0017-b1f90e31935e47daa1d21c8d652451cc.jpg",
+          18
+        ],
+        [
+          19,
+          "0018-92c16d2ac5d94d2498a896543c6f669b.jpg",
+          19
+        ],
+        [
+          20,
+          "0019-9f87c0b4d8574304ac74b20b20f871a5.jpg",
+          20
+        ],
+        [
+          21,
+          "0020-5d6c9ac889754b3fb6c3bc2db6e20f70.jpg",
+          21
+        ],
+        [
+          22,
+          "0021-6773374ab754483fb221c42580bc0475.jpg",
+          22
+        ],
+        [
+          23,
+          "0022-ba546ea8eb4844aabab880d016816768.jpg",
+          23
+        ],
+        [
+          24,
+          "0023-92aa69dcc4f641d8a97046f1a4accdc6.jpg",
+          24
+        ],
+        [
+          25,
+          "0024-0a80a528ccb144ef86e305a7f946a95f.jpg",
+          25
+        ],
+        [
+          26,
+          "0025-162235d963704ea681aead991079136f.jpg",
+          26
+        ]
+      ],
+      "features": {
+        "keypoints": "676572992fca21b3e615c7623753ab59cbbc5c45c1023e49462c1d15fe504dd9",
+        "descriptors": "bfbf391715b770c30d388f2ff55e1fe2e192b206a0b061cbccf5c2994b24a8d2"
+      },
+      "two_view_sha256": "e26e28b2e9a4c70f087196d1dd7a041807cea68e4ca233a3d4e3cf4edb2faaae",
+      "camera_sha256": "b744f29db98b50d1d6eeea45ee101000a52be7a23e004e7d3dc0cb720252881c",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "sparse_points": 2511,
+      "reprojection_error": 0.94740230046687,
+      "camera_mode": "auto"
+    },
+    {
+      "scene": "office",
+      "repeat": 2,
+      "variant": "baseline",
+      "seconds": 9.087325665866956,
+      "image_ids": [
+        [
+          1,
+          "0000-5bbc3184d3b8459f88139d03a29f05f8.jpg",
+          1
+        ],
+        [
+          2,
+          "0001-68f0045be9094c438ac73cf41ab96dec.jpg",
+          2
+        ],
+        [
+          3,
+          "0002-baadf885261c4e23a54f4066399e71f5.jpg",
+          3
+        ],
+        [
+          4,
+          "0003-c848bd3cd76a484188f1bb025f7402ee.jpg",
+          4
+        ],
+        [
+          5,
+          "0004-bbc2967644f947909cc4f93e12c0e654.jpg",
+          5
+        ],
+        [
+          6,
+          "0005-a251a92f7ab94c7d857408cfda3b3c28.jpg",
+          6
+        ],
+        [
+          7,
+          "0006-58b21c259dd94400b7c22391f6a6e20d.jpg",
+          7
+        ],
+        [
+          8,
+          "0007-f6bcfe303d5f499a8cc9e62083afd51e.jpg",
+          8
+        ],
+        [
+          9,
+          "0008-494fedfdce514ba68dd10fcfbeb97f8f.jpg",
+          9
+        ],
+        [
+          10,
+          "0009-c9c14c6b50f34a66ac39fc831e012fd9.jpg",
+          10
+        ],
+        [
+          11,
+          "0010-4eaf3fd3840f4d70b76e3dcd91154fb1.jpg",
+          11
+        ],
+        [
+          12,
+          "0011-d1e7eca1f58d4cd2914cb598c93a1ab2.jpg",
+          12
+        ],
+        [
+          13,
+          "0012-667f930f790647799e2d986bd3f3c8c5.jpg",
+          13
+        ],
+        [
+          14,
+          "0013-0df0e21a22ab426ead7a4c7d7c00e2f6.jpg",
+          14
+        ],
+        [
+          15,
+          "0014-7fe858c23af5403a87f792bb34fc2481.jpg",
+          15
+        ],
+        [
+          16,
+          "0015-cd744be562cb4ada903e978a4849709f.jpg",
+          16
+        ],
+        [
+          17,
+          "0016-afcf0d95915549ecbb875ef42638d766.jpg",
+          17
+        ],
+        [
+          18,
+          "0017-b1f90e31935e47daa1d21c8d652451cc.jpg",
+          18
+        ],
+        [
+          19,
+          "0018-92c16d2ac5d94d2498a896543c6f669b.jpg",
+          19
+        ],
+        [
+          20,
+          "0019-9f87c0b4d8574304ac74b20b20f871a5.jpg",
+          20
+        ],
+        [
+          21,
+          "0020-5d6c9ac889754b3fb6c3bc2db6e20f70.jpg",
+          21
+        ],
+        [
+          22,
+          "0021-6773374ab754483fb221c42580bc0475.jpg",
+          22
+        ],
+        [
+          23,
+          "0022-ba546ea8eb4844aabab880d016816768.jpg",
+          23
+        ],
+        [
+          24,
+          "0023-92aa69dcc4f641d8a97046f1a4accdc6.jpg",
+          24
+        ],
+        [
+          25,
+          "0024-0a80a528ccb144ef86e305a7f946a95f.jpg",
+          25
+        ],
+        [
+          26,
+          "0025-162235d963704ea681aead991079136f.jpg",
+          26
+        ]
+      ],
+      "features": {
+        "keypoints": "676572992fca21b3e615c7623753ab59cbbc5c45c1023e49462c1d15fe504dd9",
+        "descriptors": "bfbf391715b770c30d388f2ff55e1fe2e192b206a0b061cbccf5c2994b24a8d2"
+      },
+      "two_view_sha256": "ef5cfeea1e2d579559521016a88b5f6d22d92df1d8f87dc7423bc4eec57fc634",
+      "camera_sha256": "bad2708fd5044b210e017c415d67f584023c789bc0ee43e47bde65d69fa7f3f5",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "sparse_points": 2521,
+      "reprojection_error": 0.9188146909601932,
+      "camera_mode": "auto"
+    }
+  ],
+  "tum_shared_smoke": {
+    "seconds": 35.94108304101974,
+    "image_ids": [
+      [
+        1,
+        "0000-939c3ec52fb94b248a079d5a9bca37a9.jpg",
+        1
+      ],
+      [
+        2,
+        "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg",
+        1
+      ],
+      [
+        3,
+        "0002-13aeee5a47a2402780a95339ecafc52b.jpg",
+        1
+      ],
+      [
+        4,
+        "0003-b47f6504297543449ade7b2e6da2c543.jpg",
+        1
+      ],
+      [
+        5,
+        "0004-9d3388419ee745fe953f25b0766fcd13.jpg",
+        1
+      ],
+      [
+        6,
+        "0005-c8d46a667d1444af928a260ff4e9811c.jpg",
+        1
+      ],
+      [
+        7,
+        "0006-a6739b94defb47f086198ac258f5817c.jpg",
+        1
+      ],
+      [
+        8,
+        "0007-1d11f1780549441789337d884a9fa414.jpg",
+        1
+      ],
+      [
+        9,
+        "0008-0296b6fad6524c28bdf086827f716c93.jpg",
+        1
+      ],
+      [
+        10,
+        "0009-33412eadc3704832bb4cc15a67a21db4.jpg",
+        1
+      ],
+      [
+        11,
+        "0010-7e21f272397b446bbf10bc4b986fdb75.jpg",
+        1
+      ],
+      [
+        12,
+        "0011-9a7c352166144e91bb64167613752875.jpg",
+        1
+      ],
+      [
+        13,
+        "0012-33290b7c00124f57b9e287e233c79de1.jpg",
+        1
+      ],
+      [
+        14,
+        "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg",
+        1
+      ],
+      [
+        15,
+        "0014-23db493c671a4dba85d9093c799c5480.jpg",
+        1
+      ],
+      [
+        16,
+        "0015-acaa37813c234924b812d97cdc355e97.jpg",
+        1
+      ],
+      [
+        17,
+        "0016-dc73133b6ebd42808d62be192a7085ae.jpg",
+        1
+      ],
+      [
+        18,
+        "0017-11b8cee7df25460381ce28b4195e849a.jpg",
+        1
+      ],
+      [
+        19,
+        "0018-e9e0911f770640619bc7ed0bc19667d6.jpg",
+        1
+      ],
+      [
+        20,
+        "0019-3cd353e50b35458792362b5729a942af.jpg",
+        1
+      ],
+      [
+        21,
+        "0020-61d63bcad2764a8e83990e81346fcad3.jpg",
+        1
+      ],
+      [
+        22,
+        "0021-70b58331712c488d93354aa45f45ef8d.jpg",
+        1
+      ],
+      [
+        23,
+        "0022-4db4e8120a6a48e3853b4c10b071413b.jpg",
+        1
+      ],
+      [
+        24,
+        "0023-32391201e403446fbd52b0f56b1d1cba.jpg",
+        1
+      ],
+      [
+        25,
+        "0024-f47a2fcd0e95400fb44e1241b592f79a.jpg",
+        1
+      ],
+      [
+        26,
+        "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg",
+        1
+      ],
+      [
+        27,
+        "0026-b4e8debf82584324bb8c20a562ec9440.jpg",
+        1
+      ],
+      [
+        28,
+        "0027-b1979c912dd0465bb349cd2ce1f90340.jpg",
+        1
+      ],
+      [
+        29,
+        "0028-51d856789ec84bbeb47e15a329c62d62.jpg",
+        1
+      ],
+      [
+        30,
+        "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg",
+        1
+      ],
+      [
+        31,
+        "0030-bbb19a3432404284899ecf1c31fd261d.jpg",
+        1
+      ],
+      [
+        32,
+        "0031-773c0e62a25845fdbe802e4f68727db7.jpg",
+        1
+      ],
+      [
+        33,
+        "0032-5a6bb2e4866f4bab939a631df9c12c01.jpg",
+        1
+      ],
+      [
+        34,
+        "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg",
+        1
+      ],
+      [
+        35,
+        "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg",
+        1
+      ],
+      [
+        36,
+        "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg",
+        1
+      ],
+      [
+        37,
+        "0036-60fe6e6f95934e768db45738aaed5743.jpg",
+        1
+      ],
+      [
+        38,
+        "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg",
+        1
+      ],
+      [
+        39,
+        "0038-da09d53d5717443ca692d6c31f141461.jpg",
+        1
+      ],
+      [
+        40,
+        "0039-4279a3c605134c82a0ddbeed04da9763.jpg",
+        1
+      ],
+      [
+        41,
+        "0040-138c12a85ca0417aac43161fbe5ccb7e.jpg",
+        1
+      ],
+      [
+        42,
+        "0041-d5540accfaa94593927168a8c699c8be.jpg",
+        1
+      ],
+      [
+        43,
+        "0042-a4e5b8c9df2d450498354b097ced520a.jpg",
+        1
+      ],
+      [
+        44,
+        "0043-4a791456088941eaa5e98548e11b5ad3.jpg",
+        1
+      ],
+      [
+        45,
+        "0044-31e27424752c44159736d83b908ce5c3.jpg",
+        1
+      ],
+      [
+        46,
+        "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg",
+        1
+      ],
+      [
+        47,
+        "0046-ca8a23e930234016b014b22a9b36c248.jpg",
+        1
+      ],
+      [
+        48,
+        "0047-795dab28fa624d7eafec0e5317980094.jpg",
+        1
+      ],
+      [
+        49,
+        "0048-a77505f3ae9c478d98024b69168783ac.jpg",
+        1
+      ],
+      [
+        50,
+        "0049-2f1576034c324397ae2aee0285afede8.jpg",
+        1
+      ],
+      [
+        51,
+        "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg",
+        1
+      ],
+      [
+        52,
+        "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg",
+        1
+      ],
+      [
+        53,
+        "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg",
+        1
+      ],
+      [
+        54,
+        "0053-c3dcc0004c28432d87b73f674296ca3e.jpg",
+        1
+      ],
+      [
+        55,
+        "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg",
+        1
+      ],
+      [
+        56,
+        "0055-65836bf730224f0f8635ff7770013e6a.jpg",
+        1
+      ],
+      [
+        57,
+        "0056-24e814376ef542aa9330ed6ae6e5394f.jpg",
+        1
+      ],
+      [
+        58,
+        "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg",
+        1
+      ],
+      [
+        59,
+        "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg",
+        1
+      ],
+      [
+        60,
+        "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg",
+        1
+      ],
+      [
+        61,
+        "0060-4480a53853204a30bb723db05001c13e.jpg",
+        1
+      ],
+      [
+        62,
+        "0061-f6d31483abfe409db5f298392c9d5c00.jpg",
+        1
+      ],
+      [
+        63,
+        "0062-d85f1d3dc55a474887c9905874d5d15e.jpg",
+        1
+      ],
+      [
+        64,
+        "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg",
+        1
+      ],
+      [
+        65,
+        "0064-fe7f1c96df17410995fb2921f38cfbd3.jpg",
+        1
+      ],
+      [
+        66,
+        "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg",
+        1
+      ],
+      [
+        67,
+        "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg",
+        1
+      ],
+      [
+        68,
+        "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg",
+        1
+      ],
+      [
+        69,
+        "0068-45c08f1db0204344804e75909363d3ef.jpg",
+        1
+      ],
+      [
+        70,
+        "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg",
+        1
+      ],
+      [
+        71,
+        "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg",
+        1
+      ],
+      [
+        72,
+        "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg",
+        1
+      ],
+      [
+        73,
+        "0072-f724da7448144cd3a72e269ad988e910.jpg",
+        1
+      ],
+      [
+        74,
+        "0073-583da10f606c4888834e452e818c6f21.jpg",
+        1
+      ],
+      [
+        75,
+        "0074-336f2a6c53524a06a05f84b9f999d881.jpg",
+        1
+      ],
+      [
+        76,
+        "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg",
+        1
+      ],
+      [
+        77,
+        "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg",
+        1
+      ],
+      [
+        78,
+        "0077-7cc994aa8e90499f84f3b91b618ad601.jpg",
+        1
+      ],
+      [
+        79,
+        "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg",
+        1
+      ],
+      [
+        80,
+        "0079-9af81ac0f8434e77a8b493166aca01b6.jpg",
+        1
+      ],
+      [
+        81,
+        "0080-2e64893a45de4f478831f4029c100eef.jpg",
+        1
+      ],
+      [
+        82,
+        "0081-b438622b63af4e97b832964f7441431e.jpg",
+        1
+      ],
+      [
+        83,
+        "0082-b4389002e2ac431f81e4acf3b32439c1.jpg",
+        1
+      ],
+      [
+        84,
+        "0083-af9f662ee49e4f9fb8bda118892b884d.jpg",
+        1
+      ],
+      [
+        85,
+        "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg",
+        1
+      ],
+      [
+        86,
+        "0085-0be5619f19dd49f690d566d05564b142.jpg",
+        1
+      ],
+      [
+        87,
+        "0086-5d93973e60d1471194128e4feda84985.jpg",
+        1
+      ],
+      [
+        88,
+        "0087-bbfbeb09da904200908ebaccd1a1778a.jpg",
+        1
+      ],
+      [
+        89,
+        "0088-9335b242d1b14852bbf42f5ad574baa0.jpg",
+        1
+      ],
+      [
+        90,
+        "0089-a1467a062ce84f3595e4e339a617b2cb.jpg",
+        1
+      ],
+      [
+        91,
+        "0090-dcf7c280053f4409ba3a194a89e3d032.jpg",
+        1
+      ],
+      [
+        92,
+        "0091-5432bbf8590b4ed58de68624c56a2670.jpg",
+        1
+      ],
+      [
+        93,
+        "0092-8d05f80f68474c84a4659bfaa529cadb.jpg",
+        1
+      ],
+      [
+        94,
+        "0093-33506bbafa36437588470f3d72bd133e.jpg",
+        1
+      ],
+      [
+        95,
+        "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg",
+        1
+      ],
+      [
+        96,
+        "0095-62c6a796a08d415184809b4f1e1964c0.jpg",
+        1
+      ]
+    ],
+    "features": {
+      "keypoints": "15383bbb33ac1699710cc7c7073d79714b25ef33a4c30fbac68479865c2e0b78",
+      "descriptors": "b98f387b9aa0ea81573711e47e950c048646a54830eb011b4b0bcbb9ed2b90ac"
+    },
+    "two_view_sha256": "8491dbf3a18fc1acf9da1cca0a413f48c81c89c68aca26a1606b3718b98d0d1c",
+    "camera_sha256": "87daf29faaf2f98ad11ac5599076767313e3a1e0cc327830c36ddbeddd64139b",
+    "input_images": 96,
+    "registered_images": 96,
+    "unregistered_images": [],
+    "sparse_points": 16404,
+    "reprojection_error": 1.124570731672116,
+    "camera_mode": "shared"
+  }
+}

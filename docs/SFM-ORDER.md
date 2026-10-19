@@ -62,3 +62,6 @@ Apple M5 / 32 GiB、PyCOLMAP 3.13.0，ETH3D pipes 14 张、office 26 张，自�
 重复 SfM 时使用相同的已归一化照片目录，原版可由 `git show 577874d:webscan/reconstruction.py` 保存到独立文件。每次在新的 Python 进程中加载对应模块并调用 `estimate_scene(images, work, callback, camera_mode="auto")`，输出目录必须不同，避免复用数据库；不要与 Torch 共用进程。此次完整输入、源码快照和日志在 `.data/benchmarks/sfm-order-20261019/`。
 
 原照片、模型和截图遵循 [ETH3D 数据许可与署名](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+
+后续通过固定两视图验证种子，得到重复一致的完整几何匹配记录；office后续相机求解仍有波动。[后续实验](SFM-SEED.md)

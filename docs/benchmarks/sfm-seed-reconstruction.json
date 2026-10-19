@@ -1,0 +1,321 @@
+[
+  {
+    "sample": "eth3d-pipes",
+    "attempt": 0,
+    "session_id": "9fdb32fb019748fcab88b6455cfc93d1",
+    "job_id": "82eba2d1720142c5ab3b22941235b7db",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "max_points": 50000,
+      "resolution": 512,
+      "camera_mode": "auto",
+      "evaluation_mode": "holdout"
+    },
+    "submit_to_download_seconds": 13.27741058403626,
+    "ply_bytes": 725361,
+    "camera_sha256": "31786337093a50b6abc1a9c6729d8b43078f82020ed135c7bf605b8689c2c978",
+    "download_bytes_identical": true,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1311246,
+      "export_removed_bytes": 585885,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 725361,
+      "training_process_seconds": 7.0309,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3067,
+      "steps": 1000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 16.887022,
+        "ssim": 0.7046621
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "0000-656130614e7f46fc9228ffcc2b0512f9.png",
+          "width": 512,
+          "height": 335,
+          "sha256": "25588f0a4492a1fa85e381c43b548fa513a0c69acaba80d1093f77962a88d844",
+          "reference_sha256": "d17e286d3818cd637d4ef1ae903733356fb3c47c2d6a3ab60742bb63f3bfd4ed"
+        },
+        {
+          "name": "0008-9adea81938534afb8a82448b6e2b0cbc.png",
+          "width": 512,
+          "height": 335,
+          "sha256": "858eb2667288eae2d0c7fad899ac6ff743392d10dc7dbe051167c5ec79da0fb3",
+          "reference_sha256": "3cd5fd82424a117699de9e7660dadc494a986373285b80139e0c009be1f68d2b"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 13.23,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          -0.18539413809776306,
+          -0.5574712753295898,
+          9.013612747192383
+        ],
+        "scale": 13.714849472045898,
+        "units": "relative"
+      },
+      "registered_images": 14,
+      "input_images": 14,
+      "calibrated_fixture": false,
+      "camera_mode": "auto",
+      "matching_seed": 42,
+      "sparse_points": 1874,
+      "reprojection_error": 0.8365261734625319,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": false,
+      "sfm_cache_key": "0114e2eaaefd47777014f0e0ba2c322add4118cf755f69d21b8f01c4496b02e6",
+      "timings": {
+        "input_validation_seconds": 0.0018,
+        "sfm_seconds": 6.1139,
+        "cache_publish_seconds": 0.0249,
+        "training_and_model_export_seconds": 7.0585
+      },
+      "source": {
+        "name": "ETH3D pipes",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 14,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+      }
+    }
+  },
+  {
+    "sample": "eth3d-pipes",
+    "attempt": 1,
+    "session_id": "9fdb32fb019748fcab88b6455cfc93d1",
+    "job_id": "bfd28e534b5b4314b8345fdfa89fcbd3",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "max_points": 50000,
+      "resolution": 512,
+      "camera_mode": "auto",
+      "evaluation_mode": "holdout"
+    },
+    "submit_to_download_seconds": 7.1566679161041975,
+    "ply_bytes": 723237,
+    "camera_sha256": "31786337093a50b6abc1a9c6729d8b43078f82020ed135c7bf605b8689c2c978",
+    "download_bytes_identical": true,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1309122,
+      "export_removed_bytes": 585885,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 723237,
+      "training_process_seconds": 7.0286,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 3058,
+      "steps": 1000,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 16.709019,
+        "ssim": 0.7022188
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "0000-656130614e7f46fc9228ffcc2b0512f9.png",
+          "width": 512,
+          "height": 335,
+          "sha256": "628e814166c031e423ea8257786efecc14bd572c632ed9cd87db046aa76354fc",
+          "reference_sha256": "d17e286d3818cd637d4ef1ae903733356fb3c47c2d6a3ab60742bb63f3bfd4ed"
+        },
+        {
+          "name": "0008-9adea81938534afb8a82448b6e2b0cbc.png",
+          "width": 512,
+          "height": 335,
+          "sha256": "c5f67e866449e6cffb8ec7ff7c2cf2e608a65539eec39980dc6df75fa4c6a2e4",
+          "reference_sha256": "3cd5fd82424a117699de9e7660dadc494a986373285b80139e0c009be1f68d2b"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 7.11,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          -0.18539413809776306,
+          -0.5574712753295898,
+          9.013612747192383
+        ],
+        "scale": 13.714849472045898,
+        "units": "relative"
+      },
+      "registered_images": 14,
+      "input_images": 14,
+      "calibrated_fixture": false,
+      "camera_mode": "auto",
+      "matching_seed": 42,
+      "sparse_points": 1874,
+      "reprojection_error": 0.8365261734625319,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": true,
+      "sfm_cache_key": "0114e2eaaefd47777014f0e0ba2c322add4118cf755f69d21b8f01c4496b02e6",
+      "timings": {
+        "input_validation_seconds": 0.002,
+        "sfm_seconds": 0.0192,
+        "training_and_model_export_seconds": 7.0581
+      },
+      "source": {
+        "name": "ETH3D pipes",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 14,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+      }
+    }
+  },
+  {
+    "sample": "eth3d-office",
+    "attempt": 0,
+    "session_id": "3270d6ee0314476fb3c0e20225407e7a",
+    "job_id": "a41341953322402f90d9dcbc1b3d5c11",
+    "config": {
+      "backend": "brush",
+      "steps": 1000,
+      "max_points": 50000,
+      "resolution": 512,
+      "camera_mode": "auto",
+      "evaluation_mode": "holdout"
+    },
+    "submit_to_download_seconds": 17.790611209115013,
+    "ply_bytes": 947673,
+    "camera_sha256": "e4ebe499eb918707fd88421077b5161909105ffa674840ba1e3b62ea7483897a",
+    "download_bytes_identical": true,
+    "report": {
+      "backend": "brush",
+      "engine": "Brush 0.3.0",
+      "export_policy": "periodic_final_retained",
+      "export_written_files": 2,
+      "export_written_bytes": 1721178,
+      "export_removed_bytes": 773505,
+      "export_cleanup_errors": [],
+      "export_files": 1,
+      "export_bytes": 947673,
+      "training_process_seconds": 8.0279,
+      "progress_source": "brush_refinement_log",
+      "gaussians": 4009,
+      "steps": 1000,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {
+        "psnr": 20.260805,
+        "ssim": 0.81146777
+      },
+      "evaluation_verified": true,
+      "evaluation_images": [
+        {
+          "name": "0000-9fa7162447504f239948fbf93718c5db.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "ca3f76b972b427ccc49ff53b64e3fa8c2b0e285331bc622624c81bd620d1c7da",
+          "reference_sha256": "454e164bf6b8257666974bf469c52fcf998baeb68dab634a2090d8c3bfc3d36c"
+        },
+        {
+          "name": "0008-11d7697d875044869a202e11407602d1.png",
+          "width": 512,
+          "height": 334,
+          "sha256": "507342568afc4ddc666412c48bcb8b1727d0905597d4910d47bff8e37e9ead13",
+          "reference_sha256": "bf07099e02ea94b1cc4d1d77b4c9d9ae62fc67cb0177b066ecd2d793bd125d60"
+        },
+        {
+          "name": "0016-3af8eee1dacb4c39a1ac6a9be104a0ce.png",
+          "width": 512,
+          "height": 330,
+          "sha256": "4f3db879468d40eba69a7d9a9874b81b8ca200979df1b5832e5fb89b0c64dee7",
+          "reference_sha256": "e8173fc8371f0825f9b0bce78f09fe9ec11ec1663170e20daed972e6328b1336"
+        },
+        {
+          "name": "0024-82d5044e6d0941558ae3e60802b3e3c9.png",
+          "width": 512,
+          "height": 337,
+          "sha256": "3b0525d6e82fa51aef10081b52a76b6dcd27fbba0042a5e2833103906c268ab6",
+          "reference_sha256": "9765062af40b13cc790fa78e5d388e08580a52a0185a9d1d5a535ee55943ba28"
+        }
+      ],
+      "color_model": "SH3",
+      "preview_color_model": "SH3 (PLY)",
+      "splat_color_model": "SH0",
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "thumbnail_source": "evaluation_render",
+      "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+      "seconds": 17.74,
+      "pose_source": "COLMAP",
+      "normalization": {
+        "center": [
+          -6.363012313842773,
+          3.244579792022705,
+          12.407949447631836
+        ],
+        "scale": 25.08843421936035,
+        "units": "relative"
+      },
+      "registered_images": 26,
+      "input_images": 26,
+      "calibrated_fixture": false,
+      "camera_mode": "auto",
+      "matching_seed": 42,
+      "sparse_points": 2471,
+      "reprojection_error": 0.9246698843330686,
+      "unregistered_images": [],
+      "warnings": [],
+      "sfm_reused": false,
+      "sfm_cache_key": "ff0fe706f1822c4951e988ac60eaeaf8a0b1321170a6b4fce6ce57832ee3a9a5",
+      "timings": {
+        "input_validation_seconds": 0.003,
+        "sfm_seconds": 9.5914,
+        "cache_publish_seconds": 0.0372,
+        "training_and_model_export_seconds": 8.0796
+      },
+      "source": {
+        "name": "ETH3D office",
+        "url": "https://www.eth3d.net/datasets",
+        "archive_url": "https://www.eth3d.net/data/office_dslr_jpg.7z",
+        "authors": "Schöps et al., ETH3D, CVPR 2017",
+        "license": "CC BY-NC-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "images": 26,
+        "type": "real indoor multiview dataset",
+        "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+      }
+    }
+  }
+]
