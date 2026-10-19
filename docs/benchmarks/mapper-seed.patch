@@ -1,0 +1,11 @@
+--- a/webscan/reconstruction.py
++++ b/webscan/reconstruction.py
+@@ -70,7 +70,7 @@
+         database_path=db,
+         image_path=images,
+         output_path=sparse,
+-        options={"num_threads": 4, "min_model_size": 3},
++        options={"num_threads": 4, "min_model_size": 3, "random_seed": 42},
+     )
+     if not maps:
+         raise RuntimeError(
