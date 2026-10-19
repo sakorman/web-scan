@@ -26,14 +26,29 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
 
     work.mkdir(parents=True, exist_ok=True)
     db = work / "database.db"
+    # Assign image IDs before parallel feature extraction can reorder writes.
+    image_names = sorted(path.name for path in images.glob("*.jpg"))
+    mode = (
+        pycolmap.CameraMode.SINGLE
+        if camera_mode == "shared"
+        else pycolmap.CameraMode.AUTO
+    )
+    with pycolmap.Database.open(db):
+        pass
+    pycolmap.import_images(
+        database_path=db,
+        image_path=images,
+        camera_mode=mode,
+        image_names=image_names,
+        options={"camera_model": "SIMPLE_RADIAL"},
+    )
     progress("sfm", 0.08, "提取照片特征")
     # Independent camera parameters tolerate imported photos with different dimensions.
     pycolmap.extract_features(
         database_path=db,
         image_path=images,
-        camera_mode=pycolmap.CameraMode.SINGLE
-        if camera_mode == "shared"
-        else pycolmap.CameraMode.AUTO,
+        camera_mode=mode,
+        image_names=image_names,
         device=pycolmap.Device.cpu,
         extraction_options={
             "max_image_size": 1600,
@@ -61,7 +76,7 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
             "照片之间没有建立可靠的三维关联。请增加重叠视角、平移拍摄，并避免反光和纯色表面。"
         )
     best = max(maps.values(), key=lambda m: m.num_reg_images())
-    total = len(list(images.glob("*.jpg")))
+    total = len(image_names)
     if best.num_reg_images() < 3 or best.num_reg_images() / total < 0.5:
         raise RuntimeError(
             f"仅 {best.num_reg_images()}/{total} 张照片成功定位；请补拍相邻视角。"
@@ -114,7 +129,7 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
         "sparse_points": best.num_points3D(),
         "reprojection_error": best.compute_mean_reprojection_error(),
         "unregistered_images": sorted(
-            set(p.name for p in images.glob("*.jpg"))
+            set(image_names)
             - {image.name for image in best.images.values()}
         ),
     }
@@ -136,7 +151,8 @@ def create_fixture(path: Path):
     """Generate original calibrated Gaussian observations; never masquerades as photo SfM."""
     import torch
     from PIL import Image
-    from .gaussian import render_reference, logit
+
+    from .gaussian import logit, render_reference
 
     torch.set_num_threads(4)
     path.mkdir(parents=True, exist_ok=True)

@@ -205,6 +205,8 @@ WEBSCAN_ALLOWED_HOSTS=192.168.1.10 \
 
 具体条件、缓存规则和复现命令见 [性能记录](docs/PERFORMANCE.md)。
 
+位姿流程先按采集顺序登记照片，再并行提取特征，避免完成先后改变图像编号。几何求解和训练仍可能波动。[重复性检查](docs/SFM-ORDER.md)
+
 ## 技术架构
 
 ```mermaid
