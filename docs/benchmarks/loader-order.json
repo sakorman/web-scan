@@ -1,0 +1,1526 @@
+{
+  "plan": {
+    "date": "2026-10-21",
+    "project_baseline": "019759983933deb1e91eac59e078f1af7c4cb5ef",
+    "engine_upstream_commit": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "engine_upstream_tag": "v0.3.0",
+    "hypothesis": "A single seeded image producer makes consumed training-image order repeatable; it may reduce score variance but costs loading parallelism and changes the combined sampling schedule. Weighted Gaussian sampling remains unseeded.",
+    "scope": "Experimental source build only; no replacement of the installed engine. Compare identical instrumented engine with many versus one image producer, same photos and training settings.",
+    "proposed_config": {
+      "steps": 3000,
+      "resolution": 512,
+      "max_points": 150000,
+      "seed": 42,
+      "repeats": 2,
+      "scenes": [
+        "pipes",
+        "office"
+      ],
+      "evaluation_mode": "holdout"
+    },
+    "acceptance": "Trace repeatability must be measured separately from model determinism and quality. No production adoption without stable quality and acceptable cost across both scenes."
+  },
+  "build": {
+    "upstream_commit": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "cargo_lock_sha256": "a555fcb104371e9a6e4de179911c26234fd123228b7c6e30de1d9bfa97e4a2e6",
+    "unmodified_binary_sha256": "40b77d9234ffde3c715ff42c1718dff00058220d24a601b1612dd29f6204efe8",
+    "unmodified_build_duration": "14m 18s",
+    "build_command": "cargo build --locked --release --bin brush_app -j 4",
+    "profile": "release",
+    "hardware": "Apple M5 / 32 GiB",
+    "instrumented_binary_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+    "patch_sha256": "ea30b1a712ced3b0425ca596db66550cd81c91df6ee1150cb7751ea713e71fc7",
+    "instrumented_version": "brush-cli 0.3.0-loader-study",
+    "instrumented_build_duration": "1m 38s"
+  },
+  "raw_runs": {
+    "config": {
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+    "seed": 42,
+    "repeats": 2,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 24.2727,
+        "adapter_sha256": "e5474c70588feaf3f23f466739482b95f0ecced2de0ad4d39157ce3454d01282",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11551,
+        "evaluation": {
+          "psnr": 17.565407,
+          "ssim": 0.7622691
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2727586,
+        "first_progress_seconds": 2.0817,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2727586,
+        "ply_sha256": "cb0c34ce849682068f718a41e99924560f64efabb83aaf49fa58b3e1adcbbb05",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "4a606febdff7c045b55b61629ad8f7bbaf097492932dae25053584de938d8878",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "d16c5ecc37fde01b5a0ef59adac8c5052930e81006b02b66483701c8fe948a1d",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 10,
+        "consumed_order_sha256": "b2e439e11d48e3aac19775588a8920c3579211538d6de3c9c56f18fede084ea7",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 249,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 249,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 249,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 249,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 252,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 251,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 251
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg"
+        ]
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 24.2759,
+        "adapter_sha256": "5ea2d95a57aab5e1ea26e3d525acb85ed712ad92fd201ed9952bc70c01c7eeba",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11723,
+        "evaluation": {
+          "psnr": 17.372116,
+          "ssim": 0.7505473
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2768178,
+        "first_progress_seconds": 1.0758,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2768178,
+        "ply_sha256": "d9c6e6c3cb65c643a66c22202d7dd185a833060529ab6c2f7d4af6e2e8cf58bb",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "2e96c5831b573ff2d3011d64a8ad01b5dff4bb20d8d3a6e732359ce971e4851d",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "5652d3e1a676074727791094755eeb42dc361b1de4da5f7cdb0b9542e7a8ab36",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg"
+        ]
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 24.2533,
+        "adapter_sha256": "5ea2d95a57aab5e1ea26e3d525acb85ed712ad92fd201ed9952bc70c01c7eeba",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11333,
+        "evaluation": {
+          "psnr": 17.233559,
+          "ssim": 0.74244523
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2676138,
+        "first_progress_seconds": 1.078,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2676138,
+        "ply_sha256": "7d9a8a5714129bb222bdca43194f6cb11b69e28755ba91cba55a95420f0289fe",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "978dc69f86f6887fb4bd5322a71b410643e024648a766e5c9c53f597a54504f9",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "236f163d79e675288825843ba6fb6806ad91833b0d59703c2ced46253da4ae7e",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg"
+        ]
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 23.2638,
+        "adapter_sha256": "e5474c70588feaf3f23f466739482b95f0ecced2de0ad4d39157ce3454d01282",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11690,
+        "evaluation": {
+          "psnr": 18.789852,
+          "ssim": 0.7593863
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2760390,
+        "first_progress_seconds": 2.079,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2760390,
+        "ply_sha256": "8db2b285fb0ae4b7c9bf305e88f385d9b63f1c65a59ea06a9b3725bdeaafa32e",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "edba49723faaaa66aaed55d2694357ef9dffb3268ddb414d7463e2541c833d69",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "c80dcc1e7d63cbb722d27e2c2a3bb2e1924a2865ca63931220481f7d84f4ce93",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 10,
+        "consumed_order_sha256": "a5c02eb2cecacda0aa1ca58715aa029f282b67bdca8f8f43d6bc88671e92d8bc",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 251,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 249,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 249,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 249,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 251,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 251,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg"
+        ]
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 24.277,
+        "adapter_sha256": "5ea2d95a57aab5e1ea26e3d525acb85ed712ad92fd201ed9952bc70c01c7eeba",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14561,
+        "evaluation": {
+          "psnr": 19.749386,
+          "ssim": 0.8631239
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3437946,
+        "first_progress_seconds": 2.0774,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3437946,
+        "ply_sha256": "e4887814ca93e20bf436506818b35826ce58c62b3f8e2e920314ffee27e69739",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "2f12c336834668baeeaee3fbeddd8a805c24f9fba70bb5f507f17109272891af",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "925a07692897097819c2d7aa91d0532077ed1cec0c2de3dcf501c6f2393f788d",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "5664d3a7551bd5d458dd41ad8d178dc4e27a7cb978d8ca4fa6bbae2ea0c52c24",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "2a62d9fbf7fbf634199b6583bfcdeae23edb130534eca56a60e30221add7ae59",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg"
+        ]
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 24.2641,
+        "adapter_sha256": "e5474c70588feaf3f23f466739482b95f0ecced2de0ad4d39157ce3454d01282",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14098,
+        "evaluation": {
+          "psnr": 20.15605,
+          "ssim": 0.86643
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3328678,
+        "first_progress_seconds": 3.084,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3328678,
+        "ply_sha256": "24bcab9f49ea2b468fb6bf394c04a55a9ecabb79378593d60707350432785638",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "542402034b788aca3152e763e4b80e9115d293c1dc96b8a1a3c8376d1252882f",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "83ae075dda873c03df63ef56ac66343e334aa5acc26b9a3504f9a6954d695c16",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "d5cfa50d06f05eea325c9a5f7ba3721edb5fc3b531e3c1d88168d9fc342a8750",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "ed0987dec79b484cb494194a801b4b08d71de8acb187bf05ffa5dd508730f263",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 10,
+        "consumed_order_sha256": "343568c247b598a86e8698f76b901ecf5cff3f8112499e2169d34aa45a1f82b7",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 136,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 138,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 138,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 137,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 138,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 138,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 134,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 136,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 132,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 138,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 139,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 133,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 138,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 133,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 137,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 137,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg"
+        ]
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 24.2691,
+        "adapter_sha256": "e5474c70588feaf3f23f466739482b95f0ecced2de0ad4d39157ce3454d01282",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14206,
+        "evaluation": {
+          "psnr": 21.041674,
+          "ssim": 0.8711174
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3354166,
+        "first_progress_seconds": 3.0859,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3354166,
+        "ply_sha256": "6b639524c7cd274c4a8c03dd6fe2c8aae8d77c47460fbea458e30fc22be8ce5e",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "ba1233b22271b062b87b990421821ae1b00d04ee66fe4e7a47d19819e0b8404e",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "ff82c94ec3ef80d73a1c68c2d3a28e15ab357b07adb778a4d191768da25dd36d",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "2da361b69c1e87075423a220f30a0525f131093a16ebad62d68ff1ed70edf7e2",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "a9c9e9a7ce5fcf0f830a95613277c31f155c1db0c664ea730022bd90564103f3",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 10,
+        "consumed_order_sha256": "6dc71a52217cf37f8caae64c35f868e1f56b4abc31e8aeeca99122a3ef2542f4",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 138,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 137,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 137,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 138,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 138,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 134,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 135,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 137,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 136,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 133,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 138,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 137,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 134,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 138,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 134,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 137,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 137,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg"
+        ]
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 24.2433,
+        "adapter_sha256": "5ea2d95a57aab5e1ea26e3d525acb85ed712ad92fd201ed9952bc70c01c7eeba",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14457,
+        "evaluation": {
+          "psnr": 19.944798,
+          "ssim": 0.872102
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3413402,
+        "first_progress_seconds": 2.0717,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3413402,
+        "ply_sha256": "62077106fdfa17f42eeb7822445548fb21c8f918b2a23af81ccf04aa12a064f9",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "c892fae68af52215cb1f4ff7b5acc7873aa2de52c79ffe5a1e377f7eab2d9e4f",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "c8329e46ef4f478f692398bde2b72663f35064a702b872b9482d474d223df6d2",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "d7b9eae37065c573aa319c89a4524bb9cc02cef0e57b3220c6279fc27fceaa46",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "66b539897d1b23466c174b230817783bcc6b23d88d8e357a80759c31704e64ad",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-loader-study",
+          "engine_version": "0.3.0-loader-study",
+          "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg"
+        ]
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 23.768250000000002,
+            "min": 23.2638,
+            "max": 24.2727
+          },
+          "gaussians": {
+            "mean": 11620.5,
+            "min": 11551,
+            "max": 11690
+          },
+          "psnr": {
+            "mean": 18.177629500000002,
+            "min": 17.565407,
+            "max": 18.789852
+          },
+          "ssim": {
+            "mean": 0.7608277,
+            "min": 0.7593863,
+            "max": 0.7622691
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 24.2646,
+            "min": 24.2533,
+            "max": 24.2759
+          },
+          "gaussians": {
+            "mean": 11528,
+            "min": 11333,
+            "max": 11723
+          },
+          "psnr": {
+            "mean": 17.3028375,
+            "min": 17.233559,
+            "max": 17.372116
+          },
+          "ssim": {
+            "mean": 0.746496265,
+            "min": 0.74244523,
+            "max": 0.7505473
+          }
+        }
+      },
+      {
+        "scene_index": 1,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 24.2666,
+            "min": 24.2641,
+            "max": 24.2691
+          },
+          "gaussians": {
+            "mean": 14152,
+            "min": 14098,
+            "max": 14206
+          },
+          "psnr": {
+            "mean": 20.598862,
+            "min": 20.15605,
+            "max": 21.041674
+          },
+          "ssim": {
+            "mean": 0.8687737,
+            "min": 0.86643,
+            "max": 0.8711174
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 24.260150000000003,
+            "min": 24.2433,
+            "max": 24.277
+          },
+          "gaussians": {
+            "mean": 14509,
+            "min": 14457,
+            "max": 14561
+          },
+          "psnr": {
+            "mean": 19.847092,
+            "min": 19.749386,
+            "max": 19.944798
+          },
+          "ssim": {
+            "mean": 0.86761295,
+            "min": 0.8631239,
+            "max": 0.872102
+          }
+        }
+      }
+    ]
+  },
+  "aligned_comparisons": [
+    {
+      "comparison_size": 512,
+      "quick_job": "0-0-baseline",
+      "detail_job": "0-0-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 19.446522599155724,
+            "ssim": 0.801607072353363
+          },
+          "detail": {
+            "psnr": 20.192821321746074,
+            "ssim": 0.8097819685935974
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 15.453227079420245,
+            "ssim": 0.6712691783905029
+          },
+          "detail": {
+            "psnr": 14.322658862346655,
+            "ssim": 0.6440029740333557
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 17.449874839287986,
+          "ssim": 0.736438125371933
+        },
+        "detail": {
+          "psnr": 17.257740092046365,
+          "ssim": 0.7268924713134766
+        }
+      },
+      "scene_index": 0,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "0-1-baseline",
+      "detail_job": "0-1-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 22.71539643827508,
+            "ssim": 0.8158485889434814
+          },
+          "detail": {
+            "psnr": 20.598383083829255,
+            "ssim": 0.8077519536018372
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 14.480966117528027,
+            "ssim": 0.6523680090904236
+          },
+          "detail": {
+            "psnr": 13.630081669801301,
+            "ssim": 0.6275410056114197
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.598181277901553,
+          "ssim": 0.7341082990169525
+        },
+        "detail": {
+          "psnr": 17.114232376815277,
+          "ssim": 0.7176464796066284
+        }
+      },
+      "scene_index": 0,
+      "repeat": 1
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-0-baseline",
+      "detail_job": "1-0-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 22.92612047809408,
+            "ssim": 0.8887971043586731
+          },
+          "detail": {
+            "psnr": 21.855870347496484,
+            "ssim": 0.8862893581390381
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 19.924890863889814,
+            "ssim": 0.9235526919364929
+          },
+          "detail": {
+            "psnr": 19.735422012808254,
+            "ssim": 0.9288872480392456
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 15.327375291228076,
+            "ssim": 0.7601348161697388
+          },
+          "detail": {
+            "psnr": 17.799558395020306,
+            "ssim": 0.785284161567688
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 21.942410020052655,
+            "ssim": 0.8312796354293823
+          },
+          "detail": {
+            "psnr": 19.200489055556915,
+            "ssim": 0.7952041625976562
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 20.030199163316155,
+          "ssim": 0.8509410619735718
+        },
+        "detail": {
+          "psnr": 19.647834952720487,
+          "ssim": 0.848916232585907
+        }
+      },
+      "scene_index": 1,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-1-baseline",
+      "detail_job": "1-1-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 22.73280670716279,
+            "ssim": 0.8951832056045532
+          },
+          "detail": {
+            "psnr": 21.924525880356562,
+            "ssim": 0.8964471817016602
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 22.81607886895994,
+            "ssim": 0.9356993436813354
+          },
+          "detail": {
+            "psnr": 20.47214555479623,
+            "ssim": 0.9261578321456909
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 16.502914551165947,
+            "ssim": 0.7674647569656372
+          },
+          "detail": {
+            "psnr": 16.12845196915472,
+            "ssim": 0.7860772013664246
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 21.600028907527093,
+            "ssim": 0.8287805914878845
+          },
+          "detail": {
+            "psnr": 20.860157280594134,
+            "ssim": 0.8242601156234741
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 20.91295725870394,
+          "ssim": 0.8567819744348526
+        },
+        "detail": {
+          "psnr": 19.846320171225415,
+          "ssim": 0.8582355827093124
+        }
+      },
+      "scene_index": 1,
+      "repeat": 1
+    }
+  ],
+  "summary": [
+    {
+      "scene": "pipes",
+      "baseline": {
+        "image_order_variants": 2,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 23.768250000000002,
+          "min": 23.2638,
+          "max": 24.2727
+        },
+        "gaussians": {
+          "mean": 11620.5,
+          "min": 11551,
+          "max": 11690
+        },
+        "ply_bytes": {
+          "mean": 2743988,
+          "min": 2727586,
+          "max": 2760390
+        },
+        "psnr": {
+          "mean": 18.02402805859477,
+          "min": 17.449874839287986,
+          "max": 18.598181277901553
+        },
+        "ssim": {
+          "mean": 0.7352732121944427,
+          "min": 0.7341082990169525,
+          "max": 0.736438125371933
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 24.2646,
+          "min": 24.2533,
+          "max": 24.2759
+        },
+        "gaussians": {
+          "mean": 11528,
+          "min": 11333,
+          "max": 11723
+        },
+        "ply_bytes": {
+          "mean": 2722158,
+          "min": 2676138,
+          "max": 2768178
+        },
+        "psnr": {
+          "mean": 17.18598623443082,
+          "min": 17.114232376815277,
+          "max": 17.257740092046365
+        },
+        "ssim": {
+          "mean": 0.7222694754600525,
+          "min": 0.7176464796066284,
+          "max": 0.7268924713134766
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "baseline": {
+        "image_order_variants": 2,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 24.2666,
+          "min": 24.2641,
+          "max": 24.2691
+        },
+        "gaussians": {
+          "mean": 14152,
+          "min": 14098,
+          "max": 14206
+        },
+        "ply_bytes": {
+          "mean": 3341422,
+          "min": 3328678,
+          "max": 3354166
+        },
+        "psnr": {
+          "mean": 20.471578211010048,
+          "min": 20.030199163316155,
+          "max": 20.91295725870394
+        },
+        "ssim": {
+          "mean": 0.8538615182042122,
+          "min": 0.8509410619735718,
+          "max": 0.8567819744348526
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 24.260150000000003,
+          "min": 24.2433,
+          "max": 24.277
+        },
+        "gaussians": {
+          "mean": 14509,
+          "min": 14457,
+          "max": 14561
+        },
+        "ply_bytes": {
+          "mean": 3425674,
+          "min": 3413402,
+          "max": 3437946
+        },
+        "psnr": {
+          "mean": 19.74707756197295,
+          "min": 19.647834952720487,
+          "max": 19.846320171225415
+        },
+        "ssim": {
+          "mean": 0.8535759076476097,
+          "min": 0.848916232585907,
+          "max": 0.8582355827093124
+        }
+      }
+    }
+  ],
+  "timing_scope": "Adapter training/evaluation/export with the same instrumented local binary; excludes source compilation, SfM and input copy. OS/driver caches not flushed. Image trace is enabled equally in both variants.",
+  "quality_scope": "Frozen historical shared-camera scenes; every eighth image held out from training but used in SfM. Compare RGB PSNR and Gaussian-window SSIM at long edge 512. Two repeats are exploratory.",
+  "fresh_sfm_seconds": null,
+  "end_to_end_seconds": null,
+  "decision": "Not adopted as default: one producer makes consumed image order repeatable in these runs, but model bytes/counts still differ and mean PSNR decreases in both scenes. This change also alters the mixed sampling schedule; it is not merely less decoding concurrency.",
+  "pilot": {
+    "config": {
+      "steps": 500,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "2aec6d46c80d3776665e24da65d63d06e2a84b29207b14721ae4525d4e4e412b",
+    "seed": 42,
+    "repeats": 1,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 5.129,
+        "adapter_sha256": "e5474c70588feaf3f23f466739482b95f0ecced2de0ad4d39157ce3454d01282",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2297,
+        "evaluation": {
+          "psnr": 15.457438,
+          "ssim": 0.6544249
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 543641,
+        "first_progress_seconds": 2.065
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 4.1144,
+        "adapter_sha256": "5ea2d95a57aab5e1ea26e3d525acb85ed712ad92fd201ed9952bc70c01c7eeba",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2317,
+        "evaluation": {
+          "psnr": 15.80882,
+          "ssim": 0.65488446
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 548361,
+        "first_progress_seconds": 1.0753
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 1,
+        "baseline": {
+          "seconds": {
+            "mean": 5.129,
+            "min": 5.129,
+            "max": 5.129
+          },
+          "gaussians": {
+            "mean": 2297,
+            "min": 2297,
+            "max": 2297
+          },
+          "psnr": {
+            "mean": 15.457438,
+            "min": 15.457438,
+            "max": 15.457438
+          },
+          "ssim": {
+            "mean": 0.6544249,
+            "min": 0.6544249,
+            "max": 0.6544249
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 4.1144,
+            "min": 4.1144,
+            "max": 4.1144
+          },
+          "gaussians": {
+            "mean": 2317,
+            "min": 2317,
+            "max": 2317
+          },
+          "psnr": {
+            "mean": 15.80882,
+            "min": 15.80882,
+            "max": 15.80882
+          },
+          "ssim": {
+            "mean": 0.65488446,
+            "min": 0.65488446,
+            "max": 0.65488446
+          }
+        }
+      }
+    ]
+  },
+  "validation": {
+    "consumed_trace_records": 24000,
+    "full_sh3_main_models": 8,
+    "full_sh3_pilot_models": 2,
+    "evaluation_sets_complete": true,
+    "same_cameras_and_references": true,
+    "browser": "Loaded baseline and candidate for both scenes at photo 1; dragged each candidate in walk mode; no console warnings/errors. Pipe edges, cables, streaks and missing detail remain.",
+    "application_code_changed": false,
+    "installed_engine_replaced": false,
+    "peak_memory_measured": false
+  },
+  "screenshots": [
+    {
+      "scene_index": 0,
+      "repeat": 0,
+      "variant": "baseline",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "file": "54-loader-order-pipes-baseline.png",
+      "sha256": "4a606febdff7c045b55b61629ad8f7bbaf097492932dae25053584de938d8878"
+    },
+    {
+      "scene_index": 0,
+      "repeat": 0,
+      "variant": "candidate",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "file": "55-loader-order-pipes-candidate.png",
+      "sha256": "2e96c5831b573ff2d3011d64a8ad01b5dff4bb20d8d3a6e732359ce971e4851d"
+    },
+    {
+      "scene_index": 1,
+      "repeat": 0,
+      "variant": "baseline",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "file": "56-loader-order-office-baseline.png",
+      "sha256": "542402034b788aca3152e763e4b80e9115d293c1dc96b8a1a3c8376d1252882f"
+    },
+    {
+      "scene_index": 1,
+      "repeat": 0,
+      "variant": "candidate",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "file": "57-loader-order-office-candidate.png",
+      "sha256": "2f12c336834668baeeaee3fbeddd8a805c24f9fba70bb5f507f17109272891af"
+    }
+  ]
+}

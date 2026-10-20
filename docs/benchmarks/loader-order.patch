@@ -1,0 +1,115 @@
+diff --git a/crates/brush-cli/src/lib.rs b/crates/brush-cli/src/lib.rs
+index 5efdb05..8cf31db 100644
+--- a/crates/brush-cli/src/lib.rs
++++ b/crates/brush-cli/src/lib.rs
+@@ -11,7 +11,7 @@ use tracing::trace_span;
+ #[derive(Parser)]
+ #[command(
+     author,
+-    version,
++    version = "0.3.0-loader-study",
+     arg_required_else_help = false,
+     about = "Brush - universal splats"
+ )]
+diff --git a/crates/brush-dataset/src/scene_loader.rs b/crates/brush-dataset/src/scene_loader.rs
+index e87d02f..c568343 100644
+--- a/crates/brush-dataset/src/scene_loader.rs
++++ b/crates/brush-dataset/src/scene_loader.rs
+@@ -1,4 +1,4 @@
+-use std::sync::Arc;
++use std::{path::PathBuf, sync::Arc};
+ 
+ use burn::prelude::Backend;
+ use image::DynamicImage;
+@@ -11,7 +11,9 @@ use tracing::{Instrument, trace_span};
+ use crate::scene::{Scene, SceneBatch, sample_to_tensor, view_to_sample_image};
+ 
+ pub struct SceneLoader<B: Backend> {
+-    receiver: Receiver<SceneBatch<B>>,
++    receiver: Receiver<(SceneBatch<B>, PathBuf)>,
++    trace_order: bool,
++    consumed: usize,
+ }
+ 
+ struct ImageCache {
+@@ -73,6 +75,16 @@ impl<B: Backend> SceneLoader<B> {
+                 // threads would just sit around idling!
+                 .min(num_img_queue) as u64
+         };
++        // Experimental switch: keep the native producer count unless explicitly enabled.
++        let parallelism = if std::env::var("WEBSCAN_SINGLE_LOADER").as_deref() == Ok("1") {
++            1
++        } else {
++            parallelism
++        };
++        let trace_order = std::env::var("WEBSCAN_TRACE_LOADER").as_deref() == Ok("1");
++        if trace_order {
++            log::info!("WS_LOADER producers {parallelism}");
++        }
+         let num_views = scene.views.len();
+ 
+         let load_cache = Arc::new(RwLock::new(ImageCache::new(MAX_CACHE_MB, num_views)));
+@@ -114,7 +126,12 @@ impl<B: Backend> SceneLoader<B> {
+                         };
+ 
+                         let _ = send_img
+-                            .send((sample, view.image.is_masked(), view.camera.clone()))
++                            .send((
++                                sample,
++                                view.image.is_masked(),
++                                view.camera.clone(),
++                                view.image.path.clone(),
++                            ))
+                             .await;
+                     };
+ 
+@@ -131,16 +148,19 @@ impl<B: Backend> SceneLoader<B> {
+         let device = device.clone();
+         tokio_wasm::spawn(async move {
+             while let Some(rec) = rec_imag.recv().await {
+-                let (sample, alpha_is_mask, camera) = rec;
++                let (sample, alpha_is_mask, camera, image_path) = rec;
+ 
+                 let img_tensor = sample_to_tensor(&sample, &device);
+ 
+                 if send_batch
+-                    .send(SceneBatch {
+-                        img_tensor,
+-                        alpha_is_mask,
+-                        camera,
+-                    })
++                    .send((
++                        SceneBatch {
++                            img_tensor,
++                            alpha_is_mask,
++                            camera,
++                        },
++                        image_path,
++                    ))
+                     .await
+                     .is_err()
+                 {
+@@ -153,13 +173,21 @@ impl<B: Backend> SceneLoader<B> {
+ 
+         Self {
+             receiver: rec_batch,
++            trace_order,
++            consumed: 0,
+         }
+     }
+ 
+     pub async fn next_batch(&mut self) -> SceneBatch<B> {
+-        self.receiver
++        let (batch, image_path) = self
++            .receiver
+             .recv()
+             .await
+-            .expect("Somehow lost data loading channel!")
++            .expect("Somehow lost data loading channel!");
++        if self.trace_order {
++            log::info!("WS_ORDER {} {}", self.consumed, image_path.display());
++        }
++        self.consumed += 1;
++        batch
+     }
+ }

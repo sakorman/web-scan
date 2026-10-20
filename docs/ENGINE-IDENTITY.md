@@ -80,3 +80,5 @@
 对照可使用 `scripts/benchmark_exports.py`，传入旧、新适配器文件，以及完整定位的 pipes / office 任务，参数为 `--steps 1000 --resolution 512 --repeats 1`。核对完整相机与参考图摘要后再调用 `compare_quality.py` 评分。新增报告字段可以从任意新建的 Brush 任务下载查看，旧任务保留旧字段。
 
 照片与衍生图片遵循 [ETH3D 署名及许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续实测：单生产任务能固定这两组照片的消费顺序，但模型仍不确定，平均 PSNR 下降，未设为默认。[读图顺序实验](LOADER-ORDER.md)
