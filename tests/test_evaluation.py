@@ -137,6 +137,7 @@ def test_failed_evaluation_preserves_raw_exports_and_publishes_no_model(
         return Finished()
 
     monkeypatch.setattr(brush, "executable", lambda: Path("/fake"))
+    monkeypatch.setattr(brush, "engine_identity", lambda _: {})
     monkeypatch.setattr(brush.subprocess, "Popen", done)
     with pytest.raises(ValueError, match="评测未完成"):
         brush.train(

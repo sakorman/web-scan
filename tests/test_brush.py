@@ -136,6 +136,7 @@ def test_successful_process_must_have_exact_final_model(tmp_path, monkeypatch, n
         return Finished()
 
     monkeypatch.setattr(brush, "executable", lambda: tmp_path / "fake-brush")
+    monkeypatch.setattr(brush, "engine_identity", lambda _: {})
     monkeypatch.setattr(brush.subprocess, "Popen", finished_process)
     with pytest.raises(RuntimeError, match="未输出最终模型"):
         brush.train(

@@ -82,6 +82,7 @@ def test_successful_process_with_bad_ply_keeps_raw_exports(
         return Finished()
 
     monkeypatch.setattr(brush, "executable", lambda: tmp_path / "brush-app")
+    monkeypatch.setattr(brush, "engine_identity", lambda _: {})
     monkeypatch.setattr(brush.subprocess, "Popen", done)
     scene = {
         "views": [{"image": "a.jpg"}, {"image": "b.jpg"}],

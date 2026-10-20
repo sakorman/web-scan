@@ -68,3 +68,7 @@ Apple Silicon macOS，同一组 26 张办公室照片，Brush 0.3.0，1000 步�
 ## 公开示例准备
 
 ETH3D 7z 归档改为单次流式读取。本机 pipes 从 54.87 秒降到 5.54 秒，office 从 183.94 秒降到 11.25 秒；40 张照片和来源清单逐字节相同。计时仅覆盖归档准备，不含下载、SfM 和训练，未清理操作系统文件缓存。[完整记录与复现](SAMPLE-PREPARATION.md)
+
+## 引擎标识成本
+
+每次 Brush 训练前读取可执行文件摘要和 CLI 版本，本机四次约 61–70 ms，计入 `training_and_model_export_seconds`，另以 `engine_identity_seconds` 单独记录。版本查询失败最多等待 5 秒后记为未知。记录种子和摘要有助于核对重复实验，但不保证训练确定性。[实测与种子范围](ENGINE-IDENTITY.md)

@@ -1,0 +1,724 @@
+{
+  "baseline_commit": "e600bfe84b524e5a62525cd60e4581a84367671e",
+  "hardware": "Apple M5 / 32 GiB",
+  "change": "Record selected CLI-reported version, executable SHA-256 and explicit seed 42; no determinism guarantee. Hash identifies entrypoint bytes, not its dependencies or upstream authenticity.",
+  "cached_adapter_runs": {
+    "config": {
+      "steps": 1000,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "seed": 42,
+    "repeats": 1,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 8.0657,
+        "adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 3006,
+        "evaluation": {
+          "psnr": 18.780136,
+          "ssim": 0.714972
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 710965,
+        "first_progress_seconds": 2.0131,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 710965,
+        "observed_seed": 42,
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "1c6e6a63084e5dcebab7c50594fa9a239ae0da03e7eb8b27eac7da3c3beb4754",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "a265e760c8fc5a25680936b9bd461dcf835fbe34389e710a92ab2b64dedbd084",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "identity": {
+          "engine": "Brush 0.3.0",
+          "engine_version": null,
+          "engine_sha256": null,
+          "engine_identity_seconds": null,
+          "training_seed": null,
+          "determinism_guaranteed": null
+        }
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 7.1196,
+        "adapter_sha256": "30e4bd38767582c0b586be385de630912cf135a41671a235139de46a9f1f773e",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 3060,
+        "evaluation": {
+          "psnr": 17.714924,
+          "ssim": 0.70565903
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 723709,
+        "first_progress_seconds": 2.0834,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 723709,
+        "observed_seed": 42,
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "4820eb2a7761fd28d69c92ef1a7d43b470129c4a1e9fff6bbd7600259b125d1f",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "44806d2fbfe07166842e955b38355c28eba174f8bba3e5cdca08ede63508de0c",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "identity": {
+          "engine": "Brush 0.3.0",
+          "engine_version": "0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "engine_identity_seconds": 0.0702,
+          "training_seed": 42,
+          "determinism_guaranteed": false
+        }
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 8.1346,
+        "adapter_sha256": "30e4bd38767582c0b586be385de630912cf135a41671a235139de46a9f1f773e",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 3938,
+        "evaluation": {
+          "psnr": 19.185947,
+          "ssim": 0.80923647
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 930917,
+        "first_progress_seconds": 3.0752,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 930917,
+        "observed_seed": 42,
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "d0e1ee3ec0b4dbc58d6fdf2d0182275d4669f6b52dec04bd2203572cf30c2786",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "4e38da60f4c289dc4f9967d4e961201af90292d47815afed11a74f933a510d97",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "0ae4575671c946f2481d92642b27867e9d540b0dcfa65779b755c9a884daf7b5",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "af644526b016d80efe07f55da8e75156180ea63f31df3d36f4932603e3a46a39",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "identity": {
+          "engine": "Brush 0.3.0",
+          "engine_version": "0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "engine_identity_seconds": 0.0612,
+          "training_seed": 42,
+          "determinism_guaranteed": false
+        }
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 8.0847,
+        "adapter_sha256": "72668a49e3ebc89adbf8098c2126a9110b4c874414960f73bfa4cab32ba9f309",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 3979,
+        "evaluation": {
+          "psnr": 19.361956,
+          "ssim": 0.8061569
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 940593,
+        "first_progress_seconds": 3.0192,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 940593,
+        "observed_seed": 42,
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "21219e1fa84f38cb8b76355dcc0dee8d126ac8eda9d08d218b3d25b008b1a9b3",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "b0ff50930eddc289a3637e3d3f193f014514cac8b33823659f4df9a8667923ba",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "9a5b5837cf15a39dcb12a1e282749117feb6f3c3135407bf1abd85e773a42101",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "bc9910786be2a908dd9b8623b1fd5fea81d682b2920164732261c4a7a3a8de65",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "identity": {
+          "engine": "Brush 0.3.0",
+          "engine_version": null,
+          "engine_sha256": null,
+          "engine_identity_seconds": null,
+          "training_seed": null,
+          "determinism_guaranteed": null
+        }
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 1,
+        "baseline": {
+          "seconds": {
+            "mean": 8.0657,
+            "min": 8.0657,
+            "max": 8.0657
+          },
+          "gaussians": {
+            "mean": 3006,
+            "min": 3006,
+            "max": 3006
+          },
+          "psnr": {
+            "mean": 18.780136,
+            "min": 18.780136,
+            "max": 18.780136
+          },
+          "ssim": {
+            "mean": 0.714972,
+            "min": 0.714972,
+            "max": 0.714972
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 7.1196,
+            "min": 7.1196,
+            "max": 7.1196
+          },
+          "gaussians": {
+            "mean": 3060,
+            "min": 3060,
+            "max": 3060
+          },
+          "psnr": {
+            "mean": 17.714924,
+            "min": 17.714924,
+            "max": 17.714924
+          },
+          "ssim": {
+            "mean": 0.70565903,
+            "min": 0.70565903,
+            "max": 0.70565903
+          }
+        }
+      },
+      {
+        "scene_index": 1,
+        "runs_per_variant": 1,
+        "baseline": {
+          "seconds": {
+            "mean": 8.0847,
+            "min": 8.0847,
+            "max": 8.0847
+          },
+          "gaussians": {
+            "mean": 3979,
+            "min": 3979,
+            "max": 3979
+          },
+          "psnr": {
+            "mean": 19.361956,
+            "min": 19.361956,
+            "max": 19.361956
+          },
+          "ssim": {
+            "mean": 0.8061569,
+            "min": 0.8061569,
+            "max": 0.8061569
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 8.1346,
+            "min": 8.1346,
+            "max": 8.1346
+          },
+          "gaussians": {
+            "mean": 3938,
+            "min": 3938,
+            "max": 3938
+          },
+          "psnr": {
+            "mean": 19.185947,
+            "min": 19.185947,
+            "max": 19.185947
+          },
+          "ssim": {
+            "mean": 0.80923647,
+            "min": 0.80923647,
+            "max": 0.80923647
+          }
+        }
+      }
+    ]
+  },
+  "aligned_comparisons": [
+    {
+      "comparison_size": 512,
+      "quick_job": "0-baseline",
+      "detail_job": "0-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 20.949255066074933,
+            "ssim": 0.7342203259468079
+          },
+          "detail": {
+            "psnr": 18.759493003411805,
+            "ssim": 0.7275113463401794
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 16.23368153633865,
+            "ssim": 0.6398457884788513
+          },
+          "detail": {
+            "psnr": 16.40798781872704,
+            "ssim": 0.6293097734451294
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.591468301206792,
+          "ssim": 0.6870330572128296
+        },
+        "detail": {
+          "psnr": 17.58374041106942,
+          "ssim": 0.6784105598926544
+        }
+      },
+      "scene_index": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-baseline",
+      "detail_job": "1-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 21.223995601305262,
+            "ssim": 0.819891095161438
+          },
+          "detail": {
+            "psnr": 20.34997299830904,
+            "ssim": 0.8124592900276184
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 21.456784361481876,
+            "ssim": 0.910723090171814
+          },
+          "detail": {
+            "psnr": 20.96988117808088,
+            "ssim": 0.9093800187110901
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 15.417372985113468,
+            "ssim": 0.6876471042633057
+          },
+          "detail": {
+            "psnr": 14.630142396368012,
+            "ssim": 0.6816156506538391
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 18.85077380978595,
+            "ssim": 0.7365986108779907
+          },
+          "detail": {
+            "psnr": 20.30665996498003,
+            "ssim": 0.7613425850868225
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 19.23723168942164,
+          "ssim": 0.7887149751186371
+        },
+        "detail": {
+          "psnr": 19.06416413443449,
+          "ssim": 0.7911993861198425
+        }
+      },
+      "scene_index": 1
+    }
+  ],
+  "fresh_api_runs": [
+    {
+      "scene": "pipes",
+      "job_id": "8b197e34bce14cf2bbf43c1865657495",
+      "config": {
+        "backend": "brush",
+        "steps": 1000,
+        "max_points": 50000,
+        "resolution": 512,
+        "camera_mode": "auto",
+        "evaluation_mode": "holdout"
+      },
+      "import_to_download_seconds": 14.806104500079527,
+      "ply_bytes": 710729,
+      "conversion_identical": true,
+      "download_identical": true,
+      "model_sha256": {
+        "gaussians.ply": "c6765f515b86bdfca594501aabbc6e13d914b3e99219e26f7981c4fda5cb5b30",
+        "preview.splat": "eeafe03f6534ecc27efa699a0f9a57da50581affa0916112977f9ccc7b68629e"
+      },
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0643,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 2,
+        "export_written_bytes": 1289770,
+        "export_removed_bytes": 579041,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 710729,
+        "training_process_seconds": 8.0364,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 3005,
+        "steps": 1000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 15.462833,
+          "ssim": 0.6941818
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-319dfa7b3ba343f0b77cd88c8400eab3.png",
+            "width": 512,
+            "height": 335,
+            "sha256": "0f1f66890f9432cb30aeb1e966601fa57f8fafcb48cf0a383195092078b1163f",
+            "reference_sha256": "d17e286d3818cd637d4ef1ae903733356fb3c47c2d6a3ab60742bb63f3bfd4ed"
+          },
+          {
+            "name": "0008-34f2c2ca52a442d490c7685bd697f452.png",
+            "width": 512,
+            "height": 335,
+            "sha256": "132608488a9ca32d1043235f8e2eb563b65e2ae9739662d14b61ff8d1d716de5",
+            "reference_sha256": "3cd5fd82424a117699de9e7660dadc494a986373285b80139e0c009be1f68d2b"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+        "seconds": 14.57,
+        "pose_source": "COLMAP",
+        "normalization": {
+          "center": [
+            -0.18539413809776306,
+            -0.5574712753295898,
+            9.013612747192383
+          ],
+          "scale": 13.714849472045898,
+          "units": "relative"
+        },
+        "registered_images": 14,
+        "input_images": 14,
+        "calibrated_fixture": false,
+        "camera_mode": "auto",
+        "matching_seed": 42,
+        "sparse_points": 1874,
+        "reprojection_error": 0.8365261734625319,
+        "unregistered_images": [],
+        "warnings": [],
+        "sfm_reused": false,
+        "sfm_cache_key": "2209b0fdd016223a4d6453dc2f81cba802358f4d0f58c4853d4345524e789809",
+        "timings": {
+          "input_validation_seconds": 0.0019,
+          "sfm_seconds": 6.3545,
+          "cache_publish_seconds": 0.0273,
+          "training_and_model_export_seconds": 8.1522
+        },
+        "source": {
+          "name": "ETH3D pipes",
+          "url": "https://www.eth3d.net/datasets",
+          "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+          "authors": "Schöps et al., ETH3D, CVPR 2017",
+          "license": "CC BY-NC-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "images": 14,
+          "type": "real indoor multiview dataset",
+          "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "job_id": "8bf6b57d84ea40019f387a1e6326010f",
+      "config": {
+        "backend": "brush",
+        "steps": 1000,
+        "max_points": 50000,
+        "resolution": 512,
+        "camera_mode": "auto",
+        "evaluation_mode": "holdout"
+      },
+      "import_to_download_seconds": 17.818048167042434,
+      "ply_bytes": 944841,
+      "conversion_identical": true,
+      "download_identical": true,
+      "model_sha256": {
+        "gaussians.ply": "2938ad9c2e0b88a06927eda5730a5fa2f80cab46bd03afcc4c4976a77235740c",
+        "preview.splat": "ba1a746ce40cec1f7dd80c61498bea01cf5f6d9af268841c36ae480dd2400f82"
+      },
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0648,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 2,
+        "export_written_bytes": 1717166,
+        "export_removed_bytes": 772325,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 944841,
+        "training_process_seconds": 8.0377,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 3997,
+        "steps": 1000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 19.249533,
+          "ssim": 0.8034964
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-c34c6bd810344cd5bc19650f4afe7ab8.png",
+            "width": 512,
+            "height": 334,
+            "sha256": "d17e9f5405c58bcde04c2a0448de547f2676850ac0a8435a6fd5a03ad5998e79",
+            "reference_sha256": "a9196843341dbfb959d7d0dc1a55213f865d079ed49d626c1972acb9651025d2"
+          },
+          {
+            "name": "0008-312f2f05399d4e26be484abfbd8e69d5.png",
+            "width": 512,
+            "height": 337,
+            "sha256": "cc7deb86d14b8f7be0bf471c1f84b2c3a0a6bd8f9359cbb5b4d7a69dfd07cd31",
+            "reference_sha256": "9e0470eca653a5c577a1c5f350f70133d01f61bd68e8a8762fd60ce9d3bee07d"
+          },
+          {
+            "name": "0016-86b3918559dd47899bfebd7933b4e0b3.png",
+            "width": 512,
+            "height": 329,
+            "sha256": "0fff734d8ff47c2ce2bbcdcb9825bd0f37cae5f37cd4c4e610b4176417327d6e",
+            "reference_sha256": "b37f4db75d7a65cd98f8d80cfc6468e5240afc6f1c8e24d590fc98338048856b"
+          },
+          {
+            "name": "0024-114096aeafcd4bc39902805a3c654893.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "633d37ab239791287813f183b745ee994391287093e110dc43517f340b89a8e0",
+            "reference_sha256": "4ebddde0fb0de9bdb7a300d3c7a5e9cdbbc27a6cbe1e6e5aa8b03187da03d572"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+        "seconds": 17.51,
+        "pose_source": "COLMAP",
+        "normalization": {
+          "center": [
+            -0.7587596774101257,
+            3.445866823196411,
+            12.04236125946045
+          ],
+          "scale": 23.012237548828125,
+          "units": "relative"
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "calibrated_fixture": false,
+        "camera_mode": "auto",
+        "matching_seed": 42,
+        "sparse_points": 2495,
+        "reprojection_error": 0.9041386546412138,
+        "unregistered_images": [],
+        "warnings": [],
+        "sfm_reused": false,
+        "sfm_cache_key": "9758ff5d126b6cddfb86bfe5897a20bda52e760e58b3fae0296542448f11431f",
+        "timings": {
+          "input_validation_seconds": 0.003,
+          "sfm_seconds": 9.2772,
+          "cache_publish_seconds": 0.0389,
+          "training_and_model_export_seconds": 8.1587
+        },
+        "source": {
+          "name": "ETH3D office",
+          "url": "https://www.eth3d.net/datasets",
+          "archive_url": "https://www.eth3d.net/data/office_dslr_jpg.7z",
+          "authors": "Schöps et al., ETH3D, CVPR 2017",
+          "license": "CC BY-NC-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "images": 26,
+          "type": "real indoor multiview dataset",
+          "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+        }
+      }
+    }
+  ],
+  "timing_scope": "Adapter runs exclude SfM and input copying; API runs include cold SfM and preserve full worker timings. Import-to-download additionally includes import and verified artifact downloads. Driver and OS caches not flushed. Metadata overhead is included in training/export time.",
+  "decision": "Adopt accurate engine identity and explicit existing seed. CLI seed did not change effective seed 42. Do not attribute fluctuating short-run scores to this metadata change, and do not claim deterministic training or quality/speed gains.",
+  "validation": {
+    "backend_tests": 114,
+    "frontend_tests": 18,
+    "typescript_build": true,
+    "all_models_full_sh3": true,
+    "same_output_conversion_bytes": true,
+    "browser": "Both fresh API models load; quality and download panels work; report download clicked; both models dragged in walk mode; no console errors. Thin pipes, cables, holes and streaks remain in short training."
+  },
+  "screenshots": [
+    {
+      "scene_index": 0,
+      "variant": "baseline",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "sha256": "1c6e6a63084e5dcebab7c50594fa9a239ae0da03e7eb8b27eac7da3c3beb4754",
+      "file": "50-engine-identity-pipes-baseline.png"
+    },
+    {
+      "scene_index": 0,
+      "variant": "candidate",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "sha256": "4820eb2a7761fd28d69c92ef1a7d43b470129c4a1e9fff6bbd7600259b125d1f",
+      "file": "51-engine-identity-pipes-candidate.png"
+    },
+    {
+      "scene_index": 1,
+      "variant": "baseline",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "sha256": "21219e1fa84f38cb8b76355dcc0dee8d126ac8eda9d08d218b3d25b008b1a9b3",
+      "file": "52-engine-identity-office-baseline.png"
+    },
+    {
+      "scene_index": 1,
+      "variant": "candidate",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "sha256": "d0e1ee3ec0b4dbc58d6fdf2d0182275d4669f6b52dec04bd2203572cf30c2786",
+      "file": "53-engine-identity-office-candidate.png"
+    }
+  ]
+}

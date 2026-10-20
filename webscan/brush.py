@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import os
 import re
 import subprocess
@@ -12,6 +13,37 @@ import numpy as np
 from PIL import Image
 
 from webscan.evaluation import validate_evaluation
+
+TRAINING_SEED = 42
+
+
+def engine_identity(binary):
+    """Describe the selected executable without assuming it is the pinned release."""
+    with binary.open("rb") as stream:
+        digest = hashlib.file_digest(stream, "sha256").hexdigest()
+    version = None
+    try:
+        result = subprocess.run(
+            [str(binary), "--version"],
+            capture_output=True,
+            check=True,
+            timeout=5,
+        )
+        match = re.fullmatch(
+            r"brush(?:-cli|_app)? ([0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.+-]+)?)",
+            result.stdout.decode("utf-8", errors="replace").strip(),
+        )
+        if match:
+            version = match[1]
+    except (OSError, subprocess.SubprocessError):
+        # A wrapper may train correctly without supporting a version query.
+        # Keep its file identity, but never substitute the installer's version.
+        pass
+    return {
+        "engine": f"Brush {version}" if version else "Brush",
+        "engine_version": version,
+        "engine_sha256": digest,
+    }
 
 
 def executable():
@@ -182,6 +214,9 @@ def train(scene, work, output, config, progress):
     binary = executable()
     if not binary:
         raise RuntimeError("未安装 Brush；请运行 scripts/install_brush.py。")
+    identity_started = time.monotonic()
+    identity = engine_identity(binary)
+    identity_seconds = time.monotonic() - identity_started
     output.mkdir(parents=True, exist_ok=True)
     exports = work / "brush"
     exports.mkdir()
@@ -193,6 +228,8 @@ def train(scene, work, output, config, progress):
     args = [
         str(binary),
         str(work / "sfm/undistorted"),
+        "--seed",
+        str(TRAINING_SEED),
         "--total-steps",
         str(steps),
         "--max-splats",
@@ -271,7 +308,10 @@ def train(scene, work, output, config, progress):
     removed_bytes, cleanup_errors = prune_intermediate_exports(exports, steps)
     return {
         "backend": "brush",
-        "engine": "Brush 0.3.0",
+        **identity,
+        "engine_identity_seconds": round(identity_seconds, 4),
+        "training_seed": TRAINING_SEED,
+        "determinism_guaranteed": False,
         "export_policy": "periodic_final_retained",
         "export_written_files": len(written),
         "export_written_bytes": written_bytes,
