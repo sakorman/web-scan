@@ -28,6 +28,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/loader-order.patch` is an experimental modification of Brush v0.3.0, commit `3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486`, by Arthur Brussee and the Brush contributors: https://github.com/ArthurBrussee/brush . It adds a producer-count switch, a consumed-image trace and an experimental CLI version label. The patch retains Apache-2.0 licensing; see [the preserved license](licenses/brush-Apache-2.0.txt). It is not enabled in the default application or included in the official Brush binary installed by this project.
 
+`docs/benchmarks/sampling-seed.patch` is a cumulative experimental patch on the same upstream revision. It includes the loader experiment and adds persistent seeded weighted sampling, sampler tests, and initialization/refinement traces. It also remains Apache-2.0-licensed and is not enabled in the default application.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.

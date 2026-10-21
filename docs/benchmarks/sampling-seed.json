@@ -1,0 +1,1631 @@
+{
+  "plan": {
+    "date": "2026-10-21",
+    "baseline_commit": "1676da30de68dbda76e62ecb6b08728b9ceac543",
+    "engine_upstream": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "hypothesis": "With the single image producer held fixed, persist a seeded CPU RNG across weighted Gaussian sampling calls. Verify the sampler on identical weights and then measure remaining full-training variation.",
+    "change": "Thread RNG versus trainer-owned StdRng seeded from the CLI seed; no sorting of the refinement HashSet and no change to GPU kernels or other parameters.",
+    "config": {
+      "steps": 3000,
+      "resolution": 512,
+      "max_points": 150000,
+      "seed": 42,
+      "repeats": 2,
+      "evaluation_mode": "holdout"
+    },
+    "scope": "Experimental binary only, both modes use the same instrumented build and single image producer. Official engine and application remain unchanged.",
+    "acceptance": "Separate identical-weight sampler repeatability, consumed-image order, and whole-model repeatability. No general quality/speed claim from two repeats. Keep official engine unless evidence justifies a production change."
+  },
+  "build": {
+    "upstream_commit": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "cargo_lock_sha256": "a555fcb104371e9a6e4de179911c26234fd123228b7c6e30de1d9bfa97e4a2e6",
+    "build_command": "cargo build --locked --release --bin brush_app -j 4",
+    "profile": "release",
+    "hardware": "Apple M5 / 32 GiB",
+    "instrumented_binary_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+    "patch_sha256": "fe7ad0006b9e6d01e27e21683be15b6fe086f3921d6529d068dd10d82e9786d9",
+    "instrumented_version": "brush-cli 0.3.0-sampling-study",
+    "baseline_sampler_tests": 3,
+    "candidate_sampler_tests": 5,
+    "trace_build_duration": "1m 39s"
+  },
+  "raw_runs": {
+    "config": {
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+    "seed": 42,
+    "repeats": 2,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 24.2076,
+        "adapter_sha256": "bf2e67aa211fe47c7178e64acd22ca8b1819bdacdbac00d119856c94492ed00f",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11622,
+        "evaluation": {
+          "psnr": 18.98748,
+          "ssim": 0.7650002
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2744342,
+        "first_progress_seconds": 2.0675,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2744342,
+        "ply_sha256": "4c288884170d84b11de21d2d0aad7b897b7cdc32cb68d65967a3e3c2756caa92",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "9a209b3f9f47f5ca70b3953da9a4209468cb4429b9b3e99d3c4ad81d8e590fa9",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "384ba50eb6b5f40b42aa4649b383e3beecd8494643996176fe6e85798344c0fd",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg"
+        ],
+        "sampling_seed": null,
+        "initial_point_count": 1873,
+        "initial_point_order_sha256": "305ff3c5c39b0f112e80fb65a202c69e5a1df43b6d0fc7ec7946d6af865fb65c",
+        "initial_point_set_sha256": "45d0c7c551115e19d265f806f449432efcd3bf6d0a506892c8a7b2b651aedd12",
+        "first_weights_count": 1872,
+        "first_weights_sha256": "31ff210a69db0054d0719dd073f66fb6bbf5e2c6332601241b14267b53918d7d",
+        "sample_calls": 45,
+        "first_sample_sha256": "a3bacb178694d772fc7c4621bf6f1a05342e664b1b85f712b140c789e46050b7",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "3ef2ed59cb09ccd0ee5dbe9471abd53e7a7f57e165a3a12ce432d5e7dcdc3f85",
+        "first_refinement_set_sha256": "2fc993007161daa1902cabbf19b202f40ced5decd86df4d80f0cdbafff3773ff"
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 23.1967,
+        "adapter_sha256": "dfe5d582b2926611f6754024bd9cf494351b543c99243f522e0d18661eb3ad5c",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11626,
+        "evaluation": {
+          "psnr": 17.466366,
+          "ssim": 0.75565946
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2745286,
+        "first_progress_seconds": 2.0805,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2745286,
+        "ply_sha256": "7b3f19c66bf902645e8d285e25172b277a59a337c64baeae92fa389aa9ba0d17",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "24c1370af96559e5484f8045d0d4001ad7923038718683dce03f44dbf0c0dc90",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "8fef870b3371723483700b95d0d6ca2d69031e34d365596266b2ffdc15de4496",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg"
+        ],
+        "sampling_seed": 42,
+        "initial_point_count": 1873,
+        "initial_point_order_sha256": "c7b7fee10442078eec1395dfcc02447747afcf152bcce5010ff6408b8b5cec1b",
+        "initial_point_set_sha256": "45d0c7c551115e19d265f806f449432efcd3bf6d0a506892c8a7b2b651aedd12",
+        "first_weights_count": 1872,
+        "first_weights_sha256": "496a9188619eab8c9e02b4089820f5688945f30cf0aa9d98b548c59fd0e89580",
+        "sample_calls": 48,
+        "first_sample_sha256": "251400d8b25352eedaab9a526ce3824fa393e5f0cb003c9754255d9488fc78da",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "8f324910498aef80f47f1257e41e02f2d49f7dbb3a7ff685cdf0f5646b4b1331",
+        "first_refinement_set_sha256": "49259bad7abbc43d1814372d17645532dcfed9998969c3dff3a8c0b7e7735f13"
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 23.2041,
+        "adapter_sha256": "dfe5d582b2926611f6754024bd9cf494351b543c99243f522e0d18661eb3ad5c",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11594,
+        "evaluation": {
+          "psnr": 16.373953,
+          "ssim": 0.7373489
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2737734,
+        "first_progress_seconds": 2.0759,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2737734,
+        "ply_sha256": "e670bac46f4cb5f24db8b7b3ac89d063113346c366ce3642883522d5cfe40c11",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "6bd4376922eb9bc6cf81fa47e7bff99eb3fad1284677a5859a5ee5933495bf61",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "9ee6775a0c36064dde84d3e1d3b5b49154ed6495f6d4ee02ae56a28d0343d435",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg"
+        ],
+        "sampling_seed": 42,
+        "initial_point_count": 1873,
+        "initial_point_order_sha256": "2ed3b3e7826a2dc01b9a3f686d289584fcaeeb49b657d6001c1a51e73fafe69d",
+        "initial_point_set_sha256": "45d0c7c551115e19d265f806f449432efcd3bf6d0a506892c8a7b2b651aedd12",
+        "first_weights_count": 1872,
+        "first_weights_sha256": "c2ac3ccf97511c7539bc783cb37b14cd9cb8324dd93e881d26ba5bed9889f8a4",
+        "sample_calls": 47,
+        "first_sample_sha256": "8fb6ff0f8a21e41d0c008250ac7cf51682d69cce5258e50192129351946ebc83",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "a235db8455d7478f336f16452f8354c88357c6122368ae1de971e30979b2e60b",
+        "first_refinement_set_sha256": "d0a8099a5994f19cb830f22b2921a28ba334e7394fae0829372e2187693e8f60"
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 23.2046,
+        "adapter_sha256": "bf2e67aa211fe47c7178e64acd22ca8b1819bdacdbac00d119856c94492ed00f",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11847,
+        "evaluation": {
+          "psnr": 17.169102,
+          "ssim": 0.7605387
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2797442,
+        "first_progress_seconds": 2.0822,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2797442,
+        "ply_sha256": "3bb2269714d6d1156dbd1b1035b01b0680df91e87aa805a5834f4f18b4ab3617",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "9e0529a1df926417dc8e09d9dd4662479653f50de2bd7ea1528f5408e74397bf",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "088e817b190eb4ecf1fe6941f20ec9a1e5fea2568c93dc0c67595b9a4f226e05",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "first_32_images": [
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0010-0f1fb912d39a40a394132f375860801a.jpg",
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg",
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg",
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg",
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg",
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg",
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg",
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg",
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg"
+        ],
+        "sampling_seed": null,
+        "initial_point_count": 1873,
+        "initial_point_order_sha256": "caa9dd6472cae35fe9e481791e61de0cdfbe0daf804f0af46909698deec2ae11",
+        "initial_point_set_sha256": "45d0c7c551115e19d265f806f449432efcd3bf6d0a506892c8a7b2b651aedd12",
+        "first_weights_count": 1872,
+        "first_weights_sha256": "178683ca0920cf05c27bc2ed1ccbaf77a3bc5c968905af1ee2f373355e779450",
+        "sample_calls": 44,
+        "first_sample_sha256": "b45e88b54bc6977a6f612c03dacb5cb20855495e22cf5cd8d98b5e010e0aeb0f",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "3ad23d1accf1475e730d23ae0e0d934a86501ebbcdce525dfd3b2c78f5b8cc09",
+        "first_refinement_set_sha256": "34206eff9bac1a6d40e63bc574ea40f62ecce292478a879840b0ed1c4f30d0d6"
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 24.2273,
+        "adapter_sha256": "dfe5d582b2926611f6754024bd9cf494351b543c99243f522e0d18661eb3ad5c",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14545,
+        "evaluation": {
+          "psnr": 20.78928,
+          "ssim": 0.8734708
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3434170,
+        "first_progress_seconds": 3.0809,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3434170,
+        "ply_sha256": "a767131cdcb7276113fbe7ddc8b61fae1af5f0d9b95f89511ec3d144fca2504e",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "bd561ac05eb45988b468c1f92dd9544afb641f4c4e27e16fa4d87fd9ca698fd2",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "d67d354e50828ba660de20caffca2d47c9b322246b08a92708ceb35e905228f7",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "fcf980061541e0874ce68f80182e3931341f40fdfaaed522e96d271a39baacd7",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "e7aedd6f46e541f3673a468c2892fadd5dec9e4cd93e202d8af60b528ec221e5",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg"
+        ],
+        "sampling_seed": 42,
+        "initial_point_count": 2456,
+        "initial_point_order_sha256": "61cf6584257e422555b49ac2282acbed4fca183904ea8839a4fad93ee077ea83",
+        "initial_point_set_sha256": "b78bd4e186b71e015d9239ca86b9687decb14fc2883de104c6f74ac2c059deca",
+        "first_weights_count": 2456,
+        "first_weights_sha256": "719c3c1c18615a2b6dc367e8a46260bba8f65c1831d9eaf9920d184cb94675ae",
+        "sample_calls": 47,
+        "first_sample_sha256": "fb94e70df5e094629f52c08555eddaf6de91818c75791b96fcaab2875f1642fb",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "5e317a09d5357522c2418c3497fcf6696c3502852d56756385d2c9047af6f01d",
+        "first_refinement_set_sha256": "518ba97ca22c109a2da9ae79b141a3e1eac673a48766d2e6ccbb34f31c6fde55"
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 24.2248,
+        "adapter_sha256": "bf2e67aa211fe47c7178e64acd22ca8b1819bdacdbac00d119856c94492ed00f",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14503,
+        "evaluation": {
+          "psnr": 21.68093,
+          "ssim": 0.8815215
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3424258,
+        "first_progress_seconds": 3.0757,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3424258,
+        "ply_sha256": "76cc8e4148b2cfdb71bf0bd95dd58d5ef29003597c7b0a89f3aaff3c7a7d9ce7",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "e629f685cb06bda8dfb414feac293f54d65f42ded0a4fb569b982dec59625e1c",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "6ee3712aeb9993821b49912a399bd23087ff4331379ab93ef29474c2271097ae",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "6218383b2d567b6aaadbe53dc4182205edce02c9ae3dc23a9a5dba35bb0a8485",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "c68cc2995ab53728cf739d015ed2def7348bb2728673ba0241fcbc92487df16b",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg"
+        ],
+        "sampling_seed": null,
+        "initial_point_count": 2456,
+        "initial_point_order_sha256": "c91866bb6030839cf8d0c5daaa4d1c90c50bdcb60e22edc9b3eae6e330d3ac8e",
+        "initial_point_set_sha256": "b78bd4e186b71e015d9239ca86b9687decb14fc2883de104c6f74ac2c059deca",
+        "first_weights_count": 2456,
+        "first_weights_sha256": "bafcb4408ac643f0b9bd2f632b584b0768ad8829ed8b296de0e34f4d08ac83e5",
+        "sample_calls": 46,
+        "first_sample_sha256": "af8df994b58917d976704ffac2de272cd922d6700b991d9339805905cc4d967d",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "3dc30039a4ac44e9d934a00068707a31c8d10a36e1dd1e079a156b8e9d563bc8",
+        "first_refinement_set_sha256": "e4211fef3da7e3bf906de3658e39c7889aed7d0787aeba756e1450902275a156"
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 24.2191,
+        "adapter_sha256": "bf2e67aa211fe47c7178e64acd22ca8b1819bdacdbac00d119856c94492ed00f",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14466,
+        "evaluation": {
+          "psnr": 21.300798,
+          "ssim": 0.8766873
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3415526,
+        "first_progress_seconds": 3.08,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3415526,
+        "ply_sha256": "90155b28b1cf62685d7c38a5ba6686d7d8c56bc26c4ba074c1915c9437988e88",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "e5b8a3b105822634f244f0a0c56420c6b303700a8fac9e75ac96f3dffe5be0c5",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "d32f07477dcf1fa4c45e07136f71719610283cf6f31f0709d1c5eea34c5d96e7",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "36cbd525f638c77f20be7c66c0d372f9b7f69d423c5166e0f6f13ad592e1b936",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "99d5f430ba6f8d2e1f6cd480b4017a67b4aaf0e63392e756e781e13f8d44e9be",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg"
+        ],
+        "sampling_seed": null,
+        "initial_point_count": 2456,
+        "initial_point_order_sha256": "60805ca1b323c9ddd084feb4521e1404c6c55eb3debfdea8de5fd53a6cf2f286",
+        "initial_point_set_sha256": "b78bd4e186b71e015d9239ca86b9687decb14fc2883de104c6f74ac2c059deca",
+        "first_weights_count": 2456,
+        "first_weights_sha256": "6f8778fa8cf55fe8ee2cf21492e41a27b96c475ce87f1aa4ec7fee049b6eaeba",
+        "sample_calls": 48,
+        "first_sample_sha256": "fab9a7eb6018c7299ee49eb70465de1680ee0a026be20b731dcb7a6e2d6df85e",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "441d793a3aa6aad532f537ded8fa3cee4db0f587db1477516e37bfad08ef4b0c",
+        "first_refinement_set_sha256": "39c2289ef27f3fff6eed8aa68c4ce6481f53cc49e2f2ec4016211b0f3c3f4693"
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 24.224,
+        "adapter_sha256": "dfe5d582b2926611f6754024bd9cf494351b543c99243f522e0d18661eb3ad5c",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14403,
+        "evaluation": {
+          "psnr": 21.570156,
+          "ssim": 0.8779923
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3400658,
+        "first_progress_seconds": 3.0779,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3400658,
+        "ply_sha256": "1d4152acbd5f60c9ec46a96b962bac1b126c4b698f3649bc27e86067274bdf0c",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "4f0e34f64d37024d04f0d202d820516bb923d8ac3320652cde5112be20439242",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "7f84f0d739feb4cdcab25c481c96a3106917f16903659011102501fd68431e32",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "1765131267365c04ab1448f6df1770d5acdefdb2a2aabd1e1fdd28f552d80fe8",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "2b64b481f66b5562862c4f3127a24afc466b881bd9ea2821074bb25cde16ec05",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-sampling-study",
+          "engine_version": "0.3.0-sampling-study",
+          "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+          "training_seed": 42
+        },
+        "producer_count": 1,
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "first_32_images": [
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg",
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0013-4255902de37d49e1867d81798d8399f7.jpg",
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg",
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg",
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg",
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0020-007058f805204acca7390971f5b8c963.jpg",
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg",
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg",
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg",
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg",
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg",
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg",
+          "0025-4e947891805f4e808d4485b71e019539.jpg",
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg",
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg"
+        ],
+        "sampling_seed": 42,
+        "initial_point_count": 2456,
+        "initial_point_order_sha256": "77936ab3ba14e238749653d4ab958155ff349d1d7be9476b2a0a17d9d0916c18",
+        "initial_point_set_sha256": "b78bd4e186b71e015d9239ca86b9687decb14fc2883de104c6f74ac2c059deca",
+        "first_weights_count": 2456,
+        "first_weights_sha256": "05cf7ffeaa68a5e589f7d16852197de7e036c29340ba12057199fa314e71b3b2",
+        "sample_calls": 45,
+        "first_sample_sha256": "abd9f4608f8eddfe40c612945e2850a6594f7ef38632c87f8a1c2545b7b3f5c8",
+        "refinement_calls": 29,
+        "first_refinement_order_sha256": "114b235ed41feeeea46c3d2734a4f081fc1a9f6eedbb2b3083049aec3527649a",
+        "first_refinement_set_sha256": "1112a5b2979e3a8c864d635de8e2f5f4de16b75f1e08a43e4aca05772479b3a9"
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 23.7061,
+            "min": 23.2046,
+            "max": 24.2076
+          },
+          "gaussians": {
+            "mean": 11734.5,
+            "min": 11622,
+            "max": 11847
+          },
+          "psnr": {
+            "mean": 18.078291,
+            "min": 17.169102,
+            "max": 18.98748
+          },
+          "ssim": {
+            "mean": 0.76276945,
+            "min": 0.7605387,
+            "max": 0.7650002
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 23.200400000000002,
+            "min": 23.1967,
+            "max": 23.2041
+          },
+          "gaussians": {
+            "mean": 11610,
+            "min": 11594,
+            "max": 11626
+          },
+          "psnr": {
+            "mean": 16.9201595,
+            "min": 16.373953,
+            "max": 17.466366
+          },
+          "ssim": {
+            "mean": 0.74650418,
+            "min": 0.7373489,
+            "max": 0.75565946
+          }
+        }
+      },
+      {
+        "scene_index": 1,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 24.22195,
+            "min": 24.2191,
+            "max": 24.2248
+          },
+          "gaussians": {
+            "mean": 14484.5,
+            "min": 14466,
+            "max": 14503
+          },
+          "psnr": {
+            "mean": 21.490864000000002,
+            "min": 21.300798,
+            "max": 21.68093
+          },
+          "ssim": {
+            "mean": 0.8791043999999999,
+            "min": 0.8766873,
+            "max": 0.8815215
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 24.22565,
+            "min": 24.224,
+            "max": 24.2273
+          },
+          "gaussians": {
+            "mean": 14474,
+            "min": 14403,
+            "max": 14545
+          },
+          "psnr": {
+            "mean": 21.179718,
+            "min": 20.78928,
+            "max": 21.570156
+          },
+          "ssim": {
+            "mean": 0.87573155,
+            "min": 0.8734708,
+            "max": 0.8779923
+          }
+        }
+      }
+    ]
+  },
+  "aligned_comparisons": [
+    {
+      "comparison_size": 512,
+      "quick_job": "0-0-baseline",
+      "detail_job": "0-0-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 22.750042186841913,
+            "ssim": 0.8195216059684753
+          },
+          "detail": {
+            "psnr": 19.542431337216925,
+            "ssim": 0.7955343127250671
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 14.84745633000174,
+            "ssim": 0.6605133414268494
+          },
+          "detail": {
+            "psnr": 15.155641292172,
+            "ssim": 0.6645112037658691
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.79874925842183,
+          "ssim": 0.7400174736976624
+        },
+        "detail": {
+          "psnr": 17.349036314694462,
+          "ssim": 0.7300227582454681
+        }
+      },
+      "scene_index": 0,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "0-1-baseline",
+      "detail_job": "0-1-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 18.434329841023064,
+            "ssim": 0.7944027781486511
+          },
+          "detail": {
+            "psnr": 18.62061796140796,
+            "ssim": 0.794156551361084
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 15.705992556100838,
+            "ssim": 0.6771315932273865
+          },
+          "detail": {
+            "psnr": 13.950557797378949,
+            "ssim": 0.6311213374137878
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 17.07016119856195,
+          "ssim": 0.7357671856880188
+        },
+        "detail": {
+          "psnr": 16.285587879393454,
+          "ssim": 0.7126389443874359
+        }
+      },
+      "scene_index": 0,
+      "repeat": 1
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-0-baseline",
+      "detail_job": "1-0-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 23.25617005983785,
+            "ssim": 0.8927628993988037
+          },
+          "detail": {
+            "psnr": 23.164964558861932,
+            "ssim": 0.8962451815605164
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 22.725875996928476,
+            "ssim": 0.9333043694496155
+          },
+          "detail": {
+            "psnr": 19.916015129588146,
+            "ssim": 0.9181850552558899
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 17.782516959788804,
+            "ssim": 0.807526707649231
+          },
+          "detail": {
+            "psnr": 16.197187503188264,
+            "ssim": 0.7741970419883728
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 22.3502528303342,
+            "ssim": 0.8317874670028687
+          },
+          "detail": {
+            "psnr": 23.300510771075274,
+            "ssim": 0.8426244854927063
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 21.528703961722332,
+          "ssim": 0.8663453608751297
+        },
+        "detail": {
+          "psnr": 20.644669490678403,
+          "ssim": 0.8578129410743713
+        }
+      },
+      "scene_index": 1,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-1-baseline",
+      "detail_job": "1-1-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 22.337220735233515,
+            "ssim": 0.8931822776794434
+          },
+          "detail": {
+            "psnr": 22.43655772572516,
+            "ssim": 0.8948995471000671
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 22.680585008997735,
+            "ssim": 0.9354067444801331
+          },
+          "detail": {
+            "psnr": 23.487015465966856,
+            "ssim": 0.9365355968475342
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 16.707957712987152,
+            "ssim": 0.7828901410102844
+          },
+          "detail": {
+            "psnr": 16.848092653580952,
+            "ssim": 0.7856060266494751
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 22.927225768375852,
+            "ssim": 0.8364633917808533
+          },
+          "detail": {
+            "psnr": 22.92909540616207,
+            "ssim": 0.8374394774436951
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 21.163247306398564,
+          "ssim": 0.8619856387376785
+        },
+        "detail": {
+          "psnr": 21.42519031285876,
+          "ssim": 0.8636201620101929
+        }
+      },
+      "scene_index": 1,
+      "repeat": 1
+    }
+  ],
+  "summary": [
+    {
+      "scene": "pipes",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "initial_point_order_sha256_variants": 2,
+        "initial_point_set_sha256_variants": 1,
+        "first_weights_sha256_variants": 2,
+        "first_sample_sha256_variants": 2,
+        "first_refinement_order_sha256_variants": 2,
+        "seconds": {
+          "mean": 23.7061,
+          "min": 23.2046,
+          "max": 24.2076
+        },
+        "gaussians": {
+          "mean": 11734.5,
+          "min": 11622,
+          "max": 11847
+        },
+        "ply_bytes": {
+          "mean": 2770892,
+          "min": 2744342,
+          "max": 2797442
+        },
+        "psnr": {
+          "mean": 17.934455228491892,
+          "min": 17.07016119856195,
+          "max": 18.79874925842183
+        },
+        "ssim": {
+          "mean": 0.7378923296928406,
+          "min": 0.7357671856880188,
+          "max": 0.7400174736976624
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "initial_point_order_sha256_variants": 2,
+        "initial_point_set_sha256_variants": 1,
+        "first_weights_sha256_variants": 2,
+        "first_sample_sha256_variants": 2,
+        "first_refinement_order_sha256_variants": 2,
+        "seconds": {
+          "mean": 23.200400000000002,
+          "min": 23.1967,
+          "max": 23.2041
+        },
+        "gaussians": {
+          "mean": 11610,
+          "min": 11594,
+          "max": 11626
+        },
+        "ply_bytes": {
+          "mean": 2741510,
+          "min": 2737734,
+          "max": 2745286
+        },
+        "psnr": {
+          "mean": 16.81731209704396,
+          "min": 16.285587879393454,
+          "max": 17.349036314694462
+        },
+        "ssim": {
+          "mean": 0.721330851316452,
+          "min": 0.7126389443874359,
+          "max": 0.7300227582454681
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "initial_point_order_sha256_variants": 2,
+        "initial_point_set_sha256_variants": 1,
+        "first_weights_sha256_variants": 2,
+        "first_sample_sha256_variants": 2,
+        "first_refinement_order_sha256_variants": 2,
+        "seconds": {
+          "mean": 24.22195,
+          "min": 24.2191,
+          "max": 24.2248
+        },
+        "gaussians": {
+          "mean": 14484.5,
+          "min": 14466,
+          "max": 14503
+        },
+        "ply_bytes": {
+          "mean": 3419892,
+          "min": 3415526,
+          "max": 3424258
+        },
+        "psnr": {
+          "mean": 21.345975634060448,
+          "min": 21.163247306398564,
+          "max": 21.528703961722332
+        },
+        "ssim": {
+          "mean": 0.8641654998064041,
+          "min": 0.8619856387376785,
+          "max": 0.8663453608751297
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "initial_point_order_sha256_variants": 2,
+        "initial_point_set_sha256_variants": 1,
+        "first_weights_sha256_variants": 2,
+        "first_sample_sha256_variants": 2,
+        "first_refinement_order_sha256_variants": 2,
+        "seconds": {
+          "mean": 24.22565,
+          "min": 24.224,
+          "max": 24.2273
+        },
+        "gaussians": {
+          "mean": 14474,
+          "min": 14403,
+          "max": 14545
+        },
+        "ply_bytes": {
+          "mean": 3417414,
+          "min": 3400658,
+          "max": 3434170
+        },
+        "psnr": {
+          "mean": 21.03492990176858,
+          "min": 20.644669490678403,
+          "max": 21.42519031285876
+        },
+        "ssim": {
+          "mean": 0.8607165515422821,
+          "min": 0.8578129410743713,
+          "max": 0.8636201620101929
+        }
+      }
+    }
+  ],
+  "timing_scope": "Adapter training/evaluation/export with the same instrumented local binary; excludes source compilation, SfM and input copy. OS/driver caches not flushed. Image trace is enabled equally in both variants.",
+  "quality_scope": "Frozen historical shared-camera scenes; every eighth image held out from training but used in SfM. Compare RGB PSNR and Gaussian-window SSIM at long edge 512. Two repeats are exploratory.",
+  "fresh_sfm_seconds": null,
+  "end_to_end_seconds": null,
+  "decision": "Keep as an experiment. Sampler tests repeat on identical weights and seed, but full models do not. All four runs per scene have the same point-ID set and image order, yet different initialization key order and first sampling weights. Do not attribute score differences solely to the seeded sampler; fix initialization order before drawing that conclusion.",
+  "pilot": {
+    "config": {
+      "steps": 500,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "13a1d338119ee9849ef402b4c0a13b755182d43f068eab8ea4d1cfa97288d3bb",
+    "seed": 42,
+    "repeats": 1,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 4.1169,
+        "adapter_sha256": "bf2e67aa211fe47c7178e64acd22ca8b1819bdacdbac00d119856c94492ed00f",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2314,
+        "evaluation": {
+          "psnr": 15.056025,
+          "ssim": 0.6455064
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 547653,
+        "first_progress_seconds": 2.0689
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 4.1159,
+        "adapter_sha256": "dfe5d582b2926611f6754024bd9cf494351b543c99243f522e0d18661eb3ad5c",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2301,
+        "evaluation": {
+          "psnr": 16.045067,
+          "ssim": 0.6538295
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 544585,
+        "first_progress_seconds": 2.0729
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 1,
+        "baseline": {
+          "seconds": {
+            "mean": 4.1169,
+            "min": 4.1169,
+            "max": 4.1169
+          },
+          "gaussians": {
+            "mean": 2314,
+            "min": 2314,
+            "max": 2314
+          },
+          "psnr": {
+            "mean": 15.056025,
+            "min": 15.056025,
+            "max": 15.056025
+          },
+          "ssim": {
+            "mean": 0.6455064,
+            "min": 0.6455064,
+            "max": 0.6455064
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 4.1159,
+            "min": 4.1159,
+            "max": 4.1159
+          },
+          "gaussians": {
+            "mean": 2301,
+            "min": 2301,
+            "max": 2301
+          },
+          "psnr": {
+            "mean": 16.045067,
+            "min": 16.045067,
+            "max": 16.045067
+          },
+          "ssim": {
+            "mean": 0.6538295,
+            "min": 0.6538295,
+            "max": 0.6538295
+          }
+        }
+      }
+    ]
+  },
+  "validation": {
+    "baseline_sampler_tests": 3,
+    "candidate_sampler_tests": 5,
+    "full_sh3_main_models": 8,
+    "full_sh3_pilot_models": 2,
+    "consumed_image_records": 24000,
+    "same_cameras_and_references": true,
+    "initial_point_order_observer": "Unmodified std::HashMap key traversal before the existing values traversal; no sorting or point changes.",
+    "browser": "Both variants loaded for each scene; both candidates dragged in walk mode; no console warnings/errors. Thin pipes, cables and areas outside capture coverage remain blurred or streaked.",
+    "application_code_changed": false,
+    "installed_engine_replaced": false
+  },
+  "screenshots": [
+    {
+      "scene_index": 0,
+      "repeat": 0,
+      "variant": "baseline",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "file": "58-sampling-seed-pipes-baseline.png",
+      "sha256": "9a209b3f9f47f5ca70b3953da9a4209468cb4429b9b3e99d3c4ad81d8e590fa9"
+    },
+    {
+      "scene_index": 0,
+      "repeat": 0,
+      "variant": "candidate",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "file": "59-sampling-seed-pipes-candidate.png",
+      "sha256": "24c1370af96559e5484f8045d0d4001ad7923038718683dce03f44dbf0c0dc90"
+    },
+    {
+      "scene_index": 1,
+      "repeat": 0,
+      "variant": "baseline",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "file": "60-sampling-seed-office-baseline.png",
+      "sha256": "e629f685cb06bda8dfb414feac293f54d65f42ded0a4fb569b982dec59625e1c"
+    },
+    {
+      "scene_index": 1,
+      "repeat": 0,
+      "variant": "candidate",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "file": "61-sampling-seed-office-candidate.png",
+      "sha256": "bd561ac05eb45988b468c1f92dd9544afb641f4c4e27e16fa4d87fd9ca698fd2"
+    }
+  ]
+}

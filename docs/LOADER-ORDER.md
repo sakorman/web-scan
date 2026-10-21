@@ -97,3 +97,5 @@ cargo build --manifest-path .tools/brush-order-study/Cargo.toml --locked --relea
 本机完整实验位于 `.data/benchmarks/loader-order-20261021/`：`baseline.py` / `candidate.py` 是只差生产任务开关的适配器快照，`benchmark.py` 沿用 `scripts/benchmark_exports.py`，仅将二进制路径改为上述源码构建产物。命令使用 `--steps 3000 --resolution 512 --repeats 2` 与已完成定位的 pipes / office 任务；`analyze.py` 校验消费序列和完整模型，再进行同相机评分。保留了构建日志、锁文件摘要、两个二进制摘要、全部模型与消费序列，未提交大体积二进制。
 
 补丁衍生自 Arthur Brussee 及 Brush 贡献者的 Apache-2.0 代码，许可和修改说明见[第三方声明](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)。照片与衍生渲染遵循 [ETH3D 署名及 CC BY-NC-SA 4.0 许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续实测：固定加权采样种子仍不足以固定模型；同一个初始点集合的容器遍历顺序和首次采样权重已经不同。[采样与初始化追踪](SAMPLING-SEED.md)

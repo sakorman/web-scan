@@ -1,0 +1,322 @@
+diff --git a/crates/brush-cli/src/lib.rs b/crates/brush-cli/src/lib.rs
+index 5efdb05..770c09f 100644
+--- a/crates/brush-cli/src/lib.rs
++++ b/crates/brush-cli/src/lib.rs
+@@ -11,7 +11,7 @@ use tracing::trace_span;
+ #[derive(Parser)]
+ #[command(
+     author,
+-    version,
++    version = "0.3.0-sampling-study",
+     arg_required_else_help = false,
+     about = "Brush - universal splats"
+ )]
+diff --git a/crates/brush-dataset/src/formats/colmap.rs b/crates/brush-dataset/src/formats/colmap.rs
+index d9fe9fc..dc03953 100644
+--- a/crates/brush-dataset/src/formats/colmap.rs
++++ b/crates/brush-dataset/src/formats/colmap.rs
+@@ -197,6 +197,12 @@ async fn try_load_init(
+     // The ply importer handles subsampling normally. Here we just
+     // do it manually.
+     let step = load_args.subsample_points.unwrap_or(1) as usize;
++    if std::env::var("WEBSCAN_TRACE_SAMPLING").as_deref() == Ok("1") {
++        log::info!(
++            "WS_INITIAL_POINT_IDS {:?}",
++            points_data.keys().step_by(step).collect::<Vec<_>>()
++        );
++    }
+ 
+     let positions: Vec<f32> = points_data
+         .values()
+diff --git a/crates/brush-dataset/src/scene_loader.rs b/crates/brush-dataset/src/scene_loader.rs
+index e87d02f..c568343 100644
+--- a/crates/brush-dataset/src/scene_loader.rs
++++ b/crates/brush-dataset/src/scene_loader.rs
+@@ -1,4 +1,4 @@
+-use std::sync::Arc;
++use std::{path::PathBuf, sync::Arc};
+ 
+ use burn::prelude::Backend;
+ use image::DynamicImage;
+@@ -11,7 +11,9 @@ use tracing::{Instrument, trace_span};
+ use crate::scene::{Scene, SceneBatch, sample_to_tensor, view_to_sample_image};
+ 
+ pub struct SceneLoader<B: Backend> {
+-    receiver: Receiver<SceneBatch<B>>,
++    receiver: Receiver<(SceneBatch<B>, PathBuf)>,
++    trace_order: bool,
++    consumed: usize,
+ }
+ 
+ struct ImageCache {
+@@ -73,6 +75,16 @@ impl<B: Backend> SceneLoader<B> {
+                 // threads would just sit around idling!
+                 .min(num_img_queue) as u64
+         };
++        // Experimental switch: keep the native producer count unless explicitly enabled.
++        let parallelism = if std::env::var("WEBSCAN_SINGLE_LOADER").as_deref() == Ok("1") {
++            1
++        } else {
++            parallelism
++        };
++        let trace_order = std::env::var("WEBSCAN_TRACE_LOADER").as_deref() == Ok("1");
++        if trace_order {
++            log::info!("WS_LOADER producers {parallelism}");
++        }
+         let num_views = scene.views.len();
+ 
+         let load_cache = Arc::new(RwLock::new(ImageCache::new(MAX_CACHE_MB, num_views)));
+@@ -114,7 +126,12 @@ impl<B: Backend> SceneLoader<B> {
+                         };
+ 
+                         let _ = send_img
+-                            .send((sample, view.image.is_masked(), view.camera.clone()))
++                            .send((
++                                sample,
++                                view.image.is_masked(),
++                                view.camera.clone(),
++                                view.image.path.clone(),
++                            ))
+                             .await;
+                     };
+ 
+@@ -131,16 +148,19 @@ impl<B: Backend> SceneLoader<B> {
+         let device = device.clone();
+         tokio_wasm::spawn(async move {
+             while let Some(rec) = rec_imag.recv().await {
+-                let (sample, alpha_is_mask, camera) = rec;
++                let (sample, alpha_is_mask, camera, image_path) = rec;
+ 
+                 let img_tensor = sample_to_tensor(&sample, &device);
+ 
+                 if send_batch
+-                    .send(SceneBatch {
+-                        img_tensor,
+-                        alpha_is_mask,
+-                        camera,
+-                    })
++                    .send((
++                        SceneBatch {
++                            img_tensor,
++                            alpha_is_mask,
++                            camera,
++                        },
++                        image_path,
++                    ))
+                     .await
+                     .is_err()
+                 {
+@@ -153,13 +173,21 @@ impl<B: Backend> SceneLoader<B> {
+ 
+         Self {
+             receiver: rec_batch,
++            trace_order,
++            consumed: 0,
+         }
+     }
+ 
+     pub async fn next_batch(&mut self) -> SceneBatch<B> {
+-        self.receiver
++        let (batch, image_path) = self
++            .receiver
+             .recv()
+             .await
+-            .expect("Somehow lost data loading channel!")
++            .expect("Somehow lost data loading channel!");
++        if self.trace_order {
++            log::info!("WS_ORDER {} {}", self.consumed, image_path.display());
++        }
++        self.consumed += 1;
++        batch
+     }
+ }
+diff --git a/crates/brush-process/src/train_stream.rs b/crates/brush-process/src/train_stream.rs
+index 3e94dce..2724045 100644
+--- a/crates/brush-process/src/train_stream.rs
++++ b/crates/brush-process/src/train_stream.rs
+@@ -110,6 +110,9 @@ pub(crate) async fn train_stream(
+     let mut train_duration = Duration::from_secs(0);
+     let mut dataloader = SceneLoader::new(&dataset.train, 42, &device);
+     let mut trainer = SplatTrainer::new(&process_args.train_config, &device, splats.clone()).await;
++    if std::env::var("WEBSCAN_SEEDED_SAMPLING").as_deref() == Ok("1") {
++        trainer.set_sampling_seed(process_config.seed);
++    }
+ 
+     log::info!("Start training loop.");
+     for iter in process_args.process_config.start_iter..process_args.train_config.total_steps {
+diff --git a/crates/brush-train/src/multinomial.rs b/crates/brush-train/src/multinomial.rs
+index 54b69e0..32f7dbb 100644
+--- a/crates/brush-train/src/multinomial.rs
++++ b/crates/brush-train/src/multinomial.rs
+@@ -1,7 +1,15 @@
+ pub(crate) fn multinomial_sample(weights: &[f32], n: u32) -> Vec<i32> {
+     let mut rng = rand::rng();
++    multinomial_sample_with_rng(weights, n, &mut rng)
++}
++
++pub(crate) fn multinomial_sample_with_rng<R: rand::Rng + ?Sized>(
++    weights: &[f32],
++    n: u32,
++    rng: &mut R,
++) -> Vec<i32> {
+     rand::seq::index::sample_weighted(
+-        &mut rng,
++        rng,
+         weights.len(),
+         |i| if weights[i].is_nan() { 0.0 } else { weights[i] },
+         n as usize,
+@@ -23,6 +31,38 @@ pub(crate) fn multinomial_sample(weights: &[f32], n: u32) -> Vec<i32> {
+ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn seeded_stream_repeats_across_multiple_calls() {
++        use rand::{SeedableRng, rngs::StdRng};
++        let weights: Vec<f32> = (1..=24).map(|x| x as f32).collect();
++        let mut left = StdRng::seed_from_u64(42);
++        let mut right = StdRng::seed_from_u64(42);
++        let mut sequence = vec![];
++        for _ in 0..4 {
++            let a = multinomial_sample_with_rng(&weights, 8, &mut left);
++            let b = multinomial_sample_with_rng(&weights, 8, &mut right);
++            assert_eq!(a, b);
++            let mut unique = a.clone();
++            unique.sort_unstable();
++            unique.dedup();
++            assert_eq!(unique.len(), 8);
++            sequence.push(a);
++        }
++        assert_ne!(
++            sequence[0], sequence[1],
++            "Do not reset the RNG at each call"
++        );
++    }
++
++    #[test]
++    fn changing_seed_changes_the_fixture_sample() {
++        use rand::{SeedableRng, rngs::StdRng};
++        let weights = vec![1.0; 64];
++        let a = multinomial_sample_with_rng(&weights, 12, &mut StdRng::seed_from_u64(42));
++        let b = multinomial_sample_with_rng(&weights, 12, &mut StdRng::seed_from_u64(7));
++        assert_ne!(a, b);
++    }
++
+     #[test]
+     fn test_multinomial_sampling() {
+         // Test the complete multinomial sampling workflow (samples indices without replacement)
+diff --git a/crates/brush-train/src/train.rs b/crates/brush-train/src/train.rs
+index 47aa071..1af02c3 100644
+--- a/crates/brush-train/src/train.rs
++++ b/crates/brush-train/src/train.rs
+@@ -2,7 +2,7 @@ use crate::{
+     adam_scaled::{AdamScaled, AdamScaledConfig, AdamState},
+     config::TrainConfig,
+     msg::{RefineStats, TrainStepStats},
+-    multinomial::multinomial_sample,
++    multinomial::{multinomial_sample, multinomial_sample_with_rng},
+     quat_vec::quaternion_vec_multiply,
+     ssim::Ssim,
+     stats::RefineRecord,
+@@ -36,6 +36,7 @@ use burn::{
+ use burn_cubecl::cubecl::Runtime;
+ use glam::Vec3;
+ use hashbrown::{HashMap, HashSet};
++use rand::{SeedableRng, rngs::StdRng};
+ use std::f64::consts::SQRT_2;
+ use tracing::trace_span;
+ 
+@@ -54,6 +55,10 @@ pub struct SplatTrainer {
+     ssim: Option<Ssim<DiffBackend>>,
+ 
+     bounds: BoundingBox,
++    sampling_rng: Option<StdRng>,
++    sampling_calls: usize,
++    refinement_calls: usize,
++    trace_sampling: bool,
+ 
+     #[cfg(not(target_family = "wasm"))]
+     lpips: Option<lpips::LpipsModel<DiffBackend>>,
+@@ -94,11 +99,41 @@ impl SplatTrainer {
+             refine_record: None,
+             ssim,
+             bounds,
++            sampling_rng: None,
++            sampling_calls: 0,
++            refinement_calls: 0,
++            trace_sampling: std::env::var("WEBSCAN_TRACE_SAMPLING").as_deref() == Ok("1"),
+             #[cfg(not(target_family = "wasm"))]
+             lpips: (config.lpips_loss_weight > 0.0).then(|| lpips::load_vgg_lpips(device)),
+         }
+     }
+ 
++    pub fn set_sampling_seed(&mut self, seed: u64) {
++        self.sampling_rng = Some(StdRng::seed_from_u64(seed));
++        if self.trace_sampling {
++            log::info!("WS_SAMPLING_SEED {seed}");
++        }
++    }
++
++    fn sample_weights(&mut self, weights: &[f32], count: u32) -> Vec<i32> {
++        let samples = if let Some(rng) = self.sampling_rng.as_mut() {
++            multinomial_sample_with_rng(weights, count, rng)
++        } else {
++            multinomial_sample(weights, count)
++        };
++        if self.trace_sampling {
++            if self.sampling_calls == 0 {
++                log::info!(
++                    "WS_INITIAL_WEIGHTS {:?}",
++                    weights.iter().map(|x| x.to_bits()).collect::<Vec<_>>()
++                );
++            }
++            log::info!("WS_SAMPLE {} {:?}", self.sampling_calls, samples);
++        }
++        self.sampling_calls += 1;
++        samples
++    }
++
+     pub fn step(
+         &mut self,
+         iter: u32,
+@@ -391,7 +426,7 @@ impl SplatTrainer {
+                 .await
+                 .into_vec::<f32>()
+                 .expect("Failed to read weights");
+-            let resampled_inds = multinomial_sample(&resampled_weights, pruned_count);
++            let resampled_inds = self.sample_weights(&resampled_weights, pruned_count);
+             add_indices.extend(resampled_inds);
+         }
+ 
+@@ -422,7 +457,7 @@ impl SplatTrainer {
+                     .await
+                     .into_vec::<f32>()
+                     .expect("Failed to read weights");
+-                let growth_inds = multinomial_sample(&weights, grow_count);
++                let growth_inds = self.sample_weights(&weights, grow_count);
+                 add_indices.extend(growth_inds);
+             }
+         }
+@@ -452,12 +487,19 @@ impl SplatTrainer {
+         add_indices: HashSet<i32>,
+     ) -> Splats<DiffBackend> {
+         let refine_count = add_indices.len();
++        let refine_indices: Vec<i32> = add_indices.into_iter().collect();
++        if self.trace_sampling {
++            log::info!(
++                "WS_REFINE_ORDER {} {:?}",
++                self.refinement_calls,
++                refine_indices
++            );
++        }
++        self.refinement_calls += 1;
+ 
+         if refine_count > 0 {
+-            let refine_inds = Tensor::from_data(
+-                TensorData::new(add_indices.into_iter().collect(), [refine_count]),
+-                device,
+-            );
++            let refine_inds =
++                Tensor::from_data(TensorData::new(refine_indices, [refine_count]), device);
+ 
+             let cur_means = splats.means.val().inner().select(0, refine_inds.clone());
+             let cur_rots = splats
