@@ -30,6 +30,8 @@ Apple M5 / 32 GiB，Metal，Rust / Cargo 1.99.0，锁定上游依赖。源码基
 
 两种采样设置各自两次运行的模型也都不同。完整摘要与原始计数见[数据记录](benchmarks/sampling-seed.json)。
 
+后续校验发现，以上编号摘要对应当时读取器解析出的内部键，存在字节序错误；它们不是原始 COLMAP 编号。点集数量和遍历变化的观测保留，正确编号下的对照见[初始化编号与排序](INIT-ORDER.md)。
+
 [COLMAP 读取代码](https://github.com/ArthurBrussee/brush/blob/3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486/crates/colmap-reader/src/lib.rs)使用 `std::collections::HashMap` 保存点；[初始化代码](https://github.com/ArthurBrussee/brush/blob/3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486/crates/brush-dataset/src/formats/colmap.rs)再遍历 `values()` 组装坐标和颜色。[Rust 文档](https://doc.rust-lang.org/std/collections/struct.HashMap.html)说明默认哈希状态随机初始化，遍历顺序不固定。
 
 本轮记录的是该容器的点编号遍历序列，没有改动初始化方式，也没有测出它对最终误差的贡献。第一次加权采样之前，权重数组已经不同，因此真实训练不满足单元测试的“相同权重流”条件。不能把模型波动全部归因于采样器，也不能把两组分数差异全部归因于固定种子。
@@ -73,3 +75,5 @@ Apple M5 / 32 GiB，Metal，Rust / Cargo 1.99.0，锁定上游依赖。源码基
 本机原始资料在 `.data/benchmarks/sampling-seed-20261021/`，包含源码修改前快照、三个基线测试与五个新版测试的记录、编译日志、适配器、八次正式运行、两次验收及逐次 `sampling-trace.json`。`benchmark.py` 仅将现有基准脚本的二进制路径指向独立构建；`analyze.py` 核对完整照片序列、点编号集合与顺序、首轮权重，再做同相机评分。应用源码未改动，不重复其本地单测与构建；CI 随记录提交执行标准回归。
 
 实验修改继续遵循 [Brush Apache-2.0 许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片与衍生渲染遵循 [ETH3D 署名及许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续核对发现二进制点编号还存在字节序错误。修正读取并按真实编号排序后，点序列稳定，首次采样权重和模型仍变化。[初始化编号与排序](INIT-ORDER.md)

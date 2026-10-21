@@ -30,6 +30,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/sampling-seed.patch` is a cumulative experimental patch on the same upstream revision. It includes the loader experiment and adds persistent seeded weighted sampling, sampler tests, and initialization/refinement traces. It also remains Apache-2.0-licensed and is not enabled in the default application.
 
+`docs/benchmarks/init-order.patch` extends these experiments with little-endian binary point-ID decoding, optional canonical point ordering, and regression tests for IDs, payload pairing and subsampling. This cumulative patch also remains Apache-2.0-licensed and does not replace the installed official engine.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
