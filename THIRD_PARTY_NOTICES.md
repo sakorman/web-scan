@@ -34,6 +34,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/gpu-seed.patch` adds explicit CubeCL GPU RNG seeding, a real Normal/Uniform tensor regression test, and optional early-state exports to the same cumulative experiment. It remains Apache-2.0-licensed; it does not replace the installed official engine or guarantee deterministic full training.
 
+`docs/benchmarks/adam-epsilon.patch` adds an optional global Adam epsilon comparison and first-update gradient/raw-quaternion traces. This cumulative experiment retains Apache-2.0 licensing and is not enabled in the default application.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.

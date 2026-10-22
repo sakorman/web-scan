@@ -96,3 +96,5 @@ cargo test --manifest-path .tools/brush-order-study/Cargo.toml \
 每次使用独立输入副本与 `--export-path`，不得覆盖已有结果。实验二进制、构建及测试日志、适配器、八次训练、状态对照脚本保存在 `.data/benchmarks/gpu-seed-20261022/`；早期四次定位实验在 `.data/benchmarks/state-trace-20261022/`，单独记录，不混入最终 A/B 均值。公开 JSON 保存构建与输入摘要、逐次成绩、状态比较和图片摘要，不提交大体积二进制。
 
 补丁遵循 [Brush Apache-2.0 许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片与衍生渲染遵循 [ETH3D 署名及许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续追踪发现近零旋转梯度被很小的 Adam 稳定项放大。提高稳定项能减少早期差异，但全参数组调整没有通过两场景质量要求。[首轮梯度与 epsilon 对照](ADAM-EPSILON.md)
