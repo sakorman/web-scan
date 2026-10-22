@@ -1,0 +1,822 @@
+diff --git a/crates/brush-cli/src/lib.rs b/crates/brush-cli/src/lib.rs
+index 5efdb05..02657b9 100644
+--- a/crates/brush-cli/src/lib.rs
++++ b/crates/brush-cli/src/lib.rs
+@@ -11,7 +11,7 @@ use tracing::trace_span;
+ #[derive(Parser)]
+ #[command(
+     author,
+-    version,
++    version = "0.3.0-rotation-adam-study",
+     arg_required_else_help = false,
+     about = "Brush - universal splats"
+ )]
+diff --git a/crates/brush-dataset/src/formats/colmap.rs b/crates/brush-dataset/src/formats/colmap.rs
+index d9fe9fc..93cd5ab 100644
+--- a/crates/brush-dataset/src/formats/colmap.rs
++++ b/crates/brush-dataset/src/formats/colmap.rs
+@@ -163,6 +163,18 @@ async fn load_dataset_inner(
+     Ok((init, dataset))
+ }
+ 
++fn initial_points(
++    points: &HashMap<i64, colmap_reader::Point3D>,
++    stable_order: bool,
++    step: usize,
++) -> Vec<(&i64, &colmap_reader::Point3D)> {
++    let mut entries: Vec<_> = points.iter().collect();
++    if stable_order {
++        entries.sort_unstable_by_key(|(id, _)| **id);
++    }
++    entries.into_iter().step_by(step).collect()
++}
++
+ async fn try_load_init(
+     vfs: Arc<BrushVfs>,
+     device: &WgpuDevice,
+@@ -197,16 +209,25 @@ async fn try_load_init(
+     // The ply importer handles subsampling normally. Here we just
+     // do it manually.
+     let step = load_args.subsample_points.unwrap_or(1) as usize;
++    let stable_order = std::env::var("WEBSCAN_STABLE_INIT").as_deref() == Ok("1");
++    let ordered_points = initial_points(&points_data, stable_order, step);
++    if std::env::var("WEBSCAN_TRACE_SAMPLING").as_deref() == Ok("1") {
++        log::info!(
++            "WS_INITIAL_POINT_IDS {:?}",
++            ordered_points
++                .iter()
++                .map(|(id, _)| **id)
++                .collect::<Vec<_>>()
++        );
++    }
+ 
+-    let positions: Vec<f32> = points_data
+-        .values()
+-        .step_by(step)
+-        .flat_map(|p| p.xyz.to_array())
++    let positions: Vec<f32> = ordered_points
++        .iter()
++        .flat_map(|(_, p)| p.xyz.to_array())
+         .collect();
+-    let colors: Vec<f32> = points_data
+-        .values()
+-        .step_by(step)
+-        .flat_map(|p| {
++    let colors: Vec<f32> = ordered_points
++        .iter()
++        .flat_map(|(_, p)| {
+             let sh = rgb_to_sh(glam::vec3(
+                 p.rgb[0] as f32 / 255.0,
+                 p.rgb[1] as f32 / 255.0,
+@@ -229,3 +250,61 @@ async fn try_load_init(
+         splats: init_splat,
+     })
+ }
++
++#[cfg(test)]
++mod init_points_tests {
++    use super::*;
++
++    fn scene(ids: &[i64]) -> HashMap<i64, colmap_reader::Point3D> {
++        ids.iter()
++            .map(|&id| {
++                (
++                    id,
++                    colmap_reader::Point3D {
++                        xyz: glam::vec3(id as f32, 2.0 * id as f32, -(id as f32)),
++                        rgb: [id as u8, 255 - id as u8, 17],
++                        error: 0.0,
++                        image_ids: vec![],
++                        point2d_idxs: vec![],
++                    },
++                )
++            })
++            .collect()
++    }
++
++    #[test]
++    fn stable_initial_points_preserve_id_position_and_color_pairing() {
++        let left = scene(&[10, 1, 2]);
++        let right = scene(&[2, 10, 1]);
++        for map in [&left, &right] {
++            let entries = initial_points(map, true, 1);
++            assert_eq!(
++                entries.iter().map(|(id, _)| **id).collect::<Vec<_>>(),
++                vec![1, 2, 10]
++            );
++            for (id, point) in entries {
++                assert_eq!(
++                    point.xyz,
++                    glam::vec3(*id as f32, 2.0 * *id as f32, -(*id as f32))
++                );
++                assert_eq!(point.rgb, [*id as u8, 255 - *id as u8, 17]);
++            }
++        }
++    }
++
++    #[test]
++    fn initial_points_subsample_after_ordering_without_mutating_source() {
++        let points = scene(&[10, 1, 2]);
++        let ordered = initial_points(&points, true, 2);
++        assert_eq!(
++            ordered.iter().map(|(id, _)| **id).collect::<Vec<_>>(),
++            vec![1, 10]
++        );
++        assert_eq!(points.len(), 3);
++        let native = initial_points(&points, false, 2);
++        assert_eq!(
++            native.iter().map(|(id, _)| **id).collect::<Vec<_>>(),
++            points.keys().step_by(2).copied().collect::<Vec<_>>()
++        );
++    }
++}
+diff --git a/crates/brush-dataset/src/scene_loader.rs b/crates/brush-dataset/src/scene_loader.rs
+index e87d02f..c568343 100644
+--- a/crates/brush-dataset/src/scene_loader.rs
++++ b/crates/brush-dataset/src/scene_loader.rs
+@@ -1,4 +1,4 @@
+-use std::sync::Arc;
++use std::{path::PathBuf, sync::Arc};
+ 
+ use burn::prelude::Backend;
+ use image::DynamicImage;
+@@ -11,7 +11,9 @@ use tracing::{Instrument, trace_span};
+ use crate::scene::{Scene, SceneBatch, sample_to_tensor, view_to_sample_image};
+ 
+ pub struct SceneLoader<B: Backend> {
+-    receiver: Receiver<SceneBatch<B>>,
++    receiver: Receiver<(SceneBatch<B>, PathBuf)>,
++    trace_order: bool,
++    consumed: usize,
+ }
+ 
+ struct ImageCache {
+@@ -73,6 +75,16 @@ impl<B: Backend> SceneLoader<B> {
+                 // threads would just sit around idling!
+                 .min(num_img_queue) as u64
+         };
++        // Experimental switch: keep the native producer count unless explicitly enabled.
++        let parallelism = if std::env::var("WEBSCAN_SINGLE_LOADER").as_deref() == Ok("1") {
++            1
++        } else {
++            parallelism
++        };
++        let trace_order = std::env::var("WEBSCAN_TRACE_LOADER").as_deref() == Ok("1");
++        if trace_order {
++            log::info!("WS_LOADER producers {parallelism}");
++        }
+         let num_views = scene.views.len();
+ 
+         let load_cache = Arc::new(RwLock::new(ImageCache::new(MAX_CACHE_MB, num_views)));
+@@ -114,7 +126,12 @@ impl<B: Backend> SceneLoader<B> {
+                         };
+ 
+                         let _ = send_img
+-                            .send((sample, view.image.is_masked(), view.camera.clone()))
++                            .send((
++                                sample,
++                                view.image.is_masked(),
++                                view.camera.clone(),
++                                view.image.path.clone(),
++                            ))
+                             .await;
+                     };
+ 
+@@ -131,16 +148,19 @@ impl<B: Backend> SceneLoader<B> {
+         let device = device.clone();
+         tokio_wasm::spawn(async move {
+             while let Some(rec) = rec_imag.recv().await {
+-                let (sample, alpha_is_mask, camera) = rec;
++                let (sample, alpha_is_mask, camera, image_path) = rec;
+ 
+                 let img_tensor = sample_to_tensor(&sample, &device);
+ 
+                 if send_batch
+-                    .send(SceneBatch {
+-                        img_tensor,
+-                        alpha_is_mask,
+-                        camera,
+-                    })
++                    .send((
++                        SceneBatch {
++                            img_tensor,
++                            alpha_is_mask,
++                            camera,
++                        },
++                        image_path,
++                    ))
+                     .await
+                     .is_err()
+                 {
+@@ -153,13 +173,21 @@ impl<B: Backend> SceneLoader<B> {
+ 
+         Self {
+             receiver: rec_batch,
++            trace_order,
++            consumed: 0,
+         }
+     }
+ 
+     pub async fn next_batch(&mut self) -> SceneBatch<B> {
+-        self.receiver
++        let (batch, image_path) = self
++            .receiver
+             .recv()
+             .await
+-            .expect("Somehow lost data loading channel!")
++            .expect("Somehow lost data loading channel!");
++        if self.trace_order {
++            log::info!("WS_ORDER {} {}", self.consumed, image_path.display());
++        }
++        self.consumed += 1;
++        batch
+     }
+ }
+diff --git a/crates/brush-process/src/train_stream.rs b/crates/brush-process/src/train_stream.rs
+index 3e94dce..7313607 100644
+--- a/crates/brush-process/src/train_stream.rs
++++ b/crates/brush-process/src/train_stream.rs
+@@ -50,7 +50,11 @@ pub(crate) async fn train_stream(
+ 
+     let process_config = &process_args.process_config;
+     log::info!("Using seed {}", process_config.seed);
+-    <MainBackend as Backend>::seed(&device, process_config.seed);
++    seed_tensor_generators(
++        &device,
++        process_config.seed,
++        std::env::var("WEBSCAN_SEED_GPU").as_deref() == Ok("1"),
++    );
+     let mut rng = rand::rngs::StdRng::from_seed([process_config.seed as u8; 32]);
+ 
+     log::info!("Loading dataset");
+@@ -103,6 +107,7 @@ pub(crate) async fn train_stream(
+     };
+ 
+     let splats = splats.with_sh_degree(process_args.model_config.sh_degree);
++    trace_state(splats.clone(), &process_config.export_path, 0).await?;
+     let mut splats = splats.into_autodiff();
+ 
+     let mut eval_scene = dataset.eval;
+@@ -110,6 +115,9 @@ pub(crate) async fn train_stream(
+     let mut train_duration = Duration::from_secs(0);
+     let mut dataloader = SceneLoader::new(&dataset.train, 42, &device);
+     let mut trainer = SplatTrainer::new(&process_args.train_config, &device, splats.clone()).await;
++    if std::env::var("WEBSCAN_SEEDED_SAMPLING").as_deref() == Ok("1") {
++        trainer.set_sampling_seed(process_config.seed);
++    }
+ 
+     log::info!("Start training loop.");
+     for iter in process_args.process_config.start_iter..process_args.train_config.total_steps {
+@@ -122,6 +130,9 @@ pub(crate) async fn train_stream(
+ 
+         let (new_splats, stats) = trainer.step(iter, &batch, splats);
+         splats = new_splats;
++        if matches!(iter + 1, 1 | 10 | 100) {
++            trace_state(splats.valid(), &process_config.export_path, iter + 1).await?;
++        }
+         let (new_splats, refine) = trainer
+             .refine_if_needed(iter, splats)
+             .instrument(trace_span!("Refine splats"))
+@@ -204,6 +215,30 @@ pub(crate) async fn train_stream(
+     Ok(())
+ }
+ 
++fn seed_tensor_generators(device: &WgpuDevice, seed: u64, seed_gpu: bool) {
++    <MainBackend as Backend>::seed(device, seed);
++    if seed_gpu {
++        burn_cubecl::cubecl::random::seed(seed);
++        log::info!("WS_GPU_SEED {seed}");
++    }
++}
++
++async fn trace_state(
++    splats: Splats<MainBackend>,
++    export_path: &str,
++    step: u32,
++) -> anyhow::Result<()> {
++    if std::env::var("WEBSCAN_TRACE_STATE").as_deref() != Ok("1") {
++        return Ok(());
++    }
++    let folder = Path::new(export_path).join("state_trace");
++    tokio::fs::create_dir_all(&folder).await?;
++    let data = brush_serde::splat_to_ply(splats).await?;
++    tokio::fs::write(folder.join(format!("state_{step:04}.ply")), data).await?;
++    log::info!("WS_STATE_CAPTURE {step}");
++    Ok(())
++}
++
+ async fn run_eval(
+     device: &WgpuDevice,
+     emitter: &TryStreamEmitter<ProcessMessage, anyhow::Error>,
+@@ -329,3 +364,46 @@ async fn rerun_log(
+     }
+     Ok(())
+ }
++
++#[cfg(test)]
++mod tensor_seed_tests {
++    use super::*;
++    use burn::tensor::{Distribution, Tensor};
++
++    async fn draws(device: &WgpuDevice, seed: u64) -> (Vec<f32>, Vec<f32>) {
++        seed_tensor_generators(device, seed, true);
++        let normal =
++            Tensor::<MainBackend, 2>::random([64, 4], Distribution::Normal(0.0, 1.0), device)
++                .into_data_async()
++                .await
++                .into_vec::<f32>()
++                .unwrap();
++        let uniform =
++            Tensor::<MainBackend, 1>::random([64], Distribution::Uniform(-2.0, -1.0), device)
++                .into_data_async()
++                .await
++                .into_vec::<f32>()
++                .unwrap();
++        (normal, uniform)
++    }
++
++    #[test]
++    fn tensor_seed_controls_normal_and_uniform() {
++        tokio::runtime::Builder::new_current_thread()
++            .enable_all()
++            .build()
++            .unwrap()
++            .block_on(async {
++                let device = WgpuDevice::default();
++                let a = draws(&device, 42).await;
++                let b = draws(&device, 42).await;
++                assert_eq!(
++                    a, b,
++                    "The same seed must control actual GPU Tensor random draws"
++                );
++                let c = draws(&device, 17).await;
++                assert_ne!(a.0, c.0, "Normal draws must honor a changed seed");
++                assert_ne!(a.1, c.1, "Uniform draws must honor a changed seed");
++            });
++    }
++}
+diff --git a/crates/brush-train/src/adam_scaled.rs b/crates/brush-train/src/adam_scaled.rs
+index 3bcf07c..c372f48 100644
+--- a/crates/brush-train/src/adam_scaled.rs
++++ b/crates/brush-train/src/adam_scaled.rs
+@@ -51,6 +51,7 @@ pub(crate) struct AdamState<B: Backend, const D: usize> {
+     /// The current adaptive momentum.
+     pub momentum: Option<AdaptiveMomentumState<B, D>>,
+     pub scaling: Option<Tensor<B, D>>,
++    pub epsilon: Option<f32>,
+ }
+ 
+ impl AdamScaledConfig {
+@@ -86,21 +87,28 @@ impl<B: Backend> SimpleOptimizer<B> for AdamScaled {
+     ) -> (Tensor<B, D>, Option<Self::State<D>>) {
+         let mut state_momentum = None;
+         let mut scaling = None;
++        let mut epsilon = None;
+ 
+         if let Some(state) = state {
+             state_momentum = state.momentum;
+             scaling = state.scaling;
++            epsilon = state.epsilon;
+         }
+ 
+         if let Some(weight_decay) = &self.weight_decay {
+             grad = weight_decay.transform(grad, tensor.clone());
+         }
+ 
+-        let (grad, state_momentum) = self.momentum.transform(grad, state_momentum);
++        let mut momentum = self.momentum.clone();
++        if let Some(epsilon) = epsilon {
++            momentum.epsilon = epsilon;
++        }
++        let (grad, state_momentum) = momentum.transform(grad, state_momentum);
+ 
+         let state = AdamState {
+             momentum: Some(state_momentum),
+             scaling: scaling.clone(),
++            epsilon,
+         };
+ 
+         let delta = if let Some(scale) = scaling {
+@@ -163,3 +171,66 @@ impl AdaptiveMomentum {
+         (grad, state)
+     }
+ }
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++    use brush_render::MainBackend;
++    use burn::backend::wgpu::WgpuDevice;
++
++    #[test]
++    fn epsilon_override_stays_with_parameter_state() {
++        let device = WgpuDevice::default();
++        let optimizer = AdamScaled {
++            momentum: AdaptiveMomentum {
++                beta_1: 0.9,
++                beta_2: 0.999,
++                epsilon: 1e-15,
++            },
++            weight_decay: None,
++        };
++        let tiny = Tensor::<MainBackend, 1>::from_floats([1e-12, -1e-12], &device);
++        let initial = Tensor::<MainBackend, 1>::zeros([2], &device);
++        let (base, base_state) = optimizer.step(1e-3, initial.clone(), tiny.clone(), None);
++        let override_state = AdamState {
++            momentum: None,
++            scaling: None,
++            epsilon: Some(1e-8),
++        };
++        let (guarded, guarded_state) =
++            optimizer.step(1e-3, initial, tiny.clone(), Some(override_state));
++        let base_values = base.clone().into_data().into_vec::<f32>().unwrap();
++        let guarded_values = guarded.clone().into_data().into_vec::<f32>().unwrap();
++        assert!(base_values.iter().all(|v| v.abs() > 0.0009));
++        assert!(guarded_values.iter().all(|v| v.abs() < 0.000001));
++        assert_eq!(base_state.as_ref().unwrap().epsilon, None);
++        assert_eq!(guarded_state.as_ref().unwrap().epsilon, Some(1e-8));
++
++        // Record conversion and device transfer must not silently drop the override.
++        type Diff = burn::backend::Autodiff<MainBackend>;
++        let record: burn::optim::record::AdaptorRecord<AdamScaled, Diff> =
++            burn::optim::record::AdaptorRecord::from_state(guarded_state.unwrap());
++        let restored: AdamState<MainBackend, 1> = record.into_state();
++        let restored = <AdamScaled as SimpleOptimizer<MainBackend>>::to_device(restored, &device);
++        let (guarded_next, next_state) =
++            optimizer.step(1e-3, guarded, tiny.clone(), Some(restored));
++        let (base_next, _) = optimizer.step(1e-3, base, tiny, base_state);
++        assert_eq!(next_state.unwrap().epsilon, Some(1e-8));
++        assert!(
++            guarded_next
++                .into_data()
++                .into_vec::<f32>()
++                .unwrap()
++                .iter()
++                .all(|v| v.is_finite() && v.abs() < 0.000001)
++        );
++        assert!(
++            base_next
++                .into_data()
++                .into_vec::<f32>()
++                .unwrap()
++                .iter()
++                .all(|v| v.abs() > 0.0018)
++        );
++    }
++}
+diff --git a/crates/brush-train/src/multinomial.rs b/crates/brush-train/src/multinomial.rs
+index 54b69e0..32f7dbb 100644
+--- a/crates/brush-train/src/multinomial.rs
++++ b/crates/brush-train/src/multinomial.rs
+@@ -1,7 +1,15 @@
+ pub(crate) fn multinomial_sample(weights: &[f32], n: u32) -> Vec<i32> {
+     let mut rng = rand::rng();
++    multinomial_sample_with_rng(weights, n, &mut rng)
++}
++
++pub(crate) fn multinomial_sample_with_rng<R: rand::Rng + ?Sized>(
++    weights: &[f32],
++    n: u32,
++    rng: &mut R,
++) -> Vec<i32> {
+     rand::seq::index::sample_weighted(
+-        &mut rng,
++        rng,
+         weights.len(),
+         |i| if weights[i].is_nan() { 0.0 } else { weights[i] },
+         n as usize,
+@@ -23,6 +31,38 @@ pub(crate) fn multinomial_sample(weights: &[f32], n: u32) -> Vec<i32> {
+ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn seeded_stream_repeats_across_multiple_calls() {
++        use rand::{SeedableRng, rngs::StdRng};
++        let weights: Vec<f32> = (1..=24).map(|x| x as f32).collect();
++        let mut left = StdRng::seed_from_u64(42);
++        let mut right = StdRng::seed_from_u64(42);
++        let mut sequence = vec![];
++        for _ in 0..4 {
++            let a = multinomial_sample_with_rng(&weights, 8, &mut left);
++            let b = multinomial_sample_with_rng(&weights, 8, &mut right);
++            assert_eq!(a, b);
++            let mut unique = a.clone();
++            unique.sort_unstable();
++            unique.dedup();
++            assert_eq!(unique.len(), 8);
++            sequence.push(a);
++        }
++        assert_ne!(
++            sequence[0], sequence[1],
++            "Do not reset the RNG at each call"
++        );
++    }
++
++    #[test]
++    fn changing_seed_changes_the_fixture_sample() {
++        use rand::{SeedableRng, rngs::StdRng};
++        let weights = vec![1.0; 64];
++        let a = multinomial_sample_with_rng(&weights, 12, &mut StdRng::seed_from_u64(42));
++        let b = multinomial_sample_with_rng(&weights, 12, &mut StdRng::seed_from_u64(7));
++        assert_ne!(a, b);
++    }
++
+     #[test]
+     fn test_multinomial_sampling() {
+         // Test the complete multinomial sampling workflow (samples indices without replacement)
+diff --git a/crates/brush-train/src/train.rs b/crates/brush-train/src/train.rs
+index 47aa071..748da84 100644
+--- a/crates/brush-train/src/train.rs
++++ b/crates/brush-train/src/train.rs
+@@ -2,7 +2,7 @@ use crate::{
+     adam_scaled::{AdamScaled, AdamScaledConfig, AdamState},
+     config::TrainConfig,
+     msg::{RefineStats, TrainStepStats},
+-    multinomial::multinomial_sample,
++    multinomial::{multinomial_sample, multinomial_sample_with_rng},
+     quat_vec::quaternion_vec_multiply,
+     ssim::Ssim,
+     stats::RefineRecord,
+@@ -36,6 +36,7 @@ use burn::{
+ use burn_cubecl::cubecl::Runtime;
+ use glam::Vec3;
+ use hashbrown::{HashMap, HashSet};
++use rand::{SeedableRng, rngs::StdRng};
+ use std::f64::consts::SQRT_2;
+ use tracing::trace_span;
+ 
+@@ -54,6 +55,10 @@ pub struct SplatTrainer {
+     ssim: Option<Ssim<DiffBackend>>,
+ 
+     bounds: BoundingBox,
++    sampling_rng: Option<StdRng>,
++    sampling_calls: usize,
++    refinement_calls: usize,
++    trace_sampling: bool,
+ 
+     #[cfg(not(target_family = "wasm"))]
+     lpips: Option<lpips::LpipsModel<DiffBackend>>,
+@@ -64,7 +69,24 @@ fn inv_sigmoid<B: Backend>(x: Tensor<B, 1>) -> Tensor<B, 1> {
+ }
+ 
+ fn create_default_optimizer() -> OptimizerType {
+-    AdamScaledConfig::new().with_epsilon(1e-15).init()
++    let epsilon = if std::env::var("WEBSCAN_STABLE_ADAM").as_deref() == Ok("1") {
++        1e-8
++    } else {
++        1e-15
++    };
++    log::info!("WS_ADAM_EPSILON {epsilon}");
++    AdamScaledConfig::new().with_epsilon(epsilon).init()
++}
++
++fn trace_first_tensor<const D: usize>(name: &str, tensor: Tensor<MainBackend, D>) {
++    let values = tensor
++        .into_data()
++        .into_vec::<f32>()
++        .expect("Trace requires f32");
++    log::info!(
++        "WS_FIRST_TENSOR {name} {:?}",
++        values.iter().map(|v| v.to_bits()).collect::<Vec<_>>()
++    );
+ }
+ 
+ const BOUND_PERCENTILE: f32 = 0.75;
+@@ -94,11 +116,41 @@ impl SplatTrainer {
+             refine_record: None,
+             ssim,
+             bounds,
++            sampling_rng: None,
++            sampling_calls: 0,
++            refinement_calls: 0,
++            trace_sampling: std::env::var("WEBSCAN_TRACE_SAMPLING").as_deref() == Ok("1"),
+             #[cfg(not(target_family = "wasm"))]
+             lpips: (config.lpips_loss_weight > 0.0).then(|| lpips::load_vgg_lpips(device)),
+         }
+     }
+ 
++    pub fn set_sampling_seed(&mut self, seed: u64) {
++        self.sampling_rng = Some(StdRng::seed_from_u64(seed));
++        if self.trace_sampling {
++            log::info!("WS_SAMPLING_SEED {seed}");
++        }
++    }
++
++    fn sample_weights(&mut self, weights: &[f32], count: u32) -> Vec<i32> {
++        let samples = if let Some(rng) = self.sampling_rng.as_mut() {
++            multinomial_sample_with_rng(weights, count, rng)
++        } else {
++            multinomial_sample(weights, count)
++        };
++        if self.trace_sampling {
++            if self.sampling_calls == 0 {
++                log::info!(
++                    "WS_INITIAL_WEIGHTS {:?}",
++                    weights.iter().map(|x| x.to_bits()).collect::<Vec<_>>()
++                );
++            }
++            log::info!("WS_SAMPLE {} {:?}", self.sampling_calls, samples);
++        }
++        self.sampling_calls += 1;
++        samples
++    }
++
+     pub fn step(
+         &mut self,
+         iter: u32,
+@@ -108,6 +160,8 @@ impl SplatTrainer {
+         let _span = trace_span!("Train step").entered();
+ 
+         let mut splats = splats;
++        let trace_first =
++            iter == 0 && std::env::var("WEBSCAN_TRACE_GRADIENT").as_deref() == Ok("1");
+ 
+         let [img_h, img_w, _] = batch.img_tensor.dims();
+         let camera = &batch.camera;
+@@ -207,6 +261,29 @@ impl SplatTrainer {
+         });
+ 
+         let mut grads = trace_span!("Backward pass").in_scope(|| loss.backward());
++        if trace_first {
++            trace_first_tensor("rotation_before", splats.rotation.val().inner());
++            trace_first_tensor(
++                "grad_rotation",
++                splats.rotation.grad(&grads).expect("Rotation gradient"),
++            );
++            trace_first_tensor(
++                "grad_scale",
++                splats.log_scales.grad(&grads).expect("Scale gradient"),
++            );
++            trace_first_tensor(
++                "grad_position",
++                splats.means.grad(&grads).expect("Position gradient"),
++            );
++            trace_first_tensor(
++                "grad_opacity",
++                splats.raw_opacity.grad(&grads).expect("Opacity gradient"),
++            );
++            trace_first_tensor(
++                "grad_color",
++                splats.sh_coeffs.grad(&grads).expect("Color gradient"),
++            );
++        }
+ 
+         #[cfg(any(feature = "debug-validation", test))]
+         {
+@@ -249,13 +326,26 @@ impl SplatTrainer {
+             let sh_lr_scales = Tensor::<_, 1>::from_floats(sh_lr_scales.as_slice(), &device)
+                 .reshape([1, coeff_count, 1]);
+ 
+-            create_default_optimizer().load_record(HashMap::from([(
++            let mut record = HashMap::from([(
+                 splats.sh_coeffs.id,
+                 AdaptorRecord::from_state(AdamState {
+                     momentum: None,
+                     scaling: Some(sh_lr_scales),
++                    epsilon: None,
+                 }),
+-            )]))
++            )]);
++            if std::env::var("WEBSCAN_ROTATION_ADAM").as_deref() == Ok("1") {
++                record.insert(
++                    splats.rotation.id,
++                    AdaptorRecord::from_state(AdamState::<MainBackend, 2> {
++                        momentum: None,
++                        scaling: None,
++                        epsilon: Some(1e-8),
++                    }),
++                );
++                log::info!("WS_ROTATION_EPSILON init 1e-8");
++            }
++            create_default_optimizer().load_record(record)
+         });
+ 
+         splats = trace_span!("Optimizer step").in_scope(|| {
+@@ -287,6 +377,10 @@ impl SplatTrainer {
+             splats
+         });
+ 
++        if trace_first {
++            trace_first_tensor("rotation_after", splats.rotation.val().inner());
++        }
++
+         let mean_noise_weight_scale = self.config.mean_noise_weight;
+         let device = splats.device();
+         // Add random noise. Only do this in the growth phase, otherwise
+@@ -391,7 +485,7 @@ impl SplatTrainer {
+                 .await
+                 .into_vec::<f32>()
+                 .expect("Failed to read weights");
+-            let resampled_inds = multinomial_sample(&resampled_weights, pruned_count);
++            let resampled_inds = self.sample_weights(&resampled_weights, pruned_count);
+             add_indices.extend(resampled_inds);
+         }
+ 
+@@ -422,7 +516,7 @@ impl SplatTrainer {
+                     .await
+                     .into_vec::<f32>()
+                     .expect("Failed to read weights");
+-                let growth_inds = multinomial_sample(&weights, grow_count);
++                let growth_inds = self.sample_weights(&weights, grow_count);
+                 add_indices.extend(growth_inds);
+             }
+         }
+@@ -452,12 +546,19 @@ impl SplatTrainer {
+         add_indices: HashSet<i32>,
+     ) -> Splats<DiffBackend> {
+         let refine_count = add_indices.len();
++        let refine_indices: Vec<i32> = add_indices.into_iter().collect();
++        if self.trace_sampling {
++            log::info!(
++                "WS_REFINE_ORDER {} {:?}",
++                self.refinement_calls,
++                refine_indices
++            );
++        }
++        self.refinement_calls += 1;
+ 
+         if refine_count > 0 {
+-            let refine_inds = Tensor::from_data(
+-                TensorData::new(add_indices.into_iter().collect(), [refine_count]),
+-                device,
+-            );
++            let refine_inds =
++                Tensor::from_data(TensorData::new(refine_indices, [refine_count]), device);
+ 
+             let cur_means = splats.means.val().inner().select(0, refine_inds.clone());
+             let cur_rots = splats
+@@ -535,6 +636,18 @@ impl SplatTrainer {
+                 |x| Tensor::cat(vec![x, Tensor::zeros([refine_count], device)], 0),
+             );
+         }
++        if std::env::var("WEBSCAN_ROTATION_ADAM").as_deref() == Ok("1") {
++            let state: AdamState<MainBackend, 2> = record
++                .get(&splats.rotation.id)
++                .expect("Rotation optimizer record")
++                .clone()
++                .into_state();
++            log::info!(
++                "WS_ROTATION_EPSILON refine {} {:?}",
++                self.refinement_calls,
++                state.epsilon
++            );
++        }
+         self.optim = Some(create_default_optimizer().load_record(record));
+         splats
+     }
+diff --git a/crates/colmap-reader/src/lib.rs b/crates/colmap-reader/src/lib.rs
+index 833203a..3e7f57f 100644
+--- a/crates/colmap-reader/src/lib.rs
++++ b/crates/colmap-reader/src/lib.rs
+@@ -431,7 +431,7 @@ async fn read_points3d_binary<R: AsyncRead + Unpin>(
+     let num_points = reader.read_u64_le().await?;
+ 
+     for _ in 0..num_points {
+-        let point3d_id = reader.read_i64().await?;
++        let point3d_id = reader.read_i64_le().await?;
+         let xyz = glam::Vec3::new(
+             reader.read_f64_le().await? as f32,
+             reader.read_f64_le().await? as f32,
+@@ -507,6 +507,42 @@ mod tests {
+     use std::io::Cursor;
+     use tokio::io::BufReader;
+ 
++    #[tokio::test]
++    async fn test_binary_point_ids_match_text_and_preserve_payload() {
++        let ids = [1_i64, 128, 257, (1_i64 << 40) + 17];
++        let mut binary = (ids.len() as u64).to_le_bytes().to_vec();
++        let mut text = String::new();
++        for id in ids {
++            binary.extend_from_slice(&id.to_le_bytes());
++            for value in [1.5_f64, -2.5, 3.5] {
++                binary.extend_from_slice(&value.to_le_bytes());
++            }
++            binary.extend_from_slice(&[21, 128, 255]);
++            binary.extend_from_slice(&0.125_f64.to_le_bytes());
++            binary.extend_from_slice(&2_u64.to_le_bytes());
++            for value in [7_i32, 3, 9, 5] {
++                binary.extend_from_slice(&value.to_le_bytes());
++            }
++            text.push_str(&format!("{id} 1.5 -2.5 3.5 21 128 255 0.125 7 3 9 5\n"));
++        }
++        let parsed = read_points3d(Cursor::new(binary), true).await.unwrap();
++        let reference = read_points3d(Cursor::new(text.as_bytes()), false)
++            .await
++            .unwrap();
++        let mut keys: Vec<_> = parsed.keys().copied().collect();
++        keys.sort_unstable();
++        assert_eq!(keys, ids);
++        for id in ids {
++            let a = &parsed[&id];
++            let b = &reference[&id];
++            assert_eq!(a.xyz, b.xyz);
++            assert_eq!(a.rgb, b.rgb);
++            assert_eq!(a.error, b.error);
++            assert_eq!(a.image_ids, b.image_ids);
++            assert_eq!(a.point2d_idxs, b.point2d_idxs);
++        }
++    }
++
+     #[test]
+     fn test_camera_model_workflow() {
+         // Test camera model parsing and parameter extraction

@@ -87,3 +87,5 @@ pipes 平均 PSNR 17.5624 → 17.1881，SSIM 0.73119 → 0.73221；office 分别
 每次使用独立输入副本和 `--export-path`。本机资料在 `.data/benchmarks/adam-epsilon-20261022/`，包括实际二进制、日志、适配器、模型和状态 / 梯度分析脚本。公开[完整记录](benchmarks/adam-epsilon.json)保留逐次与逐视角成绩、梯度分位数、首轮公式误差、状态差值、输入 / 构建 / 图片摘要。没有修改应用源码，不重复其本地回归；提交后由标准 CI 检查后端、前端、类型与构建。
 
 补丁遵循 [Brush Apache-2.0 许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片与渲染遵循 [ETH3D 署名及许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续只调整旋转组，早期旋转差异仍缩小，但两场景平均画质下降，未采用。[旋转组单独对照](ROTATION-ADAM.md)
