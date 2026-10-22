@@ -75,3 +75,5 @@
 本机资料保留在 `.data/benchmarks/init-order-20261021/`：根目录为早期探查，`le/` 是修正编号后的独立运行，包含构建、测试、模型、采样追踪、适配器及评分脚本。`reader-before.log` 保留故障复现；最终摘要、逐视角指标及早期数据见[完整记录](benchmarks/init-order.json)。未提交大体积二进制。
 
 实验代码遵循 [Brush Apache-2.0 许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片与衍生渲染遵循 [ETH3D 署名及许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续追踪确认，训练前的旋转和透明度未受同一个 GPU 种子控制。补传 CubeCL 种子后初始 PLY 可重复，但第一次参数更新后仍出现差异。[GPU 随机种子传递](GPU-SEED.md)

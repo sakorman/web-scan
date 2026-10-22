@@ -32,6 +32,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/init-order.patch` extends these experiments with little-endian binary point-ID decoding, optional canonical point ordering, and regression tests for IDs, payload pairing and subsampling. This cumulative patch also remains Apache-2.0-licensed and does not replace the installed official engine.
 
+`docs/benchmarks/gpu-seed.patch` adds explicit CubeCL GPU RNG seeding, a real Normal/Uniform tensor regression test, and optional early-state exports to the same cumulative experiment. It remains Apache-2.0-licensed; it does not replace the installed official engine or guarantee deterministic full training.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
