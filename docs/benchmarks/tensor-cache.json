@@ -1,0 +1,2590 @@
+{
+  "plan": {
+    "date": "2026-10-23",
+    "baseline_commit": "4670af9a4e24c63bc8627c73bf4ec22db7007e75",
+    "problem": "SceneLoader converts cached RGB bytes to a new float vector and GPU tensor on every consumed training image. Dense capture revisits the same images thousands of times.",
+    "change": "Optional immutable image-tensor reuse, limited to 256 MiB logical tensor bytes per loader. Full cache falls back to the original conversion path. Preserve all image pixels, camera geometry, training/evaluation splits, steps, resolution and Gaussian budget.",
+    "config": {
+      "steps": 3000,
+      "resolution": 512,
+      "max_points": 150000,
+      "seed": 42,
+      "repeats": 2,
+      "evaluation_mode": "holdout"
+    },
+    "scenes": [
+      "pipes",
+      "office",
+      "tum-desk"
+    ],
+    "sources": {
+      "6ae86afe0c9d4a0592c2f94bcd2f89f1": ".data/jobs/6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "98a93d1c6a824661974c57a21fc391d7": ".data/jobs/98a93d1c6a824661974c57a21fc391d7",
+      "ae5482d0811e46c0bd7d77099158344f": ".data/benchmarks/tum-desk-20261019/jobs/ae5482d0811e46c0bd7d77099158344f"
+    },
+    "acceptance": "Test exact GPU pixel values and cache immutability, budget/fallback; validate actual consumed cache hits and same-camera held-out metrics on all three scenes. Final models are not guaranteed deterministic; do not equate changed Gaussian counts with algorithm speedup."
+  },
+  "build": {
+    "upstream_commit": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "cargo_lock_sha256": "a555fcb104371e9a6e4de179911c26234fd123228b7c6e30de1d9bfa97e4a2e6",
+    "build_command": "cargo build --locked --release --bin brush_app -j 4",
+    "profile": "release",
+    "hardware": "Apple M5 / 32 GiB",
+    "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+    "patch_sha256": "0365f114f1b3748fce38f21d1ab632dbe7754324be12f73a72ee612775ef33d5",
+    "version": "0.3.0-tensor-cache-study",
+    "gpu_tensor_cache_test_passed": true
+  },
+  "raw_runs": {
+    "config": {
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+    "seed": 42,
+    "repeats": 2,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 23.2646,
+        "adapter_sha256": "d6b0aff4f4de36a3e5bc26e1faf556094e095c4b32821d3acbe3c611e5b90861",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11939,
+        "evaluation": {
+          "psnr": 19.485128,
+          "ssim": 0.7800728
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2819154,
+        "first_progress_seconds": 1.0718,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2819154,
+        "ply_sha256": "cba1afde44dd54cb126808bedf6454516e77033c12f771ec37c2e356d1ea7c47",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "f9df19089017162f4d0faa9de866f25d27dbe5537134cba0ea040925626cabdd",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "a0b878458981fe655e5bd9060fd8a2d462baa91ffa2d44be8e4de528c843cdd2",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "cache_hits": 0,
+        "cache_misses": 3000,
+        "cache_logical_bytes": 0,
+        "cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 23.2697,
+        "adapter_sha256": "3f204a40a1df13057ac1ce19b951df5ad6efc5e81d72a64f4d1802c432fd57aa",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11836,
+        "evaluation": {
+          "psnr": 19.031721,
+          "ssim": 0.7715947
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2794846,
+        "first_progress_seconds": 1.0677,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2794846,
+        "ply_sha256": "f48f8ac1c340a60568f962907acaaa7e91a0b40af5f30f469d9a9f2d81ce1046",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "55530f9ab0f0ee7954cd6a1431bd48ce2f66ac437f83e8ae8a747859a3382d5a",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "66474567b7382a685f2f9a0901fef09bea01355251a99488e765502e9ffc497d",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "cache_hits": 2988,
+        "cache_misses": 12,
+        "cache_logical_bytes": 24772608,
+        "cache_budget_bytes": 268435456,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 23.2816,
+        "adapter_sha256": "3f204a40a1df13057ac1ce19b951df5ad6efc5e81d72a64f4d1802c432fd57aa",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11621,
+        "evaluation": {
+          "psnr": 18.330929,
+          "ssim": 0.7557212
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2744106,
+        "first_progress_seconds": 1.0658,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2744106,
+        "ply_sha256": "9ba94cee35b6897777fffb63c7e522231e05e1a14561028cd611ad3d972f0dcb",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "3a3046a0c98d99cbfe7e482fe699ff91d9616689e9ae7b9526e35112e70929da",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "8cd75ff6a3213a6bae7e85161fe4048cb9c2dfeb3d4f2ddf6b6b4a3d40a9c773",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "cache_hits": 2988,
+        "cache_misses": 12,
+        "cache_logical_bytes": 24772608,
+        "cache_budget_bytes": 268435456,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 23.2522,
+        "adapter_sha256": "d6b0aff4f4de36a3e5bc26e1faf556094e095c4b32821d3acbe3c611e5b90861",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 11513,
+        "evaluation": {
+          "psnr": 17.684391,
+          "ssim": 0.7598691
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 2718618,
+        "first_progress_seconds": 1.0777,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 2718618,
+        "ply_sha256": "6c1a5d24c44c1fa7a6adbc6c4975f7aadf30996eb963b5b9923a1d3d397c941f",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "fd95f4be632b3edafc467c7a40ddddc816098f86b21dc46c052401d71871e77f",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "eea0e0a9aa63de43d26c69009e4c27f9ea382c89b9dedb9c3034aec4713d8b90",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "4388daef217c50cfed93289941a8964f376e00e7666a8bcc6cf682797b52385b",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 250,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 250,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 250,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 250,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 250,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 250,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 250,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 250,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 250,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 250,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 250,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 250
+        },
+        "cache_hits": 0,
+        "cache_misses": 3000,
+        "cache_logical_bytes": 0,
+        "cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 23.2992,
+        "adapter_sha256": "3f204a40a1df13057ac1ce19b951df5ad6efc5e81d72a64f4d1802c432fd57aa",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14531,
+        "evaluation": {
+          "psnr": 21.588806,
+          "ssim": 0.8766296
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3430866,
+        "first_progress_seconds": 2.0674,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3430866,
+        "ply_sha256": "c1b90ed7f356efdb789d47241a682f4864da62bd426650247b157ecfcfa6a15d",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "664462f17a40fcec16e88fe996801b7c19e0ca9a8982450286142c8c2579ae62",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "8bba7bff910a701a2036f1acf825dcf4ce910c5773a877186648480d9dae5170",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "4eeff940329fd2043c43b056b8258b38f29caea87d09f66a61811cb079f7fc10",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "4f2087802b0b8a89f279b296d3d1745eea538cfee30fdf3dfdf5beb35149a4d3",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "cache_hits": 2978,
+        "cache_misses": 22,
+        "cache_logical_bytes": 45010944,
+        "cache_budget_bytes": 268435456,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 23.2533,
+        "adapter_sha256": "d6b0aff4f4de36a3e5bc26e1faf556094e095c4b32821d3acbe3c611e5b90861",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14342,
+        "evaluation": {
+          "psnr": 21.053625,
+          "ssim": 0.8737524
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3386262,
+        "first_progress_seconds": 2.0814,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3386262,
+        "ply_sha256": "0f74cc21b4e85b4f1ad85bf6b87536a995eec3abe36d7a77741397ce7d3d1355",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "a1d7de867217b7c9e4eef3bc2e806c2e692325352e656c65ec52957bdbe2a7a7",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "612a7b6c69a154e323d476816962a6d821d1a88e766e1b4e4fa2bbd1c49f379c",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "f3cfee390c5e9b2560a4fb4f75dd05441c639921295e7c322a1f4bdac501584a",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "0572b44bea02b00490b1ce65ebe1b9f1efb6a553806ed4760778b9a692e68c53",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "cache_hits": 0,
+        "cache_misses": 3000,
+        "cache_logical_bytes": 0,
+        "cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 23.3246,
+        "adapter_sha256": "d6b0aff4f4de36a3e5bc26e1faf556094e095c4b32821d3acbe3c611e5b90861",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14554,
+        "evaluation": {
+          "psnr": 21.396011,
+          "ssim": 0.87008977
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3436294,
+        "first_progress_seconds": 2.0863,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3436294,
+        "ply_sha256": "378d0f2447329e3f5e3bcc22421b4f061731c7ad6d4e01d8681bde26e593e6c5",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "80177dd8e134ddd68bb4492f775e115d35f1d7897654099ce207148fa73b2c22",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "9049e727637cdc035b9d0ce8c80b9808e62a937f3b3020e98596acfd1ff2579c",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "d9c3953f0cd8faf74e05f7dd3fd56e81f3df144aaa2d756cc84c7827783b402e",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "21f0d7330a0f0ca36c2d4e367fb61d18922f4e42cc0c422ff126be5ad11544b7",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "cache_hits": 0,
+        "cache_misses": 3000,
+        "cache_logical_bytes": 0,
+        "cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 23.2804,
+        "adapter_sha256": "3f204a40a1df13057ac1ce19b951df5ad6efc5e81d72a64f4d1802c432fd57aa",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 14351,
+        "evaluation": {
+          "psnr": 21.106136,
+          "ssim": 0.8693498
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 3388386,
+        "first_progress_seconds": 2.0852,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 3388386,
+        "ply_sha256": "9d07b0fba5163fa8ca96f7db1be11688fc0c7257f7cb2ebbafde8abb9cae0bcb",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "8ba14460f76d2861c750d0a15ec813b23377550a5a4ec31247951bd4809ec6fd",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "10a5d35b48955df6533119fe0de4bac8e13c67e0260f5a01835905d66e02af58",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "44e588416c0bc24561001fbd6bcbcd359513af67a5b1d256b1be7d241875e364",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "8165083033dff67474c5d95834f9bec357846f4da904f507f7ebf57865785091",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "fbfc85940e15f46299f7549e3fadd49d56ca7ca7af9a7832ef14c8f6d3b4b9c5",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 137,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 136,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 136,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 136,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 136,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 137,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 137,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 136,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 137,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 136,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 136,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 137,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 137,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 136,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 136,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 137,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 136,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 136,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 136,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 136,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 136,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 137
+        },
+        "cache_hits": 2978,
+        "cache_misses": 22,
+        "cache_logical_bytes": 45010944,
+        "cache_budget_bytes": 268435456,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 2,
+        "repeat": 0,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "baseline",
+        "seconds": 39.4508,
+        "adapter_sha256": "d6b0aff4f4de36a3e5bc26e1faf556094e095c4b32821d3acbe3c611e5b90861",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 73081,
+        "evaluation": {
+          "psnr": 22.977499,
+          "ssim": 0.8473045
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 17248666,
+        "first_progress_seconds": 16.1897,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 17248666,
+        "ply_sha256": "a765aba0ad43402aa7786db0663086e0f515b898de047055e206ff913e31be70",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "9eb7d56b2879d2a73ea3c91487b21b3e1c450a73511a0c20fff7d5afcc785f04",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "686d8b3790b48bc5d62634b8d4df88e2b6853d9898ba608d74fbe3cbb67232e7",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "f5e3a6c36f13f844dc016e585d3d2939868e3f4c7b3fd29bc2d51dcc4dcb785c",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "82ce84c0fc273eb847a43a4f99b1f66654adf474544feedc39e75979cb59af5f",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "5d6b8fee17c2849dd7934a46c2303c0fc17b2414a0c889ed8bd1ef5d8b66a8d0",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "8a7e2584992809654284801bb585dfef69031c51459696e5512b86951dd7811b",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "4105f4d335117908edf363df51c7ab32220a17db55c1b6a235c4e0612861ec8d",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "453b577f1be38234912c27835eaf352b101e2543143e515695bb8bf0c0ca2618",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "b5ca9f675506e682770bb99ef7ccff55327b395c22de0d76b1a4f61376641750",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "6c352ee04925144da8d085e31e27fbb389418c64be031cdfc240d30c5968a8d1",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "1cbe4fe414151a9949406db094e1f94f2f6fb900e5123b9c2028278f1877cff4",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "1a98fa2d468bde9d34d27f80516ab56c1e5c122d4c05c7fe5967179d9d32dca2",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "9bf58acd85a0e9e4a28005f3d60861ab6fdfc68b16f564b8aef1832694c7d92e",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 36,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 35,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 36,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 36,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 36,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 36,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 36,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 35,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 35,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 36,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 36,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 35,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 36,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 35,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 35,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 36,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 35,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 36,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 35,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 36,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 36,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 35,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 36,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 36,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 36,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 36,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 36,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 36,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 35,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 36,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 35,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 36,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 36,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 36,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 35,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 36,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 36,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 35,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 36,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 35,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 35,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 35,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 36,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 35,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 35,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 36,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 36,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 36,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 36,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 35,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 36,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 36,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 36,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 36,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 35,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 36,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 36,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 36,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 35,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 36,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 36,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 36,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 36,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 36,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 36,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 36,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 36,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 36,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 36,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 36,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 35,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 36,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 36,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 36,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 35,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 36,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 36,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 35,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 36,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 36,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 36,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 36,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 36,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 36
+        },
+        "cache_hits": 0,
+        "cache_misses": 3000,
+        "cache_logical_bytes": 0,
+        "cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 84
+      },
+      {
+        "scene_index": 2,
+        "repeat": 0,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "candidate",
+        "seconds": 39.4821,
+        "adapter_sha256": "3f204a40a1df13057ac1ce19b951df5ad6efc5e81d72a64f4d1802c432fd57aa",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 73430,
+        "evaluation": {
+          "psnr": 22.837065,
+          "ssim": 0.8458058
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 17331030,
+        "first_progress_seconds": 16.1862,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 17331030,
+        "ply_sha256": "361a6083997c88eaa105005789957b18c946aab7db91a7bbae9ef8c585dfde16",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "6a95f07c929d0418e327b31ec2b9b89650d901aabbfbd23825099bdf6e2024bc",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "298ba172fdb715fba65d587d6909add17e5c3e2a2c7ded47ee89b646c1e45c9c",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "5108e190ae337540088a6165332720b40e7ef1826a6f4b4f47563f00c59cee38",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "170d43a6cd9cf95e98b991bf1acb7e20df2a6741366bf01576380e8c542a5d8b",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "0f82040cf7f3f98c8a2aed8b3f0f51f64c5e378a89393771f4242afadcc3544c",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "6b18055fd9b58f2e66af2f4a3d8beb7ef82266e85f13600d37494528259c6489",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "e026066c746302205ee3dbe588add388735334c0261a025510f9568173afc2f1",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "28d052695aa1c4ccdd4f6bced138fce78e45a07580dd1a4ab030f7d927fcf459",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "c6ad395e55ea9d436e42efc2d0d0d6e9c0922f9aee98b569bc2b0421826a636d",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "0e659437a68af342eab90c1b0f5b6ff5c98c083de3bda6b61dd7e1dcc996d049",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "24b090732b4eae8976c45237caff119c02bbc4553b9fc2fa7129840cf8cc2d6b",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "2e1b9010837192e130cff8d3057ad180bb7e2f1f06f6a447c0942f7cbcdf4ab4",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "9bf58acd85a0e9e4a28005f3d60861ab6fdfc68b16f564b8aef1832694c7d92e",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 36,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 35,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 36,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 36,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 36,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 36,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 36,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 35,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 35,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 36,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 36,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 35,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 36,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 35,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 35,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 36,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 35,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 36,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 35,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 36,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 36,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 35,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 36,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 36,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 36,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 36,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 36,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 36,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 35,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 36,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 35,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 36,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 36,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 36,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 35,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 36,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 36,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 35,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 36,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 35,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 35,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 35,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 36,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 35,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 35,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 36,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 36,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 36,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 36,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 35,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 36,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 36,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 36,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 36,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 35,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 36,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 36,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 36,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 35,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 36,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 36,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 36,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 36,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 36,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 36,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 36,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 36,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 36,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 36,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 36,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 35,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 36,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 36,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 36,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 35,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 36,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 36,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 35,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 36,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 36,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 36,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 36,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 36,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 36
+        },
+        "cache_hits": 2916,
+        "cache_misses": 84,
+        "cache_logical_bytes": 198180864,
+        "cache_budget_bytes": 268435456,
+        "cache_first_cycle_unique": 84
+      },
+      {
+        "scene_index": 2,
+        "repeat": 1,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "candidate",
+        "seconds": 39.505,
+        "adapter_sha256": "3f204a40a1df13057ac1ce19b951df5ad6efc5e81d72a64f4d1802c432fd57aa",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 73241,
+        "evaluation": {
+          "psnr": 22.794,
+          "ssim": 0.8459043
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 17286426,
+        "first_progress_seconds": 16.221,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 17286426,
+        "ply_sha256": "243c3a34d7e20b93f0037dc86ef5902f0af0625fc785b429203e9a57a937d91d",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "b45d3df1f96ff47ecc31ce36d226a7acf85930385166da4423c93a6ff83e0447",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "26f09403f7ff3907a2da6f72f4c7d9ed7c7242fcb03f75cec4e7be790e27c548",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "c790677b60c567a903ff57dd4fb48c3acae68abd6d7ebf0a01a86c2482756fe1",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "65967ee6bf44936b363c7ee91f2fa573828d2a2874bab02b3b27707be06b8737",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "cc03b0d4ad9a01edc303c490fe2ff6ec374fdb04489c52d3cd61145fce9d41a8",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "cf874643203cc41761cdac4cba64e51b35bead588b6ef00192e1d14af229fe91",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "8ec5455a27ae39b0ecabb6dec6e371cdc4df1458f5c7a0b63b82eea91f5942af",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "de9fd2054674b478839bd06c72bc0cc9919e96bf0d2d9b339bbba74582ff3381",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "019b240cda128c6ad81096659789de2f46423f8937bc200fbb1afe65e5180a84",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "70a92f1a2ebf6c4c953e72fa80d081fd3bff43f8b67cb7ba0934233dd4abe145",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "8a3a89258af47a98195022fc29f2d1fe837465eba53055aa844b220532746d4c",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "b79d1dfe6c57700a1782a197404e56e6aa234ab0f5f1c1cd3c0b9634645c7a82",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "9bf58acd85a0e9e4a28005f3d60861ab6fdfc68b16f564b8aef1832694c7d92e",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 36,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 35,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 36,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 36,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 36,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 36,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 36,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 35,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 35,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 36,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 36,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 35,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 36,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 35,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 35,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 36,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 35,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 36,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 35,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 36,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 36,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 35,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 36,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 36,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 36,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 36,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 36,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 36,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 35,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 36,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 35,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 36,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 36,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 36,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 35,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 36,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 36,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 35,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 36,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 35,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 35,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 35,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 36,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 35,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 35,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 36,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 36,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 36,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 36,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 35,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 36,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 36,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 36,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 36,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 35,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 36,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 36,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 36,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 35,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 36,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 36,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 36,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 36,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 36,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 36,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 36,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 36,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 36,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 36,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 36,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 35,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 36,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 36,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 36,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 35,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 36,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 36,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 35,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 36,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 36,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 36,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 36,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 36,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 36
+        },
+        "cache_hits": 2916,
+        "cache_misses": 84,
+        "cache_logical_bytes": 198180864,
+        "cache_budget_bytes": 268435456,
+        "cache_first_cycle_unique": 84
+      },
+      {
+        "scene_index": 2,
+        "repeat": 1,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "baseline",
+        "seconds": 39.4595,
+        "adapter_sha256": "d6b0aff4f4de36a3e5bc26e1faf556094e095c4b32821d3acbe3c611e5b90861",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 73408,
+        "evaluation": {
+          "psnr": 22.807245,
+          "ssim": 0.8459471
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 17325838,
+        "first_progress_seconds": 16.2077,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 17325838,
+        "ply_sha256": "244fe6c4e5ec88c0a38cc7e07e610a4718400aeb0a8fc50a28e64125217352c4",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "e8932e37bb3be0f5fda627b2ae59d84158e770228163837ac7cb0f9d3ddd5cb4",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "996438398b66d6578e73afb07f361c9d21bc13e171c9ee31ff47e35cb7a2fe4c",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "6c29b45ba8a1d144e67fb01da14b9e908d37f655130d4db37bda199631e461c5",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "4bae6c786678305319f26c0af29026d0c0523c2fcb516b95754fc4944466fe89",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "1fed301824d4c63b3e3d4f1b06f540081dd0ab3a96834fec47b63348ede55199",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "aa89e7d9b60133bf95aa052f7934d4f3a84a8350f9f3050c82e601aa1b0a1186",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "66f3439824c0de1a6144aa3335bd84eb6d8b3de0115e9e63f9883092c30f2283",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "13efecd7317deda748f85db4b227f9699702ca799f6ceb879c6d157ac34f346f",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "afc94e4fe4194405b8ea4d9f4e2be12b2d2f60757a40ca5dce8b1f72a3bb7bbb",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "9ebf4dafa766d7ec225d418555a9a921f23b734c8116faa366217d567a20d832",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "d636d9b2775a6a6b9242d4ed5d5ea3885d8107aedbf3c298baeb4c9c40b9c4ea",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 512,
+            "height": 384,
+            "sha256": "b60146d3d74ee6a429800cea71b1eee8af5902776a4f51ca7f91b0026b5cc0fd",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-tensor-cache-study",
+          "engine_version": "0.3.0-tensor-cache-study",
+          "engine_sha256": "711e379ed10c6b0282ff0886f3ab219528b0286b2f51a6341c6da71a050670ef",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "9bf58acd85a0e9e4a28005f3d60861ab6fdfc68b16f564b8aef1832694c7d92e",
+        "consumed_images": 3000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 36,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 35,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 36,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 36,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 36,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 36,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 36,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 35,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 35,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 36,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 36,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 35,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 36,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 35,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 35,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 36,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 35,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 36,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 35,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 36,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 36,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 35,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 36,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 36,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 36,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 36,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 36,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 36,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 35,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 36,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 35,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 36,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 36,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 36,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 35,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 36,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 36,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 35,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 36,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 35,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 35,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 35,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 36,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 35,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 35,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 36,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 36,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 36,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 36,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 35,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 36,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 36,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 36,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 36,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 35,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 36,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 36,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 36,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 35,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 36,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 36,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 36,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 36,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 36,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 36,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 36,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 36,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 36,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 36,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 36,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 35,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 36,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 36,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 36,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 35,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 36,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 36,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 35,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 36,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 36,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 36,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 36,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 36,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 36
+        },
+        "cache_hits": 0,
+        "cache_misses": 3000,
+        "cache_logical_bytes": 0,
+        "cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 84
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 23.2584,
+            "min": 23.2522,
+            "max": 23.2646
+          },
+          "gaussians": {
+            "mean": 11726,
+            "min": 11513,
+            "max": 11939
+          },
+          "psnr": {
+            "mean": 18.5847595,
+            "min": 17.684391,
+            "max": 19.485128
+          },
+          "ssim": {
+            "mean": 0.76997095,
+            "min": 0.7598691,
+            "max": 0.7800728
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 23.27565,
+            "min": 23.2697,
+            "max": 23.2816
+          },
+          "gaussians": {
+            "mean": 11728.5,
+            "min": 11621,
+            "max": 11836
+          },
+          "psnr": {
+            "mean": 18.681325,
+            "min": 18.330929,
+            "max": 19.031721
+          },
+          "ssim": {
+            "mean": 0.76365795,
+            "min": 0.7557212,
+            "max": 0.7715947
+          }
+        }
+      },
+      {
+        "scene_index": 1,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 23.28895,
+            "min": 23.2533,
+            "max": 23.3246
+          },
+          "gaussians": {
+            "mean": 14448,
+            "min": 14342,
+            "max": 14554
+          },
+          "psnr": {
+            "mean": 21.224818,
+            "min": 21.053625,
+            "max": 21.396011
+          },
+          "ssim": {
+            "mean": 0.871921085,
+            "min": 0.87008977,
+            "max": 0.8737524
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 23.2898,
+            "min": 23.2804,
+            "max": 23.2992
+          },
+          "gaussians": {
+            "mean": 14441,
+            "min": 14351,
+            "max": 14531
+          },
+          "psnr": {
+            "mean": 21.347471,
+            "min": 21.106136,
+            "max": 21.588806
+          },
+          "ssim": {
+            "mean": 0.8729897,
+            "min": 0.8693498,
+            "max": 0.8766296
+          }
+        }
+      },
+      {
+        "scene_index": 2,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 39.45515,
+            "min": 39.4508,
+            "max": 39.4595
+          },
+          "gaussians": {
+            "mean": 73244.5,
+            "min": 73081,
+            "max": 73408
+          },
+          "psnr": {
+            "mean": 22.892372,
+            "min": 22.807245,
+            "max": 22.977499
+          },
+          "ssim": {
+            "mean": 0.8466258,
+            "min": 0.8459471,
+            "max": 0.8473045
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 39.49355,
+            "min": 39.4821,
+            "max": 39.505
+          },
+          "gaussians": {
+            "mean": 73335.5,
+            "min": 73241,
+            "max": 73430
+          },
+          "psnr": {
+            "mean": 22.8155325,
+            "min": 22.794,
+            "max": 22.837065
+          },
+          "ssim": {
+            "mean": 0.84585505,
+            "min": 0.8458058,
+            "max": 0.8459043
+          }
+        }
+      }
+    ]
+  },
+  "aligned_comparisons": [
+    {
+      "comparison_size": 512,
+      "quick_job": "0-0-baseline",
+      "detail_job": "0-0-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 22.44102996606317,
+            "ssim": 0.8174919486045837
+          },
+          "detail": {
+            "psnr": 21.506399855890287,
+            "ssim": 0.8153073787689209
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 16.131718113062586,
+            "ssim": 0.6906465888023376
+          },
+          "detail": {
+            "psnr": 16.23276138844399,
+            "ssim": 0.6766214966773987
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 19.28637403956288,
+          "ssim": 0.7540692687034607
+        },
+        "detail": {
+          "psnr": 18.86958062216714,
+          "ssim": 0.7459644377231598
+        }
+      },
+      "scene_index": 0,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "0-1-baseline",
+      "detail_job": "0-1-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 20.259897310877058,
+            "ssim": 0.8042377233505249
+          },
+          "detail": {
+            "psnr": 21.127889494659566,
+            "ssim": 0.8058208227157593
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 14.87567466189828,
+            "ssim": 0.6669869422912598
+          },
+          "detail": {
+            "psnr": 15.257426715976806,
+            "ssim": 0.6590412259101868
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 17.56778598638767,
+          "ssim": 0.7356123328208923
+        },
+        "detail": {
+          "psnr": 18.192658105318188,
+          "ssim": 0.732431024312973
+        }
+      },
+      "scene_index": 0,
+      "repeat": 1
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-0-baseline",
+      "detail_job": "1-0-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 22.57899570096675,
+            "ssim": 0.8934178352355957
+          },
+          "detail": {
+            "psnr": 22.739381958775795,
+            "ssim": 0.8983849287033081
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 22.654418207470094,
+            "ssim": 0.9340530037879944
+          },
+          "detail": {
+            "psnr": 23.037681369985997,
+            "ssim": 0.9350765347480774
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 16.845397710414332,
+            "ssim": 0.7803881764411926
+          },
+          "detail": {
+            "psnr": 17.145508469957594,
+            "ssim": 0.780282735824585
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 21.63164795871478,
+            "ssim": 0.8293511271476746
+          },
+          "detail": {
+            "psnr": 22.867461779908894,
+            "ssim": 0.8372523188591003
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 20.92761489439149,
+          "ssim": 0.8593025356531143
+        },
+        "detail": {
+          "psnr": 21.44750839465707,
+          "ssim": 0.8627491295337677
+        }
+      },
+      "scene_index": 1,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-1-baseline",
+      "detail_job": "1-1-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 22.972020310315663,
+            "ssim": 0.8953766822814941
+          },
+          "detail": {
+            "psnr": 22.826542676595047,
+            "ssim": 0.8926697969436646
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 24.226678353854805,
+            "ssim": 0.9352641105651855
+          },
+          "detail": {
+            "psnr": 24.2361744239021,
+            "ssim": 0.9379405975341797
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 16.969361674167402,
+            "ssim": 0.7753169536590576
+          },
+          "detail": {
+            "psnr": 15.449474830126581,
+            "ssim": 0.7696117162704468
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 20.890853136826642,
+            "ssim": 0.8136483430862427
+          },
+          "detail": {
+            "psnr": 21.39005983419564,
+            "ssim": 0.8166934847831726
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 21.264728368791125,
+          "ssim": 0.854901522397995
+        },
+        "detail": {
+          "psnr": 20.975562941204842,
+          "ssim": 0.8542288988828659
+        }
+      },
+      "scene_index": 1,
+      "repeat": 1
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "2-0-baseline",
+      "detail_job": "2-0-candidate",
+      "views": [
+        {
+          "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+          "quick": {
+            "psnr": 22.31365031293421,
+            "ssim": 0.8187000751495361
+          },
+          "detail": {
+            "psnr": 22.167156552751507,
+            "ssim": 0.8250826001167297
+          }
+        },
+        {
+          "view": "0008-0296b6fad6524c28bdf086827f716c93.png",
+          "quick": {
+            "psnr": 20.807736541179537,
+            "ssim": 0.8130876421928406
+          },
+          "detail": {
+            "psnr": 20.633963672166907,
+            "ssim": 0.8169838190078735
+          }
+        },
+        {
+          "view": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+          "quick": {
+            "psnr": 24.60781475239009,
+            "ssim": 0.8538756966590881
+          },
+          "detail": {
+            "psnr": 24.243276914981834,
+            "ssim": 0.8508939743041992
+          }
+        },
+        {
+          "view": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+          "quick": {
+            "psnr": 20.624347145649963,
+            "ssim": 0.8135873675346375
+          },
+          "detail": {
+            "psnr": 20.417817523665054,
+            "ssim": 0.8088629245758057
+          }
+        },
+        {
+          "view": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+          "quick": {
+            "psnr": 22.29414103612839,
+            "ssim": 0.8054399490356445
+          },
+          "detail": {
+            "psnr": 22.33416836517771,
+            "ssim": 0.8005260229110718
+          }
+        },
+        {
+          "view": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+          "quick": {
+            "psnr": 23.82633087935805,
+            "ssim": 0.846359133720398
+          },
+          "detail": {
+            "psnr": 23.748955508380067,
+            "ssim": 0.8450677990913391
+          }
+        },
+        {
+          "view": "0048-a77505f3ae9c478d98024b69168783ac.png",
+          "quick": {
+            "psnr": 25.69540458516334,
+            "ssim": 0.890624463558197
+          },
+          "detail": {
+            "psnr": 26.186679195808065,
+            "ssim": 0.8885064721107483
+          }
+        },
+        {
+          "view": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+          "quick": {
+            "psnr": 16.61671559540451,
+            "ssim": 0.7558820247650146
+          },
+          "detail": {
+            "psnr": 15.618176886235029,
+            "ssim": 0.7487105131149292
+          }
+        },
+        {
+          "view": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+          "quick": {
+            "psnr": 22.6212249182529,
+            "ssim": 0.823311448097229
+          },
+          "detail": {
+            "psnr": 22.814044341044067,
+            "ssim": 0.8205448985099792
+          }
+        },
+        {
+          "view": "0072-f724da7448144cd3a72e269ad988e910.png",
+          "quick": {
+            "psnr": 21.696135808892876,
+            "ssim": 0.8275681734085083
+          },
+          "detail": {
+            "psnr": 21.960705794050952,
+            "ssim": 0.8282456994056702
+          }
+        },
+        {
+          "view": "0080-2e64893a45de4f478831f4029c100eef.png",
+          "quick": {
+            "psnr": 25.147968936047555,
+            "ssim": 0.8653087019920349
+          },
+          "detail": {
+            "psnr": 24.395151883534112,
+            "ssim": 0.8637922406196594
+          }
+        },
+        {
+          "view": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+          "quick": {
+            "psnr": 26.79511318892217,
+            "ssim": 0.8908156156539917
+          },
+          "detail": {
+            "psnr": 26.837778836208233,
+            "ssim": 0.8904294371604919
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 22.753881975026967,
+          "ssim": 0.8337133576472601
+        },
+        "detail": {
+          "psnr": 22.613156289500296,
+          "ssim": 0.8323038667440414
+        }
+      },
+      "scene_index": 2,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "2-1-baseline",
+      "detail_job": "2-1-candidate",
+      "views": [
+        {
+          "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+          "quick": {
+            "psnr": 22.486598889750354,
+            "ssim": 0.8240407109260559
+          },
+          "detail": {
+            "psnr": 22.22055352239751,
+            "ssim": 0.8187784552574158
+          }
+        },
+        {
+          "view": "0008-0296b6fad6524c28bdf086827f716c93.png",
+          "quick": {
+            "psnr": 20.82944660881017,
+            "ssim": 0.8130148649215698
+          },
+          "detail": {
+            "psnr": 20.397159967050655,
+            "ssim": 0.8084858059883118
+          }
+        },
+        {
+          "view": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+          "quick": {
+            "psnr": 24.447775012851483,
+            "ssim": 0.8522300720214844
+          },
+          "detail": {
+            "psnr": 24.428191548423293,
+            "ssim": 0.8533814549446106
+          }
+        },
+        {
+          "view": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+          "quick": {
+            "psnr": 20.347762274863182,
+            "ssim": 0.805747389793396
+          },
+          "detail": {
+            "psnr": 20.623240461311877,
+            "ssim": 0.8115168809890747
+          }
+        },
+        {
+          "view": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+          "quick": {
+            "psnr": 22.268977794861136,
+            "ssim": 0.8046654462814331
+          },
+          "detail": {
+            "psnr": 22.04810198523854,
+            "ssim": 0.8091112375259399
+          }
+        },
+        {
+          "view": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+          "quick": {
+            "psnr": 23.753558868485428,
+            "ssim": 0.8462852239608765
+          },
+          "detail": {
+            "psnr": 23.73276685519133,
+            "ssim": 0.8447555303573608
+          }
+        },
+        {
+          "view": "0048-a77505f3ae9c478d98024b69168783ac.png",
+          "quick": {
+            "psnr": 26.665506844787572,
+            "ssim": 0.891035795211792
+          },
+          "detail": {
+            "psnr": 26.62382007679296,
+            "ssim": 0.8913591504096985
+          }
+        },
+        {
+          "view": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+          "quick": {
+            "psnr": 15.590910125272245,
+            "ssim": 0.7527962923049927
+          },
+          "detail": {
+            "psnr": 16.50493645778726,
+            "ssim": 0.7548298835754395
+          }
+        },
+        {
+          "view": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+          "quick": {
+            "psnr": 22.677349347931322,
+            "ssim": 0.8186556696891785
+          },
+          "detail": {
+            "psnr": 22.751991233747624,
+            "ssim": 0.8174461126327515
+          }
+        },
+        {
+          "view": "0072-f724da7448144cd3a72e269ad988e910.png",
+          "quick": {
+            "psnr": 21.67427487197603,
+            "ssim": 0.8279141783714294
+          },
+          "detail": {
+            "psnr": 21.524806087859933,
+            "ssim": 0.8267507553100586
+          }
+        },
+        {
+          "view": "0080-2e64893a45de4f478831f4029c100eef.png",
+          "quick": {
+            "psnr": 23.57937112843024,
+            "ssim": 0.86214280128479
+          },
+          "detail": {
+            "psnr": 23.41145808036527,
+            "ssim": 0.8617437481880188
+          }
+        },
+        {
+          "view": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+          "quick": {
+            "psnr": 26.726813600361844,
+            "ssim": 0.8908886313438416
+          },
+          "detail": {
+            "psnr": 26.6489258796669,
+            "ssim": 0.8905708193778992
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 22.587362114031748,
+          "ssim": 0.8324514230092367
+        },
+        "detail": {
+          "psnr": 22.576329346319426,
+          "ssim": 0.832394152879715
+        }
+      },
+      "scene_index": 2,
+      "repeat": 1
+    }
+  ],
+  "summary": [
+    {
+      "scene": "pipes",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 23.2584,
+          "min": 23.2522,
+          "max": 23.2646
+        },
+        "gaussians": {
+          "mean": 11726,
+          "min": 11513,
+          "max": 11939
+        },
+        "ply_bytes": {
+          "mean": 2768886,
+          "min": 2718618,
+          "max": 2819154
+        },
+        "cache_logical_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 18.427080012975274,
+          "min": 17.56778598638767,
+          "max": 19.28637403956288
+        },
+        "ssim": {
+          "mean": 0.7448408007621765,
+          "min": 0.7356123328208923,
+          "max": 0.7540692687034607
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 23.27565,
+          "min": 23.2697,
+          "max": 23.2816
+        },
+        "gaussians": {
+          "mean": 11728.5,
+          "min": 11621,
+          "max": 11836
+        },
+        "ply_bytes": {
+          "mean": 2769476,
+          "min": 2744106,
+          "max": 2794846
+        },
+        "cache_logical_bytes": {
+          "mean": 24772608,
+          "min": 24772608,
+          "max": 24772608
+        },
+        "psnr": {
+          "mean": 18.53111936374266,
+          "min": 18.192658105318188,
+          "max": 18.86958062216714
+        },
+        "ssim": {
+          "mean": 0.7391977310180664,
+          "min": 0.732431024312973,
+          "max": 0.7459644377231598
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 23.28895,
+          "min": 23.2533,
+          "max": 23.3246
+        },
+        "gaussians": {
+          "mean": 14448,
+          "min": 14342,
+          "max": 14554
+        },
+        "ply_bytes": {
+          "mean": 3411278,
+          "min": 3386262,
+          "max": 3436294
+        },
+        "cache_logical_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 21.096171631591307,
+          "min": 20.92761489439149,
+          "max": 21.264728368791125
+        },
+        "ssim": {
+          "mean": 0.8571020290255547,
+          "min": 0.854901522397995,
+          "max": 0.8593025356531143
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 23.2898,
+          "min": 23.2804,
+          "max": 23.2992
+        },
+        "gaussians": {
+          "mean": 14441,
+          "min": 14351,
+          "max": 14531
+        },
+        "ply_bytes": {
+          "mean": 3409626,
+          "min": 3388386,
+          "max": 3430866
+        },
+        "cache_logical_bytes": {
+          "mean": 45010944,
+          "min": 45010944,
+          "max": 45010944
+        },
+        "psnr": {
+          "mean": 21.211535667930956,
+          "min": 20.975562941204842,
+          "max": 21.44750839465707
+        },
+        "ssim": {
+          "mean": 0.8584890142083168,
+          "min": 0.8542288988828659,
+          "max": 0.8627491295337677
+        }
+      }
+    },
+    {
+      "scene": "tum-desk",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 39.45515,
+          "min": 39.4508,
+          "max": 39.4595
+        },
+        "gaussians": {
+          "mean": 73244.5,
+          "min": 73081,
+          "max": 73408
+        },
+        "ply_bytes": {
+          "mean": 17287252,
+          "min": 17248666,
+          "max": 17325838
+        },
+        "cache_logical_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 22.67062204452936,
+          "min": 22.587362114031748,
+          "max": 22.753881975026967
+        },
+        "ssim": {
+          "mean": 0.8330823903282484,
+          "min": 0.8324514230092367,
+          "max": 0.8337133576472601
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 39.49355,
+          "min": 39.4821,
+          "max": 39.505
+        },
+        "gaussians": {
+          "mean": 73335.5,
+          "min": 73241,
+          "max": 73430
+        },
+        "ply_bytes": {
+          "mean": 17308728,
+          "min": 17286426,
+          "max": 17331030
+        },
+        "cache_logical_bytes": {
+          "mean": 198180864,
+          "min": 198180864,
+          "max": 198180864
+        },
+        "psnr": {
+          "mean": 22.59474281790986,
+          "min": 22.576329346319426,
+          "max": 22.613156289500296
+        },
+        "ssim": {
+          "mean": 0.8323490098118782,
+          "min": 0.8323038667440414,
+          "max": 0.832394152879715
+        }
+      }
+    }
+  ],
+  "fresh_sfm_seconds": null,
+  "end_to_end_seconds": null,
+  "timing_scope": "Serial adapter training/evaluation/export, including per-process first image cache population. Excludes SfM and input copy; OS and driver caches not flushed. Same instrumented binary in both variants.",
+  "quality_scope": "Frozen shared-camera geometry per scene, every eighth photo excluded from training but used in SfM; all scores recomputed at long edge 512. Two repeats do not establish general gains.",
+  "memory_scope": "Logical f32 image tensor storage only; not allocator capacity or peak process/GPU memory.",
+  "research": {
+    "checked_date": "2026-10-23",
+    "projects": [
+      {
+        "name": "Faster-GS",
+        "venue": "CVPR 2026",
+        "repository": "https://github.com/nerficg-project/faster-gaussian-splatting",
+        "commit": "c60ea269b7cf3ebda527d640b6fdd31462f91b41",
+        "commit_date": "2026-10-10T19:32:24Z",
+        "paper": "https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf",
+        "relevance": "Separates implementation-level speedups from changes in quality or Gaussian count. This experiment adopts that evaluation distinction; no CUDA code is ported."
+      },
+      {
+        "name": "FastGS",
+        "venue": "CVPR 2026",
+        "repository": "https://github.com/fastgs/FastGS",
+        "commit": "44e02a5c1d5e9ed64d2ecd4af1cbba14ac92150f",
+        "commit_date": "2026-03-03T14:09:27Z",
+        "paper": "https://arxiv.org/abs/2511.04283",
+        "relevance": "Multi-view density control and optimized CUDA implementation; official README requires a CUDA GPU. Reported paper timings do not apply to this Metal host."
+      },
+      {
+        "name": "EffGS",
+        "status": "preprint submitted 2026-09-30",
+        "paper": "https://arxiv.org/abs/2609.39553",
+        "relevance": "Frequency-aware guidance, localized density control and scale modulation are possible later hypotheses; not implemented or benchmarked here."
+      }
+    ],
+    "releases": [
+      {
+        "project": "Brush",
+        "tag": "v0.3.0",
+        "published": "2025-09-14T17:39:46Z",
+        "url": "https://github.com/ArthurBrussee/brush/releases/tag/v0.3.0"
+      },
+      {
+        "project": "gsplat",
+        "tag": "v1.5.3",
+        "published": "2025-07-04T16:25:03Z",
+        "url": "https://github.com/nerfstudio-project/gsplat/releases/tag/v1.5.3"
+      }
+    ]
+  },
+  "fixed_environment": {
+    "WEBSCAN_SINGLE_LOADER": "1",
+    "WEBSCAN_TRACE_LOADER": "1",
+    "WEBSCAN_SEEDED_SAMPLING": "1",
+    "WEBSCAN_STABLE_INIT": "1",
+    "WEBSCAN_SEED_GPU": "1",
+    "WEBSCAN_STABLE_REFINE": "1",
+    "WEBSCAN_STABLE_ADAM": "0",
+    "WEBSCAN_ROTATION_ADAM": "0",
+    "WEBSCAN_TRACE_GRADIENT": "0",
+    "WEBSCAN_TRACE_SAMPLING": "0",
+    "WEBSCAN_TRACE_STATE": "0"
+  },
+  "variant_environment": {
+    "baseline": {
+      "WEBSCAN_CACHE_TENSORS": "0"
+    },
+    "candidate": {
+      "WEBSCAN_CACHE_TENSORS": "1"
+    }
+  },
+  "validation": {
+    "real_training_runs": 12,
+    "consumed_cache_records": 36000,
+    "gpu_cache_test": "passed: exact GPU pixels, cached tensor unaffected by caller operations, exact byte budget, oversized fallback and disabled cache",
+    "complete_sh_degree": 3,
+    "aligned_cameras_and_reference_digests": true,
+    "browser": {
+      "loaded": [
+        "pipes baseline",
+        "pipes candidate",
+        "office baseline",
+        "office candidate",
+        "tum-desk baseline",
+        "tum-desk candidate"
+      ],
+      "dragged_walk": [
+        "pipes candidate",
+        "office candidate",
+        "tum-desk candidate"
+      ],
+      "console_errors": 0,
+      "console_warnings": 0,
+      "observations": "Fine pipes, cables and small text remain blurred; roaming outside capture coverage still shows stretched fragments and missing detail."
+    }
+  },
+  "screenshots": [
+    {
+      "scene": "pipes",
+      "variant": "baseline",
+      "repeat": 0,
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/82-tensor-cache-pipes-baseline.png",
+      "sha256": "f9df19089017162f4d0faa9de866f25d27dbe5537134cba0ea040925626cabdd",
+      "width": 512,
+      "height": 336,
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "pipes",
+      "variant": "candidate",
+      "repeat": 0,
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/83-tensor-cache-pipes-candidate.png",
+      "sha256": "55530f9ab0f0ee7954cd6a1431bd48ce2f66ac437f83e8ae8a747859a3382d5a",
+      "width": 512,
+      "height": 336,
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "office",
+      "variant": "baseline",
+      "repeat": 0,
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "path": "docs/screenshots/84-tensor-cache-office-baseline.png",
+      "sha256": "a1d7de867217b7c9e4eef3bc2e806c2e692325352e656c65ec52957bdbe2a7a7",
+      "width": 512,
+      "height": 333,
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "office",
+      "variant": "candidate",
+      "repeat": 0,
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "path": "docs/screenshots/85-tensor-cache-office-candidate.png",
+      "sha256": "664462f17a40fcec16e88fe996801b7c19e0ca9a8982450286142c8c2579ae62",
+      "width": 512,
+      "height": 333,
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "tum-desk",
+      "variant": "baseline",
+      "repeat": 0,
+      "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+      "path": "docs/screenshots/86-tensor-cache-tum-desk-baseline.png",
+      "sha256": "9eb7d56b2879d2a73ea3c91487b21b3e1c450a73511a0c20fff7d5afcc785f04",
+      "width": 512,
+      "height": 384,
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY 4.0"
+    },
+    {
+      "scene": "tum-desk",
+      "variant": "candidate",
+      "repeat": 0,
+      "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+      "path": "docs/screenshots/87-tensor-cache-tum-desk-candidate.png",
+      "sha256": "6a95f07c929d0418e327b31ec2b9b89650d901aabbfbd23825099bdf6e2024bc",
+      "width": 512,
+      "height": 384,
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY 4.0"
+    }
+  ],
+  "decision": "Do not enable by default: caching removes repeated image conversion/upload but has no measurable training wall-time benefit here and retains up to 189 MiB of logical image data. Keep the experiment; next measure GPU rasterization/loss/optimizer costs before changing kernels.",
+  "official_engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+}

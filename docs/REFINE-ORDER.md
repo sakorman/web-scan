@@ -70,3 +70,5 @@ cargo test --manifest-path .tools/brush-order-study/Cargo.toml \
 本机资料在 `.data/benchmarks/refine-order-20261023/`，保留二进制、测试及构建日志、适配器、模型、状态与索引分析脚本。公开JSON包含逐次 / 逐视角指标、全部232次索引摘要和原图摘要。应用源码未变，不重复其本地测试；提交后由标准CI检查后端、前端、类型和构建。
 
 补丁遵循 [Brush Apache-2.0 许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片与渲染遵循 [ETH3D 署名和许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续加入TUM 96帧同相机对照，测试图像张量复用。转换次数明显减少，但没有测到训练提速，未启用默认缓存。[三场景测量与近期论文](TENSOR-CACHE.md)

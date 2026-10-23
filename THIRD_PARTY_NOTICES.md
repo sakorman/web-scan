@@ -40,6 +40,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/refine-order.patch` adds optional canonical refinement-index ordering and a test of stable parent-to-sample assignment. This cumulative patch retains Apache-2.0 licensing and remains an independent experiment, not a replacement for the installed official engine.
 
+`docs/benchmarks/tensor-cache.patch` adds optional bounded reuse of immutable training-image GPU tensors, cache-consumption traces and a GPU correctness/budget test. It retains Apache-2.0 licensing and is not enabled in the default application. Faster-GS, FastGS and EffGS are cited as research references; their implementation code is not included in this patch.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.

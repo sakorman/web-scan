@@ -4,7 +4,13 @@
 
 ## 2026-10-23
 
-### 固定增点索引顺序（实验）
+### 三场景图像缓存与近期研究（未采用）
+
+- 关键结论：复用GPU图像张量可省掉97.2%～99.6%的重复转换，但三场景训练耗时基本不变，缓存保留23.6～189 MiB图像数据，因此不默认启用。
+- ETH3D两组和TUM 96帧共完成12次同相机重建；GPU缓存正确性、完整SH3、留出评分和浏览器漫游检查通过。保留原照片和历史模型，下一步先测GPU光栅化、损失及优化器开销。[基线](https://github.com/sakorman/web-scan/commit/4670af9) · [完整实测与截图](docs/TENSOR-CACHE.md)
+- 本轮参考：[Faster-GS论文](https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf)与[官方代码](https://github.com/nerficg-project/faster-gaussian-splatting)、[FastGS](https://github.com/fastgs/FastGS)、[EffGS预印本](https://arxiv.org/abs/2609.39553)。区分CUDA与本机Metal，未把论文倍速当作本地结果。
+
+### 固定增点索引顺序（实验） · [4670af9](https://github.com/sakorman/web-scan/commit/4670af9)
 
 - 在实验训练器中先排序当前高斯索引，再读取父高斯属性和分配随机偏移；回归验证不同遍历顺序下的对应关系、成员和关闭开关时的行为。候选116次增点 / 裁剪调用全部升序。
 - 八次3000步同相机训练中，pipes平均PSNR / SSIM提高，office均值略降，实际选中集合和最终模型仍变化；保留实验开关，不替换正式引擎，也不宣称完整确定性。
