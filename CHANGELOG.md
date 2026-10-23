@@ -2,9 +2,17 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-10-24
+
+### 训练阶段耗时剖面与近期研究（实验）
+
+- 研究[Faster-GS](https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf)、[官方代码](https://github.com/nerficg-project/faster-gaussian-splatting)和[fused-ssim](https://github.com/rahul-goel/fused-ssim)，把CUDA / MPS实现与本机Burn/Wgpu/Metal边界分开记录。
+- 三场景12次训练中同步采样forward、loss、backward、update。backward随高斯数量增长最明显，TUM desk从6.541 ms增至9.656 ms；profile会改变调度，不作为速度结论，不替换正式训练器。
+- 完整SH3、同相机评分、浏览器加载与拖动漫游通过；保留原始阶段记录，下一步做不改变数学结果的SSIM统计批处理微基准。[实测、截图和研究链接](docs/STAGE-PROFILE.md)
+
 ## 2026-10-23
 
-### 三场景图像缓存与近期研究（未采用）
+### 三场景图像缓存与近期研究（未采用） · [7807baa](https://github.com/sakorman/web-scan/commit/7807baa)
 
 - 关键结论：复用GPU图像张量可省掉97.2%～99.6%的重复转换，但三场景训练耗时基本不变，缓存保留23.6～189 MiB图像数据，因此不默认启用。
 - ETH3D两组和TUM 96帧共完成12次同相机重建；GPU缓存正确性、完整SH3、留出评分和浏览器漫游检查通过。保留原照片和历史模型，下一步先测GPU光栅化、损失及优化器开销。[基线](https://github.com/sakorman/web-scan/commit/4670af9) · [完整实测与截图](docs/TENSOR-CACHE.md)

@@ -95,3 +95,5 @@ cargo test --manifest-path .tools/brush-order-study/Cargo.toml \
 本机资料在 `.data/benchmarks/tensor-cache-20261023/`，保留源码补丁、实际二进制、GPU测试、模型、适配器和分析脚本；[公开JSON](benchmarks/tensor-cache.json)保留逐次与逐视角数据、缓存计数、参考与构建摘要。应用源码未变，由提交后的标准CI执行后端、前端、类型和构建检查。
 
 补丁保留 [Brush Apache-2.0许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)。ETH3D照片和衍生渲染保留 [CC BY-NC-SA 4.0署名](../THIRD_PARTY_NOTICES.md#test-dataset)，TUM照片和渲染保留 [CC BY 4.0署名](../THIRD_PARTY_NOTICES.md#tum-rgb-d-desk-sample)。
+
+图像复用未带来可测提速；后续同步剖面中，反向阶段随高斯数量增长更明显。[训练阶段耗时剖面](STAGE-PROFILE.md)
