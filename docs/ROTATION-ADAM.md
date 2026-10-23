@@ -75,3 +75,5 @@ cargo test --manifest-path .tools/brush-order-study/Cargo.toml \
 本机资料在 `.data/benchmarks/rotation-adam-20261023/`，保留二进制、测试与构建日志、适配器、模型、状态和梯度分析脚本。[公开记录](benchmarks/rotation-adam.json)包含逐次 / 逐视角成绩、梯度统计、状态检查与文件摘要。应用源码未变，不重复其本地测试；提交后由标准 CI 检查后端、前端、类型和构建。
 
 补丁遵循 [Brush Apache-2.0 许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片及渲染遵循 [ETH3D 署名与许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续固定增点索引顺序，候选所有调用均升序，但实际选中集合仍有变化，未证明两场景一致的画质收益。[增点顺序对照](REFINE-ORDER.md)

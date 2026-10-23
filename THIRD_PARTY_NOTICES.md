@@ -38,6 +38,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/rotation-adam.patch` extends the experiment with a parameter-state epsilon override, an optional rotation-only setting, and a GPU test for persistence through updates, record conversion and device transfer. It retains Apache-2.0 licensing and does not replace the installed official engine.
 
+`docs/benchmarks/refine-order.patch` adds optional canonical refinement-index ordering and a test of stable parent-to-sample assignment. This cumulative patch retains Apache-2.0 licensing and remains an independent experiment, not a replacement for the installed official engine.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
