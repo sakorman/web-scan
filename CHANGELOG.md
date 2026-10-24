@@ -2,9 +2,17 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-10-25
+
+### 参考统计缓存的默认档复核（未采用）
+
+- 关键结论：6000步、1024目标分辨率的三场景12次对照仍较快，但pipes平均PSNR下降0.480 dB、SSIM下降0.01120，超过事先设定的门槛，不启用默认缓存。office与TUM通过本轮筛查，不能据此保证其他场景不退化。
+- 沿用同一实验引擎，只切换缓存；保留72,000条追踪、完整SH3、同视角成绩和8张原生渲染图。浏览器加载及拖动漫游正常，缓存数据为189～255 MiB；未重测SfM和端到端耗时。下一步单独检验参考方差的运算分组，尚无已验证修复。[基线](https://github.com/sakorman/web-scan/commit/305e826) · [完整记录与截图](docs/SSIM-REFERENCE-DEFAULT.md)
+- 参考[SSIM论文](https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf)、[fused-ssim](https://github.com/rahul-goel/fused-ssim)和[Faster-GS论文](https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf)。耗时下降没有通过全部画质检查，未作为同画质提速发布。
+
 ## 2026-10-24
 
-### 复用SSIM参考统计量（实验）
+### 复用SSIM参考统计量（实验） · [305e826](https://github.com/sakorman/web-scan/commit/305e826)
 
 - 关键进展：固定3000步、512像素，三场景12次对照的训练、评估与导出平均少约2秒，降幅约5%～9%。参考照片的均值和方差按图像路径及尺寸缓存，256 MiB上限外回到原计算；本轮缓存数据为47～252 MiB。
 - 数值 / 梯度、容量和需梯度参考图回退检查通过，完整SH3及浏览器漫游正常。pipes平均SSIM略降，尚未确认质量不退化；保留实验开关，先验证默认质量档，再决定替换正式引擎。[基线](https://github.com/sakorman/web-scan/commit/088494e) · [数据、截图与代价](docs/SSIM-REFERENCE.md)
