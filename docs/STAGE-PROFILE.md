@@ -76,3 +76,5 @@ cargo test --manifest-path .tools/brush-order-study/Cargo.toml \
 本机资料在 `.data/benchmarks/stage-profile-20261024/`，公开[JSON记录](benchmarks/stage-profile.json)含原始阶段样本、窗口摘要、12次训练、输入 / 相机 / 评估摘要和同视角图。照片与模型仍只保存在本机；TUM和ETH3D的许可见[第三方说明](../THIRD_PARTY_NOTICES.md)。
 
 两组都将 `WEBSCAN_SINGLE_LOADER`、`WEBSCAN_TRACE_LOADER`、`WEBSCAN_SEEDED_SAMPLING`、`WEBSCAN_STABLE_INIT`、`WEBSCAN_SEED_GPU`、`WEBSCAN_STABLE_REFINE` 设为 `1`，把 `WEBSCAN_STABLE_ADAM`、`WEBSCAN_ROTATION_ADAM`、`WEBSCAN_TRACE_GRADIENT`、`WEBSCAN_TRACE_SAMPLING`、`WEBSCAN_TRACE_STATE`、`WEBSCAN_CACHE_TENSORS` 设为 `0`。只切换 `WEBSCAN_PROFILE_STAGES=0` / `1`；CLI沿用[3000步固定参数](ADAM-EPSILON.md#取舍与复现)。
+
+后续SSIM统计合批通过数值与梯度检查，但组件计时变慢，未采用。[微基准与四次实拍验证](SSIM-BATCH.md)

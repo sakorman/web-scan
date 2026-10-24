@@ -44,6 +44,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/stage-profile.patch` adds optional synchronized stage timing for the Brush experiment. It retains Apache-2.0 licensing, changes no default application behavior, and does not include Faster-GS or fused-ssim source code.
 
+`docs/benchmarks/ssim-batch.patch` adds optional batching of SSIM moments using existing Burn convolutions, numerical/gradient regression checks and a component benchmark. It retains Apache-2.0 licensing. The original execution path remains available; fused-ssim and Faster-GS are references only, with no source code copied from those projects.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.

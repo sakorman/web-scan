@@ -4,7 +4,13 @@
 
 ## 2026-10-24
 
-### 训练阶段耗时剖面与近期研究（实验）
+### SSIM统计合批（未采用）
+
+- 关键结论：五组统计量合成两批后，数值和梯度检查通过，但Metal组件计时中位数慢了13.1%～15.4%，不启用默认。前向高层卷积调用减少，不等于底层执行更快。
+- 保留原始基线运算顺序，排除早期重排基线的探查。3项测试、release构建、四次真实照片短重建与浏览器漫游检查通过；取消无收益的长训练对照，正式引擎和历史模型保留。[基线](https://github.com/sakorman/web-scan/commit/46703c9) · [数据、截图与局限](docs/SSIM-BATCH.md)
+- 参考[fused-ssim](https://github.com/rahul-goel/fused-ssim)和[Faster-GS论文](https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf)。本轮只做Burn张量合批，没有移植融合内核；下一步验证Wgpu融合的可行性。
+
+### 训练阶段耗时剖面与近期研究（实验） · [46703c9](https://github.com/sakorman/web-scan/commit/46703c9)
 
 - 研究[Faster-GS](https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf)、[官方代码](https://github.com/nerficg-project/faster-gaussian-splatting)和[fused-ssim](https://github.com/rahul-goel/fused-ssim)，把CUDA / MPS实现与本机Burn/Wgpu/Metal边界分开记录。
 - 三场景12次训练中同步采样forward、loss、backward、update。backward随高斯数量增长最明显，TUM desk从6.541 ms增至9.656 ms；profile会改变调度，不作为速度结论，不替换正式训练器。
