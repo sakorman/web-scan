@@ -4,7 +4,13 @@
 
 ## 2026-10-25
 
-### 参考统计缓存的默认档复核（未采用）
+### 参考二阶矩与尺寸边界（实验）
+
+- 关键进展：改存参考二阶矩后，五组实拍 / 尺寸组合的SSIM图及预测梯度与原公式一致；同时查出626×469输入的局部重复性异常，原路径也会出现，补两列的组件对照恢复一致，根因尚待定位。
+- 两项缓存回归、release构建、八次1000步重建与浏览器拖动漫游通过。第一次参数更新后仍有运行差异，画质没有一致提升；保留实验开关，暂缓长训练和默认接入。补列没有用于训练照片或相机。[基线](https://github.com/sakorman/web-scan/commit/63a4fdd) · [数据、截图与下一步](docs/SSIM-MOMENTS.md)
+- 参考[SSIM论文](https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf)、[fused-ssim Metal实现](https://github.com/rahul-goel/fused-ssim/blob/a7c48d6dd7ac6dc39a7958c7c4452e0b10418f38/ssim.mm)及[Faster-GS](https://fhahlbohm.github.io/faster-gaussian-splatting/)。未移植CUDA增点策略，未把局部数值改善写成整体画质或速度提升。
+
+### 参考统计缓存的默认档复核（未采用） · [63a4fdd](https://github.com/sakorman/web-scan/commit/63a4fdd)
 
 - 关键结论：6000步、1024目标分辨率的三场景12次对照仍较快，但pipes平均PSNR下降0.480 dB、SSIM下降0.01120，超过事先设定的门槛，不启用默认缓存。office与TUM通过本轮筛查，不能据此保证其他场景不退化。
 - 沿用同一实验引擎，只切换缓存；保留72,000条追踪、完整SH3、同视角成绩和8张原生渲染图。浏览器加载及拖动漫游正常，缓存数据为189～255 MiB；未重测SfM和端到端耗时。下一步单独检验参考方差的运算分组，尚无已验证修复。[基线](https://github.com/sakorman/web-scan/commit/305e826) · [完整记录与截图](docs/SSIM-REFERENCE-DEFAULT.md)
