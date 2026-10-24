@@ -1,0 +1,2650 @@
+{
+  "plan": {
+    "date": "2026-10-25",
+    "baseline_commit": "7abc8f2c1b971613dc4e36f1fdba88d02e85c0cb",
+    "problem": "Uncached SSIM repeats differ locally at 626x469; two-column component padding removed the observed discrepancy. Identify the earliest incorrect operation without changing image size or calibration.",
+    "scope": "Deterministic synthetic tensors: upload, HWC multiply, permuted NCHW multiply, separable blur; compare CPU mathematical results and repeat outputs. Use evidence to choose one bounded fix or retain a diagnostic if unresolved.",
+    "constraints": "Do not modify shared Cargo caches. Isolate experimental patches. Keep original photos/models and production engine. Run photo reconstruction after a justified implementation change; no speed or quality claim based solely on a component check.",
+    "config": {
+      "steps": 1000,
+      "resolution": 1024,
+      "max_points": 150000,
+      "seed": 42,
+      "evaluation_mode": "holdout",
+      "repeats": 2
+    },
+    "scenes": [
+      "pipes",
+      "office",
+      "tum-desk"
+    ],
+    "sources": {
+      "6ae86afe0c9d4a0592c2f94bcd2f89f1": ".data/jobs/6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "98a93d1c6a824661974c57a21fc391d7": ".data/jobs/98a93d1c6a824661974c57a21fc391d7",
+      "ae5482d0811e46c0bd7d77099158344f": ".data/benchmarks/tum-desk-20261019/jobs/ae5482d0811e46c0bd7d77099158344f"
+    },
+    "change": "Limit packed contiguous-copy output vector width to a divisor of the total element count. cubecl-std only is locally patched; all other locked packages unchanged.",
+    "comparison": "Saved pre-fix binary versus new binary, same adapter and cache disabled in both. Three scenes, two repeats each, 12 serial short regressions. No image or camera padding.",
+    "measurement": "Train/evaluation/export, no state readback; no new SfM or API end-to-end measurements. New processes, OS/driver caches not flushed.",
+    "acceptance": "Regression must fail before and pass after; original unpadded photo probe must no longer show tail outliers. Validate full SH3, matching cameras and actual sizes on all short runs. Do not infer default-quality gains from 1000-step results."
+  },
+  "build": {
+    "upstream_commit": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "cargo_lock_sha256": "a555fcb104371e9a6e4de179911c26234fd123228b7c6e30de1d9bfa97e4a2e6",
+    "build_command": "cargo build --locked --release --bin brush_app -j 4",
+    "profile": "release",
+    "hardware": "Apple M5 / 32 GiB",
+    "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+    "patch_sha256": "97e06ea96991061321c820de9c4e2de0ebcfa3cc8ec5655247268236eaea5c10",
+    "version": "brush-cli 0.3.0-ssim-tail-study",
+    "reference_cache_numeric_test_passed": true,
+    "reference_cache_numeric_tests_passed": 2,
+    "photo_probe_variants": [
+      "variance cache",
+      "second-moment cache",
+      "uncached repeat"
+    ],
+    "locked_packages_unchanged_except": "cubecl-std local path overlay at 43580a8",
+    "cubecl_patch_sha256": "30f91d9ac3289ef2997ee3dbe5b2a15bd99c21666e03d273a0b56fbc4985c56f",
+    "cubecl_upstream_commit": "43580a8c294f3a8140921c26f6378a12aef82881",
+    "cubecl_lock_overlay": "Local only; all other Cargo.lock package entries unchanged."
+  },
+  "raw_runs": {
+    "config": {
+      "steps": 1000,
+      "max_points": 150000,
+      "resolution": 1024,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": {
+      "baseline": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+      "candidate": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9"
+    },
+    "seed": 42,
+    "repeats": 2,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 26.2682,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2918,
+        "evaluation": {
+          "psnr": 16.227333,
+          "ssim": 0.7372431
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 690197,
+        "first_progress_seconds": 3.0793,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 12,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 690197,
+        "ply_sha256": "f0579187fe5ca0ace1fea9838a02819d4539424bfcbd0dd2f8e0ade1856585a3",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "715a3e85e77b031aa8e4ffc89ca497353d860c7d667c62460bd0a32df1c9dc68",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "cc9717c9db623f5e1345590d8f9602dcd88adc0e16ee283fba6422e2af8d3ee5",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-moments-study",
+          "engine_version": "0.3.0-ssim-moments-study",
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "b117c090666d84d88515357f0cd1b9d87116d2f3e639fa11ccde6fe83bf5788b",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 84,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 84,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 83,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 83,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 84,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 83,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 83,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 83,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 83,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 83,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 84,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 83
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 27.26,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2894,
+        "evaluation": {
+          "psnr": 17.264912,
+          "ssim": 0.7489475
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 684533,
+        "first_progress_seconds": 4.095,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 12,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 684533,
+        "ply_sha256": "5f40b7b5250dbf3bd3b4f8b47bba90a8568da4bc63da6b8158163cacebf3590e",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "f694e676f434981f7734c2bb4a1bba9ff8339e2f82436c323a62376f680a4879",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "3647c314783708f3eb58875af18d1b33a79215ddb68de27c864cb651d468dbca",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-tail-study",
+          "engine_version": "0.3.0-ssim-tail-study",
+          "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "b117c090666d84d88515357f0cd1b9d87116d2f3e639fa11ccde6fe83bf5788b",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 84,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 84,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 83,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 83,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 84,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 83,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 83,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 83,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 83,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 83,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 84,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 83
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "candidate",
+        "seconds": 26.2716,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 2971,
+        "evaluation": {
+          "psnr": 16.864307,
+          "ssim": 0.7419269
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 702705,
+        "first_progress_seconds": 3.0809,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 12,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 702705,
+        "ply_sha256": "c726bed482a7fe555d88ee615f6404d54d9ad53d8b352b126541837b86ac2608",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "dd28445788fffec68cd2212d16f3c87113e4a37e4263969c669325f01f1ae192",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "a998ed852fdc5e3eec76b4f8afffef756ef8cc5c7e9ab7ef34f36f65d2368b08",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-tail-study",
+          "engine_version": "0.3.0-ssim-tail-study",
+          "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "b117c090666d84d88515357f0cd1b9d87116d2f3e639fa11ccde6fe83bf5788b",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 84,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 84,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 83,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 83,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 84,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 83,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 83,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 83,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 83,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 83,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 84,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 83
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 0,
+        "repeat": 1,
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "variant": "baseline",
+        "seconds": 25.2659,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "gaussians": 3054,
+        "evaluation": {
+          "psnr": 18.050137,
+          "ssim": 0.7620467
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "exports": 1,
+        "export_bytes": 722293,
+        "first_progress_seconds": 3.0839,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 12,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_bytes": 722293,
+        "ply_sha256": "37ac6d09a3b27ef71d0423aa9049cb56bdfe741caa7132c17aad25019442d27e",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "0541d9a7a49f687df3a2a40fb50208959cce0b9881e0b91b540a5892d66da001",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 1024,
+            "height": 673,
+            "sha256": "c690eaf9761f86e6c732b53fab3fcb202e49e69db622fc4df8ac0041861d62bb",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-moments-study",
+          "engine_version": "0.3.0-ssim-moments-study",
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "b117c090666d84d88515357f0cd1b9d87116d2f3e639fa11ccde6fe83bf5788b",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-3bd4aab61a0f4ef49b7d15887e3009f0.jpg": 84,
+          "0002-e233195e3dbc4611addfd64aae44e368.jpg": 84,
+          "0003-05d89188e5f947508bbf9ea5865c048d.jpg": 83,
+          "0004-594f972d13494a62b0d4901e5b11ab54.jpg": 83,
+          "0005-f4a8a0db445c4b6c89006e1e2d672470.jpg": 84,
+          "0006-7a54bfe5d1e342a5ab1665d89f3912d2.jpg": 83,
+          "0007-ca47db4f1c3c49c5841b81b913d2d369.jpg": 83,
+          "0009-5164518d9d5944b8acb0d080300994a4.jpg": 83,
+          "0010-0f1fb912d39a40a394132f375860801a.jpg": 83,
+          "0011-3d134e2c8a1041ffba6c960cedd4bff4.jpg": 83,
+          "0012-f7e6845d614041fc831b58622c0aea27.jpg": 84,
+          "0013-2feee0ed58e04170a5c537967a6dcbdd.jpg": 83
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 12
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 26.3169,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 3927,
+        "evaluation": {
+          "psnr": 19.145187,
+          "ssim": 0.832173
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 928321,
+        "first_progress_seconds": 3.0823,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 22,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 928321,
+        "ply_sha256": "8b23bdde5d0f1190fa149fbf3b97134c8b45daaa4f6e4110f43443791ff3f624",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "c5b3fc92017066cf10334fe1237183beddbfc5cf72cb30ba1c0498722181d66f",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "5066999431c77f29cfd2bb65f099a2cf18e1dd6194c75b5079df4b7db3745a4f",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "fc59b29064729b6e8796e522328fb2e04d25bfff3c4d20f421c00faf9b4bbee1",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "3cb16a67f436aa48dc6ab0ecb51f72cf6fbef0cc926edf7be90bd60c89dc7e23",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-tail-study",
+          "engine_version": "0.3.0-ssim-tail-study",
+          "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "d4a142d3eb3c5570921688acf1e8912f3e02bb3438b4b845ba48ba6dcbf5e7fa",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 46,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 45,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 45,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 46,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 46,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 45,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 46,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 45,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 46,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 46,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 45,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 46,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 45,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 45,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 45,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 46,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 46,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 45,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 45,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 45,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 45,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 46
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 26.334,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 3927,
+        "evaluation": {
+          "psnr": 19.058073,
+          "ssim": 0.8354773
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 928321,
+        "first_progress_seconds": 3.0922,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 22,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 928321,
+        "ply_sha256": "7ce8a7da52c3911b9abba4147ec5512d24fdeb61b78e6ae0f52de565377137ba",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "04944d45ad227a4e37674ebbd12989e50da063a1b58b63f37451863e888d2e33",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "f64aacf38c66161f7366f399277a19f6224b2b37329e8eed165e89f0fef35dae",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "03e5309b4d36dbea96ab3f6a8c6a58f6ed16c1ae4cb654335dbe047242ff3baa",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "06806b393052a36c9f564a52d92e3c3af394675756ef3ee666dfcea0b664291f",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-moments-study",
+          "engine_version": "0.3.0-ssim-moments-study",
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "d4a142d3eb3c5570921688acf1e8912f3e02bb3438b4b845ba48ba6dcbf5e7fa",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 46,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 45,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 45,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 46,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 46,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 45,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 46,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 45,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 46,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 46,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 45,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 46,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 45,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 45,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 45,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 46,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 46,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 45,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 45,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 45,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 45,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 46
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "baseline",
+        "seconds": 26.2419,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 3922,
+        "evaluation": {
+          "psnr": 19.322803,
+          "ssim": 0.8377321
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 927141,
+        "first_progress_seconds": 3.0642,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 22,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 927141,
+        "ply_sha256": "52829f1faca0ef6a49d28e4b41a4131e6d7b9e6c67652c520478898b4893434b",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "2a01d427db44c79f0dc693797999c599e88933b180d542670afc8f0c5f680185",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "5b97a9914bcdc40ea4524110958e7cdea3c7bb330f60ec9fa8c8cafeda23eff1",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "1087389a56f048f320dd86eae36e8ff0409804c55f8e652a6b9e2d357da04a1f",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "17d79c60a382b8f816e65733c8f55ca31e43ee1f5715318d4f0e40187280a9b0",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-moments-study",
+          "engine_version": "0.3.0-ssim-moments-study",
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "d4a142d3eb3c5570921688acf1e8912f3e02bb3438b4b845ba48ba6dcbf5e7fa",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 46,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 45,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 45,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 46,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 46,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 45,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 46,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 45,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 46,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 46,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 45,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 46,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 45,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 45,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 45,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 46,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 46,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 45,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 45,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 45,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 45,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 46
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 1,
+        "repeat": 1,
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "variant": "candidate",
+        "seconds": 26.3295,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "gaussians": 3938,
+        "evaluation": {
+          "psnr": 19.285576,
+          "ssim": 0.83346856
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "exports": 1,
+        "export_bytes": 930917,
+        "first_progress_seconds": 3.0715,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 22,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_bytes": 930917,
+        "ply_sha256": "9fec835ed766aef8788de1573662c4c09c06c4642dcfa1f615003cdb054f222c",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "8e042db0c3098f21556cc5d9ac63a7b3912065c7fbfe75d02ae13076824d9048",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "e2806a3db0b8d0e61c49fe6e3751e0450388aa25453aa46c1990ae3899c672df",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "24f3e41afb6b0dd4dee4669e4607f383359b968163c71d5a3d8bfdef6dbc206c",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 1024,
+            "height": 667,
+            "sha256": "ef54703674e5eb31398009bfbd5d199b3c80ead4fa1789bf0c38d5415d0e62e7",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-tail-study",
+          "engine_version": "0.3.0-ssim-tail-study",
+          "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "d4a142d3eb3c5570921688acf1e8912f3e02bb3438b4b845ba48ba6dcbf5e7fa",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-d030b2157bef4e729dc7606a13845c83.jpg": 46,
+          "0002-0f65e210b731497ebec0e32eb9a29947.jpg": 45,
+          "0003-e26cc582aaf4417487bb58a9e638db16.jpg": 45,
+          "0004-b3eb4da6be68433e8e36cc89b01f60d2.jpg": 46,
+          "0005-ca30341f980148e9b9ead51f67f8db72.jpg": 46,
+          "0006-6a431c8da31a41cbbf48d68e130a8795.jpg": 45,
+          "0007-09ecd1d2cb204fc4a55f59f15e65b4ad.jpg": 46,
+          "0009-8ecfea7d4ee343cb94114b8608d09fc1.jpg": 45,
+          "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg": 46,
+          "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg": 46,
+          "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg": 45,
+          "0013-4255902de37d49e1867d81798d8399f7.jpg": 46,
+          "0014-44dffaee9557413ca251bd6b50221fe7.jpg": 45,
+          "0015-506681db8e634fe3bfe4ca862fa113b5.jpg": 45,
+          "0017-29d2820d78da431a9ae417b4484bce96.jpg": 45,
+          "0018-498fb3822bed4fc5a9bccc1339c38aab.jpg": 46,
+          "0019-9efb55df88a04ab688eef92f6ed918f1.jpg": 46,
+          "0020-007058f805204acca7390971f5b8c963.jpg": 45,
+          "0021-ace7c463ee144c90a3ffbf3234ba84a5.jpg": 45,
+          "0022-ac6f4c159df04d368a358dd4997ff411.jpg": 45,
+          "0023-d9130d0a5c0d43788e3f51a474a4db2e.jpg": 45,
+          "0025-4e947891805f4e808d4485b71e019539.jpg": 46
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 22
+      },
+      {
+        "scene_index": 2,
+        "repeat": 0,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "baseline",
+        "seconds": 15.2823,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 25870,
+        "evaluation": {
+          "psnr": 20.472925,
+          "ssim": 0.7844468
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 6106870,
+        "first_progress_seconds": 15.1819,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 84,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 6106870,
+        "ply_sha256": "3df9b6cfe23b2fa995fcf49776a92bf9365e89068d8c36f84bbfad5b0a40c147",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "03b3519d7f106ddb2ce56ecee7f44d9e197cef58d1234f1ba074817a035e19df",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "975067e3a6773c4e0e3f6f735dc4afc0b47774eae647eb3c024e16ec38b061d1",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "cd9267558bf5d281da1d41196895469e0d13fa3e3ec360124305429508866559",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "6b4b1864fece8d7be780bc7ce4590f9c525696f6bc924b6bb5455950d3193eaf",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "1bc909ccad462997628bb3e818f7fe7abd19ec86d240f24ff46b713dbe03b9e1",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "329797e49fa34a6429df3106007a1e3bb2987a1d56a09c4ede6cdcd3abfdbb4d",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "fe1defc736f18fc4593169b9c090c4216bca3019d24649e83198bf8aecb29bbf",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "ce827fbab822c83a4c1093f4b4b16b806072dd87962278d859bb9caf24920da0",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "790fcaa01b09fd7c551a1d3fdc9ddcd4c0bd78dfdf1563765ad2893dd09294d0",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "52dad827565f7ac7ea6150ff77b264ed3f986a8b21b1827a62b59120acb89bfe",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "c1d4b6cb9b663c32ac63d413459e4ee53e5813ac9bb9f596fa6c71ea97bf9fed",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "4624b5fe8f1e4ab875fae94cc30748d735db5b7ba099676066a29b230be74d05",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-moments-study",
+          "engine_version": "0.3.0-ssim-moments-study",
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "866067774a3aec628c7fea02f75c5c423d32cbcf4cf2d9cabf965818d74cc3c5",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 12,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 12,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 12,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 12,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 12,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 12,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 12,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 12,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 11,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 12,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 12,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 12,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 12,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 12,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 12,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 12,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 12,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 12,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 12,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 12,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 12,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 11,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 12,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 12,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 12,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 12,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 12,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 12,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 11,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 12,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 12,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 12,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 12,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 12,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 12,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 12,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 12,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 12,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 12,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 12,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 12,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 12,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 12,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 12,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 12,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 12,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 12,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 12,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 12,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 12,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 12,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 12,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 12,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 12,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 12,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 11,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 12,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 12,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 12,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 12,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 12,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 11,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 12,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 12,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 12,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 12,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 11,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 12,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 12,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 12,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 12,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 12,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 12,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 12,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 12,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 12,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 11,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 12,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 12,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 12,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 12,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 11,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 12,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 12
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 84
+      },
+      {
+        "scene_index": 2,
+        "repeat": 0,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "candidate",
+        "seconds": 15.2287,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 25828,
+        "evaluation": {
+          "psnr": 20.606424,
+          "ssim": 0.78491145
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 6096958,
+        "first_progress_seconds": 15.1331,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 84,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 6096958,
+        "ply_sha256": "6afabb2c1121816033115b1e580d0f44682adc5e2d8b619e0fbaad50653b2106",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "de98daaa92de2ce0d2ffdd69ab06fc86979ce36d17daa6737c76b64853f07bef",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "5a1eae1e7cd41fba5b34e9d3cb9757883d2d89ab88cff8a2726df3903b578d25",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "07f31d7d70c883698bebab4cf591f396dd50fa475d8f66e8a7a26bf4f998452c",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "6cfd071db94bccd6e7cd9674d03844ed8df61b4a83b40fcbdf194cba27d45233",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "04f5ac3b75f356c2bddec3cff93d05b31f681302e27ce5a20062487157cb1767",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "92a5ed24f25265435351bbf0c8562b6d03a8a950bf1635388fa9784d5a3c4e85",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "e80fb15977b05b76b95b4cb44060486e0b8020f7e1af61b755eea075650cfbf5",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "13324981adcdfdf874f0c1d0e54eb239b89547d7fdf23edfee0db2816edd59fd",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "f44eed6272eebbc3c47a107d852a070c596a13c6bdcdb0c35caa686a5341758a",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "2fe6370e7ffeed33cad7c1cbeda980dd47d5be0481bcb2b08a6b06164ca9081a",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "1ef9eae3adacefdd21ff7809416daa163543213ab44d7f494be061e68aeef6cb",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "04fa3222288517c04a81d42d3a99183dab09d0343168de65de221c27c3828ed0",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-tail-study",
+          "engine_version": "0.3.0-ssim-tail-study",
+          "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "866067774a3aec628c7fea02f75c5c423d32cbcf4cf2d9cabf965818d74cc3c5",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 12,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 12,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 12,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 12,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 12,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 12,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 12,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 12,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 11,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 12,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 12,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 12,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 12,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 12,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 12,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 12,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 12,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 12,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 12,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 12,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 12,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 11,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 12,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 12,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 12,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 12,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 12,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 12,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 11,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 12,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 12,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 12,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 12,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 12,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 12,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 12,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 12,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 12,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 12,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 12,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 12,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 12,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 12,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 12,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 12,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 12,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 12,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 12,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 12,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 12,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 12,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 12,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 12,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 12,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 12,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 11,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 12,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 12,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 12,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 12,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 12,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 11,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 12,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 12,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 12,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 12,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 11,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 12,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 12,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 12,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 12,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 12,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 12,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 12,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 12,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 12,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 11,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 12,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 12,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 12,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 12,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 11,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 12,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 12
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 84
+      },
+      {
+        "scene_index": 2,
+        "repeat": 1,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "candidate",
+        "seconds": 15.2421,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 25875,
+        "evaluation": {
+          "psnr": 20.43833,
+          "ssim": 0.78358173
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 6108050,
+        "first_progress_seconds": 15.1406,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 84,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 6108050,
+        "ply_sha256": "cd86a5995588177b35f257812161cb06621084a978e26fa3ecf9bf01e8ae7c68",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "39aa9e0bd756e7e7e14d2e9ee5c1bf9e8bb0273d73d34dc13420a8dc02acea92",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "1db3da198cc8fce18028d19dd507337baeb1ff95e3123601f47688ed960ff714",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "480b3209163cee70eb88ebeea9358016ea30a86f0b6dda1e3aa872c1a0cc5108",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "4bf8391241aab5b391e491519053feb9b5bdfbab0ad0100aacc381eccc23ac9d",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "15afb3efc0274aa077722b59ee537773e1db1303ec2ad55492cf74f8c4041bb3",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "4ef5e4826daad929583e4dcf66e606f9164993ee7102c57e55a1325a808b2411",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "033bdb9e968c72eac90327e2544bfd17cd95a83221ac25fd58fb6190cfc9a0a1",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "f60898b9cc36d558664f482f6291ace2fa167a4893db3c91ac73c4bafb17bd8f",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "3ceeb729fdf561bd404f959953c22139e34b0eb573a02c216a76e7e3dbc94442",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "688480818508a2d386d70a10c9856f4d77364a11a7b2f724480d1e0db5d2a4ca",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "60b61e052cee7b5656c55c6ce9382d757fe8d831970d84929d676a58fc8a2765",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "c9ee2c0c010b4313b57e4e9d6f36c23c0a9299ea15b614da7e80157e3fdb0217",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-tail-study",
+          "engine_version": "0.3.0-ssim-tail-study",
+          "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "866067774a3aec628c7fea02f75c5c423d32cbcf4cf2d9cabf965818d74cc3c5",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 12,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 12,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 12,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 12,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 12,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 12,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 12,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 12,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 11,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 12,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 12,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 12,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 12,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 12,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 12,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 12,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 12,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 12,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 12,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 12,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 12,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 11,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 12,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 12,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 12,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 12,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 12,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 12,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 11,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 12,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 12,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 12,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 12,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 12,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 12,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 12,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 12,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 12,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 12,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 12,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 12,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 12,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 12,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 12,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 12,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 12,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 12,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 12,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 12,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 12,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 12,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 12,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 12,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 12,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 12,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 11,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 12,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 12,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 12,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 12,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 12,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 11,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 12,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 12,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 12,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 12,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 11,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 12,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 12,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 12,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 12,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 12,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 12,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 12,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 12,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 12,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 11,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 12,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 12,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 12,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 12,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 11,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 12,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 12
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 84
+      },
+      {
+        "scene_index": 2,
+        "repeat": 1,
+        "source_job": "ae5482d0811e46c0bd7d77099158344f",
+        "variant": "baseline",
+        "seconds": 15.2693,
+        "adapter_sha256": "2bcab278a96a90899b1c1ea9eec43b492291c073f574c1de7f55ef02cada9d15",
+        "input_sha256": "1b57ee9a49b6693395e72ffa985ebda69bf0d714f9bcfd75793e575c52826383",
+        "gaussians": 25874,
+        "evaluation": {
+          "psnr": 20.606333,
+          "ssim": 0.78515345
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "exports": 1,
+        "export_bytes": 6107814,
+        "first_progress_seconds": 15.1689,
+        "reference_hits": 0,
+        "reference_misses": 1000,
+        "reference_cache_bytes": 0,
+        "reference_cache_entries": 0,
+        "reference_uncached_images": 84,
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_sha256": "07f61884117ae45b661f6d46841985d021693a8ef4a094139f75eba6722be60d",
+        "ply_bytes": 6107814,
+        "ply_sha256": "e5fd6bc3d94b8bc513c2ad68866f20f6da804b30edb0794c8596068666d2c5dd",
+        "evaluation_images": [
+          {
+            "name": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "02dd8aac4683e7a0d5ad67b701965f70c0be4c6f3cb0653458bbfe409f826abc",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e"
+          },
+          {
+            "name": "0008-0296b6fad6524c28bdf086827f716c93.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "0165ad953624173ea0bef0865e05515af0d72d9a7a2d995f32c4f46c1be69432",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded"
+          },
+          {
+            "name": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "1b7ebe2acee6055c7b260948318303ea05d18489bdc712e0b5df82959511ccbb",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55"
+          },
+          {
+            "name": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "61c9388a2c8997c0bded7307f3cfaecbcb5a0e998082634cdf518032b85f031d",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887"
+          },
+          {
+            "name": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "867e34469a6cdade2834a5f1dc472c6a3f5f52bc3caa56e2bdc691b4cf754b86",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770"
+          },
+          {
+            "name": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "9cecaf38ec07adb63b0e9ea83581dd44631e66ae3b450e6e28f494dc2a03a697",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218"
+          },
+          {
+            "name": "0048-a77505f3ae9c478d98024b69168783ac.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "789f15497916169962caf7d0b9c8721a0fb31255bb3c050013ae6e51cc8cd2b7",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba"
+          },
+          {
+            "name": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "0b13b90abfdd80786ab5b7b0a037cb2fcfe6315001e89f2f734fd48437afb60f",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a"
+          },
+          {
+            "name": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "ceaff4f985fd1beaa986e9c510914a2e80d6fe9a614e37513c6c59e38d2022bb",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd"
+          },
+          {
+            "name": "0072-f724da7448144cd3a72e269ad988e910.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "651bf37a16e346ad57b78bb04f1f731f36a347f98aefdd30e859cda1171d87ca",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874"
+          },
+          {
+            "name": "0080-2e64893a45de4f478831f4029c100eef.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "b06ac23dd34fd676222d906192e8d85cbe76fe678c175f3d8b9eb5ded42ccec7",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3"
+          },
+          {
+            "name": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+            "width": 626,
+            "height": 469,
+            "sha256": "9528c23753be15da9f4c39846ba8d85ed59b44d23cbee454393b84c81a281239",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103"
+          }
+        ],
+        "engine_identity": {
+          "engine": "Brush 0.3.0-ssim-moments-study",
+          "engine_version": "0.3.0-ssim-moments-study",
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "consumed_order_sha256": "866067774a3aec628c7fea02f75c5c423d32cbcf4cf2d9cabf965818d74cc3c5",
+        "consumed_images": 1000,
+        "per_image_counts": {
+          "0001-8fdfd0ebfa354d70bcaedb7b228e7006.jpg": 12,
+          "0002-13aeee5a47a2402780a95339ecafc52b.jpg": 12,
+          "0003-b47f6504297543449ade7b2e6da2c543.jpg": 12,
+          "0004-9d3388419ee745fe953f25b0766fcd13.jpg": 12,
+          "0005-c8d46a667d1444af928a260ff4e9811c.jpg": 12,
+          "0006-a6739b94defb47f086198ac258f5817c.jpg": 12,
+          "0007-1d11f1780549441789337d884a9fa414.jpg": 12,
+          "0009-33412eadc3704832bb4cc15a67a21db4.jpg": 12,
+          "0010-7e21f272397b446bbf10bc4b986fdb75.jpg": 11,
+          "0011-9a7c352166144e91bb64167613752875.jpg": 12,
+          "0012-33290b7c00124f57b9e287e233c79de1.jpg": 12,
+          "0013-0e82c37fc5ec4f6a8cc2ac7d6dce90b0.jpg": 12,
+          "0014-23db493c671a4dba85d9093c799c5480.jpg": 12,
+          "0015-acaa37813c234924b812d97cdc355e97.jpg": 12,
+          "0017-11b8cee7df25460381ce28b4195e849a.jpg": 12,
+          "0018-e9e0911f770640619bc7ed0bc19667d6.jpg": 12,
+          "0019-3cd353e50b35458792362b5729a942af.jpg": 12,
+          "0020-61d63bcad2764a8e83990e81346fcad3.jpg": 12,
+          "0021-70b58331712c488d93354aa45f45ef8d.jpg": 12,
+          "0022-4db4e8120a6a48e3853b4c10b071413b.jpg": 12,
+          "0023-32391201e403446fbd52b0f56b1d1cba.jpg": 12,
+          "0025-c08fa1e748b143468fa96bbab31cfbf2.jpg": 11,
+          "0026-b4e8debf82584324bb8c20a562ec9440.jpg": 12,
+          "0027-b1979c912dd0465bb349cd2ce1f90340.jpg": 12,
+          "0028-51d856789ec84bbeb47e15a329c62d62.jpg": 12,
+          "0029-0eef90d4b97a461e941b7a757cb3c1f8.jpg": 12,
+          "0030-bbb19a3432404284899ecf1c31fd261d.jpg": 12,
+          "0031-773c0e62a25845fdbe802e4f68727db7.jpg": 12,
+          "0033-ab4bd083f9e24dc8bb14d7e82a496468.jpg": 11,
+          "0034-ddc978ffc49646638075ee09bdc7b6fd.jpg": 12,
+          "0035-bd98a76598b14e36bfbf05bc81113ecb.jpg": 12,
+          "0036-60fe6e6f95934e768db45738aaed5743.jpg": 12,
+          "0037-0ec29521a1d946f5b8c182ce6fa9867f.jpg": 12,
+          "0038-da09d53d5717443ca692d6c31f141461.jpg": 12,
+          "0039-4279a3c605134c82a0ddbeed04da9763.jpg": 12,
+          "0041-d5540accfaa94593927168a8c699c8be.jpg": 12,
+          "0042-a4e5b8c9df2d450498354b097ced520a.jpg": 12,
+          "0043-4a791456088941eaa5e98548e11b5ad3.jpg": 12,
+          "0044-31e27424752c44159736d83b908ce5c3.jpg": 12,
+          "0045-23c09a4dc0a14818ba77d77b291ccd4a.jpg": 12,
+          "0046-ca8a23e930234016b014b22a9b36c248.jpg": 12,
+          "0047-795dab28fa624d7eafec0e5317980094.jpg": 12,
+          "0049-2f1576034c324397ae2aee0285afede8.jpg": 12,
+          "0050-c135a6f062ed4b25a83ef7a0eefad87d.jpg": 12,
+          "0051-05d2e2a7439c44af96ee249993a2ad8c.jpg": 12,
+          "0052-9879c0d9a575433989783d8ef3c5b1a3.jpg": 12,
+          "0053-c3dcc0004c28432d87b73f674296ca3e.jpg": 12,
+          "0054-d183f8a8312042f7bf043fd5c2c2eabd.jpg": 12,
+          "0055-65836bf730224f0f8635ff7770013e6a.jpg": 12,
+          "0057-eaae5a07d6ec4ef496542b4b5355b3e7.jpg": 12,
+          "0058-84bcd88f3f294a8384e2b03b9e859e94.jpg": 12,
+          "0059-e9f7d1cdd26f44b8a6ab3fee1d789524.jpg": 12,
+          "0060-4480a53853204a30bb723db05001c13e.jpg": 12,
+          "0061-f6d31483abfe409db5f298392c9d5c00.jpg": 12,
+          "0062-d85f1d3dc55a474887c9905874d5d15e.jpg": 12,
+          "0063-104166aafb374c3f9fcb0b8cb2c588d2.jpg": 11,
+          "0065-8aa74cd392bf431fa36e78c88d7bea8c.jpg": 12,
+          "0066-db7a8a6454d4482a8d7aca3f5e891621.jpg": 12,
+          "0067-dbcb3e90cb534119af5aadb86fdd4ee3.jpg": 12,
+          "0068-45c08f1db0204344804e75909363d3ef.jpg": 12,
+          "0069-928e6f4124d94862b1f8345ffdbc56e6.jpg": 12,
+          "0070-7434c7eb7cde4ea9ad66feb8a5533612.jpg": 11,
+          "0071-d84b72945adb4a7abf488b8bf84a6f61.jpg": 12,
+          "0073-583da10f606c4888834e452e818c6f21.jpg": 12,
+          "0074-336f2a6c53524a06a05f84b9f999d881.jpg": 12,
+          "0075-4f64daf8c84d4d8e8facbcb93e09e8f9.jpg": 12,
+          "0076-20ed9d5da6874a00bb1f7e16c812d2e6.jpg": 11,
+          "0077-7cc994aa8e90499f84f3b91b618ad601.jpg": 12,
+          "0078-6f3d4af0ecd7445c9bc1bd706af19771.jpg": 12,
+          "0079-9af81ac0f8434e77a8b493166aca01b6.jpg": 12,
+          "0081-b438622b63af4e97b832964f7441431e.jpg": 12,
+          "0082-b4389002e2ac431f81e4acf3b32439c1.jpg": 12,
+          "0083-af9f662ee49e4f9fb8bda118892b884d.jpg": 12,
+          "0084-6ccb2dc75f70461f82afe8ff528e0086.jpg": 12,
+          "0085-0be5619f19dd49f690d566d05564b142.jpg": 12,
+          "0086-5d93973e60d1471194128e4feda84985.jpg": 12,
+          "0087-bbfbeb09da904200908ebaccd1a1778a.jpg": 11,
+          "0089-a1467a062ce84f3595e4e339a617b2cb.jpg": 12,
+          "0090-dcf7c280053f4409ba3a194a89e3d032.jpg": 12,
+          "0091-5432bbf8590b4ed58de68624c56a2670.jpg": 12,
+          "0092-8d05f80f68474c84a4659bfaa529cadb.jpg": 12,
+          "0093-33506bbafa36437588470f3d72bd133e.jpg": 11,
+          "0094-7eedcb9e4d5d473b97eebadeb6d47364.jpg": 12,
+          "0095-62c6a796a08d415184809b4f1e1964c0.jpg": 12
+        },
+        "cache_hits": 0,
+        "cache_misses": 1000,
+        "cache_logical_bytes": 0,
+        "image_tensor_cache_budget_bytes": 0,
+        "reference_cache_budget_bytes": 0,
+        "cache_first_cycle_unique": 84
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 25.767049999999998,
+            "min": 25.2659,
+            "max": 26.2682
+          },
+          "gaussians": {
+            "mean": 2986,
+            "min": 2918,
+            "max": 3054
+          },
+          "psnr": {
+            "mean": 17.138735,
+            "min": 16.227333,
+            "max": 18.050137
+          },
+          "ssim": {
+            "mean": 0.7496449000000001,
+            "min": 0.7372431,
+            "max": 0.7620467
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 26.7658,
+            "min": 26.2716,
+            "max": 27.26
+          },
+          "gaussians": {
+            "mean": 2932.5,
+            "min": 2894,
+            "max": 2971
+          },
+          "psnr": {
+            "mean": 17.0646095,
+            "min": 16.864307,
+            "max": 17.264912
+          },
+          "ssim": {
+            "mean": 0.7454372,
+            "min": 0.7419269,
+            "max": 0.7489475
+          }
+        }
+      },
+      {
+        "scene_index": 1,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 26.287950000000002,
+            "min": 26.2419,
+            "max": 26.334
+          },
+          "gaussians": {
+            "mean": 3924.5,
+            "min": 3922,
+            "max": 3927
+          },
+          "psnr": {
+            "mean": 19.190438,
+            "min": 19.058073,
+            "max": 19.322803
+          },
+          "ssim": {
+            "mean": 0.8366047,
+            "min": 0.8354773,
+            "max": 0.8377321
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 26.3232,
+            "min": 26.3169,
+            "max": 26.3295
+          },
+          "gaussians": {
+            "mean": 3932.5,
+            "min": 3927,
+            "max": 3938
+          },
+          "psnr": {
+            "mean": 19.2153815,
+            "min": 19.145187,
+            "max": 19.285576
+          },
+          "ssim": {
+            "mean": 0.83282078,
+            "min": 0.832173,
+            "max": 0.83346856
+          }
+        }
+      },
+      {
+        "scene_index": 2,
+        "runs_per_variant": 2,
+        "baseline": {
+          "seconds": {
+            "mean": 15.2758,
+            "min": 15.2693,
+            "max": 15.2823
+          },
+          "gaussians": {
+            "mean": 25872,
+            "min": 25870,
+            "max": 25874
+          },
+          "psnr": {
+            "mean": 20.539628999999998,
+            "min": 20.472925,
+            "max": 20.606333
+          },
+          "ssim": {
+            "mean": 0.7848001250000001,
+            "min": 0.7844468,
+            "max": 0.78515345
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 15.2354,
+            "min": 15.2287,
+            "max": 15.2421
+          },
+          "gaussians": {
+            "mean": 25851.5,
+            "min": 25828,
+            "max": 25875
+          },
+          "psnr": {
+            "mean": 20.522377,
+            "min": 20.43833,
+            "max": 20.606424
+          },
+          "ssim": {
+            "mean": 0.78424659,
+            "min": 0.78358173,
+            "max": 0.78491145
+          }
+        }
+      }
+    ]
+  },
+  "aligned_comparisons": [
+    {
+      "comparison_size": 512,
+      "quick_job": "0-0-baseline",
+      "detail_job": "0-0-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 17.507895135141215,
+            "ssim": 0.695327877998352
+          },
+          "detail": {
+            "psnr": 19.82532412968162,
+            "ssim": 0.719668984413147
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 14.961487226565506,
+            "ssim": 0.6156225204467773
+          },
+          "detail": {
+            "psnr": 14.722850820142382,
+            "ssim": 0.6137474775314331
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 16.23469118085336,
+          "ssim": 0.6554751992225647
+        },
+        "detail": {
+          "psnr": 17.274087474912,
+          "ssim": 0.66670823097229
+        }
+      },
+      "scene_index": 0,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "0-1-baseline",
+      "detail_job": "0-1-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 19.07979728443508,
+            "ssim": 0.7236260771751404
+          },
+          "detail": {
+            "psnr": 19.56892587278218,
+            "ssim": 0.7204639315605164
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 17.043405855295013,
+            "ssim": 0.6456807255744934
+          },
+          "detail": {
+            "psnr": 14.179616934290092,
+            "ssim": 0.6054829955101013
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.061601569865047,
+          "ssim": 0.6846534013748169
+        },
+        "detail": {
+          "psnr": 16.874271403536135,
+          "ssim": 0.6629734635353088
+        }
+      },
+      "scene_index": 0,
+      "repeat": 1
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-0-baseline",
+      "detail_job": "1-0-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 21.08337422288774,
+            "ssim": 0.8002831339836121
+          },
+          "detail": {
+            "psnr": 19.925037724331006,
+            "ssim": 0.7905550599098206
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 20.25276034099289,
+            "ssim": 0.9042932987213135
+          },
+          "detail": {
+            "psnr": 21.85670456453464,
+            "ssim": 0.9128857254981995
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 15.588548807221947,
+            "ssim": 0.6942800879478455
+          },
+          "detail": {
+            "psnr": 15.261569464519791,
+            "ssim": 0.6857118606567383
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 19.27174600438557,
+            "ssim": 0.7447530627250671
+          },
+          "detail": {
+            "psnr": 19.48810906933432,
+            "ssim": 0.7407376170158386
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 19.049107343872038,
+          "ssim": 0.7859023958444595
+        },
+        "detail": {
+          "psnr": 19.132855205679938,
+          "ssim": 0.7824725657701492
+        }
+      },
+      "scene_index": 1,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "1-1-baseline",
+      "detail_job": "1-1-candidate",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 20.833052135900424,
+            "ssim": 0.8015385866165161
+          },
+          "detail": {
+            "psnr": 20.776053087880054,
+            "ssim": 0.7988900542259216
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 20.83833050292843,
+            "ssim": 0.9066874980926514
+          },
+          "detail": {
+            "psnr": 21.49284122378861,
+            "ssim": 0.9099404811859131
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 15.326930983473153,
+            "ssim": 0.6935502886772156
+          },
+          "detail": {
+            "psnr": 15.319768767903192,
+            "ssim": 0.6888665556907654
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 20.25014845742976,
+            "ssim": 0.7469632625579834
+          },
+          "detail": {
+            "psnr": 19.50804286423585,
+            "ssim": 0.7355564832687378
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 19.31211551993294,
+          "ssim": 0.7871849089860916
+        },
+        "detail": {
+          "psnr": 19.274176485951926,
+          "ssim": 0.7833133935928345
+        }
+      },
+      "scene_index": 1,
+      "repeat": 1
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "2-0-baseline",
+      "detail_job": "2-0-candidate",
+      "views": [
+        {
+          "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+          "quick": {
+            "psnr": 20.114984022243867,
+            "ssim": 0.7545351386070251
+          },
+          "detail": {
+            "psnr": 20.267608451948075,
+            "ssim": 0.7577179074287415
+          }
+        },
+        {
+          "view": "0008-0296b6fad6524c28bdf086827f716c93.png",
+          "quick": {
+            "psnr": 19.26149035975916,
+            "ssim": 0.7821351885795593
+          },
+          "detail": {
+            "psnr": 19.388517578879426,
+            "ssim": 0.7828673124313354
+          }
+        },
+        {
+          "view": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+          "quick": {
+            "psnr": 23.240910096627303,
+            "ssim": 0.8213629722595215
+          },
+          "detail": {
+            "psnr": 23.18388615019941,
+            "ssim": 0.818027138710022
+          }
+        },
+        {
+          "view": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+          "quick": {
+            "psnr": 18.218866300109276,
+            "ssim": 0.72635418176651
+          },
+          "detail": {
+            "psnr": 18.32433861953608,
+            "ssim": 0.7287331819534302
+          }
+        },
+        {
+          "view": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+          "quick": {
+            "psnr": 20.20576437485756,
+            "ssim": 0.7478818297386169
+          },
+          "detail": {
+            "psnr": 20.519670596114313,
+            "ssim": 0.7493833899497986
+          }
+        },
+        {
+          "view": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+          "quick": {
+            "psnr": 20.409660501085398,
+            "ssim": 0.758604884147644
+          },
+          "detail": {
+            "psnr": 20.35901757602381,
+            "ssim": 0.758815586566925
+          }
+        },
+        {
+          "view": "0048-a77505f3ae9c478d98024b69168783ac.png",
+          "quick": {
+            "psnr": 22.754840092618196,
+            "ssim": 0.8542277812957764
+          },
+          "detail": {
+            "psnr": 23.52888800010335,
+            "ssim": 0.8529629111289978
+          }
+        },
+        {
+          "view": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+          "quick": {
+            "psnr": 12.92377051860235,
+            "ssim": 0.6886646747589111
+          },
+          "detail": {
+            "psnr": 13.054208260895237,
+            "ssim": 0.6945388913154602
+          }
+        },
+        {
+          "view": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+          "quick": {
+            "psnr": 20.74671207504046,
+            "ssim": 0.7646611928939819
+          },
+          "detail": {
+            "psnr": 20.867336325813483,
+            "ssim": 0.7654791474342346
+          }
+        },
+        {
+          "view": "0072-f724da7448144cd3a72e269ad988e910.png",
+          "quick": {
+            "psnr": 19.30825754993461,
+            "ssim": 0.7484831213951111
+          },
+          "detail": {
+            "psnr": 19.666392020683123,
+            "ssim": 0.7470122575759888
+          }
+        },
+        {
+          "view": "0080-2e64893a45de4f478831f4029c100eef.png",
+          "quick": {
+            "psnr": 23.35347235055992,
+            "ssim": 0.8346251249313354
+          },
+          "detail": {
+            "psnr": 23.153940496638267,
+            "ssim": 0.835336446762085
+          }
+        },
+        {
+          "view": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+          "quick": {
+            "psnr": 25.126943680874145,
+            "ssim": 0.8512933254241943
+          },
+          "detail": {
+            "psnr": 24.944635623674692,
+            "ssim": 0.848670482635498
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 20.472139326859352,
+          "ssim": 0.7777357846498489
+        },
+        "detail": {
+          "psnr": 20.604869975042437,
+          "ssim": 0.7782953878243765
+        }
+      },
+      "scene_index": 2,
+      "repeat": 0
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "2-1-baseline",
+      "detail_job": "2-1-candidate",
+      "views": [
+        {
+          "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+          "quick": {
+            "psnr": 20.176094614579398,
+            "ssim": 0.755864143371582
+          },
+          "detail": {
+            "psnr": 20.262078046235246,
+            "ssim": 0.7592936158180237
+          }
+        },
+        {
+          "view": "0008-0296b6fad6524c28bdf086827f716c93.png",
+          "quick": {
+            "psnr": 19.52104677835283,
+            "ssim": 0.7815963625907898
+          },
+          "detail": {
+            "psnr": 19.10306562834879,
+            "ssim": 0.7823084592819214
+          }
+        },
+        {
+          "view": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+          "quick": {
+            "psnr": 23.29965353419847,
+            "ssim": 0.8196489214897156
+          },
+          "detail": {
+            "psnr": 23.24509487099283,
+            "ssim": 0.8193773627281189
+          }
+        },
+        {
+          "view": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+          "quick": {
+            "psnr": 18.13962577590468,
+            "ssim": 0.7288699746131897
+          },
+          "detail": {
+            "psnr": 18.376975919473214,
+            "ssim": 0.7298028469085693
+          }
+        },
+        {
+          "view": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+          "quick": {
+            "psnr": 20.205097048672428,
+            "ssim": 0.7461081743240356
+          },
+          "detail": {
+            "psnr": 20.30515108569018,
+            "ssim": 0.7452362179756165
+          }
+        },
+        {
+          "view": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+          "quick": {
+            "psnr": 20.557378879141876,
+            "ssim": 0.7595151662826538
+          },
+          "detail": {
+            "psnr": 20.26761254664231,
+            "ssim": 0.7578028440475464
+          }
+        },
+        {
+          "view": "0048-a77505f3ae9c478d98024b69168783ac.png",
+          "quick": {
+            "psnr": 23.36540373946132,
+            "ssim": 0.8579003810882568
+          },
+          "detail": {
+            "psnr": 23.11478715151734,
+            "ssim": 0.8521902561187744
+          }
+        },
+        {
+          "view": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+          "quick": {
+            "psnr": 13.660384838101429,
+            "ssim": 0.7005677223205566
+          },
+          "detail": {
+            "psnr": 12.607504051485703,
+            "ssim": 0.6920814514160156
+          }
+        },
+        {
+          "view": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+          "quick": {
+            "psnr": 20.50745063051447,
+            "ssim": 0.7585744261741638
+          },
+          "detail": {
+            "psnr": 20.517274465596806,
+            "ssim": 0.7610253095626831
+          }
+        },
+        {
+          "view": "0072-f724da7448144cd3a72e269ad988e910.png",
+          "quick": {
+            "psnr": 19.687851144046455,
+            "ssim": 0.7505135536193848
+          },
+          "detail": {
+            "psnr": 19.305605361073447,
+            "ssim": 0.7433658242225647
+          }
+        },
+        {
+          "view": "0080-2e64893a45de4f478831f4029c100eef.png",
+          "quick": {
+            "psnr": 23.08234599729879,
+            "ssim": 0.8352140784263611
+          },
+          "detail": {
+            "psnr": 23.44643727999091,
+            "ssim": 0.8363232016563416
+          }
+        },
+        {
+          "view": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+          "quick": {
+            "psnr": 25.053040526458172,
+            "ssim": 0.8477658033370972
+          },
+          "detail": {
+            "psnr": 24.68560917069951,
+            "ssim": 0.8454785943031311
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 20.604614458894194,
+          "ssim": 0.7785115589698156
+        },
+        "detail": {
+          "psnr": 20.43643296481219,
+          "ssim": 0.7770238320032755
+        }
+      },
+      "scene_index": 2,
+      "repeat": 1
+    }
+  ],
+  "summary": [
+    {
+      "scene": "pipes",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 25.767049999999998,
+          "min": 25.2659,
+          "max": 26.2682
+        },
+        "gaussians": {
+          "mean": 2986,
+          "min": 2918,
+          "max": 3054
+        },
+        "ply_bytes": {
+          "mean": 706245,
+          "min": 690197,
+          "max": 722293
+        },
+        "reference_cache_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 17.148146375359204,
+          "min": 16.23469118085336,
+          "max": 18.061601569865047
+        },
+        "ssim": {
+          "mean": 0.6700643002986908,
+          "min": 0.6554751992225647,
+          "max": 0.6846534013748169
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 26.7658,
+          "min": 26.2716,
+          "max": 27.26
+        },
+        "gaussians": {
+          "mean": 2932.5,
+          "min": 2894,
+          "max": 2971
+        },
+        "ply_bytes": {
+          "mean": 693619,
+          "min": 684533,
+          "max": 702705
+        },
+        "reference_cache_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 17.074179439224068,
+          "min": 16.874271403536135,
+          "max": 17.274087474912
+        },
+        "ssim": {
+          "mean": 0.6648408472537994,
+          "min": 0.6629734635353088,
+          "max": 0.66670823097229
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 26.287950000000002,
+          "min": 26.2419,
+          "max": 26.334
+        },
+        "gaussians": {
+          "mean": 3924.5,
+          "min": 3922,
+          "max": 3927
+        },
+        "ply_bytes": {
+          "mean": 927731,
+          "min": 927141,
+          "max": 928321
+        },
+        "reference_cache_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 19.18061143190249,
+          "min": 19.049107343872038,
+          "max": 19.31211551993294
+        },
+        "ssim": {
+          "mean": 0.7865436524152756,
+          "min": 0.7859023958444595,
+          "max": 0.7871849089860916
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 26.3232,
+          "min": 26.3169,
+          "max": 26.3295
+        },
+        "gaussians": {
+          "mean": 3932.5,
+          "min": 3927,
+          "max": 3938
+        },
+        "ply_bytes": {
+          "mean": 929619,
+          "min": 928321,
+          "max": 930917
+        },
+        "reference_cache_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 19.203515845815932,
+          "min": 19.132855205679938,
+          "max": 19.274176485951926
+        },
+        "ssim": {
+          "mean": 0.7828929796814919,
+          "min": 0.7824725657701492,
+          "max": 0.7833133935928345
+        }
+      }
+    },
+    {
+      "scene": "tum-desk",
+      "baseline": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 15.2758,
+          "min": 15.2693,
+          "max": 15.2823
+        },
+        "gaussians": {
+          "mean": 25872,
+          "min": 25870,
+          "max": 25874
+        },
+        "ply_bytes": {
+          "mean": 6107342,
+          "min": 6106870,
+          "max": 6107814
+        },
+        "reference_cache_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 20.538376892876773,
+          "min": 20.472139326859352,
+          "max": 20.604614458894194
+        },
+        "ssim": {
+          "mean": 0.7781236718098323,
+          "min": 0.7777357846498489,
+          "max": 0.7785115589698156
+        }
+      },
+      "candidate": {
+        "image_order_variants": 1,
+        "model_variants": 2,
+        "seconds": {
+          "mean": 15.2354,
+          "min": 15.2287,
+          "max": 15.2421
+        },
+        "gaussians": {
+          "mean": 25851.5,
+          "min": 25828,
+          "max": 25875
+        },
+        "ply_bytes": {
+          "mean": 6102504,
+          "min": 6096958,
+          "max": 6108050
+        },
+        "reference_cache_bytes": {
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "psnr": {
+          "mean": 20.520651469927316,
+          "min": 20.43643296481219,
+          "max": 20.604869975042437
+        },
+        "ssim": {
+          "mean": 0.777659609913826,
+          "min": 0.7770238320032755,
+          "max": 0.7782953878243765
+        }
+      }
+    }
+  ],
+  "fresh_sfm_seconds": null,
+  "end_to_end_seconds": null,
+  "timing_scope": "Serial adapter training/evaluation/export, reference-statistics caching disabled in both variants. Excludes SfM and input copy; OS and driver caches not flushed. Same instrumented binary in both variants.",
+  "quality_scope": "Frozen shared-camera geometry per scene, every eighth photo excluded from training but used in SfM; all scores recomputed at long edge 512. Two repeats do not establish general gains.",
+  "memory_scope": "Logical cached reference mean/variance tensor storage only; not allocator capacity or peak process/GPU memory.",
+  "research": {
+    "checked_date": "2026-10-25",
+    "references": [
+      {
+        "title": "SSIM: Image Quality Assessment: From Error Visibility to Structural Similarity",
+        "url": "https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf",
+        "use": "The local SSIM path uses separable 11x11 Gaussian statistics; this round checks the tensor layout before changing the loss."
+      },
+      {
+        "title": "CubeCL contiguous tensor implementation",
+        "url": "https://github.com/ArthurBrussee/cubecl/blob/43580a8c294f3a8140921c26f6378a12aef82881/crates/cubecl-std/src/tensor/contiguous.rs",
+        "use": "The packed contiguous copy chooses vector widths from shape and stride; the isolated fix also requires the total element count to be divisible by the selected width."
+      },
+      {
+        "title": "fused-ssim",
+        "url": "https://github.com/rahul-goel/fused-ssim",
+        "use": "Public fused kernels motivate keeping numerical layout tests separate from a Burn/Wgpu implementation change; no external kernel source copied."
+      },
+      {
+        "title": "Faster-GS",
+        "url": "https://fhahlbohm.github.io/faster-gaussian-splatting/",
+        "paper": "https://fhahlbohm.github.io/faster-gaussian-splatting/assets/hahlbohm2026fastergs.pdf",
+        "use": "Recent optimization results are not claimed here; this round keeps the same 3DGS settings and tests one copy-path defect."
+      }
+    ]
+  },
+  "diagnostics": {
+    "before_fix": "permuted HWC→CHW read/multiply failed for width 625 and 626; width626 reported 2 mismatches in the last vectorized tail. Upload and HWC multiply were exact. Separable blur repeat was exact for the synthetic probe.",
+    "after_fix": "Widths 624–628 all had zero mismatches; SSIM/gradient regression suite passed 6 tests. The unpadded TUM 626×469 photo probe now has zero map/gradient differences for second-moment caching and the uncached repeat.",
+    "fix": "When selecting a packed output vector width in cubecl-std, require total element count modulo vector width == 0. This is an isolated CubeCL source patch, not a change to photo dimensions or camera calibration.",
+    "scope": "The before/after component evidence identifies a tensor tail write defect in the locked CubeCL path. It does not prove every GPU shape is correct or that final 3DGS quality improves."
+  },
+  "validation": {
+    "component_regression_before": "failed intentionally at width625 with 3 mismatches; earlier width626 probe showed two mismatches",
+    "component_regression_after": "passed widths624,625,626,627,628 with zero mismatches",
+    "ssim_tests": "6 passed, 0 failed, 3 ignored; numeric and gradient cache tests passed",
+    "photo_probe_after": "TUM 626x469: second-moment and uncached-repeat map/gradient differences 0; variance cache retains ~3.3e-5 expected arithmetic difference",
+    "training_runs": 12,
+    "consumed_reference_records": 12000,
+    "complete_sh_degree": 3,
+    "aligned_cameras_and_reference_digests": true,
+    "browser": {
+      "loaded": [
+        "pipes baseline",
+        "pipes candidate",
+        "office baseline",
+        "office candidate",
+        "tum-desk baseline",
+        "tum-desk candidate"
+      ],
+      "dragged_walk": [
+        "pipes candidate",
+        "office candidate",
+        "tum-desk candidate"
+      ],
+      "console_errors": 0,
+      "console_warnings": 0,
+      "observations": "All short models load. Fine pipes, cables, text and desk details remain soft; out-of-coverage views still show stretched or floating fragments and holes."
+    }
+  },
+  "decision": "Adopt only the isolated CubeCL packed-copy tail fix for the experimental Brush build; do not change the production Brush binary or enable SSIM reference caching. The fix removes the identified uninitialized tail on 624–628 widths and makes the unpadded TUM component probe repeatable, but 1000-step photo scores are exploratory and do not establish final quality or speed improvement.",
+  "training_scope": "Three fixed scenes (ETH3D pipes, ETH3D office, TUM desk), 1000 steps, 1024 target long edge, 150000 budget, SH3, holdout every eighth image, fixed shared cameras; all 12 runs are exploratory short regressions. The app normally trains all photos.",
+  "screenshots": [
+    {
+      "scene": "pipes",
+      "variant": "baseline",
+      "repeat": 0,
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/116-ssim-tail-pipes-baseline.png",
+      "sha256": "715a3e85e77b031aa8e4ffc89ca497353d860c7d667c62460bd0a32df1c9dc68",
+      "width": 1024,
+      "height": 673,
+      "source": "Unmodified native evaluation PNG, first repeat first held-out view",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "pipes",
+      "variant": "candidate",
+      "repeat": 0,
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/117-ssim-tail-pipes-candidate.png",
+      "sha256": "f694e676f434981f7734c2bb4a1bba9ff8339e2f82436c323a62376f680a4879",
+      "width": 1024,
+      "height": 673,
+      "source": "Unmodified native evaluation PNG, first repeat first held-out view",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "office",
+      "variant": "baseline",
+      "repeat": 0,
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "path": "docs/screenshots/118-ssim-tail-office-baseline.png",
+      "sha256": "04944d45ad227a4e37674ebbd12989e50da063a1b58b63f37451863e888d2e33",
+      "width": 1024,
+      "height": 667,
+      "source": "Unmodified native evaluation PNG, first repeat first held-out view",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "office",
+      "variant": "candidate",
+      "repeat": 0,
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "path": "docs/screenshots/119-ssim-tail-office-candidate.png",
+      "sha256": "c5b3fc92017066cf10334fe1237183beddbfc5cf72cb30ba1c0498722181d66f",
+      "width": 1024,
+      "height": 667,
+      "source": "Unmodified native evaluation PNG, first repeat first held-out view",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "scene": "tum-desk",
+      "variant": "baseline",
+      "repeat": 0,
+      "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+      "path": "docs/screenshots/120-ssim-tail-tum-desk-baseline.png",
+      "sha256": "03b3519d7f106ddb2ce56ecee7f44d9e197cef58d1234f1ba074817a035e19df",
+      "width": 626,
+      "height": 469,
+      "source": "Unmodified native evaluation PNG, first repeat first held-out view",
+      "license": "CC BY 4.0"
+    },
+    {
+      "scene": "tum-desk",
+      "variant": "candidate",
+      "repeat": 0,
+      "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+      "path": "docs/screenshots/121-ssim-tail-tum-desk-candidate.png",
+      "sha256": "de98daaa92de2ce0d2ffdd69ab06fc86979ce36d17daa6737c76b64853f07bef",
+      "width": 626,
+      "height": 469,
+      "source": "Unmodified native evaluation PNG, first repeat first held-out view",
+      "license": "CC BY 4.0"
+    }
+  ]
+}

@@ -4,6 +4,12 @@
 
 ## 2026-10-25
 
+### SSIM输入尾部复制修复（实验）
+
+- 关键突破：把626×469异常缩小到锁定CubeCL连续复制的向量尾部；修复打包向量宽度必须整除总元素数后，624～628宽度全部无漏写，未填充的TUM组件探查恢复一致。
+- 组件回归、6项SSIM / 梯度测试、三场景12次短重建、完整SH3和浏览器拖动漫游通过；短训练没有一致画质或速度收益，正式Brush不替换，也没有修改照片或相机。保留修复前后证据与下一步长档复核。[基线](https://github.com/sakorman/web-scan/commit/7abc8f2) · [完整记录、补丁与截图](docs/SSIM-TAIL.md)
+- 参考[SSIM论文](https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf)、[CubeCL连续复制实现](https://github.com/ArthurBrussee/cubecl/blob/43580a8c294f3a8140921c26f6378a12aef82881/crates/cubecl-std/src/tensor/contiguous.rs)和[Faster-GS](https://fhahlbohm.github.io/faster-gaussian-splatting/)。只采用输入写入修复，不把短训练分数写成整体质量提升。
+
 ### 参考二阶矩与尺寸边界（实验）
 
 - 关键进展：改存参考二阶矩后，五组实拍 / 尺寸组合的SSIM图及预测梯度与原公式一致；同时查出626×469输入的局部重复性异常，原路径也会出现，补两列的组件对照恢复一致，根因尚待定位。

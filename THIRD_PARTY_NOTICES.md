@@ -48,6 +48,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/ssim-reference.patch` adds an optional bounded cache of frozen reference-image SSIM means/variances, image identity propagation, fallback/numerical tests and a component benchmark. It retains Apache-2.0 licensing and remains an experimental build; cited SSIM research and external fused kernels are not copied into the patch.
 
+`docs/benchmarks/ssim-tail.patch` records an experimental Brush build that includes the SSIM diagnostics and the input-layout regression. `docs/benchmarks/cubecl-contiguous-tail.patch` is a separate two-line change against CubeCL commit `43580a8c294f3a8140921c26f6378a12aef82881`; CubeCL is MIT OR Apache-2.0. Neither patch changes the official Brush binary or the default application.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.

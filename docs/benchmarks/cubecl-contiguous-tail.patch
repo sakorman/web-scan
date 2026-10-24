@@ -1,0 +1,13 @@
+diff --git a/crates/cubecl-std/src/tensor/contiguous.rs b/crates/cubecl-std/src/tensor/contiguous.rs
+index bbf33380..25a61f0f 100644
+--- a/crates/cubecl-std/src/tensor/contiguous.rs
++++ b/crates/cubecl-std/src/tensor/contiguous.rs
+@@ -228,6 +228,8 @@ pub fn into_contiguous_ref<R: Runtime, E: CubePrimitive>(
+         *R::supported_line_sizes()
+             .iter()
+             .filter(|it| num_elems_per_unit % **it as u32 == 0)
++            // Packed stores must cover every element, including the final partial thread.
++            .filter(|it| num_elems % **it as usize == 0)
+             .max()
+             .unwrap_or(&1)
+     };
