@@ -71,3 +71,5 @@ cargo test --manifest-path .tools/brush-order-study/Cargo.toml \
 真实照片仅切换 `WEBSCAN_BATCH_SSIM=0` / `1`。两组将 `WEBSCAN_SINGLE_LOADER`、`WEBSCAN_TRACE_LOADER`、`WEBSCAN_SEEDED_SAMPLING`、`WEBSCAN_STABLE_INIT`、`WEBSCAN_SEED_GPU`、`WEBSCAN_STABLE_REFINE` 设为1，其余此前实验开关及 `WEBSCAN_PROFILE_STAGES` 均设为0。CLI使用1000步、增长结束800步、最终评估1000步，其余沿用[固定参数](ADAM-EPSILON.md#取舍与复现)。
 
 本机资料在 `.data/benchmarks/ssim-batch-20261024/`；[公开JSON](benchmarks/ssim-batch.json)保存最终与排除的探查、原始微基准、数值误差、四次实拍结果及文件摘要。应用源码没有变化，标准CI检查后端、前端、类型与构建。补丁保留[Brush Apache-2.0许可](../THIRD_PARTY_NOTICES.md#brush-loading-experiment)，照片和渲染保留[ETH3D署名及许可](../THIRD_PARTY_NOTICES.md#test-dataset)。
+
+后续改为复用固定参考图统计量，三场景训练耗时有所下降，画质与默认档仍待复核。[参考统计缓存](SSIM-REFERENCE.md)

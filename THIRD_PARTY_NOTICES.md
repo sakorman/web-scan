@@ -46,6 +46,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/ssim-batch.patch` adds optional batching of SSIM moments using existing Burn convolutions, numerical/gradient regression checks and a component benchmark. It retains Apache-2.0 licensing. The original execution path remains available; fused-ssim and Faster-GS are references only, with no source code copied from those projects.
 
+`docs/benchmarks/ssim-reference.patch` adds an optional bounded cache of frozen reference-image SSIM means/variances, image identity propagation, fallback/numerical tests and a component benchmark. It retains Apache-2.0 licensing and remains an experimental build; cited SSIM research and external fused kernels are not copied into the patch.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.

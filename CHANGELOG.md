@@ -4,7 +4,13 @@
 
 ## 2026-10-24
 
-### SSIM统计合批（未采用）
+### 复用SSIM参考统计量（实验）
+
+- 关键进展：固定3000步、512像素，三场景12次对照的训练、评估与导出平均少约2秒，降幅约5%～9%。参考照片的均值和方差按图像路径及尺寸缓存，256 MiB上限外回到原计算；本轮缓存数据为47～252 MiB。
+- 数值 / 梯度、容量和需梯度参考图回退检查通过，完整SH3及浏览器漫游正常。pipes平均SSIM略降，尚未确认质量不退化；保留实验开关，先验证默认质量档，再决定替换正式引擎。[基线](https://github.com/sakorman/web-scan/commit/088494e) · [数据、截图与代价](docs/SSIM-REFERENCE.md)
+- 参考[SSIM原论文](https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf)、[fused-ssim](https://github.com/rahul-goel/fused-ssim)和[Faster-GS](https://github.com/nerficg-project/faster-gaussian-splatting)。本轮复用固定参考项，未移植CUDA或MPS融合内核。
+
+### SSIM统计合批（未采用） · [088494e](https://github.com/sakorman/web-scan/commit/088494e)
 
 - 关键结论：五组统计量合成两批后，数值和梯度检查通过，但Metal组件计时中位数慢了13.1%～15.4%，不启用默认。前向高层卷积调用减少，不等于底层执行更快。
 - 保留原始基线运算顺序，排除早期重排基线的探查。3项测试、release构建、四次真实照片短重建与浏览器漫游检查通过；取消无收益的长训练对照，正式引擎和历史模型保留。[基线](https://github.com/sakorman/web-scan/commit/46703c9) · [数据、截图与局限](docs/SSIM-BATCH.md)
