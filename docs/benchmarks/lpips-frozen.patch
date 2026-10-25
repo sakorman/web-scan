@@ -1,0 +1,159 @@
+diff --git a/crates/lpips/src/lib.rs b/crates/lpips/src/lib.rs
+--- a/crates/lpips/src/lib.rs
++++ b/crates/lpips/src/lib.rs
+@@ -76,7 +76,7 @@
+ }
+ 
+ impl<B: Backend> LpipsModel<B> {
+-    /// Calculate the lpips. Imgs are in NCHW order. Inputs should be 0-1 normalised.
++    /// Calculate LPIPS from NHWC images normalised to 0-1.
+     pub fn lpips(&self, imgs_a: Tensor<B, 4>, imgs_b: Tensor<B, 4>) -> Tensor<B, 1> {
+         let device = imgs_a.device();
+ 
+@@ -159,11 +159,15 @@
+     #[allow(clippy::large_include_file)]
+     let bytes = include_bytes!("../burn_mapped.bin");
+ 
+-    model.load_record(
+-        BinBytesRecorder::<HalfPrecisionSettings, &[u8]>::default()
+-            .load(bytes, device)
+-            .expect("Should decode state successfully"),
+-    )
++    model
++        .load_record(
++            BinBytesRecorder::<HalfPrecisionSettings, &[u8]>::default()
++                .load(bytes, device)
++                .expect("Should decode state successfully"),
++        )
++        // LPIPS is a fixed perceptual metric. Keep input gradients, but never compute
++        // VGG or scoring-head weight gradients during Gaussian optimization.
++        .no_grad()
+ }
+ 
+ #[cfg(test)]
+@@ -183,6 +187,113 @@
+         Tensor::from_data(data, device)
+     }
+ 
++    fn parameters<B: Backend>(model: &super::LpipsModel<B>) -> Vec<Tensor<B, 4>> {
++        model
++            .blocks
++            .iter()
++            .flat_map(|block| block.convs.iter().map(|conv| conv.weight.val()))
++            .chain(model.heads.iter().map(|head| head.weight.val()))
++            .collect()
++    }
++
++    #[test]
++    fn pretrained_parameters_are_frozen() {
++        type Diff = burn::backend::Autodiff<Wgpu>;
++        let device = WgpuDevice::default();
++        let model = load_vgg_lpips::<Diff>(&device);
++        let tracked = parameters(&model)
++            .iter()
++            .filter(|p| p.is_require_grad())
++            .count();
++        println!("WS_LPIPS_PARAMETERS {} {tracked}", parameters(&model).len());
++        assert_eq!(
++            tracked, 0,
++            "Pretrained LPIPS weights must not accumulate gradients"
++        );
++        for block in &model.blocks {
++            for conv in &block.convs {
++                assert!(!conv.bias.as_ref().unwrap().val().is_require_grad());
++            }
++        }
++    }
++
++    struct Trainable;
++    impl<B: Backend> burn::module::ModuleMapper<B> for Trainable {
++        fn map_float<const D: usize>(
++            &mut self,
++            _: burn::module::ParamId,
++            tensor: Tensor<B, D>,
++        ) -> Tensor<B, D> {
++            tensor.set_require_grad(true)
++        }
++    }
++
++    #[test]
++    fn freezing_preserves_scores_and_input_gradients() {
++        use burn::module::Module;
++        type Diff = burn::backend::Autodiff<Wgpu>;
++        let device = WgpuDevice::default();
++        let frozen_model = load_vgg_lpips::<Diff>(&device);
++        let shape = [1, 32, 48, 3];
++        let count = shape.iter().product::<usize>();
++        for offset in [0.3, 0.7] {
++            let mut results = vec![];
++            for frozen in [false, true] {
++                let model = if frozen {
++                    frozen_model.clone()
++                } else {
++                    frozen_model.clone().map(&mut Trainable)
++                };
++                let input = |shift: f32| {
++                    let data: Vec<f32> = (0..count)
++                        .map(|i| ((i as f32 * 0.017 + shift).sin() + 1.0) * 0.5)
++                        .collect();
++                    Tensor::<Diff, 1>::from_floats(data.as_slice(), &device).reshape(shape)
++                };
++                let prediction = input(offset).require_grad();
++                let reference = input(1.3);
++                let score = model.lpips(prediction.clone(), reference.clone());
++                let value = score.clone().inner().into_scalar();
++                let gradients = score.backward();
++                assert!(reference.grad(&gradients).is_none());
++                let input_gradient = prediction
++                    .grad(&gradients)
++                    .unwrap()
++                    .into_data()
++                    .into_vec::<f32>()
++                    .unwrap();
++                assert!(input_gradient.iter().all(|v| v.is_finite()));
++                assert!(input_gradient.iter().any(|v| v.abs() > 1e-8));
++                let weight_gradients = parameters(&model)
++                    .iter()
++                    .filter(|w| w.grad(&gradients).is_some())
++                    .count();
++                assert_eq!(weight_gradients, if frozen { 0 } else { 18 });
++                for block in &model.blocks {
++                    for conv in &block.convs {
++                        assert_eq!(
++                            conv.bias.as_ref().unwrap().val().grad(&gradients).is_none(),
++                            frozen
++                        );
++                    }
++                }
++                println!(
++                    "WS_LPIPS_FROZEN {offset} {frozen} score={value} weight_gradients={weight_gradients}"
++                );
++                results.push((value, input_gradient));
++            }
++            let score_error = (results[0].0 - results[1].0).abs();
++            let gradient_error = results[0]
++                .1
++                .iter()
++                .zip(&results[1].1)
++                .map(|(a, b)| (a - b).abs())
++                .fold(0.0_f32, f32::max);
++            println!("WS_LPIPS_EQUIVALENCE {offset} {score_error} {gradient_error}");
++            assert!(score_error < 1e-5 && gradient_error < 1e-5);
++        }
++    }
++
+     #[test]
+     fn test_result() -> Result<(), Box<dyn std::error::Error>> {
+         let device = WgpuDevice::default();
+diff --git a/crates/brush-cli/src/lib.rs b/crates/brush-cli/src/lib.rs
+--- a/crates/brush-cli/src/lib.rs
++++ b/crates/brush-cli/src/lib.rs
+@@ -11,7 +11,7 @@
+ #[derive(Parser)]
+ #[command(
+     author,
+-    version = "0.3.0-ssim-tail-study",
++    version = "0.3.0-lpips-frozen-study",
+     arg_required_else_help = false,
+     about = "Brush - universal splats"
+ )]

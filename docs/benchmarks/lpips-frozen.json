@@ -1,0 +1,896 @@
+{
+  "plan": {
+    "date": "2026-10-26",
+    "baseline_commit": "c7d2a2b439b8bfe4df323126c971167081ce881c",
+    "hypothesis": "LPIPS pretrained VGG/linear parameters require gradients despite never being optimized. Freeze network parameters while preserving differentiation with respect to predicted RGB; test whether unnecessary weight-gradient convolutions cause the observed BufferTooBig.",
+    "change": "Only freeze model parameters after loading pretrained LPIPS; unchanged reference photos, prediction sizes and loss formula/weights.",
+    "preconditions": "GPU regression must show parameters frozen, prediction gradients nonzero and matching the trainable-weights reference, no reference gradients.",
+    "plan": "Fail-first parameter regression, forward/input-gradient equivalence, then four 128px pipes runs (old/new/new/old, 500 steps, LPIPS0.01) and two 512px frozen-network runs (pipes/office,500 steps,LPIPS0.01). Reuse saved 512 failure rather than rerunning same oversized allocation.",
+    "acceptance": "Same pretrained weights and numerical agreement before photo training; valid full SH3 and held-out renders at512 without BufferTooBig. No final-quality/default-weight change from a500-step feasibility test.",
+    "sources": {
+      "6ae86afe0c9d4a0592c2f94bcd2f89f1": ".data/jobs/6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "98a93d1c6a824661974c57a21fc391d7": ".data/jobs/98a93d1c6a824661974c57a21fc391d7"
+    },
+    "measurement": "Serial GPU, new processes, same source images/cameras/holdout and flags. Wall time includes engine identity/training/evaluation/export. Kernel/OS caches not flushed, no new SfM/API end-to-end/peak-memory measurement."
+  },
+  "build": {
+    "upstream_commit": "3edecbb2fe79d3e2c87eeab85b15e0b1dd10d486",
+    "cubecl_commit": "43580a8c294f3a8140921c26f6378a12aef82881",
+    "hardware": "Apple M5 / 32 GiB",
+    "backend": "Wgpu/Metal",
+    "old_engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+    "weight_file": "crates/lpips/burn_mapped.bin",
+    "weight_sha256": "abb257f9aa223154f3ed476674dbfc0b6daee5b2e07618bd208918ee9600e2e7",
+    "weight_bytes": 29433386,
+    "cargo_lock_sha256": "c61c2076f9849df4825273ac40057cea6d6c1bd9cbd7e57e09f9e3c134eb1dc7",
+    "same_dependency_overlay_as": "docs/benchmarks/ssim-tail-brush-deps.patch and docs/benchmarks/ssim-tail-cubecl-deps.patch",
+    "official_engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "incremental_patch_sha256": "6482cf0e2cbfa21645efc65054ba9419455a065740b73e287c0958b9fb176b48",
+    "source_diff_sha256": "7da7e495641a6239a034d8eaf601f3db0c200d96e3b18d62c4795269e49b7755",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+    "version": "brush-cli 0.3.0-lpips-frozen-study",
+    "build_command": "cargo build --locked --offline --release --bin brush_app -j 4",
+    "reproduction": {
+      "clean_checkouts": true,
+      "brush_source_diff_matches_compiled": true,
+      "cubecl_source_diff_matches_compiled": true,
+      "lock_matches_compiled": true,
+      "same_512_failure_inputs": true
+    },
+    "patch_base": "Brush v0.3.0 plus ssim-tail.patch and both dependency overlays; incremental lpips-frozen.patch"
+  },
+  "raw_runs": {
+    "plan": {
+      "date": "2026-10-26",
+      "baseline_commit": "c7d2a2b439b8bfe4df323126c971167081ce881c",
+      "hypothesis": "LPIPS pretrained VGG/linear parameters require gradients despite never being optimized. Freeze network parameters while preserving differentiation with respect to predicted RGB; test whether unnecessary weight-gradient convolutions cause the observed BufferTooBig.",
+      "change": "Only freeze model parameters after loading pretrained LPIPS; unchanged reference photos, prediction sizes and loss formula/weights.",
+      "preconditions": "GPU regression must show parameters frozen, prediction gradients nonzero and matching the trainable-weights reference, no reference gradients.",
+      "plan": "Fail-first parameter regression, forward/input-gradient equivalence, then four 128px pipes runs (old/new/new/old, 500 steps, LPIPS0.01) and two 512px frozen-network runs (pipes/office,500 steps,LPIPS0.01). Reuse saved 512 failure rather than rerunning same oversized allocation.",
+      "acceptance": "Same pretrained weights and numerical agreement before photo training; valid full SH3 and held-out renders at512 without BufferTooBig. No final-quality/default-weight change from a500-step feasibility test.",
+      "sources": {
+        "6ae86afe0c9d4a0592c2f94bcd2f89f1": ".data/jobs/6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "98a93d1c6a824661974c57a21fc391d7": ".data/jobs/98a93d1c6a824661974c57a21fc391d7"
+      },
+      "measurement": "Serial GPU, new processes, same source images/cameras/holdout and flags. Wall time includes engine identity/training/evaluation/export. Kernel/OS caches not flushed, no new SfM/API end-to-end/peak-memory measurement."
+    },
+    "adapter_sha256": "ee9794d000291b5ea6684479c5d8413e647f68ba59ef8a82e304461055ec939f",
+    "engine_sha256": {
+      "baseline": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+      "candidate": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b"
+    },
+    "runs": [
+      {
+        "key": "pipes-128-0-baseline",
+        "scene": "pipes",
+        "resolution": 128,
+        "repeat": 0,
+        "variant": "baseline",
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "config": {
+          "steps": 500,
+          "max_points": 150000,
+          "resolution": 128,
+          "evaluation_mode": "holdout",
+          "backend": "brush"
+        },
+        "lpips_weight": 0.01,
+        "status": "succeeded",
+        "seconds": 56.4864,
+        "gaussians": 2307,
+        "ply_bytes": 546001,
+        "evaluation": {
+          "psnr": 17.15853,
+          "ssim": 0.65321004
+        },
+        "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_sha256": "89851ac6d4ee03622bddade1997503851dfd097746ed8c597e06648f4363ff6d",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "0ed3157e91bb9ded8591e29343b255397ed1eb287712f5d9909655b64332c575",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "d6fb66699b2252dfc0c84ceabd81da3bb9c5199982e0ec4c242a5dc9177b6417",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "consumed_images": 500,
+        "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+        "engine_version": "0.3.0-ssim-tail-study",
+        "autotune_messages": 0,
+        "aligned_scores": {
+          "long_edge": 128,
+          "views": [
+            {
+              "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 18.60118832814062,
+              "ssim": 0.6779595613479614
+            },
+            {
+              "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 15.259128174199954,
+              "ssim": 0.5179287195205688
+            }
+          ],
+          "mean": {
+            "psnr": 16.930158251170287,
+            "ssim": 0.5979441404342651
+          }
+        }
+      },
+      {
+        "key": "pipes-128-0-candidate",
+        "scene": "pipes",
+        "resolution": 128,
+        "repeat": 0,
+        "variant": "candidate",
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "config": {
+          "steps": 500,
+          "max_points": 150000,
+          "resolution": 128,
+          "evaluation_mode": "holdout",
+          "backend": "brush"
+        },
+        "lpips_weight": 0.01,
+        "status": "succeeded",
+        "seconds": 38.3272,
+        "gaussians": 2300,
+        "ply_bytes": 544349,
+        "evaluation": {
+          "psnr": 18.04392,
+          "ssim": 0.6596551
+        },
+        "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_sha256": "dbbd0b2fb6223a8c6e394c2b288d1f26f3934a149abc187a7c5973f7f1372b06",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "3f833c278c78caf1a0cb9e363e305db5bfeafa8989a4d72394578f30025f665a",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "4bbe049c97bc334cda1b3c03ba58fd3c8ff3ae7733833952070af210ff0297a9",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "consumed_images": 500,
+        "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+        "engine_version": "0.3.0-lpips-frozen-study",
+        "autotune_messages": 6,
+        "aligned_scores": {
+          "long_edge": 128,
+          "views": [
+            {
+              "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 19.48585429541177,
+              "ssim": 0.6756764054298401
+            },
+            {
+              "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 16.01880144273217,
+              "ssim": 0.5097211599349976
+            }
+          ],
+          "mean": {
+            "psnr": 17.75232786907197,
+            "ssim": 0.5926987826824188
+          }
+        }
+      },
+      {
+        "key": "pipes-128-1-candidate",
+        "scene": "pipes",
+        "resolution": 128,
+        "repeat": 1,
+        "variant": "candidate",
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "config": {
+          "steps": 500,
+          "max_points": 150000,
+          "resolution": 128,
+          "evaluation_mode": "holdout",
+          "backend": "brush"
+        },
+        "lpips_weight": 0.01,
+        "status": "succeeded",
+        "seconds": 36.332,
+        "gaussians": 2318,
+        "ply_bytes": 548597,
+        "evaluation": {
+          "psnr": 15.998541,
+          "ssim": 0.6230266
+        },
+        "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_sha256": "d9b5e0a05104d508ab9fa0d53a15caaa44d652e309c0b51658786f041b986edd",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "edb081247e62967c576185d8a370f89115d6b6fce13207877db26628c742ca6b",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "7ccad8d69c67f14bc9f49ed7d184dbf9d3dba72f3a367adf8a91572f07a973c8",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "consumed_images": 500,
+        "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+        "engine_version": "0.3.0-lpips-frozen-study",
+        "autotune_messages": 0,
+        "aligned_scores": {
+          "long_edge": 128,
+          "views": [
+            {
+              "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 15.467084745881161,
+              "ssim": 0.6286737322807312
+            },
+            {
+              "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 16.14492857641761,
+              "ssim": 0.4993027448654175
+            }
+          ],
+          "mean": {
+            "psnr": 15.806006661149386,
+            "ssim": 0.5639882385730743
+          }
+        }
+      },
+      {
+        "key": "pipes-128-1-baseline",
+        "scene": "pipes",
+        "resolution": 128,
+        "repeat": 1,
+        "variant": "baseline",
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "config": {
+          "steps": 500,
+          "max_points": 150000,
+          "resolution": 128,
+          "evaluation_mode": "holdout",
+          "backend": "brush"
+        },
+        "lpips_weight": 0.01,
+        "status": "succeeded",
+        "seconds": 56.379,
+        "gaussians": 2306,
+        "ply_bytes": 545765,
+        "evaluation": {
+          "psnr": 17.809587,
+          "ssim": 0.66552746
+        },
+        "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_sha256": "d7dfd968b923a6c0e52f9790a3cff9f1cf2d782da6bb227f3734346453764de7",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "b7e5d3761f761fc2b007e11ec05fc8ad132f43fd14b72812a347693fbf762e42",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 128,
+            "height": 84,
+            "sha256": "49b232046467dc049457fd5bfa0b77a494b6d0109cbc0660557d31a393dc1f4a",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "consumed_images": 500,
+        "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+        "engine_version": "0.3.0-ssim-tail-study",
+        "autotune_messages": 0,
+        "aligned_scores": {
+          "long_edge": 128,
+          "views": [
+            {
+              "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 19.03710579210974,
+              "ssim": 0.6897149682044983
+            },
+            {
+              "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+              "width": 128,
+              "height": 84,
+              "psnr": 16.078664782177338,
+              "ssim": 0.5272572040557861
+            }
+          ],
+          "mean": {
+            "psnr": 17.55788528714354,
+            "ssim": 0.6084860861301422
+          }
+        }
+      },
+      {
+        "key": "pipes-512-0-candidate",
+        "scene": "pipes",
+        "resolution": 512,
+        "repeat": 0,
+        "variant": "candidate",
+        "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+        "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+        "config": {
+          "steps": 500,
+          "max_points": 150000,
+          "resolution": 512,
+          "evaluation_mode": "holdout",
+          "backend": "brush"
+        },
+        "lpips_weight": 0.01,
+        "status": "succeeded",
+        "seconds": 358.0272,
+        "gaussians": 2321,
+        "ply_bytes": 549305,
+        "evaluation": {
+          "psnr": 14.396444,
+          "ssim": 0.6375625
+        },
+        "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+        "ply_sha256": "2b50837d406bdbffe4c0710cdd05553721aed7bc3182d87ed3f6d43e5f861bcb",
+        "evaluation_images": [
+          {
+            "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "c4c1aa1df81fd345f789edd9f24cb8e4312825fc87b1e0fd118db9eb4bc08e71",
+            "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+          },
+          {
+            "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+            "width": 512,
+            "height": 336,
+            "sha256": "09c0b87d85a35381d89b2b42bd15f60c464dadfcdc99cdd0187a8bbc3c07a27a",
+            "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+          }
+        ],
+        "consumed_images": 500,
+        "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+        "engine_version": "0.3.0-lpips-frozen-study",
+        "autotune_messages": 18,
+        "aligned_scores": {
+          "long_edge": 512,
+          "views": [
+            {
+              "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+              "width": 512,
+              "height": 336,
+              "psnr": 13.652709594378095,
+              "ssim": 0.616207480430603
+            },
+            {
+              "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+              "width": 512,
+              "height": 336,
+              "psnr": 14.999895122597177,
+              "ssim": 0.6117269396781921
+            }
+          ],
+          "mean": {
+            "psnr": 14.326302358487636,
+            "ssim": 0.6139672100543976
+          }
+        }
+      },
+      {
+        "key": "office-512-0-candidate",
+        "scene": "office",
+        "resolution": 512,
+        "repeat": 0,
+        "variant": "candidate",
+        "source_job": "98a93d1c6a824661974c57a21fc391d7",
+        "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+        "config": {
+          "steps": 500,
+          "max_points": 150000,
+          "resolution": 512,
+          "evaluation_mode": "holdout",
+          "backend": "brush"
+        },
+        "lpips_weight": 0.01,
+        "status": "succeeded",
+        "seconds": 333.0836,
+        "gaussians": 3067,
+        "ply_bytes": 725361,
+        "evaluation": {
+          "psnr": 17.329634,
+          "ssim": 0.7528879
+        },
+        "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "training_views": 22,
+        "evaluation_views": 4,
+        "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+        "ply_sha256": "2136a02cd616aca440ae5ccbcc92e9eb81a85d9e611bbbfa93919cfebee40962",
+        "evaluation_images": [
+          {
+            "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "058937bc6941cead79e904777a80fccbb25241eadaca718c631b183751ff4bc4",
+            "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+          },
+          {
+            "name": "0008-1c6da61406eb4744893572435799058c.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "65d5eb8c3183992ba0b95ed08792b098e3d3632dce89a94e129eb42de5bc4062",
+            "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+          },
+          {
+            "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "39bb5fb38b71a5fde45b00f96b0f07cb24e08f99433e678a987cdf1c09ddd542",
+            "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+          },
+          {
+            "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+            "width": 512,
+            "height": 333,
+            "sha256": "54af041fb220814374b8d42376f209246449dbcaf42a0f2707aa813286233b40",
+            "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+          }
+        ],
+        "consumed_images": 500,
+        "consumed_order_sha256": "ae10a4619c1ea4a5269eed06c421e329c9a0732e930e32b73c2b043ed7f78a42",
+        "engine_version": "0.3.0-lpips-frozen-study",
+        "autotune_messages": 9,
+        "aligned_scores": {
+          "long_edge": 512,
+          "views": [
+            {
+              "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+              "width": 512,
+              "height": 333,
+              "psnr": 18.05770856072144,
+              "ssim": 0.7348359823226929
+            },
+            {
+              "view": "0008-1c6da61406eb4744893572435799058c.png",
+              "width": 512,
+              "height": 333,
+              "psnr": 20.427729064720737,
+              "ssim": 0.9055542349815369
+            },
+            {
+              "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+              "width": 512,
+              "height": 333,
+              "psnr": 13.575937780913858,
+              "ssim": 0.6170161962509155
+            },
+            {
+              "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+              "width": 512,
+              "height": 333,
+              "psnr": 16.913194383389516,
+              "ssim": 0.6880547404289246
+            }
+          ],
+          "mean": {
+            "psnr": 17.243642447436386,
+            "ssim": 0.7363652884960175
+          }
+        }
+      }
+    ]
+  },
+  "aligned_comparisons_128": [
+    {
+      "comparison_size": 128,
+      "quick_job": "pipes-128-0-baseline",
+      "detail_job": "pipes-128-0-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 18.60118832814062,
+            "ssim": 0.6779595613479614
+          },
+          "detail": {
+            "psnr": 19.48585429541177,
+            "ssim": 0.6756764054298401
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 15.259128174199954,
+            "ssim": 0.5179287195205688
+          },
+          "detail": {
+            "psnr": 16.01880144273217,
+            "ssim": 0.5097211599349976
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 16.930158251170287,
+          "ssim": 0.5979441404342651
+        },
+        "detail": {
+          "psnr": 17.75232786907197,
+          "ssim": 0.5926987826824188
+        }
+      }
+    },
+    {
+      "comparison_size": 128,
+      "quick_job": "pipes-128-1-baseline",
+      "detail_job": "pipes-128-1-candidate",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 19.03710579210974,
+            "ssim": 0.6897149682044983
+          },
+          "detail": {
+            "psnr": 15.467084745881161,
+            "ssim": 0.6286737322807312
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 16.078664782177338,
+            "ssim": 0.5272572040557861
+          },
+          "detail": {
+            "psnr": 16.14492857641761,
+            "ssim": 0.4993027448654175
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 17.55788528714354,
+          "ssim": 0.6084860861301422
+        },
+        "detail": {
+          "psnr": 15.806006661149386,
+          "ssim": 0.5639882385730743
+        }
+      }
+    }
+  ],
+  "summary_128": {
+    "baseline": {
+      "seconds": {
+        "mean": 56.4327,
+        "min": 56.379,
+        "max": 56.4864
+      },
+      "gaussians": {
+        "mean": 2306.5,
+        "min": 2306,
+        "max": 2307
+      },
+      "ply_bytes": {
+        "mean": 545883,
+        "min": 545765,
+        "max": 546001
+      },
+      "psnr": {
+        "mean": 17.244021769156916,
+        "min": 16.930158251170287,
+        "max": 17.55788528714354
+      },
+      "ssim": {
+        "mean": 0.6032151132822037,
+        "min": 0.5979441404342651,
+        "max": 0.6084860861301422
+      }
+    },
+    "candidate": {
+      "seconds": {
+        "mean": 37.3296,
+        "min": 36.332,
+        "max": 38.3272
+      },
+      "gaussians": {
+        "mean": 2309,
+        "min": 2300,
+        "max": 2318
+      },
+      "ply_bytes": {
+        "mean": 546473,
+        "min": 544349,
+        "max": 548597
+      },
+      "psnr": {
+        "mean": 16.77916726511068,
+        "min": 15.806006661149386,
+        "max": 17.75232786907197
+      },
+      "ssim": {
+        "mean": 0.5783435106277466,
+        "min": 0.5639882385730743,
+        "max": 0.5926987826824188
+      }
+    }
+  },
+  "research": {
+    "checked_date": "2026-10-26",
+    "references": [
+      {
+        "title": "The Unreasonable Effectiveness of Deep Features as a Perceptual Metric (CVPR 2018)",
+        "url": "https://arxiv.org/abs/1801.03924",
+        "use": "LPIPS is used as a fixed perceptual objective while optimizing image/scene parameters."
+      },
+      {
+        "title": "LPIPS official pretrained VGG implementation",
+        "url": "https://github.com/richzhang/PerceptualSimilarity/blob/082bb24f84c091ea94de2867d34c4544f68e0963/lpips/pretrained_networks.py",
+        "use": "The VGG constructor defaults to requires_grad=False and disables gradients on feature-network weights."
+      },
+      {
+        "title": "Burn Module::no_grad at locked revision",
+        "url": "https://github.com/tracel-ai/burn/blob/dd2a02905ea4a29ce2100e432e49d63b365546ab/crates/burn-core/src/module/base.rs",
+        "use": "Disable model parameter gradients without disabling the autodiff backend or input gradient flow."
+      },
+      {
+        "title": "Burn convolution autodiff at locked revision",
+        "url": "https://github.com/tracel-ai/burn/blob/dd2a02905ea4a29ce2100e432e49d63b365546ab/crates/burn-autodiff/src/ops/module.rs",
+        "use": "conv2d_weight_backward is conditional on tracked model weights; freezing them retains input backward but omits these unused convolutions."
+      }
+    ]
+  },
+  "fresh_sfm_seconds": null,
+  "end_to_end_seconds": null,
+  "peak_memory_bytes": null,
+  "timing_scope": "Per-process adapter training/evaluation/export including model load and kernel tuning; input copy and build excluded. Serial GPU, OS/driver/tuning caches not explicitly cleared.",
+  "quality_scope": "128px runs scored at128, 512px runs scored at512 with Lanczos/RGB PSNR/Gaussian-window SSIM. No cross-resolution quality comparison. Holdouts participate in SfM. 512px runs have no successful old LPIPS counterpart; previous failed run is an availability baseline only.",
+  "numeric_checks": {
+    "regression_before": {
+      "expected_frozen_weights": 0,
+      "observed_trainable_weights": 18,
+      "failed": true
+    },
+    "regression_after": {
+      "weight_tensors": 18,
+      "trainable_weights": 0,
+      "bias_tensors": 13,
+      "bias_gradients_disabled": true
+    },
+    "score_and_prediction_gradient_equivalence": [
+      {
+        "offset": 0.3,
+        "score_absolute_error": 0.0,
+        "prediction_gradient_max_absolute_error": 1.7462298e-10
+      },
+      {
+        "offset": 0.7,
+        "score_absolute_error": 0.0,
+        "prediction_gradient_max_absolute_error": 1.4551915e-10
+      }
+    ],
+    "gradient_counts": [
+      {
+        "offset": 0.3,
+        "frozen": false,
+        "lpips": 0.058760542,
+        "weight_gradient_tensors": 18
+      },
+      {
+        "offset": 0.3,
+        "frozen": true,
+        "lpips": 0.058760542,
+        "weight_gradient_tensors": 0
+      },
+      {
+        "offset": 0.7,
+        "frozen": false,
+        "lpips": 0.03259066,
+        "weight_gradient_tensors": 18
+      },
+      {
+        "offset": 0.7,
+        "frozen": true,
+        "lpips": 0.03259066,
+        "weight_gradient_tensors": 0
+      }
+    ],
+    "reference_input_gradients": false,
+    "prediction_input_gradients": "finite and nonzero in both variants",
+    "tests_passed": 3
+  },
+  "previous_512_failure": {
+    "source_experiment": "lpips-pilot-20261025",
+    "scene": "pipes",
+    "steps_requested": 500,
+    "resolution": 512,
+    "lpips_weight": 0.01,
+    "engine_sha256": "7785dadfd785a583e6c541d8fefaa7544ce90aaa72731d46372f9e2e80c45cd9",
+    "source_job": "6ae86afe0c9d4a0592c2f94bcd2f89f1",
+    "requested_buffer_bytes": 7795113984,
+    "error": "BufferTooBig",
+    "stage": "LPIPS backward",
+    "final_ply_exists": false,
+    "evidence": "Saved earlier failure, not rerun this round; buffer request is not peak memory usage.",
+    "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+    "matches_new_512_inputs": true
+  },
+  "reproduction": {
+    "clean_checkouts": true,
+    "brush_source_diff_matches_compiled": true,
+    "cubecl_source_diff_matches_compiled": true,
+    "lock_matches_compiled": true,
+    "same_512_failure_inputs": true
+  },
+  "fixed_environment": {
+    "WEBSCAN_TRACE_LOADER": "1",
+    "WEBSCAN_SINGLE_LOADER": "1",
+    "WEBSCAN_TRACE_SAMPLING": "0",
+    "WEBSCAN_SEEDED_SAMPLING": "1",
+    "WEBSCAN_STABLE_INIT": "1",
+    "WEBSCAN_TRACE_STATE": "0",
+    "WEBSCAN_SEED_GPU": "1",
+    "WEBSCAN_TRACE_GRADIENT": "0",
+    "WEBSCAN_STABLE_ADAM": "0",
+    "WEBSCAN_ROTATION_ADAM": "0",
+    "WEBSCAN_STABLE_REFINE": "1",
+    "WEBSCAN_CACHE_TENSORS": "0",
+    "WEBSCAN_PROFILE_STAGES": "0",
+    "WEBSCAN_BATCH_SSIM": "0",
+    "WEBSCAN_CACHE_SSIM_REF": "0",
+    "WEBSCAN_CACHE_SSIM_MOMENTS": "0",
+    "WEBSCAN_TRACE_REF_CACHE": "1"
+  },
+  "comparison_128": {
+    "seconds_change_percent": -33.85111823464055,
+    "psnr_delta": -0.4648545040462366,
+    "ssim_delta": -0.024871602654457092,
+    "claim": "Observed wall time reduction at fixed128px with LPIPS0.01 in both; quality means fell, two repeats only, actual point counts differ. Not a matched-quality speed guarantee."
+  },
+  "validation": {
+    "training_runs": 6,
+    "consumed_records": 3000,
+    "complete_sh_degree": 3,
+    "evaluated_files": 14,
+    "comparison_128_cameras_reference_sets_identical": true,
+    "previous_failed_512_pipes_input_bytes_identical": true,
+    "browser": {
+      "loaded": [
+        "pipes-128-0-baseline",
+        "pipes-128-0-candidate",
+        "pipes-512-0-candidate",
+        "office-512-0-candidate"
+      ],
+      "walk_mode_and_dragged": [
+        "pipes-128-0-candidate",
+        "pipes-512-0-candidate",
+        "office-512-0-candidate"
+      ],
+      "console_errors": 0,
+      "console_warnings": 0,
+      "observations": "500-step models remain very blurry. Thin pipes, valve details and window edges are missing or stretched; floating fragments and holes remain outside captured views. No verified quality improvement."
+    }
+  },
+  "decision": "Keep freezing pretrained LPIPS parameters in the experimental engine: numerical/input-gradient regression passes and512px pipes/office now complete. Do not enable LPIPS by default:500steps still cost333–358seconds at512px, the128px mean quality scores fell, and long-run perceptual quality is untested. No tiling or image-resolution change was needed for the successful512px runs.",
+  "next": "Use the working512px path for a bounded evaluation of perceptual quality and cost against SSIM/L1 with matched cameras and held-out metrics; do not infer6000-step quality from these feasibility runs.",
+  "screenshots": [
+    {
+      "run": "pipes-128-0-baseline",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/134-lpips-frozen-pipes-128-0-baseline.png",
+      "sha256": "0ed3157e91bb9ded8591e29343b255397ed1eb287712f5d9909655b64332c575",
+      "width": 128,
+      "height": 84,
+      "selection": "first held-out view of first repeat",
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "run": "pipes-128-0-candidate",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/135-lpips-frozen-pipes-128-0-candidate.png",
+      "sha256": "3f833c278c78caf1a0cb9e363e305db5bfeafa8989a4d72394578f30025f665a",
+      "width": 128,
+      "height": 84,
+      "selection": "first held-out view of first repeat",
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "run": "pipes-512-0-candidate",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/136-lpips-frozen-pipes-512-0-candidate.png",
+      "sha256": "c4c1aa1df81fd345f789edd9f24cb8e4312825fc87b1e0fd118db9eb4bc08e71",
+      "width": 512,
+      "height": 336,
+      "selection": "first held-out view of first repeat",
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "run": "office-512-0-candidate",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "path": "docs/screenshots/137-lpips-frozen-office-512-0-candidate.png",
+      "sha256": "058937bc6941cead79e904777a80fccbb25241eadaca718c631b183751ff4bc4",
+      "width": 512,
+      "height": 333,
+      "selection": "first held-out view of first repeat",
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    }
+  ]
+}
