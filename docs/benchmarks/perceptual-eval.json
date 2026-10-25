@@ -1,0 +1,555 @@
+{
+  "plan": {
+    "date": "2026-10-26",
+    "baseline_commit": "594134fff063af4496d639d517211822b3996649",
+    "problem": "Existing comparison uses only PSNR/SSIM, which is insufficient to assess the expensive LPIPS training path. Add optional reproducible offline LPIPS scoring of the exact aligned evaluation images.",
+    "implementation": "Optional --lpips-scorer in compare_quality; a small Brush example loads frozen built-in VGG once and returns per-pair distances. Fail closed on camera/reference/split mismatch or incomplete/invalid scorer results. Keep original output unchanged without the option.",
+    "experiment": "Reuse the two successful frozen-LPIPS512/500-step jobs from the previous study; run new500-step512px pipes/office controls with the same frozen engine, identical geometry/seed/flags, LPIPS weight0 instead of0.01. Score matched held-out images at512 using PSNR,SSIM and Brush LPIPS-VGG (lower is better).",
+    "limits": "One training run per setting/scene, no statistical quality claim, LPIPS training and scoring share a VGG model so this is not an independent perceptual test. Reused candidate time comes from a previous turn; no controlled speed comparison across turns. No new SfM/end-to-end/peak-memory measurement.",
+    "sources": {
+      "pipes": ".data/jobs/6ae86afe0c9d4a0592c2f94bcd2f89f1",
+      "office": ".data/jobs/98a93d1c6a824661974c57a21fc391d7"
+    },
+    "candidate_jobs": {
+      "pipes": ".data/benchmarks/lpips-frozen-20261026/runs/pipes-512-0-candidate",
+      "office": ".data/benchmarks/lpips-frozen-20261026/runs/office-512-0-candidate"
+    }
+  },
+  "runs": [
+    {
+      "key": "pipes-default",
+      "scene": "pipes",
+      "mode": "default",
+      "reused": false,
+      "source_experiment": "perceptual-eval-20261026",
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+      "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "camera_mode": "shared",
+      "training_views": 12,
+      "evaluation_views": 2,
+      "steps": 500,
+      "resolution": 512,
+      "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+      "lpips_weight": 0,
+      "ssim_weight": 0.2,
+      "seconds": 4.153740667272359,
+      "gaussians": 2300,
+      "ply_bytes": 544349,
+      "ply_sha256": "70523991e8cfd2deed553cb3436367c2ce2cfbe6c250c4cfb1272ca03ce1a96c",
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "5db47da0df608d370e96574c9aa1a6aa462b8d6f6751137de6747e9cb73d938b",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "bc71a00d9f70679f119b6c655e1b5a46037266992248d1a2d7c40c5b56244343",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ]
+    },
+    {
+      "key": "pipes-lpips",
+      "scene": "pipes",
+      "mode": "lpips",
+      "reused": true,
+      "source_experiment": "lpips-frozen-20261026",
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+      "consumed_order_sha256": "c301f6b71017c487b7171b665cc25635d831e0ac802f4e9a499583abf9f5e6a2",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "camera_mode": "shared",
+      "training_views": 12,
+      "evaluation_views": 2,
+      "steps": 500,
+      "resolution": 512,
+      "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+      "lpips_weight": 0.01,
+      "ssim_weight": 0.2,
+      "seconds": 358.0272,
+      "gaussians": 2321,
+      "ply_bytes": 549305,
+      "ply_sha256": "2b50837d406bdbffe4c0710cdd05553721aed7bc3182d87ed3f6d43e5f861bcb",
+      "evaluation_images": [
+        {
+          "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "c4c1aa1df81fd345f789edd9f24cb8e4312825fc87b1e0fd118db9eb4bc08e71",
+          "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+        },
+        {
+          "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "width": 512,
+          "height": 336,
+          "sha256": "09c0b87d85a35381d89b2b42bd15f60c464dadfcdc99cdd0187a8bbc3c07a27a",
+          "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+        }
+      ]
+    },
+    {
+      "key": "office-default",
+      "scene": "office",
+      "mode": "default",
+      "reused": false,
+      "source_experiment": "perceptual-eval-20261026",
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+      "consumed_order_sha256": "ae10a4619c1ea4a5269eed06c421e329c9a0732e930e32b73c2b043ed7f78a42",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "camera_mode": "shared",
+      "training_views": 22,
+      "evaluation_views": 4,
+      "steps": 500,
+      "resolution": 512,
+      "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+      "lpips_weight": 0,
+      "ssim_weight": 0.2,
+      "seconds": 4.129977999720722,
+      "gaussians": 3022,
+      "ply_bytes": 714741,
+      "ply_sha256": "8f8b2e7404dad212a3ebdeacd1a40644728eff5658a06f41d463a1249a8c17c1",
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "e4ba2b5c545d3fded33897e9ad153a8311c6823d69c6ff4dd15d0ca8b29d6623",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "80f00236a4bf4316669bf4e287aadfcea6c33c0d6f71f35928d9197fb68d1490",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "df1bac1f0eb86c489b314b59dd60512c09b32e340be5c4b29bc4455622958ffe",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "49e36920375786d73e2d14f6af0d3a4749593ff83499a40bad76264675b70892",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ]
+    },
+    {
+      "key": "office-lpips",
+      "scene": "office",
+      "mode": "lpips",
+      "reused": true,
+      "source_experiment": "lpips-frozen-20261026",
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+      "consumed_order_sha256": "ae10a4619c1ea4a5269eed06c421e329c9a0732e930e32b73c2b043ed7f78a42",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "camera_mode": "shared",
+      "training_views": 22,
+      "evaluation_views": 4,
+      "steps": 500,
+      "resolution": 512,
+      "engine_sha256": "9107d2d736885b622b2751d538b20d5a3705da1777a8ebe3752f6a3807993a4b",
+      "lpips_weight": 0.01,
+      "ssim_weight": 0.2,
+      "seconds": 333.0836,
+      "gaussians": 3067,
+      "ply_bytes": 725361,
+      "ply_sha256": "2136a02cd616aca440ae5ccbcc92e9eb81a85d9e611bbbfa93919cfebee40962",
+      "evaluation_images": [
+        {
+          "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "058937bc6941cead79e904777a80fccbb25241eadaca718c631b183751ff4bc4",
+          "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+        },
+        {
+          "name": "0008-1c6da61406eb4744893572435799058c.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "65d5eb8c3183992ba0b95ed08792b098e3d3632dce89a94e129eb42de5bc4062",
+          "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+        },
+        {
+          "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "39bb5fb38b71a5fde45b00f96b0f07cb24e08f99433e678a987cdf1c09ddd542",
+          "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+        },
+        {
+          "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "width": 512,
+          "height": 333,
+          "sha256": "54af041fb220814374b8d42376f209246449dbcaf42a0f2707aa813286233b40",
+          "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "comparison_size": 512,
+      "quick_job": "pipes-default",
+      "detail_job": "pipes-lpips",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "quick": {
+            "psnr": 14.550872642388523,
+            "ssim": 0.6121479272842407,
+            "lpips": 0.6502625
+          },
+          "detail": {
+            "psnr": 13.652709594378095,
+            "ssim": 0.616207480430603,
+            "lpips": 0.56714046
+          },
+          "lpips_inputs": {
+            "width": 512,
+            "height": 336,
+            "quick": {
+              "render_sha256": "174fcc6bd5fa3c43c34f007be2ec3f74f6c5dab67c959a1dcaa9235b5755b45e",
+              "reference_sha256": "2daa4a340cfdc62e76734183e520a37f590562a4b969182b7a69d7285fe75f3d"
+            },
+            "detail": {
+              "render_sha256": "7995a3683f2162c39f6d39a69a4a409416b080df175ba2dd9a50df44486ad438",
+              "reference_sha256": "2daa4a340cfdc62e76734183e520a37f590562a4b969182b7a69d7285fe75f3d"
+            }
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "quick": {
+            "psnr": 14.272089850676048,
+            "ssim": 0.5930138230323792,
+            "lpips": 0.6679195
+          },
+          "detail": {
+            "psnr": 14.999895122597177,
+            "ssim": 0.6117269396781921,
+            "lpips": 0.6289698
+          },
+          "lpips_inputs": {
+            "width": 512,
+            "height": 336,
+            "quick": {
+              "render_sha256": "bd69fcba213b482a465cc9563ee4ad77fa2f74af5691a445c0a2692954200506",
+              "reference_sha256": "0590f9a32565d7642a0bb6ccd6f2b2162470727e63843f76042f884de471892a"
+            },
+            "detail": {
+              "render_sha256": "ea73fc0bc13c37673c6b8324fd0c96594abb111343e2ebfd04eb661312da91ed",
+              "reference_sha256": "0590f9a32565d7642a0bb6ccd6f2b2162470727e63843f76042f884de471892a"
+            }
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 14.411481246532286,
+          "ssim": 0.6025808751583099,
+          "lpips": 0.659091
+        },
+        "detail": {
+          "psnr": 14.326302358487636,
+          "ssim": 0.6139672100543976,
+          "lpips": 0.59805513
+        }
+      },
+      "lpips_scorer": {
+        "protocol": 1,
+        "metric": "lpips_vgg_brush",
+        "version": "1",
+        "weights_sha256": "abb257f9aa223154f3ed476674dbfc0b6daee5b2e07618bd208918ee9600e2e7",
+        "input": "RGB0..1 NHWC",
+        "binary_sha256": "e5e24a3c0b7e0d7400031965896f86feec3d8039e453ddbea0d96f310d812021",
+        "seconds": 5.464364333078265,
+        "lower_is_better": true
+      },
+      "scene": "pipes"
+    },
+    {
+      "comparison_size": 512,
+      "quick_job": "office-default",
+      "detail_job": "office-lpips",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "quick": {
+            "psnr": 17.227679094943667,
+            "ssim": 0.7259067296981812,
+            "lpips": 0.48097494
+          },
+          "detail": {
+            "psnr": 18.05770856072144,
+            "ssim": 0.7348359823226929,
+            "lpips": 0.47134006
+          },
+          "lpips_inputs": {
+            "width": 512,
+            "height": 333,
+            "quick": {
+              "render_sha256": "0fa51555369c686fca32f9fc6d861a63dd908b72ea51ca56cd92d9713293df9a",
+              "reference_sha256": "e86b456a367c4965d3791a13fc281a936e802f37e98de9214d1099acaefc2f04"
+            },
+            "detail": {
+              "render_sha256": "9fdd32d005620484e6674a15d44a7135807d4f31df5a7b2d2e282803629c88af",
+              "reference_sha256": "e86b456a367c4965d3791a13fc281a936e802f37e98de9214d1099acaefc2f04"
+            }
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "quick": {
+            "psnr": 19.737692113786082,
+            "ssim": 0.8978021740913391,
+            "lpips": 0.37956774
+          },
+          "detail": {
+            "psnr": 20.427729064720737,
+            "ssim": 0.9055542349815369,
+            "lpips": 0.35637861
+          },
+          "lpips_inputs": {
+            "width": 512,
+            "height": 333,
+            "quick": {
+              "render_sha256": "6142b3f394d06767d6eb3bc53eb87c371a482167edc92be04b301059128a8d90",
+              "reference_sha256": "f08b8c17c40baedfab6cefbe1632635c37eaf381f23dd292bf476428f0eaea47"
+            },
+            "detail": {
+              "render_sha256": "9c98c8bd2e1b9c2844bea7e6f5a355ab30d56bdefb953f6083ac50c39b958782",
+              "reference_sha256": "f08b8c17c40baedfab6cefbe1632635c37eaf381f23dd292bf476428f0eaea47"
+            }
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "quick": {
+            "psnr": 13.482581022327054,
+            "ssim": 0.6274595856666565,
+            "lpips": 0.5935459
+          },
+          "detail": {
+            "psnr": 13.575937780913858,
+            "ssim": 0.6170161962509155,
+            "lpips": 0.5866713
+          },
+          "lpips_inputs": {
+            "width": 512,
+            "height": 333,
+            "quick": {
+              "render_sha256": "14ba35930a9ba45535ec9b538200c372c61258d783478143406930b047e81fd4",
+              "reference_sha256": "ba65c9c77251e264ede7e8b79600e6b6e149a3a92acec1a828bbbaf8a5ca3953"
+            },
+            "detail": {
+              "render_sha256": "ea76e7f50c86847add5209b2906e175aca6060f958368f34124ca9cb138323e4",
+              "reference_sha256": "ba65c9c77251e264ede7e8b79600e6b6e149a3a92acec1a828bbbaf8a5ca3953"
+            }
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "quick": {
+            "psnr": 16.456713397265116,
+            "ssim": 0.6836342811584473,
+            "lpips": 0.5214481
+          },
+          "detail": {
+            "psnr": 16.913194383389516,
+            "ssim": 0.6880547404289246,
+            "lpips": 0.5119139
+          },
+          "lpips_inputs": {
+            "width": 512,
+            "height": 333,
+            "quick": {
+              "render_sha256": "25e51907c5f4424a1b9f62658b481d0e7e502af97c176b6d69250a6cde210b72",
+              "reference_sha256": "5d27dcdda27a57354f1c0e3806d979f9174b45d85e3dfed07cb3bc1cde54d689"
+            },
+            "detail": {
+              "render_sha256": "65d10836a1d29268e31a63f474f9df4d54a430392e79e28da0d5f47b7620ab21",
+              "reference_sha256": "5d27dcdda27a57354f1c0e3806d979f9174b45d85e3dfed07cb3bc1cde54d689"
+            }
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 16.72616640708048,
+          "ssim": 0.733700692653656,
+          "lpips": 0.49388417
+        },
+        "detail": {
+          "psnr": 17.243642447436386,
+          "ssim": 0.7363652884960175,
+          "lpips": 0.4815759675
+        }
+      },
+      "lpips_scorer": {
+        "protocol": 1,
+        "metric": "lpips_vgg_brush",
+        "version": "1",
+        "weights_sha256": "abb257f9aa223154f3ed476674dbfc0b6daee5b2e07618bd208918ee9600e2e7",
+        "input": "RGB0..1 NHWC",
+        "binary_sha256": "e5e24a3c0b7e0d7400031965896f86feec3d8039e453ddbea0d96f310d812021",
+        "seconds": 3.4300736663863063,
+        "lower_is_better": true
+      },
+      "scene": "office"
+    }
+  ],
+  "scorer_smoke": {
+    "identity": {
+      "protocol": 1,
+      "metric": "lpips_vgg_brush",
+      "version": "1",
+      "weights_sha256": "abb257f9aa223154f3ed476674dbfc0b6daee5b2e07618bd208918ee9600e2e7",
+      "input": "RGB0..1 NHWC"
+    },
+    "self_score": 4.926563e-16,
+    "self_tolerance": 1e-08,
+    "forward_score": 0.46549854,
+    "reverse_score": 0.46549854,
+    "symmetry_abs_error": 0.0,
+    "symmetry_tolerance": 1e-05,
+    "dimension_mismatch_rejected": true
+  },
+  "fresh_sfm_seconds": null,
+  "end_to_end_seconds": null,
+  "peak_memory_bytes": null,
+  "time_scope": "Two new default-loss runs; LPIPS training outputs and wall times reused from the preceding experiment. This is not a fresh interleaved timing benchmark. Scoring time includes VGG load, GPU execution and results, but excludes Python PNG preparation and version lookup.",
+  "metric_scope": "Brush LPIPS-VGG using built-in converted weights (half-precision storage), Wgpu inference, RGB0..1 NHWC; lower is better. Scores are not pooled with other backbone/weight/normalization implementations. Training candidate uses this same VGG model, so the perceptual metric is not independent of its objective.",
+  "quality_scope": "Frozen shared-camera geometry, every eighth photo held out of training but used in SfM; exact camera JSON, input files, consumption order and references aligned. One500-step training per setting/scene; no statistical or final-quality claim.",
+  "scorer_build": {
+    "source": "docs/benchmarks/lpips_score.rs",
+    "source_sha256": "776a9f608c7a15a18aa07ad6f789a3930e1d7da0963047069d41f27f60e1c211",
+    "binary_sha256": "e5e24a3c0b7e0d7400031965896f86feec3d8039e453ddbea0d96f310d812021",
+    "weights_sha256": "abb257f9aa223154f3ed476674dbfc0b6daee5b2e07618bd208918ee9600e2e7",
+    "cargo_lock_sha256": "c61c2076f9849df4825273ac40057cea6d6c1bd9cbd7e57e09f9e3c134eb1dc7",
+    "profile": "release",
+    "hardware": "Apple M5 / 32 GiB",
+    "runtime": "Wgpu/Metal",
+    "source_base": "Brush3edecbb2 plus documented tail dependency fix and frozen LPIPS loader",
+    "fresh_training_engine_build": false,
+    "build_command": "cargo build --locked --offline --release -p lpips --example lpips_score; WEBSCAN_LPIPS_WEIGHTS_SHA256 set to pinned weights digest"
+  },
+  "research": {
+    "checked_date": "2026-10-26",
+    "references": [
+      {
+        "title": "The Unreasonable Effectiveness of Deep Features as a Perceptual Metric",
+        "url": "https://arxiv.org/abs/1801.03924",
+        "use": "LPIPS supplements pixel/structural metrics; VGG is a distinct metric configuration, lower is better."
+      },
+      {
+        "title": "LPIPS official implementation",
+        "url": "https://github.com/richzhang/PerceptualSimilarity",
+        "use": "Documents VGG vs AlexNet and expected input normalization. This adapter uses Brush converted weights and records exact binary/weight identity."
+      },
+      {
+        "title": "Drop-In Perceptual Optimization for3DGS",
+        "url": "https://machinelearning.apple.com/research/drop-in",
+        "use": "Motivates perceptual and human evaluation alongside resource budgets. WD-R and DISTS are not implemented in this change."
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "run": "pipes-default",
+      "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+      "path": "docs/screenshots/138-perceptual-pipes-default.png",
+      "sha256": "5db47da0df608d370e96574c9aa1a6aa462b8d6f6751137de6747e9cb73d938b",
+      "width": 512,
+      "height": 336,
+      "selection": "first held-out view",
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "run": "office-default",
+      "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+      "path": "docs/screenshots/139-perceptual-office-default.png",
+      "sha256": "e4ba2b5c545d3fded33897e9ad153a8311c6823d69c6ff4dd15d0ca8b29d6623",
+      "width": 512,
+      "height": 333,
+      "selection": "first held-out view",
+      "source": "Unmodified native evaluation PNG",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "run": "pipes-lpips",
+      "path": "docs/screenshots/136-lpips-frozen-pipes-512-0-candidate.png",
+      "sha256": "c4c1aa1df81fd345f789edd9f24cb8e4312825fc87b1e0fd118db9eb4bc08e71",
+      "reused": true,
+      "license": "CC BY-NC-SA 4.0"
+    },
+    {
+      "run": "office-lpips",
+      "path": "docs/screenshots/137-lpips-frozen-office-512-0-candidate.png",
+      "sha256": "058937bc6941cead79e904777a80fccbb25241eadaca718c631b183751ff4bc4",
+      "reused": true,
+      "license": "CC BY-NC-SA 4.0"
+    }
+  ],
+  "validation": {
+    "new_training_runs": 2,
+    "reused_training_runs": 2,
+    "shared_held_out_views": 6,
+    "render_reference_pairs_scored": 12,
+    "scorer_self_distance": 4.926563e-16,
+    "scorer_symmetry_error": 0,
+    "python_tests": 127,
+    "frontend_tests": 18,
+    "typescript_and_build": "passed",
+    "scorer_build": "passed",
+    "browser": {
+      "loaded": [
+        "pipes-default",
+        "pipes-lpips",
+        "office-default",
+        "office-lpips"
+      ],
+      "walk_mode_and_dragged": [
+        "pipes-default",
+        "office-default"
+      ],
+      "console_errors": 0,
+      "console_warnings": 0,
+      "observations": "All500-step models remain blurred, with stretched pipes/window edges and holes or floating fragments outside captured views. No human preference conclusion."
+    }
+  },
+  "decision": "Keep the optional offline evaluator and protocol/evidence validation. The two LPIPS-training outputs have lower Brush-LPIPS-VGG scores, but there is one short run per setting and scoring shares the trained objective network. Training cost remains substantial; keep default LPIPS weight0 and do not claim independent perceptual or final-quality improvement.",
+  "next": "Use the evaluator on fixed longer-run outputs or an independent perceptual metric before changing default loss settings; avoid repeating previous long training merely to obtain scores.",
+  "implementation": {
+    "comparison_script": "scripts/compare_quality.py",
+    "script_sha256": "c0512e8e03cc09338af578061f73d64148e46c7d8178dc89ba9e52eee7450660",
+    "scorer_source": "docs/benchmarks/lpips_score.rs",
+    "scorer_source_sha256": "776a9f608c7a15a18aa07ad6f789a3930e1d7da0963047069d41f27f60e1c211",
+    "new_option": "--lpips-scorer",
+    "scoring_size_option": "--size",
+    "protocol": "JSON identity then complete id/tab/score rows for exact aligned RGB PNG pairs; missing, duplicate,nonfinite,negative or unknown metric/weight identity is rejected."
+  }
+}

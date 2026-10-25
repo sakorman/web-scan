@@ -81,6 +81,8 @@ Web Scan 是一个在本地运行的三维重建工具。导入同一处空间�
 
 对照结果与适用范围见 [画质优化实测](docs/QUALITY.md)。
 
+已有留出结果可以离线补充LPIPS感知评分，与PSNR / SSIM一起查看；脚本会先校验相机、照片和评分尺寸。[使用方法与实测](docs/PERCEPTUAL-EVAL.md)
+
 ![全照片训练的管道房模型与拍摄视角对照](docs/screenshots/14-final-pipes.jpg)
 
 ## 下载重建模型

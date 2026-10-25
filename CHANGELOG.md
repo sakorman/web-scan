@@ -4,7 +4,13 @@
 
 ## 2026-10-26
 
-### 冻结 LPIPS 预训练参数（实验修复）
+### 增加留出图感知评分
+
+- 关键进展：对照脚本可选离线LPIPS-VGG，和PSNR / SSIM使用相同RGB像素；记录评分器、权重及处理后图片摘要，拒绝缺失 / 重复 / 无效分数，相机或留出参考不一致时先报错。
+- 新跑两组500步默认损失，复用此前感知损失模型。pipes / office的LPIPS为0.65909 → 0.59806、0.49388 → 0.48158（低为好），但只有单次短训练，且训练与评分共用VGG，默认LPIPS仍关闭。127项后端、18项前端、类型和构建通过；四个模型加载、两个新模型漫游正常。[基线](https://github.com/sakorman/web-scan/commit/594134f) · [成绩、成本与截图](docs/PERCEPTUAL-EVAL.md)
+- 参考[LPIPS论文](https://arxiv.org/abs/1801.03924)、[官方实现](https://github.com/richzhang/PerceptualSimilarity)及[近期感知优化研究](https://machinelearning.apple.com/research/drop-in)。保留评测工具，下一步先给已有长训练结果补分，避免重复重建。
+
+### 冻结 LPIPS 预训练参数（实验修复） · [594134f](https://github.com/sakorman/web-scan/commit/594134f)
 
 - 关键进展：查出感知网络权重被无用求导，加载后冻结18组权重和13组偏置，保留预测图梯度。512像素的pipes / office均完成500步重建，此前pipes会申请约7.80GB缓冲并失败，不需要降低输入分辨率。
 - 参数回归先失败后通过，3项GPU测试通过，所测LPIPS分数相同、预测梯度最大差1.75e-10。六次重建、完整SH3、14张留出图、四个模型加载及三个候选漫游通过；补丁在干净源码副本中复现一致。[基线](https://github.com/sakorman/web-scan/commit/c7d2a2b) · [实测、补丁与截图](docs/LPIPS-FROZEN.md)

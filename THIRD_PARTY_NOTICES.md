@@ -54,6 +54,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/lpips-frozen.patch` is an incremental change to the Brush experiment above. It freezes pretrained LPIPS parameters while retaining input gradients, adds GPU regression tests, and identifies the experimental build. It retains Brush's Apache-2.0 license; no code or weights from the separately cited LPIPS repository are redistributed by this patch.
 
+`docs/benchmarks/lpips_score.rs` is a local scoring adapter that calls Brush's LPIPS module and records the compiled weight identity. Its original adapter code is covered by this project's MIT license; Brush and its converted weights keep their upstream provenance and terms. No model weights are added to this repository. The separately cited LPIPS project is by Richard Zhang and collaborators: https://github.com/richzhang/PerceptualSimilarity .
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
