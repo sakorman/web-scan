@@ -1,0 +1,32 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index d112c71..b5cd07f 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2879,7 +2879,6 @@ dependencies = [
+ [[package]]
+ name = "cubecl-std"
+ version = "0.7.0"
+-source = "git+https://github.com/ArthurBrussee/cubecl?branch=sg-size#43580a8c294f3a8140921c26f6378a12aef82881"
+ dependencies = [
+  "cubecl-core",
+  "cubecl-runtime",
+diff --git a/Cargo.toml b/Cargo.toml
+index f7f9fc1..32b491d 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -123,7 +123,7 @@ alphanumeric-sort = "1.5.3"
+ [patch."https://github.com/tracel-ai/cubecl"]
+ cubecl = { git = "https://github.com/ArthurBrussee/cubecl", branch = "sg-size" }
+ cubecl-common = { git = "https://github.com/ArthurBrussee/cubecl", branch = "sg-size" }
+-cubecl-std = { git = "https://github.com/ArthurBrussee/cubecl", branch = "sg-size" }
++cubecl-std = { path = "../cubecl-tail-study/crates/cubecl-std" }
+ cubecl-core = { git = "https://github.com/ArthurBrussee/cubecl", branch = "sg-size" }
+ cubecl-runtime = { git = "https://github.com/ArthurBrussee/cubecl", branch = "sg-size" }
+ 
+@@ -334,3 +334,6 @@ single_range_in_vec_init = "allow"
+ # When that has landed and Bevy has updated to a new winit version this workaround should be removed.
+ [profile.dev.package.objc2]
+ debug-assertions = false
++
++[patch."https://github.com/ArthurBrussee/cubecl"]
++cubecl-std = { path = "../cubecl-tail-study/crates/cubecl-std" }

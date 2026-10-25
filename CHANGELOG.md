@@ -4,6 +4,12 @@
 
 ## 2026-10-25
 
+### 张量尾部修复的默认质量档复核（未采用）
+
+- 关键结论：修复后6000步 / 1024目标长边三场景12次对照中，pipes和TUM通过筛查，office平均PSNR下降0.264 dB、SSIM下降0.00760，超过预设门槛；三场景耗时均略慢，不接入默认引擎。
+- 补齐Brush与CubeCL依赖覆盖、Cargo锁文件摘要、完整SH3、72,000条消费记录和六张同视角原生图片。浏览器加载及拖动漫游正常；保持官方Brush、原照片和历史模型不变。[基线](https://github.com/sakorman/web-scan/commit/442b49a) · [完整默认档报告](docs/SSIM-TAIL-DEFAULT.md)
+- 继续参考[SSIM论文](https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf)、[CubeCL实现](https://github.com/ArthurBrussee/cubecl/blob/43580a8c294f3a8140921c26f6378a12aef82881/crates/cubecl-std/src/tensor/contiguous.rs)和[Faster-GS](https://fhahlbohm.github.io/faster-gaussian-splatting/)。该修复解决已复现的输入漏写，但没有被证据支持为整体质量或速度提升。
+
 ### SSIM输入尾部复制修复（实验）
 
 - 关键突破：把626×469异常缩小到锁定CubeCL连续复制的向量尾部；修复打包向量宽度必须整除总元素数后，624～628宽度全部无漏写，未填充的TUM组件探查恢复一致。

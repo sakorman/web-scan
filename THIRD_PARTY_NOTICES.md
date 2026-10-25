@@ -50,6 +50,8 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/ssim-tail.patch` records an experimental Brush build that includes the SSIM diagnostics and the input-layout regression. `docs/benchmarks/cubecl-contiguous-tail.patch` is a separate two-line change against CubeCL commit `43580a8c294f3a8140921c26f6378a12aef82881`; CubeCL is MIT OR Apache-2.0. Neither patch changes the official Brush binary or the default application.
 
+`docs/benchmarks/ssim-tail-brush-deps.patch` and `docs/benchmarks/ssim-tail-cubecl-deps.patch` only describe the local Cargo overlays used to compile that experiment. They do not copy dependency source into this repository and retain the upstream Brush Apache-2.0 and CubeCL MIT OR Apache-2.0 terms.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
