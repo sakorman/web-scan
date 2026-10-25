@@ -4,6 +4,12 @@
 
 ## 2026-10-25
 
+### SSIM 权重短对照（未采用）
+
+- 关键结论：将现有 `ssim_weight` 从0.2提高到0.3，pipes平均SSIM提高0.00862但PSNR下降0.2823 dB，超过筛查门槛；office两项指标通过。默认仍保持0.2，不把单一SSIM提升当作整体画质收益。
+- 同一尾部修复二进制完成pipes / office八次1000步对照，完整SH3、四个模型加载和拖动漫游通过；没有新增源码或默认参数改动。[基线](https://github.com/sakorman/web-scan/commit/13a1a2a) · [结果、论文和截图](docs/SSIM-WEIGHT.md)
+- 参考[Apple感知优化研究](https://machinelearning.apple.com/research/drop-in)和[TurboGS](https://proceedings.mlr.press/v306/dong26k.html)。它们使用更完整的感知损失或稀疏采样方案，本轮没有移植；下一步若继续研究需加入LPIPS / DISTS和人眼对照。
+
 ### 张量尾部修复的默认质量档复核（未采用）
 
 - 关键结论：修复后6000步 / 1024目标长边三场景12次对照中，pipes和TUM通过筛查，office平均PSNR下降0.264 dB、SSIM下降0.00760，超过预设门槛；三场景耗时均略慢，不接入默认引擎。
