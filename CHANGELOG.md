@@ -4,6 +4,12 @@
 
 ## 2026-10-25
 
+### LPIPS 感知损失试验（未采用）
+
+- 关键结果：项目内置LPIPS在Apple Metal第一组候选反向阶段申请约7.80 GB缓冲，触发 `BufferTooBig`，没有生成候选模型；基线500步正常完成约4.15秒。停止扩大试验，不把它写成画质结论。
+- 记录了失败边界、内置权重和资源代价，默认仍使用SSIM / L1，原照片和历史模型不变。下一步若继续研究需先做VGG特征分块或降低峰值显存。[完整记录](docs/LPIPS-PILOT.md)
+- 参考[Apple感知优化研究](https://machinelearning.apple.com/research/drop-in)和[TurboGS](https://proceedings.mlr.press/v306/dong26k.html)。论文中的WD-R、稀疏采样和结构感知损失没有直接移植到本地Metal训练器。
+
 ### SSIM 权重短对照（未采用）
 
 - 关键结论：将现有 `ssim_weight` 从0.2提高到0.3，pipes平均SSIM提高0.00862但PSNR下降0.2823 dB，超过筛查门槛；office两项指标通过。默认仍保持0.2，不把单一SSIM提升当作整体画质收益。
