@@ -76,7 +76,7 @@ def normalize_scene(points, views):
     }
 
 
-def shared_retry_reason(camera_mode, image_sizes, attempt):
+def shared_retry_reason(camera_mode, image_sizes, attempt, focal_lengths=()):
     """Return why an automatic shared-intrinsics retry is or is not safe."""
     if camera_mode != "auto":
         return "manual_camera_mode"
@@ -85,6 +85,9 @@ def shared_retry_reason(camera_mode, image_sizes, attempt):
     coverage = attempt["registered_images"] / max(attempt["input_images"], 1)
     if coverage >= AUTO_SHARED_RETRY_COVERAGE:
         return "auto_coverage_sufficient"
+    known_focals = {focal for focal in focal_lengths if focal is not None}
+    if len(known_focals) > 1:
+        return "mixed_35mm_focal_lengths"
     return None
 
 
@@ -102,14 +105,17 @@ def prefer_shared_attempt(primary, candidate):
     )
 
 
-def _image_sizes(image_paths):
+def _image_metadata(image_paths):
     from PIL import Image
 
-    sizes = []
+    from .image_metadata import focal_length_35mm
+
+    sizes, focal_lengths = [], []
     for path in image_paths:
         with Image.open(path) as image:
             sizes.append(image.size)
-    return sizes
+            focal_lengths.append(focal_length_35mm(image))
+    return sizes, focal_lengths
 
 
 def _map_scene(
@@ -232,12 +238,14 @@ def estimate_scene(
             "照片之间没有建立可靠的三维关联。请增加重叠视角、平移拍摄，并避免反光和纯色表面。"
         )
     selected = primary
+    image_sizes, focal_lengths = _image_metadata(image_paths)
     retry = {
         "attempted": False,
         "selected": False,
         "reason": shared_retry_reason(
-            camera_mode, _image_sizes(image_paths), primary["summary"]
+            camera_mode, image_sizes, primary["summary"], focal_lengths
         ),
+        "focal_length_35mm": sorted({focal for focal in focal_lengths if focal}),
         "auto": primary["summary"],
     }
     if retry["reason"] is None:

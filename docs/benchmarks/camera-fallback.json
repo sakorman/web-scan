@@ -8,6 +8,8 @@
   },
   "policy": {
     "requires_uniform_image_dimensions": true,
+    "requires_consistent_known_35mm_focal_length": true,
+    "missing_35mm_focal_length_behavior": "does not block the existing retry policy",
     "auto_coverage_threshold": 0.9,
     "selection": "shared must increase registered images and sparse points; reprojection error must stay within 1.10x of auto"
   },
@@ -43,5 +45,22 @@
       }
     }
   ],
+  "focal_guard_verification": {
+    "date": "2026-10-27",
+    "original_office_no_focal_hint": {
+      "input_images": 26,
+      "focal_length_35mm": [],
+      "auto": {"registered_images": 20, "sparse_points": 1806, "reprojection_error": 0.9529911241, "attempt_seconds": 11.0336},
+      "shared_retry": {"registered_images": 26, "sparse_points": 2497, "reprojection_error": 0.9623911798, "attempt_seconds": 8.0639},
+      "result": {"camera_mode_effective": "shared", "sfm_seconds": 19.3354}
+    },
+    "lossless_metadata_only_office_copy": {
+      "input_images": 26,
+      "focal_length_35mm": [24, 48],
+      "auto": {"registered_images": 26, "sparse_points": 2488, "reprojection_error": 0.9267289292, "attempt_seconds": 8.1391},
+      "result": {"camera_mode_effective": "auto", "retry_reason": "auto_coverage_sufficient", "sfm_seconds": 8.388},
+      "limitation": "Artificial metadata only; it did not enter the low-coverage focal-conflict branch and is not a quality comparison."
+    }
+  },
   "decision": "adopted: only conservative retry; not a global switch to shared intrinsics and not a quality or speed claim."
 }

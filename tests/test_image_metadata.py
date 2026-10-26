@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 from PIL import Image, ImageOps
 
 from webscan.api import create_app
-from webscan.image_metadata import focal_length_exif
+from webscan.image_metadata import focal_length_35mm, focal_length_exif
 
 
 def jpeg(focal=35, orientation=1):
@@ -51,6 +51,7 @@ def test_upload_preserves_focal_prior_without_other_exif_or_pixel_changes(tmp_pa
             assert output.getexif().get_ifd(34665) == {41989: 35}
             assert set(output.getexif()) == {34665}
             assert np.array_equal(np.asarray(output), np.asarray(baseline))
+            assert focal_length_35mm(output) == 35
         duplicate = client.post(
             f"/api/sessions/{sid}/frames", files={"file": ("photo.jpg", raw)}
         ).json()
@@ -70,6 +71,7 @@ def test_invalid_focal_hint_is_omitted(value):
             return Exif()
 
     assert focal_length_exif(Source()) == b""
+    assert focal_length_35mm(Source()) is None
 
 
 def test_missing_or_broken_optional_metadata_is_omitted():

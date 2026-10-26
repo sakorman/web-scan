@@ -8,15 +8,15 @@ EXIF_IFD = 34665
 FOCAL_LENGTH_35MM = 41989
 
 
-def focal_length_exif(image):
-    """Return a fresh EXIF block containing only a valid equivalent focal length."""
+def focal_length_35mm(image):
+    """Read one valid, integer 35 mm-equivalent focal-length hint if available."""
     try:
         source = image.getexif()
         value = source.get_ifd(EXIF_IFD).get(
             FOCAL_LENGTH_35MM, source.get(FOCAL_LENGTH_35MM)
         )
         if isinstance(value, (str, bytes, bool)):
-            return b""
+            return None
         focal = float(value)
         # This EXIF field is an unsigned SHORT; zero means unknown.
         if (
@@ -24,7 +24,7 @@ def focal_length_exif(image):
             or not focal.is_integer()
             or not 1 <= focal <= 65535
         ):
-            return b""
+            return None
     except (
         AttributeError,
         OSError,
@@ -33,7 +33,15 @@ def focal_length_exif(image):
         ZeroDivisionError,
         OverflowError,
     ):
+        return None
+    return int(focal)
+
+
+def focal_length_exif(image):
+    """Return a fresh EXIF block containing only a valid equivalent focal length."""
+    focal = focal_length_35mm(image)
+    if focal is None:
         return b""
     result = Image.Exif()
-    result[EXIF_IFD] = {FOCAL_LENGTH_35MM: int(focal)}
+    result[EXIF_IFD] = {FOCAL_LENGTH_35MM: focal}
     return result.tobytes()

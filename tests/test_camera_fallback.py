@@ -27,6 +27,22 @@ def test_shared_retry_requires_uniform_images_and_low_auto_coverage():
     )
 
 
+def test_shared_retry_rejects_known_mixed_35mm_focal_lengths():
+    primary = attempt(20, 1806, 0.953)
+    image_sizes = [(1600, 1067)] * 26
+    assert (
+        shared_retry_reason("auto", image_sizes, primary, [24] * 13 + [48] * 13)
+        == "mixed_35mm_focal_lengths"
+    )
+    # Missing EXIF does not invent a lens distinction; the existing geometric
+    # selection gates remain responsible for that case.
+    assert shared_retry_reason("auto", image_sizes, primary, [24, None] * 13) is None
+    assert (
+        shared_retry_reason("auto", image_sizes, attempt(24, 2200, 0.95), [24, 48])
+        == "auto_coverage_sufficient"
+    )
+
+
 def test_shared_retry_needs_better_coverage_points_and_bounded_error():
     primary = attempt(20, 1806, 0.953)
     assert prefer_shared_attempt(primary, attempt(26, 2497, 0.962))
