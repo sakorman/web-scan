@@ -4,7 +4,13 @@
 
 ## 2026-10-26
 
-### 长训练模型的感知复查
+### 限制评分到共同原生尺寸
+
+- 关键修复：128像素渲染不再因请求512而被隐式放大。报告同时记录请求上限、共同原生上限和逐视角尺寸，处理短边舍入及首张照片较小的旧报告；尺寸不足时明确报错。
+- 真实128像素对照已复现旧行为，修复后回到原生尺寸；已有512像素pipes / office的像素摘要与三项指标保持一致，142个原文件不变。136项后端、18项前端、类型与构建通过。本地服务已恢复，历史模型与下载入口正常。[基线](https://github.com/sakorman/web-scan/commit/9a20934) · [数据、图示与限制](docs/SCORING-SIZE.md)
+- 参考[3DGS评测实现](https://github.com/graphdeco-inria/gaussian-splatting/blob/main/metrics.py)和[LPIPS](https://github.com/richzhang/PerceptualSimilarity)。这是评分尺度修正，不是模型画质或训练提速；旧成绩保留，后续基线不混用两种尺度。
+
+### 长训练模型的感知复查 · [9a20934](https://github.com/sakorman/web-scan/commit/9a20934)
 
 - 关键结果：给已有12个6000步模型补齐72对LPIPS评分。office平均0.28580 → 0.29160（低为好），8组视角与重复对照中7组变差，与PSNR / SSIM下降一致；pipes均值改善，TUM变化小，默认接入结论保持。
 - 约53秒完成补评分，760个原始文件摘要前后一致，原PSNR / SSIM完整复现。复查office四个模型及两个候选漫游，正常加载；直接复用已有截图，没有重新训练。同步更正旧文档的pipes评分口径、模型总数和论文链接。[基线](https://github.com/sakorman/web-scan/commit/9083b95) · [数据、截图与局限](docs/PERCEPTUAL-LONG.md)

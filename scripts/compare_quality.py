@@ -106,16 +106,17 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
         if report.get("evaluation_mode", "holdout") != "holdout":
             raise ValueError("Comparison requires held-out evaluation")
         scene = json.loads((work / "sfm/scene.json").read_text())
-        # Earlier reports did not record resolution; recover it from the actual PNG.
+        # Earlier reports did not record the cap. The first photo can be smaller
+        # than that cap, so inspect every rendering rather than assuming its size.
         resolution = report.get("resolution")
         if resolution is None:
-            first = next(
-                (work / "brush" / f"eval_{report['steps']}").glob("*.png"), None
-            )
-            if first is None:
+            images = list((work / "brush" / f"eval_{report['steps']}").glob("*.png"))
+            if not images:
                 raise ValueError("No evaluation renders")
-            with Image.open(first) as image:
-                resolution = max(image.size)
+            resolution = 0
+            for path in images:
+                with Image.open(path) as image:
+                    resolution = max(resolution, *image.size)
         checked, _ = validate_evaluation(
             scene,
             work / "brush",
@@ -136,18 +137,40 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
         (x["name"], x["reference_sha256"]) for x in records[1]
     ]:
         raise ValueError("Evaluation views or reference images differ")
+    common_size = min(
+        size,
+        *(max(record["width"], record["height"]) for group in records for record in group),
+    )
+    if common_size < 16:
+        raise ValueError("Native evaluation renders must be at least 16 pixels on the long edge")
     qdir = qa / "brush" / f"eval_{qr['steps']}"
     ddir = de / "brush" / f"eval_{dr['steps']}"
     names = [record["name"] for record in records[0]]
     rows, pairs = [], []
     context = TemporaryDirectory(prefix="webscan-lpips-") if lpips_scorer else nullcontext(None)
     with context as folder:
-        for name in names:
+        for view_index, name in enumerate(names):
+            quick_native = [records[0][view_index][axis] for axis in ["width", "height"]]
+            detail_native = [records[1][view_index][axis] for axis in ["width", "height"]]
             with Image.open(
                 qa / "sfm/undistorted/images" / (Path(name).stem + ".jpg")
             ) as source:
                 reference = source.convert("RGB")
-                reference.thumbnail((size, size), Image.Resampling.LANCZOS)
+                reference_native = list(reference.size)
+                reference.thumbnail((common_size, common_size), Image.Resampling.LANCZOS)
+                # A renderer may round the short edge down by one pixel. Preserve
+                # the usual grid when it fits; otherwise shrink within both outputs.
+                bounds = tuple(min(a, b) for a, b in zip(quick_native, detail_native))
+                if any(actual > limit for actual, limit in zip(reference.size, bounds)):
+                    reference = source.convert("RGB")
+                    reference.thumbnail(
+                        tuple(min(limit, common_size) for limit in bounds),
+                        Image.Resampling.LANCZOS,
+                    )
+            if min(reference.size) < 11:
+                raise ValueError("SSIM needs image dimensions of at least 11 pixels")
+            if lpips_scorer and min(reference.size) < 16:
+                raise ValueError("LPIPS needs image dimensions of at least 16 pixels")
             with Image.open(qdir / name) as image:
                 qimage = image.convert("RGB").resize(reference.size, Image.Resampling.LANCZOS)
             with Image.open(ddir / name) as image:
@@ -156,10 +179,15 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
                 "view": name,
                 "quick": metrics(qimage, reference),
                 "detail": metrics(dimage, reference),
+                "scoring_dimensions": {
+                    "width": reference.width,
+                    "height": reference.height,
+                    "reference_native": reference_native,
+                    "quick_native": quick_native,
+                    "detail_native": detail_native,
+                },
             }
             if folder is not None:
-                if min(reference.size) < 16:
-                    raise ValueError("LPIPS needs image dimensions of at least 16 pixels")
                 provenance = {}
                 for mode, image in [("quick", qimage), ("detail", dimage)]:
                     index = len(pairs)
@@ -184,7 +212,10 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
                 row["detail"]["lpips"] = scores[index * 2 + 1]
     metric_names = ["psnr", "ssim", "lpips"] if lpips_scorer else ["psnr", "ssim"]
     result = {
-        "comparison_size": size,
+        "requested_comparison_size": size,
+        "comparison_size": common_size,
+        "resize_policy": "never_upscale",
+        "resampling": "Lanczos",
         "quick_job": quick,
         "detail_job": detail,
         "views": rows,
@@ -207,7 +238,10 @@ def main():
     p.add_argument("--quick", required=True)
     p.add_argument("--detail", required=True)
     p.add_argument("--output", type=Path, required=True)
-    p.add_argument("--size", type=int, default=512, help="Common scoring long edge")
+    p.add_argument(
+        "--size", type=int, default=512,
+        help="Requested scoring long-edge cap (also limited by both native renders)",
+    )
     p.add_argument(
         "--lpips-scorer", type=Path, help="Optional offline Brush LPIPS scorer executable"
     )

@@ -1,5 +1,7 @@
 # 留出照片的感知评分
 
+评分尺寸现已限制在双方原生渲染范围内，`--size` 表示请求上限；报告额外记录请求、有效上限及逐视角实际尺寸。[原生尺寸修正](SCORING-SIZE.md)。下文512像素实测重新核对后数值不变。
+
 后续已对[12个6000步模型补充感知评分](PERCEPTUAL-LONG.md)，复用原模型和照片，未重新训练。
 
 2026-10-26。对照脚本新增可选的离线LPIPS评分，读取已有重建的留出图，在相同相机、画幅和尺寸下同时记录PSNR、SSIM及Brush LPIPS-VGG。每张图的处理后摘要、评分器和权重摘要一同保存，缺图或评分不完整时拒绝生成结果。
@@ -10,7 +12,7 @@
 
 `scripts/compare_quality.py` 先检查完整相机JSON、留出拆分、图像集合、渲染及参考图摘要，再统一到指定长边。PSNR / SSIM和LPIPS使用同一份RGB像素；LPIPS输入保存为临时无损PNG，运行结束或失败时清理。原照片、渲染图和历史模型不改写。
 
-`--lpips-scorer` 指定[独立评分程序](benchmarks/lpips_score.rs)。程序一次加载Brush内置VGG权重，在Wgpu / Metal上依次评分，返回带编号的距离；不重新训练或下载模型。协议检查拒绝缺失、重复、越界编号、非有限值、负距离及无法识别的指标 / 权重身份。结果顺序按编号恢复，避免不同视角的得分被错配。没有这个选项时，保留原PSNR / SSIM输出。
+`--lpips-scorer` 指定[独立评分程序](benchmarks/lpips_score.rs)。程序一次加载Brush内置VGG权重，在Wgpu / Metal上依次评分，返回带编号的距离；不重新训练或下载模型。协议检查拒绝缺失、重复、越界编号、非有限值、负距离及无法识别的指标 / 权重身份。结果顺序按编号恢复，避免不同视角的得分被错配。没有这个选项时，只计算PSNR / SSIM。
 
 这里的指标明确标为 **Brush LPIPS-VGG，越低越好**。它使用Brush转换后的半精度存储权重、RGB 0～1输入及模块内的标准化，不与AlexNet、不同权重或不同预处理的LPIPS数字直接混比。[LPIPS官方说明](https://github.com/richzhang/PerceptualSimilarity)区分骨干网络和输入规范；[原论文](https://arxiv.org/abs/1801.03924)为这种感知比较提供依据。
 
