@@ -4,7 +4,13 @@
 
 ## 2026-10-26
 
-### 增加留出图感知评分
+### 长训练模型的感知复查
+
+- 关键结果：给已有12个6000步模型补齐72对LPIPS评分。office平均0.28580 → 0.29160（低为好），8组视角与重复对照中7组变差，与PSNR / SSIM下降一致；pipes均值改善，TUM变化小，默认接入结论保持。
+- 约53秒完成补评分，760个原始文件摘要前后一致，原PSNR / SSIM完整复现。复查office四个模型及两个候选漫游，正常加载；直接复用已有截图，没有重新训练。同步更正旧文档的pipes评分口径、模型总数和论文链接。[基线](https://github.com/sakorman/web-scan/commit/9083b95) · [数据、截图与局限](docs/PERCEPTUAL-LONG.md)
+- 参考[LPIPS](https://arxiv.org/abs/1801.03924)与[2026年感知优化论文](https://arxiv.org/abs/2603.23297)。两次重复不作显著性结论；保留联合指标基线，不为追求通过而重复同一实验。
+
+### 增加留出图感知评分 · [9083b95](https://github.com/sakorman/web-scan/commit/9083b95)
 
 - 关键进展：对照脚本可选离线LPIPS-VGG，和PSNR / SSIM使用相同RGB像素；记录评分器、权重及处理后图片摘要，拒绝缺失 / 重复 / 无效分数，相机或留出参考不一致时先报错。
 - 新跑两组500步默认损失，复用此前感知损失模型。pipes / office的LPIPS为0.65909 → 0.59806、0.49388 → 0.48158（低为好），但只有单次短训练，且训练与评分共用VGG，默认LPIPS仍关闭。127项后端、18项前端、类型和构建通过；四个模型加载、两个新模型漫游正常。[基线](https://github.com/sakorman/web-scan/commit/594134f) · [成绩、成本与截图](docs/PERCEPTUAL-EVAL.md)

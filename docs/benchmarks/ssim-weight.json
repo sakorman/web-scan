@@ -1211,7 +1211,7 @@
       {
         "title": "Drop-In Perceptual Optimization for 3DGS",
         "url": "https://machinelearning.apple.com/research/drop-in",
-        "paper": "https://arxiv.org/abs/2503.18815",
+        "paper": "https://arxiv.org/abs/2603.23297",
         "use": "Perceptual losses can improve human-preferred detail but need matched metrics and resource budgets; this small SSIM-weight screen does not implement WD-R."
       },
       {
