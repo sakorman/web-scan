@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-26",
+  "purpose": "自动内参定位不足时，对同尺寸照片保守重试同镜头内参。",
+  "environment": {
+    "platform": "Apple Silicon macOS",
+    "pycolmap": "3.13.0",
+    "brush_engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "policy": {
+    "requires_uniform_image_dimensions": true,
+    "auto_coverage_threshold": 0.9,
+    "selection": "shared must increase registered images and sparse points; reprojection error must stay within 1.10x of auto"
+  },
+  "configuration": {
+    "camera_model": "SIMPLE_RADIAL",
+    "max_image_size": 1600,
+    "max_num_features": 8192,
+    "guided_matching": true,
+    "num_threads": 4,
+    "ransac_seed": 42,
+    "matching": "exhaustive"
+  },
+  "runs": [
+    {
+      "scene": "ETH3D pipes",
+      "input_images": 14,
+      "image_size": [1600, 1067],
+      "auto": {"registered_images": 14, "sparse_points": 1877, "reprojection_error": 0.8428877365, "attempt_seconds": 5.7686},
+      "retry": {"attempted": false, "reason": "auto_coverage_sufficient"},
+      "result": {"camera_mode_effective": "auto", "sfm_seconds": 5.9281}
+    },
+    {
+      "scene": "ETH3D office",
+      "input_images": 26,
+      "image_size": [1600, 1067],
+      "auto": {"registered_images": 20, "sparse_points": 1806, "reprojection_error": 0.9529911241, "attempt_seconds": 11.007},
+      "shared_retry": {"registered_images": 26, "sparse_points": 2501, "reprojection_error": 0.9701111586, "attempt_seconds": 7.9977},
+      "result": {
+        "camera_mode_effective": "shared",
+        "sfm_seconds": 19.2353,
+        "sfm_and_training_export_seconds": 42.5048,
+        "training": {"steps": 3000, "resolution": 512, "training_views": 22, "evaluation_views": 4, "seconds": 23.2695, "gaussians": 14560, "model_bytes": 3437710, "psnr": 21.30112, "ssim": 0.8796676}
+      }
+    }
+  ],
+  "decision": "adopted: only conservative retry; not a global switch to shared intrinsics and not a quality or speed claim."
+}

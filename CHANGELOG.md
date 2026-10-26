@@ -4,6 +4,12 @@
 
 ## 2026-10-26
 
+### 自动内参的保守回退
+
+- 关键突破：同尺寸的 ETH3D office 照片在自动内参下只定位 20 / 26 张；同镜头重试定位 26 / 26 张，稀疏点 1,806 → 2,501，平均重投影误差仅 0.95299 → 0.97011 px。自动模式现在只在同尺寸且定位率低于 90% 时重试；重试还必须同时增加定位数、稀疏点，并把误差控制在首轮的 110% 内，才会采用。
+- 实测：office 完整位姿阶段为 19.2353 秒（首轮 11.0070 秒加重试 7.9977 秒），随后 3000 步 / 512 像素留出训练完成，生成 14,560 个高斯和 3.28 MiB 完整 SH3 PLY。评分为 PSNR 21.30112、SSIM 0.87967，但留出视图由 3 张变为 4 张，不能与旧自动结果直接比较。pipes 已定位 14 / 14，没有触发重试。质量报告会显示实际采用的相机模式与两轮定位数。[完整记录、数据和复现](docs/CAMERA-FALLBACK.md) · [公开汇总](docs/benchmarks/camera-fallback.json) · [前序基线](https://github.com/sakorman/web-scan/commit/a3874cc)
+- 代价与限制：这用额外的 SfM 时间换取覆盖，不是提速；同尺寸也不能证明未变焦。共同拍摄视角仍有墙面、显示器边缘发软和轻微漂浮亮斑，下一步用精细档和更多不同镜头的实拍复核。参考 [COLMAP 相机模型](https://github.com/colmap/colmap/blob/main/doc/cameras.rst)、[COLMAP 教程](https://github.com/colmap/colmap/blob/main/doc/tutorial.rst) 与 [3D Gaussian Splatting](https://arxiv.org/abs/2308.04079)。
+
 ### 顺序匹配筛查（未采用）
 
 - 关键结果：连续 TUM desk 的 SfM 从 34.1641 秒降到 21.3348 秒，96 张照片仍全部定位；但 3000 步留出 PSNR / SSIM 从 23.11717 / 0.84490 降到 22.85436 / 0.84011，且高斯数减少 13.94%。

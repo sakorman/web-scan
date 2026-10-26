@@ -102,6 +102,8 @@ def run(
     result = {
         "mode": mode,
         "seconds": round(time.monotonic() - started, 4),
+        "camera_mode_effective": scene.get("camera_mode_effective", camera_mode),
+        "camera_mode_retry": scene.get("camera_mode_retry"),
         "registered_images": scene["registered_images"],
         "input_images": scene["input_images"],
         "sparse_points": scene["sparse_points"],
@@ -121,6 +123,13 @@ def main():
     parser.add_argument("--images", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--camera-mode", choices=("auto", "shared"), default="auto")
+    parser.add_argument(
+        "--matching-modes",
+        nargs="+",
+        choices=("exhaustive", "sequential"),
+        default=("exhaustive", "sequential"),
+        help="matching strategies to run in order",
+    )
     parser.add_argument("--overlap", type=int, default=10)
     parser.add_argument(
         "--training-steps",
@@ -165,21 +174,13 @@ def main():
                 run(
                     args.images,
                     args.output,
-                    mode="exhaustive",
+                    mode=mode,
                     camera_mode=args.camera_mode,
                     overlap=args.overlap,
                     training_steps=args.training_steps,
                     resolution=args.resolution,
-                ),
-                run(
-                    args.images,
-                    args.output,
-                    mode="sequential",
-                    camera_mode=args.camera_mode,
-                    overlap=args.overlap,
-                    training_steps=args.training_steps,
-                    resolution=args.resolution,
-                ),
+                )
+                for mode in args.matching_modes
             ],
         }
         (args.output / "summary.json").write_text(

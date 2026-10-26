@@ -125,6 +125,20 @@ def run(root: Path, jid: str):
             )
         timings["training_and_model_export_seconds"] = time.monotonic() - phase
         progress("export", 0.95, "导出模型与预览")
+        warnings = []
+        if scene["registered_images"] < scene["input_images"]:
+            warnings.append(
+                f"{scene['input_images'] - scene['registered_images']} 张照片未成功定位；缺失区域建议补拍。"
+            )
+        if scene.get("camera_mode_effective") not in (None, scene.get("camera_mode")):
+            retry = scene.get("camera_mode_retry", {})
+            auto = retry.get("auto", {})
+            shared = retry.get("shared", {})
+            warnings.append(
+                "自动模式改用同镜头内参："
+                f"定位 {auto.get('registered_images', 0)}/{auto.get('input_images', 0)}"
+                f" → {shared.get('registered_images', 0)}/{shared.get('input_images', 0)}。"
+            )
         report.update(
             seconds=round(time.monotonic() - started, 2),
             pose_source=scene["pose_source"],
@@ -133,17 +147,13 @@ def run(root: Path, jid: str):
             input_images=scene["input_images"],
             calibrated_fixture=session["kind"] == "fixture",
             camera_mode=scene.get("camera_mode", "auto"),
+            camera_mode_effective=scene.get("camera_mode_effective"),
+            camera_mode_retry=scene.get("camera_mode_retry"),
             matching_seed=scene.get("matching_seed"),
             sparse_points=scene.get("sparse_points"),
             reprojection_error=scene.get("reprojection_error"),
             unregistered_images=scene.get("unregistered_images", []),
-            warnings=(
-                [
-                    f"{scene['input_images'] - scene['registered_images']} 张照片未成功定位；缺失区域建议补拍。"
-                ]
-                if scene["registered_images"] < scene["input_images"]
-                else []
-            ),
+            warnings=warnings,
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,
             timings={name: round(value, 4) for name, value in timings.items()},
