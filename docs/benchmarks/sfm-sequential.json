@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-26",
+  "purpose": "筛查有序连续照片的顺序匹配；默认路径保持穷举匹配。",
+  "environment": {
+    "platform": "Apple Silicon macOS",
+    "pycolmap": "3.13.0",
+    "brush_engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "configuration": {
+    "features": {
+      "max_image_size": 1600,
+      "max_num_features": 8192,
+      "guided_matching": true,
+      "num_threads": 4,
+      "ransac_seed": 42
+    },
+    "sequential": {
+      "overlap": 10,
+      "quadratic_overlap": true,
+      "loop_detection": false
+    }
+  },
+  "measurement": "SfM 包含特征提取、匹配、建图和去畸变；TUM 另包含训练、留出评测与导出。每种设置一次运行。",
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "input_images": 14,
+      "camera_mode": "auto",
+      "exhaustive": {"seconds": 6.0253, "registered_images": 14, "sparse_points": 1865, "reprojection_error": 0.842086},
+      "sequential": {"seconds": 5.3619, "registered_images": 11, "sparse_points": 941, "reprojection_error": 0.776612}
+    },
+    {
+      "name": "ETH3D office",
+      "input_images": 26,
+      "camera_mode": "auto",
+      "exhaustive": {"seconds": 11.5196, "registered_images": 20, "sparse_points": 1806, "reprojection_error": 0.952991},
+      "sequential": {"seconds": 7.6244, "registered_images": 18, "sparse_points": 851, "reprojection_error": 0.841506}
+    },
+    {
+      "name": "TUM freiburg1_desk RGB",
+      "input_images": 96,
+      "camera_mode": "shared",
+      "exhaustive": {
+        "seconds": 34.1641,
+        "registered_images": 96,
+        "sparse_points": 16404,
+        "reprojection_error": 1.124571,
+        "training": {"steps": 3000, "resolution": 512, "training_views": 84, "evaluation_views": 12, "seconds": 39.446, "gaussians": 73161, "model_bytes": 17267546, "psnr": 23.11717, "ssim": 0.8449049}
+      },
+      "sequential": {
+        "seconds": 21.3348,
+        "registered_images": 96,
+        "sparse_points": 13590,
+        "reprojection_error": 0.982601,
+        "training": {"steps": 3000, "resolution": 512, "training_views": 84, "evaluation_views": 12, "seconds": 37.4061, "gaussians": 62963, "model_bytes": 14860818, "psnr": 22.854355, "ssim": 0.84011465}
+      }
+    }
+  ],
+  "decision": "not_adopted: ETH3D 定位完整性和稀疏几何下降；TUM 留出 PSNR、SSIM 与细小边缘也下降。"
+}

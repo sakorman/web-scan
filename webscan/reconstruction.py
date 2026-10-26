@@ -6,6 +6,55 @@ from pathlib import Path
 import numpy as np
 
 
+def match_images(database, *, mode="exhaustive", sequential_overlap=10):
+    """Run the chosen COLMAP pairing strategy with the project's fixed checks.
+
+    Sequential matching is intentionally opt-in here.  Its input order is part
+    of the reconstruction contract, while ordinary photo uploads may be a
+    gallery assembled in an arbitrary order.
+    """
+    if mode not in {"exhaustive", "sequential"}:
+        raise ValueError(f"不支持的匹配方式：{mode}")
+    if mode == "sequential" and (
+        not isinstance(sequential_overlap, int) or not 1 <= sequential_overlap <= 50
+    ):
+        raise ValueError("顺序匹配重叠范围需为 1–50")
+
+    import pycolmap
+
+    matching_options = {"num_threads": 4, "guided_matching": True}
+    verification_options = {"ransac": {"random_seed": 42}}
+    if mode == "exhaustive":
+        pycolmap.match_exhaustive(
+            database_path=database,
+            device=pycolmap.Device.cpu,
+            matching_options=matching_options,
+            verification_options=verification_options,
+        )
+        return {"mode": mode, "ransac_seed": 42}
+    if mode == "sequential":
+        pairing_options = pycolmap.SequentialPairingOptions(
+            overlap=sequential_overlap,
+            quadratic_overlap=True,
+            loop_detection=False,
+            num_threads=4,
+        )
+        pycolmap.match_sequential(
+            database_path=database,
+            device=pycolmap.Device.cpu,
+            matching_options=matching_options,
+            pairing_options=pairing_options,
+            verification_options=verification_options,
+        )
+        return {
+            "mode": mode,
+            "overlap": sequential_overlap,
+            "quadratic_overlap": True,
+            "loop_detection": False,
+            "ransac_seed": 42,
+        }
+
+
 def normalize_scene(points, views):
     center = np.median(points, axis=0)
     radius = float(np.percentile(np.linalg.norm(points - center, axis=1), 90))
@@ -21,7 +70,14 @@ def normalize_scene(points, views):
     }
 
 
-def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
+def estimate_scene(
+    images: Path,
+    work: Path,
+    progress,
+    camera_mode="auto",
+    matching_mode="exhaustive",
+    sequential_overlap=10,
+):
     import pycolmap
 
     work.mkdir(parents=True, exist_ok=True)
@@ -57,11 +113,8 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
         },
     )
     progress("sfm", 0.17, "匹配视角与几何验证")
-    pycolmap.match_exhaustive(
-        database_path=db,
-        device=pycolmap.Device.cpu,
-        matching_options={"num_threads": 4, "guided_matching": True},
-        verification_options={"ransac": {"random_seed": 42}},
+    matching = match_images(
+        db, mode=matching_mode, sequential_overlap=sequential_overlap
     )
     sparse = work / "sparse"
     sparse.mkdir(exist_ok=True)
@@ -127,7 +180,8 @@ def estimate_scene(images: Path, work: Path, progress, camera_mode="auto"):
         "input_images": total,
         "pose_source": "COLMAP",
         "camera_mode": camera_mode,
-        "matching_seed": 42,
+        "matching_seed": matching["ransac_seed"],
+        "matching": matching,
         "sparse_points": best.num_points3D(),
         "reprojection_error": best.compute_mean_reprojection_error(),
         "unregistered_images": sorted(

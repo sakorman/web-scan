@@ -4,6 +4,13 @@
 
 ## 2026-10-26
 
+### 顺序匹配筛查（未采用）
+
+- 关键结果：连续 TUM desk 的 SfM 从 34.1641 秒降到 21.3348 秒，96 张照片仍全部定位；但 3000 步留出 PSNR / SSIM 从 23.11717 / 0.84490 降到 22.85436 / 0.84011，且高斯数减少 13.94%。
+- ETH3D pipes / office 的匹配时间也变短，却分别少定位 3 / 2 张照片，稀疏点减少 49.54% / 52.88%。默认仍用穷举匹配；顺序方式只保留为有序连续照片的显式筛查工具，不影响既有任务或模型。[基线](https://github.com/sakorman/web-scan/commit/b82376d) · [完整记录与复现](docs/SFM-SEQUENTIAL.md) · [公开汇总](docs/benchmarks/sfm-sequential.json)
+- 全量回归先发现无效参数会在校验前加载原生 PyCOLMAP；已改为先拒绝无效方式或重叠范围。顺序匹配、图像顺序和缓存 11 项聚焦回归，以及 141 项后端、18 项前端、类型检查和构建均通过。
+- 参考 [COLMAP 配对说明](https://github.com/colmap/colmap/blob/main/doc/tutorial.rst) 与 [PyCOLMAP 顺序配对 API](https://colmap.github.io/legacy/3.13/pycolmap/pycolmap.html)。一次运行不足以下结论；后续需在更多连续采集和重复中验证定位完整性。
+
 ### 限制评分到共同原生尺寸
 
 - 关键修复：128像素渲染不再因请求512而被隐式放大。报告同时记录请求上限、共同原生上限和逐视角尺寸，处理短边舍入及首张照片较小的旧报告；尺寸不足时明确报错。
