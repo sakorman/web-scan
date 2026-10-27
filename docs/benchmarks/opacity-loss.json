@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-27",
+  "status": "not_adopted",
+  "baseline_commit": "fd092ee4386fc979ef75e95f3bf4f0a1107b34cf",
+  "question": "Does increasing only Brush raw-opacity decay from 1e-9 to 1e-7 reduce visible floaters without degrading held-out image quality?",
+  "engine": {
+    "name": "Brush 0.3.0",
+    "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "config": {
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 150000,
+    "sh_degree": 3,
+    "seed": 42,
+    "refine_every": 100,
+    "growth_stop_iter": 2400,
+    "evaluation_mode": "holdout",
+    "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"
+  },
+  "candidate_change": {
+    "baseline_opacity_loss_weight": "1e-9",
+    "candidate_opacity_loss_weight": "1e-7",
+    "other_cli_options": "unchanged"
+  },
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "training_views": 12,
+      "evaluation_views": 2,
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "order": ["baseline", "candidate"],
+      "baseline": {"seconds": 24.2145, "gaussians": 11339, "ply_bytes": 2677554, "brush_evaluation": {"psnr": 18.078367, "ssim": 0.74931437}},
+      "candidate": {"seconds": 24.2164, "gaussians": 10198, "ply_bytes": 2408278, "brush_evaluation": {"psnr": 17.410639, "ssim": 0.7547955}},
+      "common_grid": {"long_edge": 512, "views": 2, "baseline": {"psnr": 17.927158454361326, "ssim": 0.7257286012172699}, "candidate": {"psnr": 17.296570862800642, "ssim": 0.7286201417446136}}
+    },
+    {
+      "name": "ETH3D office",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "training_views": 22,
+      "evaluation_views": 4,
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "order": ["candidate", "baseline"],
+      "baseline": {"seconds": 25.2149, "gaussians": 14399, "ply_bytes": 3399714, "brush_evaluation": {"psnr": 20.491665, "ssim": 0.86918837}},
+      "candidate": {"seconds": 25.2049, "gaussians": 13432, "ply_bytes": 3171502, "brush_evaluation": {"psnr": 20.468777, "ssim": 0.8724328}},
+      "common_grid": {"long_edge": 512, "views": 4, "baseline": {"psnr": 20.369512151190026, "ssim": 0.8537887632846832}, "candidate": {"psnr": 20.344383932938065, "ssim": 0.8580000996589661}}
+    }
+  ],
+  "verification": {
+    "camera_geometry_identical": true,
+    "evaluation_photo_sets_identical": true,
+    "reference_sha256_checked": true,
+    "models": "all four outputs are complete SH3 PLY",
+    "scoring": "native evaluation plus compare_quality.py on a no-upscale common 512 grid"
+  },
+  "limits": [
+    "One paired run per scene screens clear regressions but does not estimate general parameter effects.",
+    "Held-out photos participate in upstream SfM, so this is not an independent end-to-end evaluation.",
+    "Fewer Gaussians and smaller PLY do not establish a same-quality speed or compression gain."
+  ],
+  "references": [
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs#L187-L205",
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs",
+    "https://arxiv.org/abs/2508.02493",
+    "https://arxiv.org/abs/2308.04079",
+    "https://www.eth3d.net/datasets"
+  ]
+}
