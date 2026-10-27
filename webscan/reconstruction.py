@@ -10,6 +10,9 @@ import numpy as np
 
 AUTO_SHARED_RETRY_COVERAGE = 0.9
 MAX_SHARED_RETRY_REPROJECTION_RATIO = 1.1
+MIN_SPARSE_VIEW_SUPPORT = 64
+SPARSE_VIEW_SUPPORT_FRACTION = 0.4
+MAX_SPARSE_VIEW_SUPPORT_FLOOR = 300
 
 
 def match_images(database, *, mode="exhaustive", sequential_overlap=10):
@@ -73,6 +76,41 @@ def normalize_scene(points, views):
         "center": center.tolist(),
         "scale": radius,
         "units": "relative",
+    }
+
+
+def sparse_view_coverage(reconstruction, valid_point_ids):
+    """Summarize sparse-track support for each registered photo.
+
+    A registered image can still be weakly connected to the sparse model.  The
+    result is deliberately a capture diagnostic, not a reconstruction-quality
+    score: a photo with a low count may be valid for a small or textureless
+    part of the scene, while a high count cannot prove every surface is seen.
+    """
+    support = []
+    valid_point_ids = set(valid_point_ids)
+    for image in reconstruction.images.values():
+        observations = sum(
+            point.has_point3D() and point.point3D_id in valid_point_ids
+            for point in image.points2D
+        )
+        support.append({"image_name": image.name, "observations": observations})
+    support.sort(key=lambda item: item["image_name"])
+    if not support:
+        return None
+    median = float(np.median([item["observations"] for item in support]))
+    floor = min(
+        MAX_SPARSE_VIEW_SUPPORT_FLOOR,
+        max(MIN_SPARSE_VIEW_SUPPORT, round(median * SPARSE_VIEW_SUPPORT_FRACTION)),
+    )
+    weak = [item for item in support if item["observations"] < floor]
+    return {
+        "method": "valid_sparse_track_observations",
+        "valid_sparse_points": len(valid_point_ids),
+        "registered_views": len(support),
+        "median_observations": round(median, 1),
+        "support_floor": floor,
+        "weak_views": weak,
     }
 
 
@@ -301,11 +339,19 @@ def estimate_scene(
         undistort_options={"max_image_size": 1600},
     )
     result = pycolmap.Reconstruction(undistorted / "sparse")
-    points = [
-        p for p in result.points3D.values() if p.track.length() >= 2 and p.error < 4
+    # Keep COLMAP's point order for the downstream initializer.  The coverage
+    # diagnostic needs a membership set, but the training seed must not depend
+    # on hash iteration order.
+    valid_points = [
+        (point_id, point)
+        for point_id, point in result.points3D.items()
+        if point.track.length() >= 2 and point.error < 4
     ]
+    valid_point_ids = {point_id for point_id, _ in valid_points}
+    points = [point for _, point in valid_points]
     if len(points) < 12:
         raise RuntimeError("有效三维点不足，请围绕目标缓慢移动并增加纹理与光照。")
+    coverage = sparse_view_coverage(result, valid_point_ids)
     xyz = np.array([p.xyz for p in points], dtype=np.float32)
     rgb = np.array([p.color for p in points], dtype=np.float32) / 255
     views = []
@@ -341,6 +387,7 @@ def estimate_scene(
         "sparse_points": summary["sparse_points"],
         "reprojection_error": summary["reprojection_error"],
         "unregistered_images": summary["unregistered_images"],
+        "sparse_view_coverage": coverage,
     }
 
 

@@ -130,6 +130,12 @@ def run(root: Path, jid: str):
             warnings.append(
                 f"{scene['input_images'] - scene['registered_images']} 张照片未成功定位；缺失区域建议补拍。"
             )
+        coverage = scene.get("sparse_view_coverage")
+        if coverage and coverage.get("weak_views"):
+            warnings.append(
+                f"{len(coverage['weak_views'])} 张已定位照片的稀疏支撑偏低；"
+                "如对应区域发软或有空洞，请补拍与相邻画面重叠的过渡视角。"
+            )
         if scene.get("camera_mode_effective") not in (None, scene.get("camera_mode")):
             retry = scene.get("camera_mode_retry", {})
             auto = retry.get("auto", {})
@@ -153,6 +159,7 @@ def run(root: Path, jid: str):
             sparse_points=scene.get("sparse_points"),
             reprojection_error=scene.get("reprojection_error"),
             unregistered_images=scene.get("unregistered_images", []),
+            sparse_view_coverage=coverage,
             warnings=warnings,
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,

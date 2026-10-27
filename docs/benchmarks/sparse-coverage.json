@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-27",
+  "scope": "capture diagnostic only; no SfM or Brush training parameter change",
+  "environment": {"platform": "Apple Silicon macOS", "pycolmap": "3.13.0", "brush": "0.3.0"},
+  "coverage_rule": {
+    "valid_point_track_length_min": 2,
+    "valid_point_reprojection_error_max_px": 4,
+    "support_floor": "min(300, max(64, round(median_observations * 0.4)))"
+  },
+  "runs": [
+    {
+      "scene": "ETH3D pipes", "input_images": 14, "registered_images": 14,
+      "camera_mode": "shared", "steps": 3000, "resolution": 512, "max_points": 150000, "evaluation_views": 2,
+      "sparse_points": 1845, "reprojection_error_px": 0.937267187086593,
+      "coverage": {"valid_sparse_points": 1845, "median_observations": 282.0, "support_floor": 113, "weak_views": [{"image_name": "0012-33a7296ae63e476fb9e3f71227f25bea.jpg", "observations": 111}]},
+      "model": {"gaussians": 10978, "ply_bytes": 2592358}, "evaluation": {"psnr": 17.915062, "ssim": 0.7528827},
+      "timings_seconds": {"sfm": 5.7511, "training_and_export": 23.2554, "end_to_end": 29.07}
+    },
+    {
+      "scene": "ETH3D office", "input_images": 26, "registered_images": 26,
+      "camera_mode": "shared", "steps": 3000, "resolution": 512, "max_points": 150000, "evaluation_views": 4,
+      "sparse_points": 2508, "reprojection_error_px": 0.9782765865739612,
+      "coverage": {"valid_sparse_points": 2508, "median_observations": 306.0, "support_floor": 122, "weak_views": [{"image_name": "0003-ac6e7098e3ef410cac8cff9876d823a7.jpg", "observations": 107}, {"image_name": "0004-d155ac724de74f04a46e6b32969ef778.jpg", "observations": 87}, {"image_name": "0005-811c347ffe9b479bbc01280efa6837c2.jpg", "observations": 63}, {"image_name": "0009-a07d99a1f24f4245a9e0e446c1807c8f.jpg", "observations": 112}, {"image_name": "0013-54d2f46cf67a40e2ba5e31144769dd73.jpg", "observations": 95}]},
+      "model": {"gaussians": 14488, "ply_bytes": 3420718}, "evaluation": {"psnr": 21.485437, "ssim": 0.87813103},
+      "timings_seconds": {"sfm": 8.5278, "training_and_export": 24.2911, "end_to_end": 32.9}
+    }
+  ],
+  "limitations": [
+    "This is a relative capture diagnostic, not a reconstruction-quality score.",
+    "Holdout images participated in upstream SfM and are not an independent end-to-end evaluation.",
+    "Brush does not guarantee deterministic runs on this platform."
+  ]
+}
