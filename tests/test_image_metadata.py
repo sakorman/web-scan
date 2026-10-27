@@ -9,6 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 from PIL import Image, ImageOps
 
+from webscan import api
 from webscan.api import create_app
 from webscan.image_metadata import focal_length_35mm, focal_length_exif
 
@@ -25,6 +26,15 @@ def jpeg(focal=35, orientation=1):
     exif[34853] = {1: "N", 2: (30.0, 0.0, 0.0)}
     result = io.BytesIO()
     image.save(result, "JPEG", exif=exif)
+    return result.getvalue()
+
+
+def jpeg_size(size, focal=35):
+    image = Image.new("RGB", size, "#245da8")
+    exif = Image.Exif()
+    exif[34665] = {41989: focal}
+    result = io.BytesIO()
+    image.save(result, "JPEG", quality=90, exif=exif)
     return result.getvalue()
 
 
@@ -56,6 +66,56 @@ def test_upload_preserves_focal_prior_without_other_exif_or_pixel_changes(tmp_pa
             f"/api/sessions/{sid}/frames", files={"file": ("photo.jpg", raw)}
         ).json()
         assert duplicate["id"] == frame["id"] and duplicate["duplicate"]
+
+
+def test_upload_safely_normalizes_larger_source_and_records_transform(
+    tmp_path, monkeypatch
+):
+    # Use a scaled boundary so this checks the high-resolution branch without
+    # allocating a production-sized photo during every unit-test run.
+    monkeypatch.setattr(api, "MAX_SOURCE_PIXELS", 10_000)
+    monkeypatch.setattr(api, "NORMALIZED_IMAGE_MAX_DIMENSION", 100)
+    monkeypatch.setattr(api.Image, "MAX_IMAGE_PIXELS", 10_000)
+    raw = jpeg_size((120, 80), focal=28)
+    app = create_app(tmp_path, run_worker=False)
+    with TestClient(app) as client:
+        sid = client.post("/api/sessions", json={}).json()["id"]
+        response = client.post(
+            f"/api/sessions/{sid}/frames",
+            data={"metadata": json.dumps({"capture_index": 3})},
+            files={"file": ("large.jpg", raw)},
+        )
+        assert response.status_code == 200
+        frame = response.json()
+        assert (frame["width"], frame["height"]) == (100, 67)
+        saved = client.get(f"/api/sessions/{sid}/frames/{frame['id']}").content
+        with Image.open(io.BytesIO(saved)) as output:
+            assert output.size == (100, 67)
+            assert focal_length_35mm(output) == 28
+        recorded = client.get(f"/api/sessions/{sid}").json()["frames"][0]["metadata"]
+        assert recorded["capture_index"] == 3
+        assert recorded["normalization"] == {
+            "source_width": 120,
+            "source_height": 80,
+            "source_pixels": 9600,
+            "normalized_width": 100,
+            "normalized_height": 67,
+            "resized": True,
+        }
+
+
+def test_upload_rejects_source_over_safe_pixel_cap(tmp_path, monkeypatch):
+    monkeypatch.setattr(api, "MAX_SOURCE_PIXELS", 10_000)
+    monkeypatch.setattr(api.Image, "MAX_IMAGE_PIXELS", 10_000)
+    app = create_app(tmp_path, run_worker=False)
+    with TestClient(app) as client:
+        sid = client.post("/api/sessions", json={}).json()["id"]
+        response = client.post(
+            f"/api/sessions/{sid}/frames",
+            files={"file": ("oversize.jpg", jpeg_size((125, 81)))},
+        )
+    assert response.status_code == 422
+    assert "原始图片超过 4800 万像素" in response.json()["detail"]
 
 
 @pytest.mark.parametrize(

@@ -11,6 +11,7 @@ import math
 import os
 import re
 import time
+import warnings
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
@@ -30,7 +31,11 @@ from .samples import SAMPLES, prepared_photos, sample_info
 ROOT = Path(__file__).resolve().parent.parent
 MAX_FILE = 16 * 1024 * 1024
 MIN_CAPTURE_FRAMES = 12
-Image.MAX_IMAGE_PIXELS = 24_000_000
+MAX_SOURCE_PIXELS = 48_000_000
+NORMALIZED_IMAGE_MAX_DIMENSION = 2400
+# Pillow raises at twice this value.  The explicit check in ``ingest_image``
+# rejects between 48 and 96 MP before decoding pixel data.
+Image.MAX_IMAGE_PIXELS = MAX_SOURCE_PIXELS
 DOWNLOAD_TYPES = {
     "gaussians.ply": ("model.ply", "application/octet-stream"),
     "preview.splat": ("preview.splat", "application/octet-stream"),
@@ -62,18 +67,28 @@ def valid_id(value):
 def ingest_image(store, sid, raw, metadata):
     """Decode first; serialize final write with finalize through the same DB lock."""
     try:
-        with Image.open(io.BytesIO(raw)) as original:
-            if original.width * original.height > 24_000_000:
-                raise ValueError("图片超过 2400 万像素")
-            focal_exif = focal_length_exif(original)
-            image = ImageOps.exif_transpose(original).convert("RGB")
-            image.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
-            if min(image.size) < 32:
-                raise ValueError("图片尺寸过小")
-            out = io.BytesIO()
-            image.save(out, format="JPEG", quality=94, exif=focal_exif)
-            content = out.getvalue()
-            width, height = image.size
+        # Let the explicit source limit return a product-facing error rather
+        # than Pillow's warning.  No pixels are decoded before that check.
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", Image.DecompressionBombWarning)
+            with Image.open(io.BytesIO(raw)) as original:
+                source_width, source_height = original.size
+                source_pixels = source_width * source_height
+                if source_pixels > MAX_SOURCE_PIXELS:
+                    raise ValueError("原始图片超过 4800 万像素")
+                focal_exif = focal_length_exif(original)
+                image = ImageOps.exif_transpose(original).convert("RGB")
+                normalized_from = image.size
+                image.thumbnail(
+                    (NORMALIZED_IMAGE_MAX_DIMENSION, NORMALIZED_IMAGE_MAX_DIMENSION),
+                    Image.Resampling.LANCZOS,
+                )
+                if min(image.size) < 32:
+                    raise ValueError("图片尺寸过小")
+                out = io.BytesIO()
+                image.save(out, format="JPEG", quality=94, exif=focal_exif)
+                content = out.getvalue()
+                width, height = image.size
     except (
         UnidentifiedImageError,
         OSError,
@@ -105,10 +120,29 @@ def ingest_image(store, sid, raw, metadata):
         fid = uid()
         target = store.session_dir(sid) / "images" / f"{fid}.jpg"
         target.write_bytes(content)
+        stored_metadata = {
+            **metadata,
+            "normalization": {
+                "source_width": source_width,
+                "source_height": source_height,
+                "source_pixels": source_pixels,
+                "normalized_width": width,
+                "normalized_height": height,
+                "resized": normalized_from != (width, height),
+            },
+        }
         try:
             db.execute(
                 "INSERT INTO frames VALUES(?,?,?,?,?,?,?)",
-                (fid, sid, sha, width, height, len(content), json.dumps(metadata)),
+                (
+                    fid,
+                    sid,
+                    sha,
+                    width,
+                    height,
+                    len(content),
+                    json.dumps(stored_metadata),
+                ),
             )
         except Exception:
             target.unlink(missing_ok=True)
@@ -195,6 +229,8 @@ def create_app(
             ),
             "max_frames": 200,
             "min_capture_frames": MIN_CAPTURE_FRAMES,
+            "max_source_pixels": MAX_SOURCE_PIXELS,
+            "normalized_image_max_dimension": NORMALIZED_IMAGE_MAX_DIMENSION,
         }
 
     @app.get("/api/sessions")

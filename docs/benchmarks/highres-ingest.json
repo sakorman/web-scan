@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-27",
+  "scope": "safe high-resolution ingest normalization",
+  "source_limits": {
+    "compressed_file_bytes": 16777216,
+    "source_pixels": 48000000,
+    "normalized_long_edge": 2400,
+    "project_frames": 200,
+    "project_bytes": 536870912
+  },
+  "synthetic_boundary_check": {
+    "purpose": "ingest boundary only; not a reconstruction or throughput benchmark",
+    "source_size": [6000, 5000],
+    "source_pixels": 30000000,
+    "source_bytes": 470184,
+    "normalized_size": [2400, 2000],
+    "normalized_bytes": 75684,
+    "focal_length_35mm": 28,
+    "request_seconds": 0.1616
+  },
+  "real_photo_regression": {
+    "dataset": "ETH3D",
+    "source": "https://www.eth3d.net/datasets",
+    "license": "CC BY-NC-SA 4.0",
+    "environment": "Apple Silicon macOS; Brush 0.3.0; PyCOLMAP 3.13.0; serial GPU use",
+    "config": {
+      "backend": "brush",
+      "camera_mode": "shared",
+      "steps": 3000,
+      "resolution_long_edge": 512,
+      "max_points": 150000,
+      "evaluation_mode": "holdout",
+      "training_seed": 42
+    },
+    "runs": [
+      {
+        "scene": "pipes",
+        "session_id": "4a89fcdc3f9945f09ed87c0199a6d2bc",
+        "job_id": "25cf29db5f5e4fe199d4ca31bbc204c8",
+        "source_frame_size": [1600, 1067],
+        "source_frames": 14,
+        "resized_frames": 0,
+        "registered_images": 14,
+        "sparse_points": 1845,
+        "reprojection_error": 0.937267187086593,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation_size": [512, 336],
+        "psnr": 18.793522,
+        "ssim": 0.760213,
+        "gaussians": 10903,
+        "ply_bytes": 2574658,
+        "sparse_coverage": {
+          "median_observations": 282,
+          "support_floor": 113,
+          "weak_views": 1
+        },
+        "timings_seconds": {
+          "sfm": 5.8022,
+          "training_and_export": 23.2572,
+          "end_to_end": 29.13
+        },
+        "sfm_reused": false
+      },
+      {
+        "scene": "office",
+        "session_id": "613a5cc96058428c93a56c03d7ed7487",
+        "job_id": "307c9f9411a94b1d934b5195288b128e",
+        "source_frame_size": [1600, 1067],
+        "source_frames": 26,
+        "resized_frames": 0,
+        "registered_images": 26,
+        "sparse_points": 2508,
+        "reprojection_error": 0.9769666624797718,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation_size": [512, 333],
+        "psnr": 21.803417,
+        "ssim": 0.87744385,
+        "gaussians": 14323,
+        "ply_bytes": 3381778,
+        "sparse_coverage": {
+          "median_observations": 306,
+          "support_floor": 122,
+          "weak_views": 5
+        },
+        "timings_seconds": {
+          "sfm": 8.4836,
+          "training_and_export": 23.2779,
+          "end_to_end": 31.84
+        },
+        "sfm_reused": false
+      }
+    ]
+  },
+  "limits": [
+    "ETH3D inputs are already 1600px long edge, so the reconstruction runs only check regression of the ordinary ingestion path.",
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "Brush training is not deterministic; independent runs are not a direct quality or speed comparison."
+  ],
+  "references": {
+    "pillow_max_image_pixels": "https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.MAX_IMAGE_PIXELS",
+    "colmap_cameras": "https://colmap.github.io/cameras.html",
+    "gaussian_splatting": "https://arxiv.org/abs/2308.04079"
+  }
+}
