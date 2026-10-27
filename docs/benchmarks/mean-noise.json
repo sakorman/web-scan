@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-27",
+  "status": "not_adopted",
+  "baseline_commit": "0efaaefd27a5eab032ac839817cc7a519ff71fb8",
+  "question": "Does halving only Brush mean noise for low-opacity Gaussians from 40 to 20 improve held-out indoor reconstruction quality without a material cost?",
+  "engine": {"name": "Brush 0.3.0", "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"},
+  "config": {"steps": 3000, "resolution": 512, "max_points": 150000, "sh_degree": 3, "seed": 42, "refine_every": 100, "growth_stop_iter": 2400, "evaluation_mode": "holdout", "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"},
+  "candidate_change": {"baseline_mean_noise_weight": "40", "candidate_mean_noise_weight": "20", "other_cli_options": "unchanged"},
+  "scenes": [
+    {"name": "ETH3D pipes", "input_images": 14, "registered_images": 14, "unregistered_images": [], "training_views": 12, "evaluation_views": 2, "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee", "order": ["baseline", "candidate"], "baseline": {"seconds": 23.303, "gaussians": 11749, "ply_bytes": 2774314, "brush_evaluation": {"psnr": 18.439257, "ssim": 0.76464325}}, "candidate": {"seconds": 23.2823, "gaussians": 11700, "ply_bytes": 2762750, "brush_evaluation": {"psnr": 19.510319, "ssim": 0.78259456}}, "common_grid": {"long_edge": 512, "views": 2, "baseline": {"psnr": 18.29582267774706, "ssim": 0.7387617230415344}, "candidate": {"psnr": 19.332235821819516, "ssim": 0.7570370733737946}}},
+    {"name": "ETH3D office", "input_images": 26, "registered_images": 26, "unregistered_images": [], "training_views": 22, "evaluation_views": 4, "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1", "order": ["candidate", "baseline"], "baseline": {"seconds": 23.2953, "gaussians": 14189, "ply_bytes": 3350154, "brush_evaluation": {"psnr": 21.736626, "ssim": 0.87698436}}, "candidate": {"seconds": 23.2973, "gaussians": 13913, "ply_bytes": 3285018, "brush_evaluation": {"psnr": 21.154276, "ssim": 0.8699945}}, "common_grid": {"long_edge": 512, "views": 4, "baseline": {"psnr": 21.58068430700643, "ssim": 0.862507551908493}, "candidate": {"psnr": 21.011217473528603, "ssim": 0.8551097214221954}}}
+  ],
+  "verification": {"camera_geometry_identical": true, "evaluation_photo_sets_identical": true, "reference_sha256_checked": true, "models": "all four outputs are complete SH3 PLY", "scoring": "native evaluation plus compare_quality.py on a no-upscale common 512 grid"},
+  "limits": ["One paired run per scene screens a clear cross-scene trade-off but does not estimate general parameter effects.", "Held-out photos participate in upstream SfM, so this is not an independent end-to-end evaluation.", "The engine does not guarantee deterministic training; the fixed seed is a reproducibility aid rather than proof of a deterministic outcome."],
+  "references": ["https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs", "https://github.com/ArthurBrussee/brush/commit/9fc23abdbdc99cfee1bebb31197d6927a0c89c7c", "https://arxiv.org/abs/2308.04079", "https://www.eth3d.net/datasets"]
+}

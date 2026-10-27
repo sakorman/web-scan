@@ -4,6 +4,11 @@
 
 ## 2026-10-27
 
+### 低透明度均值噪声筛查（未采用）
+
+- 关键结果：仅将 Brush 对低透明度高斯的均值噪声从 `40` 降到 `20` 后，pipes 的共同512网格 PSNR / SSIM 增加 1.03641 dB / 0.018275，但 office 下降 0.56947 dB / 0.007398；不以单场景收益替换默认参数。
+- 实测与取舍：固定 ETH3D 位姿、输入摘要、留出照片、3,000步、512像素、15万高斯预算、SH3 和种子42，串行完成两场景各一组真实 Metal 训练，只切换均值噪声。四个输出通过完整SH3、相机、留出照片和共同网格复评；候选仅少 0.4% / 1.9% 高斯，耗时无显著差异，既不是稳定压缩也不是提速。上游将这类噪声保持到训练末尾，当前证据不足以削弱默认值。后续优先评估采集覆盖或可验证的几何约束。[完整记录、截图与复现](docs/MEAN-NOISE.md) · [公开汇总](docs/benchmarks/mean-noise.json) · [基线](https://github.com/sakorman/web-scan/commit/0efaaef) · [Brush 0.3.0 配置](https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs) · [上游改动](https://github.com/ArthurBrussee/brush/commit/9fc23abdbdc99cfee1bebb31197d6927a0c89c7c) · [3D Gaussian Splatting](https://arxiv.org/abs/2308.04079)
+
 ### 高梯度扩张比例筛查（未采用）
 
 - 关键结果：将 Brush 每轮细化的高梯度扩张比例从 `0.1` 提到 `0.2`，pipes / office 的共同512网格 SSIM 增加 0.00860 / 0.01325，但 PSNR 分别下降 0.25367 / 0.76810 dB。候选分别多出 365.32% / 278.26% 的高斯，训练、评测和导出慢约 21.7%，不作为默认质量档。

@@ -1,0 +1,10 @@
+--- baseline.py
++++ candidate.py
+@@ -201,6 +201,8 @@
+         "--max-resolution",
+         str(config["resolution"]),
++        "--mean-noise-weight",
++        "20",
+         "--refine-every",
+         "100",
+         "--growth-stop-iter",
