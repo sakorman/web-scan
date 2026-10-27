@@ -14,6 +14,8 @@ import statistics
 import time
 from pathlib import Path
 
+import numpy as np
+
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -35,6 +37,35 @@ def freeze_adapters(output, sources):
         shutil.copy2(source, target)
         frozen[label] = target
     return frozen
+
+
+def write_comparison_artifacts(work, scene, report):
+    """Write the task artifacts required by the image comparison utility."""
+    sfm = work / "sfm"
+    artifacts = work / "artifacts"
+    sfm.mkdir(parents=True, exist_ok=True)
+    artifacts.mkdir(parents=True, exist_ok=True)
+    (sfm / "scene.json").write_text(json.dumps(scene, ensure_ascii=False, indent=2))
+    matrix = np.asarray(scene["views"][0]["view"], dtype=np.float64)
+    position = (-matrix[:3, :3].T @ matrix[:3, 3]).tolist()
+    (artifacts / "cameras.json").write_text(
+        json.dumps(
+            {
+                "position": position,
+                "target": [0, 0, 0],
+                "coordinate_system": "COLMAP right-down-forward",
+                "views": [
+                    {key: value for key, value in view.items() if key != "image"}
+                    for view in scene["views"]
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+    (artifacts / "report.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2)
+    )
 
 
 def run_order(scene, repeat):
@@ -176,6 +207,7 @@ def main():
                 report = adapter.train(
                     local_scene, work, work / "artifacts", config, progress
                 )
+                write_comparison_artifacts(work, local_scene, report)
                 elapsed = time.monotonic() - started
                 exports = list((work / "brush").glob("export_*.ply"))
                 stats = {

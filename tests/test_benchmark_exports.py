@@ -1,6 +1,13 @@
+import json
+
 import pytest
 
-from scripts.benchmark_exports import freeze_adapters, run_order, summarize
+from scripts.benchmark_exports import (
+    freeze_adapters,
+    run_order,
+    summarize,
+    write_comparison_artifacts,
+)
 
 
 def records():
@@ -70,3 +77,32 @@ def test_adapter_edits_do_not_change_an_experiment_in_progress(tmp_path):
     source.write_text("setting = 50\n")
     assert all(path.read_text() == "setting = 100\n" for path in frozen.values())
     assert frozen["baseline"] != frozen["candidate"]
+
+
+def test_comparison_artifacts_match_task_layout(tmp_path):
+    scene = {
+        "views": [
+            {
+                "image": "/prepared/images/0000.jpg",
+                "image_name": "0000.jpg",
+                "view": [
+                    [1, 0, 0, 2],
+                    [0, 1, 0, 3],
+                    [0, 0, 1, 4],
+                    [0, 0, 0, 1],
+                ],
+                "K": [[100, 0, 50], [0, 100, 25], [0, 0, 1]],
+            }
+        ]
+    }
+    report = {"steps": 500, "evaluation": {"psnr": 20.0, "ssim": 0.8}}
+
+    write_comparison_artifacts(tmp_path, scene, report)
+
+    assert json.loads((tmp_path / "sfm/scene.json").read_text()) == scene
+    cameras = json.loads((tmp_path / "artifacts/cameras.json").read_text())
+    assert cameras["position"] == [-2.0, -3.0, -4.0]
+    assert cameras["views"] == [
+        {key: value for key, value in scene["views"][0].items() if key != "image"}
+    ]
+    assert json.loads((tmp_path / "artifacts/report.json").read_text()) == report

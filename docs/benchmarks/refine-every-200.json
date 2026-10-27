@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-27",
+  "status": "not_adopted",
+  "baseline_commit": "1564b8c9f07507b642cb948d1637123a4a0c2077",
+  "question": "Does changing only Brush refinement frequency from 100 to 200 preserve held-out quality while reducing training cost?",
+  "engine": {
+    "name": "Brush 0.3.0",
+    "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "config": {
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 150000,
+    "sh_degree": 3,
+    "seed": 42,
+    "growth_stop_iter": 2400,
+    "evaluation_mode": "holdout",
+    "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"
+  },
+  "candidate_change": {
+    "baseline_refine_every": 100,
+    "candidate_refine_every": 200,
+    "other_cli_options": "unchanged"
+  },
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "training_views": 12,
+      "evaluation_views": 2,
+      "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee",
+      "order": ["baseline", "candidate"],
+      "baseline": {
+        "seconds": 23.1917,
+        "gaussians": 11562,
+        "ply_bytes": 2730182,
+        "brush_evaluation": {"psnr": 18.89809, "ssim": 0.75847137}
+      },
+      "candidate": {
+        "seconds": 22.1652,
+        "gaussians": 3992,
+        "ply_bytes": 943661,
+        "brush_evaluation": {"psnr": 18.486774, "ssim": 0.73982066}
+      },
+      "common_grid": {
+        "long_edge": 512,
+        "views": 2,
+        "baseline": {"psnr": 18.707960567729025, "ssim": 0.7329556047916412},
+        "candidate": {"psnr": 18.296713708749067, "ssim": 0.7117244899272919}
+      }
+    },
+    {
+      "name": "ETH3D office",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "training_views": 22,
+      "evaluation_views": 4,
+      "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1",
+      "order": ["candidate", "baseline"],
+      "baseline": {
+        "seconds": 23.1741,
+        "gaussians": 14293,
+        "ply_bytes": 3374698,
+        "brush_evaluation": {"psnr": 21.125591, "ssim": 0.87255967}
+      },
+      "candidate": {
+        "seconds": 22.1858,
+        "gaussians": 5132,
+        "ply_bytes": 1212701,
+        "brush_evaluation": {"psnr": 20.841503, "ssim": 0.85550743}
+      },
+      "common_grid": {
+        "long_edge": 512,
+        "views": 4,
+        "baseline": {"psnr": 20.987702974309766, "ssim": 0.8575213104486465},
+        "candidate": {"psnr": 20.6828798505177, "ssim": 0.8387588262557983}
+      }
+    }
+  ],
+  "verification": {
+    "camera_geometry_identical": true,
+    "evaluation_photo_sets_identical": true,
+    "reference_sha256_checked": true,
+    "models": "all four outputs are complete SH3 PLY",
+    "artifact_layout": "benchmark output includes scene, cameras and report for compare_quality.py"
+  },
+  "limits": [
+    "One paired run per scene is a screening result, not a general parameter estimate.",
+    "Held-out photos participate in upstream SfM, so this is not an independent end-to-end evaluation.",
+    "The smaller candidate model and PLY do not establish a same-quality speedup."
+  ],
+  "references": [
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs",
+    "https://arxiv.org/abs/2308.04079",
+    "https://www.eth3d.net/datasets"
+  ]
+}
