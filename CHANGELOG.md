@@ -4,6 +4,11 @@
 
 ## 2026-10-27
 
+### 高梯度扩张比例筛查（未采用）
+
+- 关键结果：将 Brush 每轮细化的高梯度扩张比例从 `0.1` 提到 `0.2`，pipes / office 的共同512网格 SSIM 增加 0.00860 / 0.01325，但 PSNR 分别下降 0.25367 / 0.76810 dB。候选分别多出 365.32% / 278.26% 的高斯，训练、评测和导出慢约 21.7%，不作为默认质量档。
+- 实测与取舍：固定 ETH3D 相机、输入摘要、留出照片、3,000步、512像素、15万高斯预算、SH3 和种子42，只切换扩张比例；两场景各完成一组串行训练、完整SH3检查与共同网格复评。pipes 的单张留出图里斜向漂浮线条较少，但全视角 PSNR 与模型代价均不支持接入。后续应优先改善拍摄覆盖或引入有验证的几何监督，而不是单纯扩张更多高斯。[完整记录、截图与复现](docs/GROWTH-SELECT.md) · [公开汇总](docs/benchmarks/growth-select.json) · [基线](https://github.com/sakorman/web-scan/commit/b16428b) · [Brush 0.3.0 细化实现](https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs#L398-L432) · [AD-GS](https://doi.org/10.1145/3757377.3763993)
+
 ### 透明度正则筛查（未采用）
 
 - 关键结果：将 Brush 原始 opacity 正则从 `1e-9` 提到 `1e-7` 后，pipes / office 的共同512网格 SSIM 分别增加 0.00289 / 0.00421，但 PSNR 分别下降 0.63059 / 0.02513 dB；pipes 的管道接头与门板边界更软。默认权重不变，不把更小 PLY 或近似相同用时写成优化。

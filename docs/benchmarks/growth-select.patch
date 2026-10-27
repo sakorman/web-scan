@@ -1,0 +1,11 @@
+--- baseline.py
++++ candidate.py
+@@ -201,6 +201,8 @@
+         str(config["resolution"]),
+         "--refine-every",
+         "100",
++        "--growth-select-fraction",
++        "0.2",
+         "--growth-stop-iter",
+         str(int(steps * 0.8)),
+         "--export-every",

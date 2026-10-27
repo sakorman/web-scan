@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-27",
+  "status": "not_adopted",
+  "baseline_commit": "b16428bc0c80dc5e26669240cd13c1405f0d0af1",
+  "question": "Does doubling only Brush high-gradient growth selection from 0.1 to 0.2 improve held-out indoor reconstruction quality enough to justify the added model size and time?",
+  "engine": {"name": "Brush 0.3.0", "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"},
+  "config": {"steps": 3000, "resolution": 512, "max_points": 150000, "sh_degree": 3, "seed": 42, "refine_every": 100, "growth_stop_iter": 2400, "evaluation_mode": "holdout", "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"},
+  "candidate_change": {"baseline_growth_select_fraction": "0.1", "candidate_growth_select_fraction": "0.2", "other_cli_options": "unchanged"},
+  "scenes": [
+    {"name": "ETH3D pipes", "input_images": 14, "registered_images": 14, "unregistered_images": [], "training_views": 12, "evaluation_views": 2, "input_sha256": "ac2009a1fc0350fc9ac184c8d36b1e44149be76fa3916b3c592104616eb022ee", "order": ["baseline", "candidate"], "baseline": {"seconds": 23.2557, "gaussians": 11408, "ply_bytes": 2693838, "brush_evaluation": {"psnr": 18.792044, "ssim": 0.7695889}}, "candidate": {"seconds": 28.3034, "gaussians": 53084, "ply_bytes": 12529374, "brush_evaluation": {"psnr": 18.539303, "ssim": 0.77767414}}, "common_grid": {"long_edge": 512, "views": 2, "baseline": {"psnr": 18.63054762416042, "ssim": 0.7445319890975952}, "candidate": {"psnr": 18.37687453405851, "ssim": 0.7531301379203796}}},
+    {"name": "ETH3D office", "input_images": 26, "registered_images": 26, "unregistered_images": [], "training_views": 22, "evaluation_views": 4, "input_sha256": "19e69efb3899b6ae8b915d67bcc905f9079ec5abb14b4930db66130a908304c1", "order": ["candidate", "baseline"], "baseline": {"seconds": 23.2388, "gaussians": 14310, "ply_bytes": 3378710, "brush_evaluation": {"psnr": 21.863678, "ssim": 0.87508404}}, "candidate": {"seconds": 28.2906, "gaussians": 54129, "ply_bytes": 12775994, "brush_evaluation": {"psnr": 21.060347, "ssim": 0.8870934}}, "common_grid": {"long_edge": 512, "views": 4, "baseline": {"psnr": 21.715321895224363, "ssim": 0.8604638576507568}, "candidate": {"psnr": 20.947218872415174, "ssim": 0.8737144321203232}}}
+  ],
+  "verification": {"camera_geometry_identical": true, "evaluation_photo_sets_identical": true, "reference_sha256_checked": true, "models": "all four outputs are complete SH3 PLY", "scoring": "native evaluation plus compare_quality.py on a no-upscale common 512 grid"},
+  "limits": ["One paired run per scene screens clear regressions but does not estimate general parameter effects.", "Held-out photos participate in upstream SfM, so this is not an independent end-to-end evaluation.", "More Gaussians and a larger PLY do not establish a quality improvement."],
+  "references": ["https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs#L398-L432", "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs", "https://doi.org/10.1145/3757377.3763993", "https://arxiv.org/abs/2508.02493", "https://www.eth3d.net/datasets"]
+}
