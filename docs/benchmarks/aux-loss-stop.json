@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-28",
+  "status": "not_adopted",
+  "question": "Does ending Brush opacity and scale auxiliary regularization at the same 80% point as densification improve fixed-geometry held-out quality without a model or runtime cost?",
+  "engine": {
+    "name": "Brush 0.3.0",
+    "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "config": {
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 150000,
+    "sh_degree": 3,
+    "seed": 42,
+    "refine_every": 100,
+    "growth_stop_iter": 2400,
+    "evaluation_mode": "holdout",
+    "baseline_aux_loss_time": 0.9,
+    "candidate_aux_loss_time": 0.8,
+    "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"
+  },
+  "snapshots": {
+    "baseline_adapter_sha256": "63c17f0cfbf8c2b7cd4ae3abd5c8974175175266cf742fb80b0ebf9c81164a12",
+    "candidate_adapter_sha256": "4f79cb403b3cf3d2f7d1da7c0653975fc9de3cd23784490725e7c2fd61a86a4f",
+    "raw_results_sha256": "604cb8073e35efbb8971f1a424adc58425f86849dea6a9c407dc6f27b83a6e82"
+  },
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "source_job": "72d3fbeb762b4f26b4d05afe57b9d83e",
+      "input_images": 14,
+      "registered_images": 14,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "runs": [
+        {"order": ["baseline", "candidate"], "baseline": {"seconds": 23.2476, "gaussians": 10789, "psnr": 17.945244, "ssim": 0.7430736}, "candidate": {"seconds": 23.2098, "gaussians": 11169, "psnr": 18.821795, "ssim": 0.75211686}},
+        {"order": ["candidate", "baseline"], "baseline": {"seconds": 23.2601, "gaussians": 10685, "psnr": 18.339855, "ssim": 0.7560415}, "candidate": {"seconds": 23.2404, "gaussians": 11395, "psnr": 18.86094, "ssim": 0.7562464}}
+      ],
+      "common_grid_512_mean": {"baseline": {"psnr": 18.017177309816745, "ssim": 0.7256093770265579}, "candidate": {"psnr": 18.69358655658608, "ssim": 0.7300765663385391}}
+    },
+    {
+      "name": "ETH3D office",
+      "source_job": "3218cf389cdf403c942fb98ccf588f80",
+      "input_images": 26,
+      "registered_images": 26,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "runs": [
+        {"order": ["candidate", "baseline"], "baseline": {"seconds": 23.2091, "gaussians": 14247, "psnr": 21.836428, "ssim": 0.8737404}, "candidate": {"seconds": 23.2322, "gaussians": 14584, "psnr": 21.543386, "ssim": 0.87386566}},
+        {"order": ["baseline", "candidate"], "baseline": {"seconds": 23.27, "gaussians": 14519, "psnr": 21.88055, "ssim": 0.882574}, "candidate": {"seconds": 23.2716, "gaussians": 14558, "psnr": 21.396008, "ssim": 0.8695404}}
+      ],
+      "common_grid_512_mean": {"baseline": {"psnr": 21.69829186320694, "ssim": 0.86367217451334}, "candidate": {"psnr": 21.32437193417549, "ssim": 0.8569505512714386}}
+    }
+  ],
+  "verification": {
+    "camera_geometry_identical": true,
+    "evaluation_photo_sets_identical": true,
+    "reference_sha256_checked": true,
+    "models": "all eight outputs are complete SH3 PLY",
+    "scoring": "native evaluation plus compare_quality.py on a no-upscale common 512 grid"
+  },
+  "limits": [
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "Two repeats reject this candidate but do not estimate a general effect.",
+    "Sub-second timing differences are below the one-second process polling precision."
+  ],
+  "references": [
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs#L143-L199",
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs",
+    "https://openaccess.thecvf.com/content/CVPR2025/html/Wang_Steepest_Descent_Density_Control_for_Compact_3D_Gaussian_Splatting_CVPR_2025_paper.html",
+    "https://doi.org/10.1145/3757377.3763993",
+    "https://www.eth3d.net/datasets"
+  ]
+}

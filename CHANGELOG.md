@@ -4,6 +4,12 @@
 
 ## 2026-10-28
 
+### 辅助约束结束时刻筛查（未采用）
+
+- 关键结论：将 Brush 透明度、尺度辅助约束的结束点从训练进度 `0.9` 对齐到增点停止的 `0.8`。pipes 的共同512网格均值 PSNR / SSIM 提高 0.676409 dB / 0.004467，但高斯数增加 5.08%；office 同时下降 0.373920 dB / 0.006722，且高斯数增加 1.31%。
+- 验证与取舍：固定 ETH3D pipes / office 的相机、输入、留出照片、3,000步、512像素、15万高斯预算、SH3和种子42，以相反顺序各重复一次，完成8次串行训练。完整 SH3 PLY、相机、参考摘要和共同网格均通过校验；office 第二轮办公桌视角出现前景发黑与缺失，默认参数不改动。
+- 代价与限制：训练、留出评测与导出均值差为 -0.03 s / +0.01 s，低于轮询精度，不能称为提速。两次重复只足以排除本候选；留出照片仍参与 SfM。[完整记录与截图](docs/AUX-LOSS-STOP.md) · [公开汇总](docs/benchmarks/aux-loss-stop.json) · [Brush 训练实现](https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs#L143-L199) · [SteepGS](https://openaccess.thecvf.com/content/CVPR2025/html/Wang_Steepest_Descent_Density_Control_for_Compact_3D_Gaussian_Splatting_CVPR_2025_paper.html) · [AD-GS](https://doi.org/10.1145/3757377.3763993)
+
 ### 增点梯度阈值筛查（未采用）
 
 - 关键结论：借鉴增密控制研究，将 Brush 的高梯度扩张阈值由 `4e-5` 提到 `8e-5`，两组模型约少 20% 高斯，但没有得到稳定的同画质提速。pipes 两次共同512网格均值 PSNR / SSIM 下降 0.291553 dB / 0.012075；office PSNR 增 0.312880 dB、SSIM 降 0.001683。
