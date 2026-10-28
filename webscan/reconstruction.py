@@ -13,6 +13,7 @@ MAX_SHARED_RETRY_REPROJECTION_RATIO = 1.1
 MIN_SPARSE_VIEW_SUPPORT = 64
 SPARSE_VIEW_SUPPORT_FRACTION = 0.4
 MAX_SPARSE_VIEW_SUPPORT_FLOOR = 300
+CAMERA_SPACING_OUTLIER_RATIO = 2.5
 
 
 def match_images(database, *, mode="exhaustive", sequential_overlap=10):
@@ -111,6 +112,53 @@ def sparse_view_coverage(reconstruction, valid_point_ids):
         "median_observations": round(median, 1),
         "support_floor": floor,
         "weak_views": weak,
+    }
+
+
+def camera_spacing_coverage(views):
+    """Summarize unusually isolated registered camera positions.
+
+    Poses are already normalized with the sparse scene, so the values are only
+    comparable inside one reconstruction.  This intentionally says nothing
+    about the input order: galleries and imported photo sets may be unordered.
+    """
+    positions = []
+    for view in views:
+        matrix = np.asarray(view["view"], dtype=np.float64)
+        position = -matrix[:3, :3].T @ matrix[:3, 3]
+        positions.append((view["image_name"], position))
+    positions.sort(key=lambda item: item[0])
+    if len(positions) < 3:
+        return None
+    names = [name for name, _ in positions]
+    centers = np.array([position for _, position in positions], dtype=np.float64)
+    distances = np.linalg.norm(centers[:, None, :] - centers[None, :, :], axis=2)
+    np.fill_diagonal(distances, np.inf)
+    nearest = distances.min(axis=1)
+    median = float(np.median(nearest))
+    if median <= np.finfo(np.float64).eps:
+        return {
+            "method": "nearest_registered_camera_spacing",
+            "units": "scene_normalized",
+            "registered_views": len(positions),
+            "median_nearest_distance": 0.0,
+            "spacing_floor": None,
+            "isolated_views": [],
+            "reason": "coincident_camera_centers",
+        }
+    floor = median * CAMERA_SPACING_OUTLIER_RATIO
+    isolated = [
+        {"image_name": name, "nearest_distance": round(float(distance), 6)}
+        for name, distance in zip(names, nearest)
+        if distance > floor
+    ]
+    return {
+        "method": "nearest_registered_camera_spacing",
+        "units": "scene_normalized",
+        "registered_views": len(positions),
+        "median_nearest_distance": round(median, 6),
+        "spacing_floor": round(floor, 6),
+        "isolated_views": isolated,
     }
 
 
@@ -371,6 +419,7 @@ def estimate_scene(
             }
         )
     xyz, transform = normalize_scene(xyz, views)
+    spacing = camera_spacing_coverage(views)
     return {
         "points": xyz,
         "colors": rgb,
@@ -388,6 +437,7 @@ def estimate_scene(
         "reprojection_error": summary["reprojection_error"],
         "unregistered_images": summary["unregistered_images"],
         "sparse_view_coverage": coverage,
+        "camera_spacing_coverage": spacing,
     }
 
 

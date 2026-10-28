@@ -1,4 +1,6 @@
-from webscan.reconstruction import sparse_view_coverage
+import numpy as np
+
+from webscan.reconstruction import camera_spacing_coverage, sparse_view_coverage
 
 
 class Point:
@@ -39,3 +41,50 @@ def test_sparse_coverage_marks_only_relatively_weak_registered_views():
 
 def test_sparse_coverage_handles_empty_reconstructions():
     assert sparse_view_coverage(type("Empty", (), {"images": {}})(), set()) is None
+
+
+def view(name, center):
+    matrix = np.eye(4)
+    matrix[:3, 3] = -np.asarray(center)
+    return {"image_name": name, "view": matrix.tolist()}
+
+
+def test_camera_spacing_marks_only_relatively_isolated_registered_views():
+    coverage = camera_spacing_coverage(
+        [
+            view("0002.jpg", [0.2, 0, 0]),
+            view("0003.jpg", [1.0, 0, 0]),
+            view("0000.jpg", [0, 0, 0]),
+            view("0001.jpg", [0.1, 0, 0]),
+        ]
+    )
+
+    assert coverage == {
+        "method": "nearest_registered_camera_spacing",
+        "units": "scene_normalized",
+        "registered_views": 4,
+        "median_nearest_distance": 0.1,
+        "spacing_floor": 0.25,
+        "isolated_views": [
+            {"image_name": "0003.jpg", "nearest_distance": 0.8}
+        ],
+    }
+
+
+def test_camera_spacing_handles_coincident_or_too_few_camera_centers():
+    assert camera_spacing_coverage([view("0000.jpg", [0, 0, 0])]) is None
+    assert camera_spacing_coverage(
+        [
+            view("0000.jpg", [0, 0, 0]),
+            view("0001.jpg", [0, 0, 0]),
+            view("0002.jpg", [0, 0, 0]),
+        ]
+    ) == {
+        "method": "nearest_registered_camera_spacing",
+        "units": "scene_normalized",
+        "registered_views": 3,
+        "median_nearest_distance": 0.0,
+        "spacing_floor": None,
+        "isolated_views": [],
+        "reason": "coincident_camera_centers",
+    }

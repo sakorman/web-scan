@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-28",
+  "scope": "registered-camera nearest-neighbor spacing diagnostic",
+  "rule": {
+    "method": "nearest_registered_camera_spacing",
+    "units": "scene_normalized",
+    "minimum_registered_views": 3,
+    "spacing_floor": "2.5 * median nearest-camera distance",
+    "isolated_view_rule": "nearest distance > spacing floor",
+    "input_order_used": false
+  },
+  "environment": "Apple Silicon macOS; PyCOLMAP 3.13.0; Brush 0.3.0; serial GPU use",
+  "config": {
+    "backend": "brush",
+    "camera_mode": "shared",
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 150000,
+    "evaluation_mode": "holdout",
+    "training_seed": 42
+  },
+  "dataset": {
+    "name": "ETH3D",
+    "url": "https://www.eth3d.net/datasets",
+    "license": "CC BY-NC-SA 4.0"
+  },
+  "runs": [
+    {
+      "scene": "pipes",
+      "session_id": "4a89fcdc3f9945f09ed87c0199a6d2bc",
+      "job_id": "72d3fbeb762b4f26b4d05afe57b9d83e",
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1845,
+      "reprojection_error": 0.937267187086593,
+      "camera_spacing": {
+        "median_nearest_distance": 0.081482,
+        "spacing_floor": 0.203706,
+        "isolated_views": [
+          {"image_name": "0007-4d479ad91e794ba382babfdad1f1ba4d.jpg", "nearest_distance": 0.255536}
+        ]
+      },
+      "sparse_track_coverage": {
+        "support_floor": 113,
+        "weak_views": ["0012-8f96b05b4d3f4167a10d116d35d9820d.jpg"]
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation_size": [512, 336],
+      "psnr": 18.814209,
+      "ssim": 0.76881766,
+      "gaussians": 11180,
+      "ply_bytes": 2640030,
+      "timings_seconds": {"sfm": 5.8728, "training_and_export": 23.2891, "end_to_end": 29.23},
+      "sfm_reused": false
+    },
+    {
+      "scene": "office",
+      "session_id": "613a5cc96058428c93a56c03d7ed7487",
+      "job_id": "3218cf389cdf403c942fb98ccf588f80",
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2518,
+      "reprojection_error": 0.9677003703907899,
+      "camera_spacing": {
+        "median_nearest_distance": 0.034839,
+        "spacing_floor": 0.087098,
+        "isolated_views": [
+          {"image_name": "0019-1b24f391bb80493caee3212a975ec503.jpg", "nearest_distance": 0.087514},
+          {"image_name": "0022-d28315b019ba4f3abf1d5ebeb3f08912.jpg", "nearest_distance": 0.0997},
+          {"image_name": "0023-0f746a6cee9d41b9ab0e566dafe9407d.jpg", "nearest_distance": 0.087765},
+          {"image_name": "0024-cb8dfa606c494090850b4b725516808a.jpg", "nearest_distance": 0.087765},
+          {"image_name": "0025-d98db4510fce4f4e89c5d369b14a2c9f.jpg", "nearest_distance": 0.158117}
+        ]
+      },
+      "sparse_track_coverage": {
+        "support_floor": 123,
+        "weak_views": [
+          "0003-99f4f153fcd449bcb3b47728175b8afb.jpg",
+          "0004-78df3659ff9e4535a8ee9ca40e9e7ad0.jpg",
+          "0005-2e03839709f9452e990db995662b7d8f.jpg",
+          "0008-9d8c2a3926b24624931609dcbf0b12a6.jpg",
+          "0009-0d0e0c6010174b1c89f501d1ea02ea81.jpg",
+          "0013-261318ea61b4472c9d38385131765e3c.jpg"
+        ]
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation_size": [512, 333],
+      "psnr": 22.28945,
+      "ssim": 0.8865431,
+      "gaussians": 14605,
+      "ply_bytes": 3448330,
+      "timings_seconds": {"sfm": 8.6644, "training_and_export": 23.2318, "end_to_end": 31.98},
+      "sfm_reused": false
+    }
+  ],
+  "limits": [
+    "Scene-normalized distances are comparable only inside the same reconstruction.",
+    "The diagnostic does not infer capture sequence, overlap, orientation, visibility, texture, or parallax quality.",
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "Brush training is not deterministic; separate runs do not demonstrate a quality or speed gain."
+  ],
+  "references": {
+    "colmap_capture_guidance": "https://colmap.github.io/tutorial.html",
+    "colmap_camera_models": "https://colmap.github.io/cameras.html",
+    "gaussian_splatting": "https://arxiv.org/abs/2308.04079",
+    "sparse_pose_research": "https://arxiv.org/abs/2509.17246"
+  }
+}

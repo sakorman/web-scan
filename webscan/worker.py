@@ -136,6 +136,12 @@ def run(root: Path, jid: str):
                 f"{len(coverage['weak_views'])} 张已定位照片的稀疏支撑偏低；"
                 "如对应区域发软或有空洞，请补拍与相邻画面重叠的过渡视角。"
             )
+        spacing = scene.get("camera_spacing_coverage")
+        if spacing and spacing.get("isolated_views"):
+            warnings.append(
+                f"{len(spacing['isolated_views'])} 张已定位照片与最近相机的间隔偏大；"
+                "请复查该位置是否有足够重叠的过渡照片。"
+            )
         if scene.get("camera_mode_effective") not in (None, scene.get("camera_mode")):
             retry = scene.get("camera_mode_retry", {})
             auto = retry.get("auto", {})
@@ -160,6 +166,7 @@ def run(root: Path, jid: str):
             reprojection_error=scene.get("reprojection_error"),
             unregistered_images=scene.get("unregistered_images", []),
             sparse_view_coverage=coverage,
+            camera_spacing_coverage=spacing,
             warnings=warnings,
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,
