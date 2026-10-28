@@ -1,8 +1,10 @@
 import numpy as np
+from PIL import Image as PILImage
 
 from webscan.reconstruction import (
     camera_direction_coverage,
     camera_spacing_coverage,
+    image_detail_coverage,
     sparse_view_coverage,
 )
 
@@ -141,3 +143,28 @@ def test_camera_direction_reports_wide_headings_and_too_few_views():
         "narrow_coverage": False,
         "narrow_p90_threshold_degrees": 20.0,
     }
+
+
+def test_image_detail_marks_only_a_strong_relative_outlier(tmp_path):
+    sharp = np.indices((96, 96)).sum(axis=0) % 2 * 255
+    paths = []
+    for index in range(3):
+        path = tmp_path / f"sharp-{index}.jpg"
+        PILImage.fromarray(sharp.astype("uint8")).save(path, quality=95)
+        paths.append(path)
+    flat = tmp_path / "flat.jpg"
+    PILImage.new("L", (96, 96), 127).save(flat)
+    coverage = image_detail_coverage(
+        [
+            {"image_name": path.name, "image": str(path)}
+            for path in [*paths, flat]
+        ]
+    )
+    assert coverage["method"] == "downsampled_central_gradient_energy"
+    assert coverage["registered_views"] == 4
+    assert coverage["low_detail_views"] == [
+        {"image_name": "flat.jpg", "detail_score": 0.0}
+    ]
+    assert image_detail_coverage(
+        [{"image_name": paths[0].name, "image": str(paths[0])}]
+    ) is None

@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-29",
+  "change": "relative image-detail diagnostic only; no photo filtering or training-parameter change",
+  "method": {
+    "name": "downsampled_central_gradient_energy",
+    "max_long_edge": 512,
+    "minimum_registered_views": 4,
+    "relative_floor": 0.25,
+    "scope": "registered undistorted photos within one reconstruction"
+  },
+  "config": {
+    "backend": "Brush 0.3.0",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 300000,
+    "camera_mode": "shared",
+    "evaluation_mode": "holdout",
+    "training_seed": 42,
+    "color_model": "SH3"
+  },
+  "runs": [
+    {
+      "scene": "ETH3D pipes",
+      "job": "918975b11578454384d5ba480d09de77",
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1845,
+      "reprojection_error": 0.9372671871,
+      "image_detail": {
+        "median": 0.006142,
+        "floor": 0.001535,
+        "low_detail_views": []
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {"psnr": 18.624418, "ssim": 0.7598312},
+      "gaussians": 10811,
+      "model_bytes": 2552946,
+      "timings_seconds": {"sfm": 6.0273, "training_export": 23.2273, "end_to_end": 29.31},
+      "sfm_reused": false
+    },
+    {
+      "scene": "ETH3D office",
+      "job": "94624532d2904560bb5c8bc46b97e8f4",
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2519,
+      "reprojection_error": 0.9679252629,
+      "image_detail": {
+        "median": 0.004133,
+        "floor": 0.001033,
+        "low_detail_views": [
+          {"photo": 4, "score": 0.000709},
+          {"photo": 5, "score": 0.000572},
+          {"photo": 6, "score": 0.00072}
+        ]
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {"psnr": 21.26175, "ssim": 0.8808228},
+      "gaussians": 14611,
+      "model_bytes": 3449746,
+      "timings_seconds": {"sfm": 8.6403, "training_export": 24.2832, "end_to_end": 33.0},
+      "sfm_reused": false
+    }
+  ],
+  "validation": {
+    "unit": "three textured checkerboards plus one flat image reports only the flat image; fewer than four views report no diagnostic",
+    "browser": "office quality report showed photos 4-6 and the download panel listed PLY, splat, cameras and report",
+    "artifact_checks": "both jobs passed full SH3 PLY, camera, held-out render and artifact validation"
+  },
+  "limits": [
+    "Not an absolute blur score or a motion-blur classifier.",
+    "Held-out photos also participated in SfM.",
+    "No paired diagnostic-off timing or quality comparison was performed."
+  ],
+  "sources": [
+    "https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=890060",
+    "https://arxiv.org/abs/2403.04926",
+    "https://arxiv.org/abs/2308.04079"
+  ]
+}

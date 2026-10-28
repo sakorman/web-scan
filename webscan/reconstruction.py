@@ -15,6 +15,8 @@ SPARSE_VIEW_SUPPORT_FRACTION = 0.4
 MAX_SPARSE_VIEW_SUPPORT_FLOOR = 300
 CAMERA_SPACING_OUTLIER_RATIO = 2.5
 CAMERA_DIRECTION_NARROW_P90_DEGREES = 20.0
+IMAGE_DETAIL_OUTLIER_RATIO = 0.25
+IMAGE_DETAIL_MAX_LONG_EDGE = 512
 
 
 def match_images(database, *, mode="exhaustive", sequential_overlap=10):
@@ -197,6 +199,65 @@ def camera_direction_coverage(views):
         "max_pairwise_angle_degrees": round(float(np.max(pairwise)), 1),
         "narrow_coverage": p90 < CAMERA_DIRECTION_NARROW_P90_DEGREES,
         "narrow_p90_threshold_degrees": CAMERA_DIRECTION_NARROW_P90_DEGREES,
+    }
+
+
+def image_detail_coverage(views):
+    """Find registered photos with unusually little visible image detail.
+
+    This is a relative, within-capture measurement.  Squared central
+    difference energy falls for defocus and motion blur, but it also falls on
+    a blank wall, a dark frame, or a uniformly lit surface.  It therefore
+    supplies a review hint rather than a blur label or an automatic filter.
+    """
+    from PIL import Image
+
+    scores = []
+    for view in views:
+        try:
+            with Image.open(view["image"]) as image:
+                width, height = image.size
+                scale = min(1.0, IMAGE_DETAIL_MAX_LONG_EDGE / max(width, height))
+                resized = image.convert("L").resize(
+                    (max(3, round(width * scale)), max(3, round(height * scale))),
+                    Image.Resampling.BILINEAR,
+                )
+                gray = np.asarray(resized, dtype=np.float32) / 255.0
+        except (OSError, KeyError):
+            continue
+        dx = gray[1:-1, 2:] - gray[1:-1, :-2]
+        dy = gray[2:, 1:-1] - gray[:-2, 1:-1]
+        score = float(np.mean(dx * dx + dy * dy))
+        if np.isfinite(score):
+            scores.append({"image_name": view["image_name"], "detail_score": score})
+    if len(scores) < 4:
+        return None
+    scores.sort(key=lambda item: item["image_name"])
+    median = float(np.median([item["detail_score"] for item in scores]))
+    if median <= np.finfo(np.float64).eps:
+        return {
+            "method": "downsampled_central_gradient_energy",
+            "registered_views": len(scores),
+            "reason": "no_measurable_image_detail",
+            "low_detail_views": [],
+        }
+    floor = median * IMAGE_DETAIL_OUTLIER_RATIO
+    low = [
+        {
+            "image_name": item["image_name"],
+            "detail_score": round(item["detail_score"], 6),
+        }
+        for item in scores
+        if item["detail_score"] < floor
+    ]
+    return {
+        "method": "downsampled_central_gradient_energy",
+        "units": "relative_normalized_intensity_squared",
+        "registered_views": len(scores),
+        "max_long_edge": IMAGE_DETAIL_MAX_LONG_EDGE,
+        "median_detail_score": round(median, 6),
+        "detail_floor": round(floor, 6),
+        "low_detail_views": low,
     }
 
 
@@ -459,6 +520,7 @@ def estimate_scene(
     xyz, transform = normalize_scene(xyz, views)
     spacing = camera_spacing_coverage(views)
     directions = camera_direction_coverage(views)
+    image_detail = image_detail_coverage(views)
     return {
         "points": xyz,
         "colors": rgb,
@@ -478,6 +540,7 @@ def estimate_scene(
         "sparse_view_coverage": coverage,
         "camera_spacing_coverage": spacing,
         "camera_direction_coverage": directions,
+        "image_detail_coverage": image_detail,
     }
 
 

@@ -153,6 +153,17 @@ def run(root: Path, jid: str):
                 "多数已定位相机的朝向接近；请补拍侧向或反向视角，"
                 "不要只沿同一朝向移动。"
             )
+        image_detail = scene.get("image_detail_coverage")
+        if image_detail and image_detail.get("reason") == "no_measurable_image_detail":
+            warnings.append(
+                "已定位照片几乎没有可测图像细节；请检查是否拍到纯色表面、"
+                "失焦、抖动或严重曝光不足。"
+            )
+        elif image_detail and image_detail.get("low_detail_views"):
+            warnings.append(
+                f"{len(image_detail['low_detail_views'])} 张已定位照片的图像细节明显偏低；"
+                "请复查是否为纯色区域、失焦、抖动或严重曝光问题。"
+            )
         if scene.get("camera_mode_effective") not in (None, scene.get("camera_mode")):
             retry = scene.get("camera_mode_retry", {})
             auto = retry.get("auto", {})
@@ -179,6 +190,7 @@ def run(root: Path, jid: str):
             sparse_view_coverage=coverage,
             camera_spacing_coverage=spacing,
             camera_direction_coverage=directions,
+            image_detail_coverage=image_detail,
             warnings=warnings,
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,
