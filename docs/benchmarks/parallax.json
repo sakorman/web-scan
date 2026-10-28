@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-29",
+  "scope": "surface existing coincident-camera-center capture warning",
+  "rule": {
+    "source": "nearest_registered_camera_spacing",
+    "units": "scene_normalized",
+    "minimum_registered_views": 3,
+    "trigger": "all nearest-camera distances are numerically coincident",
+    "reason": "coincident_camera_centers",
+    "camera_direction_used": false,
+    "capture_order_used": false
+  },
+  "environment": "Apple Silicon macOS; PyCOLMAP 3.13.0; Brush 0.3.0; serial GPU use",
+  "config": {
+    "backend": "brush",
+    "camera_mode": "shared",
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 300000,
+    "evaluation_mode": "holdout",
+    "training_seed": 42
+  },
+  "dataset": {
+    "name": "ETH3D",
+    "url": "https://www.eth3d.net/datasets",
+    "license": "CC BY-NC-SA 4.0"
+  },
+  "runs": [
+    {
+      "scene": "pipes",
+      "session_id": "4a89fcdc3f9945f09ed87c0199a6d2bc",
+      "job_id": "3f65dc0a5d394f8a9073ad321874f38b",
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1845,
+      "reprojection_error": 0.937267187086593,
+      "camera_spacing": {
+        "median_nearest_distance": 0.081482,
+        "spacing_floor": 0.203706,
+        "coincident_camera_centers": false,
+        "isolated_view_count": 1
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation_size": [512, 336],
+      "psnr": 18.994553,
+      "ssim": 0.7605778,
+      "gaussians": 10840,
+      "ply_bytes": 2559790,
+      "timings_seconds": {"sfm_cache_restore": 0.022, "training_and_export": 23.2918, "end_to_end": 23.35},
+      "sfm_reused": true
+    },
+    {
+      "scene": "office",
+      "session_id": "613a5cc96058428c93a56c03d7ed7487",
+      "job_id": "390caba887354a5a95b9ec4145b75938",
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2518,
+      "reprojection_error": 0.9690637526223953,
+      "camera_spacing": {
+        "median_nearest_distance": 0.03481,
+        "spacing_floor": 0.087025,
+        "coincident_camera_centers": false,
+        "isolated_view_count": 5
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation_size": [512, 333],
+      "psnr": 22.210938,
+      "ssim": 0.8832617,
+      "gaussians": 14617,
+      "ply_bytes": 3451162,
+      "timings_seconds": {"sfm_cache_restore": 0.0322, "training_and_export": 23.2509, "end_to_end": 23.32},
+      "sfm_reused": true
+    }
+  ],
+  "limits": [
+    "The diagnostic only surfaces exact coincident centers in an otherwise completed photo reconstruction.",
+    "It does not measure baseline magnitude, direction, field of view, overlap, occlusion, texture, or surface completeness.",
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "Brush training is not deterministic; independent runs do not demonstrate a quality or speed gain."
+  ],
+  "references": {
+    "colmap_capture_guidance": "https://colmap.github.io/tutorial.html",
+    "colmap_camera_models": "https://colmap.github.io/cameras.html",
+    "gaussian_splatting": "https://arxiv.org/abs/2308.04079"
+  }
+}

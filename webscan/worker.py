@@ -137,7 +137,12 @@ def run(root: Path, jid: str):
                 "如对应区域发软或有空洞，请补拍与相邻画面重叠的过渡视角。"
             )
         spacing = scene.get("camera_spacing_coverage")
-        if spacing and spacing.get("isolated_views"):
+        if spacing and spacing.get("reason") == "coincident_camera_centers":
+            warnings.append(
+                "已定位相机的位置重合；仅转动镜头无法提供三维深度所需的视差，"
+                "请围绕目标做小幅横移后补拍。"
+            )
+        elif spacing and spacing.get("isolated_views"):
             warnings.append(
                 f"{len(spacing['isolated_views'])} 张已定位照片与最近相机的间隔偏大；"
                 "请复查该位置是否有足够重叠的过渡照片。"
