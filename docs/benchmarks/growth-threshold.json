@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-28",
+  "status": "not_adopted",
+  "question": "Can doubling Brush's growth gradient threshold from 0.00004 to 0.00008 reduce Gaussian count or training time without reducing held-out quality?",
+  "engine": {
+    "name": "Brush 0.3.0",
+    "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "config": {
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 150000,
+    "sh_degree": 3,
+    "seed": 42,
+    "refine_every": 100,
+    "growth_stop_iter": 2400,
+    "evaluation_mode": "holdout",
+    "baseline_growth_grad_threshold": 0.00004,
+    "candidate_growth_grad_threshold": 0.00008,
+    "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"
+  },
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "source_job": "72d3fbeb762b4f26b4d05afe57b9d83e",
+      "input_images": 14,
+      "registered_images": 14,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "runs": [
+        {"order": ["baseline", "candidate"], "baseline": {"seconds": 23.1879, "gaussians": 11152, "psnr": 17.985443, "ssim": 0.7584269}, "candidate": {"seconds": 23.2, "gaussians": 8787, "psnr": 19.010916, "ssim": 0.76444846}},
+        {"order": ["candidate", "baseline"], "baseline": {"seconds": 24.1991, "gaussians": 10958, "psnr": 18.558233, "ssim": 0.7652633}, "candidate": {"seconds": 24.1933, "gaussians": 9008, "psnr": 16.92131, "ssim": 0.73423886}}
+      ],
+      "common_grid_512_mean": {"baseline": {"psnr": 18.109350610482045, "ssim": 0.7373573780059814}, "candidate": {"psnr": 17.817797719621065, "ssim": 0.7252826946893528}}
+    },
+    {
+      "name": "ETH3D office",
+      "source_job": "3218cf389cdf403c942fb98ccf588f80",
+      "input_images": 26,
+      "registered_images": 26,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "runs": [
+        {"order": ["candidate", "baseline"], "baseline": {"seconds": 24.2093, "gaussians": 14580, "psnr": 20.770567, "ssim": 0.8683744}, "candidate": {"seconds": 23.2075, "gaussians": 11610, "psnr": 20.952116, "ssim": 0.8703237}},
+        {"order": ["baseline", "candidate"], "baseline": {"seconds": 24.2167, "gaussians": 14574, "psnr": 21.196539, "ssim": 0.87778026}, "candidate": {"seconds": 24.2106, "gaussians": 11565, "psnr": 21.650229, "ssim": 0.8728439}}
+      ],
+      "common_grid_512_mean": {"baseline": {"psnr": 20.847019428560225, "ssim": 0.8581590801477432}, "candidate": {"psnr": 21.159898968414235, "ssim": 0.8564756946108813}}
+    }
+  ],
+  "verification": {
+    "camera_geometry_identical": true,
+    "evaluation_photo_sets_identical": true,
+    "reference_sha256_checked": true,
+    "models": "all eight outputs are complete SH3 PLY",
+    "scoring": "native evaluation plus compare_quality.py on a no-upscale common 512 grid"
+  },
+  "limits": [
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "Two repeats identify an unstable candidate but do not estimate a general parameter effect.",
+    "A lower Gaussian count does not establish a quality or speed improvement."
+  ],
+  "references": [
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs",
+    "https://github.com/graphdeco-inria/gaussian-splatting#--densify_grad_threshold",
+    "https://arxiv.org/abs/2503.14274",
+    "https://www.eth3d.net/datasets"
+  ]
+}

@@ -4,6 +4,12 @@
 
 ## 2026-10-28
 
+### 增点梯度阈值筛查（未采用）
+
+- 关键结论：借鉴增密控制研究，将 Brush 的高梯度扩张阈值由 `4e-5` 提到 `8e-5`，两组模型约少 20% 高斯，但没有得到稳定的同画质提速。pipes 两次共同512网格均值 PSNR / SSIM 下降 0.291553 dB / 0.012075；office PSNR 增 0.312880 dB、SSIM 降 0.001683。
+- 验证与取舍：冻结同一组 ETH3D 位姿、照片、留出视角和参考图摘要，以相反顺序各跑两次真实 GPU 训练。pipes / office 分别为 14 / 14、26 / 26 定位，完整 SH3、相机和评测图均通过；第二轮 pipes 候选在同视角出现明显管线变软与墙面渗色。默认参数和历史模型均不改动。
+- 代价与限制：候选在 pipes 平均 23.6967 秒，和 23.6935 秒基线没有实际时延收益；office 约快 0.50 秒，但画质方向不一致。两次重复只足够排除该候选，不能概括其它阈值或场景；评估照片仍参与 SfM。[完整记录与截图](docs/GROWTH-THRESHOLD.md) · [公开汇总](docs/benchmarks/growth-threshold.json) · [Brush 配置](https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs) · [原始3DGS增密参数](https://github.com/graphdeco-inria/gaussian-splatting#--densify_grad_threshold) · [Adaptive Density Control](https://arxiv.org/abs/2503.14274)
+
 ### 拍摄位置间隔诊断
 
 - 关键突破：质量报告新增已定位相机的最近邻位置间隔提示。它在场景归一化尺度内计算中位数，并以 2.5 倍中位数标出相对孤立的位置；不依赖照片顺序、不改变相机、训练、模型或历史任务，与稀疏轨迹支撑分开呈现。
