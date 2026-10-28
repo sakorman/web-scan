@@ -1,6 +1,10 @@
 import numpy as np
 
-from webscan.reconstruction import camera_spacing_coverage, sparse_view_coverage
+from webscan.reconstruction import (
+    camera_direction_coverage,
+    camera_spacing_coverage,
+    sparse_view_coverage,
+)
 
 
 class Point:
@@ -87,4 +91,53 @@ def test_camera_spacing_handles_coincident_or_too_few_camera_centers():
         "spacing_floor": None,
         "isolated_views": [],
         "reason": "coincident_camera_centers",
+    }
+
+
+def direction_view(name, forward):
+    matrix = np.eye(4)
+    matrix[2, :3] = np.asarray(forward, dtype=float)
+    return {"image_name": name, "view": matrix.tolist()}
+
+
+def test_camera_direction_marks_narrow_parallel_headings_without_using_position():
+    coverage = camera_direction_coverage(
+        [
+            direction_view("0002.jpg", [0, 0, 1]),
+            direction_view("0000.jpg", [0, 0, 1]),
+            direction_view("0001.jpg", [0, 0, 1]),
+        ]
+    )
+
+    assert coverage == {
+        "method": "forward_direction_pairwise_angles",
+        "units": "degrees",
+        "registered_views": 3,
+        "median_pairwise_angle_degrees": 0.0,
+        "p90_pairwise_angle_degrees": 0.0,
+        "max_pairwise_angle_degrees": 0.0,
+        "narrow_coverage": True,
+        "narrow_p90_threshold_degrees": 20.0,
+    }
+
+
+def test_camera_direction_reports_wide_headings_and_too_few_views():
+    assert camera_direction_coverage([direction_view("0000.jpg", [0, 0, 1])]) is None
+    coverage = camera_direction_coverage(
+        [
+            direction_view("0000.jpg", [1, 0, 0]),
+            direction_view("0001.jpg", [0, 1, 0]),
+            direction_view("0002.jpg", [0, 0, 1]),
+        ]
+    )
+
+    assert coverage == {
+        "method": "forward_direction_pairwise_angles",
+        "units": "degrees",
+        "registered_views": 3,
+        "median_pairwise_angle_degrees": 90.0,
+        "p90_pairwise_angle_degrees": 90.0,
+        "max_pairwise_angle_degrees": 90.0,
+        "narrow_coverage": False,
+        "narrow_p90_threshold_degrees": 20.0,
     }

@@ -142,6 +142,12 @@ def run(root: Path, jid: str):
                 f"{len(spacing['isolated_views'])} 张已定位照片与最近相机的间隔偏大；"
                 "请复查该位置是否有足够重叠的过渡照片。"
             )
+        directions = scene.get("camera_direction_coverage")
+        if directions and directions.get("narrow_coverage"):
+            warnings.append(
+                "多数已定位相机的朝向接近；请补拍侧向或反向视角，"
+                "不要只沿同一朝向移动。"
+            )
         if scene.get("camera_mode_effective") not in (None, scene.get("camera_mode")):
             retry = scene.get("camera_mode_retry", {})
             auto = retry.get("auto", {})
@@ -167,6 +173,7 @@ def run(root: Path, jid: str):
             unregistered_images=scene.get("unregistered_images", []),
             sparse_view_coverage=coverage,
             camera_spacing_coverage=spacing,
+            camera_direction_coverage=directions,
             warnings=warnings,
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,

@@ -14,6 +14,7 @@ MIN_SPARSE_VIEW_SUPPORT = 64
 SPARSE_VIEW_SUPPORT_FRACTION = 0.4
 MAX_SPARSE_VIEW_SUPPORT_FLOOR = 300
 CAMERA_SPACING_OUTLIER_RATIO = 2.5
+CAMERA_DIRECTION_NARROW_P90_DEGREES = 20.0
 
 
 def match_images(database, *, mode="exhaustive", sequential_overlap=10):
@@ -159,6 +160,43 @@ def camera_spacing_coverage(views):
         "median_nearest_distance": round(median, 6),
         "spacing_floor": round(floor, 6),
         "isolated_views": isolated,
+    }
+
+
+def camera_direction_coverage(views):
+    """Summarize the spread of registered optical-axis directions.
+
+    The third camera axis points forward in COLMAP's right-down-forward
+    convention.  This is a relative capture hint only: varied headings do not
+    prove that every surface is visible, while near-parallel headings can still
+    be valid for a planar target.  A narrow spread simply suggests adding side
+    or reverse views before expecting a room-scale model to be complete.
+    """
+    directions = []
+    for view in views:
+        matrix = np.asarray(view["view"], dtype=np.float64)
+        forward = matrix[:3, :3].T @ np.array([0.0, 0.0, 1.0])
+        length = float(np.linalg.norm(forward))
+        if not np.isfinite(forward).all() or length <= np.finfo(np.float64).eps:
+            continue
+        directions.append(forward / length)
+    if len(directions) < 3:
+        return None
+    axes = np.array(directions, dtype=np.float64)
+    cosine = np.clip(axes @ axes.T, -1.0, 1.0)
+    angles = np.degrees(np.arccos(cosine))
+    pairwise = angles[np.triu_indices(len(axes), 1)]
+    median = float(np.median(pairwise))
+    p90 = float(np.percentile(pairwise, 90))
+    return {
+        "method": "forward_direction_pairwise_angles",
+        "units": "degrees",
+        "registered_views": len(directions),
+        "median_pairwise_angle_degrees": round(median, 1),
+        "p90_pairwise_angle_degrees": round(p90, 1),
+        "max_pairwise_angle_degrees": round(float(np.max(pairwise)), 1),
+        "narrow_coverage": p90 < CAMERA_DIRECTION_NARROW_P90_DEGREES,
+        "narrow_p90_threshold_degrees": CAMERA_DIRECTION_NARROW_P90_DEGREES,
     }
 
 
@@ -420,6 +458,7 @@ def estimate_scene(
         )
     xyz, transform = normalize_scene(xyz, views)
     spacing = camera_spacing_coverage(views)
+    directions = camera_direction_coverage(views)
     return {
         "points": xyz,
         "colors": rgb,
@@ -438,6 +477,7 @@ def estimate_scene(
         "unregistered_images": summary["unregistered_images"],
         "sparse_view_coverage": coverage,
         "camera_spacing_coverage": spacing,
+        "camera_direction_coverage": directions,
     }
 
 

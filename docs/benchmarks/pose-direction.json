@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-28",
+  "scope": "registered-camera forward-direction diversity diagnostic",
+  "rule": {
+    "method": "forward_direction_pairwise_angles",
+    "units": "degrees",
+    "minimum_registered_views": 3,
+    "statistic": "pairwise forward-axis angle median, p90, and maximum",
+    "narrow_coverage_rule": "p90 pairwise angle < 20 degrees",
+    "camera_position_used": false,
+    "capture_order_used": false
+  },
+  "environment": "Apple Silicon macOS; PyCOLMAP 3.13.0; Brush 0.3.0; serial GPU use",
+  "config": {
+    "backend": "brush",
+    "camera_mode": "shared",
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 300000,
+    "evaluation_mode": "holdout",
+    "training_seed": 42
+  },
+  "dataset": {
+    "name": "ETH3D",
+    "url": "https://www.eth3d.net/datasets",
+    "license": "CC BY-NC-SA 4.0"
+  },
+  "runs": [
+    {
+      "scene": "pipes",
+      "session_id": "4a89fcdc3f9945f09ed87c0199a6d2bc",
+      "job_id": "40671432467e4b909a9cc0c32efa4c17",
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1845,
+      "reprojection_error": 0.937267187086593,
+      "camera_direction": {
+        "median_pairwise_angle_degrees": 71.5,
+        "p90_pairwise_angle_degrees": 131.7,
+        "max_pairwise_angle_degrees": 177.0,
+        "narrow_coverage": false,
+        "narrow_p90_threshold_degrees": 20.0
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation_size": [512, 336],
+      "psnr": 18.612213,
+      "ssim": 0.7655997,
+      "gaussians": 11104,
+      "ply_bytes": 2622094,
+      "timings_seconds": {"sfm": 5.9605, "training_and_export": 23.303, "end_to_end": 29.33},
+      "sfm_reused": false
+    },
+    {
+      "scene": "office",
+      "session_id": "613a5cc96058428c93a56c03d7ed7487",
+      "job_id": "a2afdd9cb73c4e70a07585d504f7ca26",
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2518,
+      "reprojection_error": 0.9690637526223953,
+      "camera_direction": {
+        "median_pairwise_angle_degrees": 68.1,
+        "p90_pairwise_angle_degrees": 120.2,
+        "max_pairwise_angle_degrees": 168.2,
+        "narrow_coverage": false,
+        "narrow_p90_threshold_degrees": 20.0
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation_size": [512, 333],
+      "psnr": 21.542286,
+      "ssim": 0.87124693,
+      "gaussians": 14421,
+      "ply_bytes": 3404906,
+      "timings_seconds": {"sfm": 8.3482, "training_and_export": 24.2581, "end_to_end": 32.69},
+      "sfm_reused": false
+    }
+  ],
+  "limits": [
+    "Direction diversity does not measure field of view, position spacing, occlusion, texture, overlap, parallax, or surface completeness.",
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "Brush training is not deterministic; independent runs do not demonstrate a quality or speed gain.",
+    "The 20-degree threshold is a conservative capture hint, not a reconstruction-quality threshold."
+  ],
+  "references": {
+    "colmap_capture_guidance": "https://colmap.github.io/tutorial.html",
+    "colmap_camera_models": "https://colmap.github.io/cameras.html",
+    "gaussian_splatting": "https://arxiv.org/abs/2308.04079",
+    "sparse_pose_research": "https://arxiv.org/abs/2509.17246"
+  }
+}
