@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-29",
+  "status": "not_adopted",
+  "question": "Can lowering Brush's high-order SH learning-rate scale from 20 to 10 improve held-out indoor rendering without an added training cost?",
+  "engine": {
+    "name": "Brush 0.3.0",
+    "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71"
+  },
+  "config": {
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 150000,
+    "sh_degree": 3,
+    "seed": 42,
+    "refine_every": 100,
+    "growth_stop_iter": 2400,
+    "evaluation_mode": "holdout",
+    "baseline_lr_coeffs_sh_scale": 20,
+    "candidate_lr_coeffs_sh_scale": 10,
+    "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"
+  },
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "input_images": 14,
+      "registered_images": 14,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "order": ["baseline", "candidate"],
+      "render_size": [512, 336],
+      "baseline": {"seconds": 23.2131, "gaussians": 11353, "ply_bytes": 2680858, "psnr": 19.849733, "ssim": 0.7753439},
+      "candidate": {"seconds": 23.1965, "gaussians": 11485, "ply_bytes": 2712010, "psnr": 19.336208, "ssim": 0.7684262}
+    },
+    {
+      "name": "ETH3D office",
+      "input_images": 26,
+      "registered_images": 26,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "order": ["candidate", "baseline"],
+      "render_size": [512, 333],
+      "baseline": {"seconds": 24.2172, "gaussians": 14656, "ply_bytes": 3460366, "psnr": 21.405085, "ssim": 0.88065714},
+      "candidate": {"seconds": 24.201, "gaussians": 14902, "ply_bytes": 3518422, "psnr": 21.264458, "ssim": 0.86705244}
+    }
+  ],
+  "verification": {
+    "camera_geometry_identical": true,
+    "evaluation_photo_sets_identical": true,
+    "reference_sha256_checked": true,
+    "same_view_render_size_checked": true,
+    "models": "all four outputs are complete SH3 PLY",
+    "visual_check": "same-view rendered images inspected; no improvement to pipes edges or office foreground artifacts"
+  },
+  "limits": [
+    "Each setting ran once per scene; the comparison detects the observed two-scene regression but cannot estimate variance.",
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "The sub-20 ms timing differences are below the one-second training-progress polling precision."
+  ],
+  "references": [
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs",
+    "https://arxiv.org/abs/2308.04079",
+    "https://www.eth3d.net/datasets"
+  ]
+}
