@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-29",
+  "status": "not_adopted",
+  "question": "Can lowering Brush's final scale learning rate from 0.006 to 0.003 improve held-out indoor rendering without added training cost?",
+  "engine": {
+    "name": "Brush 0.3.0",
+    "sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "latest_stable_release": "https://github.com/ArthurBrussee/brush/releases/tag/v0.3.0"
+  },
+  "config": {
+    "steps": 3000,
+    "resolution_long_edge": 512,
+    "max_points": 150000,
+    "sh_degree": 3,
+    "seed": 42,
+    "refine_every": 100,
+    "growth_stop_iter": 2400,
+    "evaluation_mode": "holdout",
+    "baseline_lr_scale_end": 0.006,
+    "candidate_lr_scale_end": 0.003,
+    "measurement": "serial training, held-out evaluation and export; excludes SfM and input copy"
+  },
+  "scenes": [
+    {
+      "name": "ETH3D pipes",
+      "input_images": 14,
+      "registered_images": 14,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "order": ["baseline", "candidate"],
+      "render_size": [512, 336],
+      "baseline": {"seconds": 23.2554, "gaussians": 11539, "ply_bytes": 2724754, "psnr": 19.526295, "ssim": 0.7681562},
+      "candidate": {"seconds": 23.2427, "gaussians": 11167, "ply_bytes": 2636962, "psnr": 17.610645, "ssim": 0.7504332}
+    },
+    {
+      "name": "ETH3D office",
+      "input_images": 26,
+      "registered_images": 26,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "order": ["candidate", "baseline"],
+      "render_size": [512, 333],
+      "baseline": {"seconds": 23.2619, "gaussians": 14655, "ply_bytes": 3460130, "psnr": 21.031273, "ssim": 0.8768751},
+      "candidate": {"seconds": 23.2922, "gaussians": 14470, "ply_bytes": 3416470, "psnr": 20.957024, "ssim": 0.86768967}
+    }
+  ],
+  "verification": {
+    "camera_geometry_identical": true,
+    "evaluation_photo_sets_identical": true,
+    "reference_sha256_checked": true,
+    "same_view_render_size_checked": true,
+    "models": "all four outputs are complete SH3 PLY",
+    "visual_check": "same-view renders inspected; pipes edges and orange-wall bleed regress, office artifacts do not improve"
+  },
+  "limits": [
+    "Each setting ran once per scene; the comparison detects the observed two-scene regression but cannot estimate variance.",
+    "Held-out photos participate in upstream SfM and are not independent end-to-end evaluation.",
+    "The sub-31 ms timing differences are below the one-second training-progress polling precision."
+  ],
+  "references": [
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs",
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs#L70-L96",
+    "https://arxiv.org/abs/2308.04079",
+    "https://www.eth3d.net/datasets"
+  ]
+}
