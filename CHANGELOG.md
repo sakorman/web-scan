@@ -4,6 +4,12 @@
 
 ## 2026-10-30
 
+### 同镜头 RADIAL 内参
+
+- 关键突破：明确选择同镜头模式时，COLMAP 从 `SIMPLE_RADIAL` 改为 `RADIAL`，可估计固定镜头的第二个径向畸变系数；自动模式继续使用保守模型，任务报告记录实际 `camera_model`。不改匹配、训练、导出、照片或历史模型。
+- 验证与取舍：固定 ETH3D pipes / office 原始照片，以 3,000 步、512 像素、30 万高斯上限、Brush 0.3.0、SH3、种子 42 和留出评估串行完成 SIMPLE_RADIAL 基线与 RADIAL 全流程。两场景均保持 14 / 14、26 / 26 定位，平均重投影误差由 0.9373 / 0.9691 降至 0.5676 / 0.7426 px；pipes 稀疏点 +36，office -28（1.1%）。两份 RADIAL PLY 均含 `f_rest_44`，相机和留出工件有效。
+- 代价与限制：相机模型改变了去畸变画幅、相机和留出参考身份，不能横比 PSNR / SSIM；单次 SfM、训练和总耗时也不作提速结论。RADIAL 在少视角、重复纹理或非固定镜头上可能过拟合，故只保留给明确同镜头的照片，默认和混合设备路径保持不变。下一步如需跨内参比较，将渲染投回同一原始相机域，而不复用当前留出分数。[完整记录](docs/SHARED-RADIAL.md) · [公开汇总](docs/benchmarks/shared-radial.json) · [实现提交](https://github.com/sakorman/web-scan/commit/1049b5c90342305c0e8bfe7dc33b3e5fe5fd08e5) · [COLMAP 相机模型](https://github.com/colmap/colmap/blob/main/doc/cameras.rst) · [COLMAP FAQ](https://github.com/colmap/colmap/blob/main/doc/faq.rst) · [近期位姿研究](https://arxiv.org/abs/2508.17876) · [ETH3D](https://www.eth3d.net/datasets)
+
 ### 相对重投影残差复查
 
 - 关键突破：质量报告新增“重投影一致性”。它用最终 COLMAP 稀疏点回投每张已定位照片，按照片统计有效观测的平均像素残差；只有高于本次中位数 1.3 倍、且至少有 12 个有效观测的照片才提示人工复查。它不删除照片、不修改位姿、不改 SfM 或训练。

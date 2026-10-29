@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Validate COLMAP RADIAL only for the explicit shared-lens path. Auto mode remains SIMPLE_RADIAL.",
+  "method": {
+    "only_changed_variable": "COLMAP import camera model: SIMPLE_RADIAL versus RADIAL",
+    "selection_scope": "explicit shared mode; automatic fallback may reach it only through its existing geometry and metadata gates",
+    "not_a_claim": "PSNR and SSIM are not cross-model comparisons because undistortion changes camera geometry and reference image identities"
+  },
+  "config": {
+    "backend": "Brush 0.3.0 Metal",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 300000,
+    "camera_mode": "shared",
+    "evaluation_mode": "holdout",
+    "seed": 42,
+    "fresh_sfm": true,
+    "gpu_execution": "serial"
+  },
+  "runs": [
+    {
+      "dataset": "ETH3D pipes",
+      "input_images": 14,
+      "registered_images": 14,
+      "baseline": {
+        "camera_model": "SIMPLE_RADIAL",
+        "sparse_points": 1845,
+        "reprojection_error_px": 0.937267187086593,
+        "median_view_reprojection_error_px": 0.9488,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "gaussians": 11190,
+        "ply_bytes": 2642390,
+        "timings_seconds": {"sfm": 6.0935, "training_and_export": 23.292, "end_to_end": 29.45}
+      },
+      "radial": {
+        "camera_model": "RADIAL",
+        "sparse_points": 1881,
+        "reprojection_error_px": 0.5676130227212903,
+        "median_view_reprojection_error_px": 0.5866,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "gaussians": 11540,
+        "ply_bytes": 2724990,
+        "ply_sh3_field": "f_rest_44",
+        "evaluation_task_local": {"psnr": 20.066326, "ssim": 0.7997353},
+        "timings_seconds": {"sfm": 5.8409, "training_and_export": 23.2775, "end_to_end": 29.18}
+      }
+    },
+    {
+      "dataset": "ETH3D office",
+      "input_images": 26,
+      "registered_images": 26,
+      "baseline": {
+        "camera_model": "SIMPLE_RADIAL",
+        "sparse_points": 2518,
+        "reprojection_error_px": 0.9690637526223953,
+        "median_view_reprojection_error_px": 0.9725,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "gaussians": 14616,
+        "ply_bytes": 3450926,
+        "timings_seconds": {"sfm": 8.5413, "training_and_export": 23.2871, "end_to_end": 31.91}
+      },
+      "radial": {
+        "camera_model": "RADIAL",
+        "sparse_points": 2490,
+        "reprojection_error_px": 0.7426058359715842,
+        "median_view_reprojection_error_px": 0.7472,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "gaussians": 14472,
+        "ply_bytes": 3416942,
+        "ply_sh3_field": "f_rest_44",
+        "evaluation_task_local": {"psnr": 22.12878, "ssim": 0.8918278},
+        "timings_seconds": {"sfm": 8.6252, "training_and_export": 24.2901, "end_to_end": 33.0}
+      }
+    }
+  ],
+  "acceptance": {
+    "both_scenes_keep_all_registered_images": true,
+    "both_radial_outputs_have_full_sh3": true,
+    "office_sparse_point_change": -28,
+    "decision": "Retain RADIAL only for explicit shared-lens mode; do not change auto mode or claim a cross-model quality or speed improvement."
+  }
+}
