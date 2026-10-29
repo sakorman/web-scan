@@ -76,6 +76,44 @@ def run_order(scene, repeat):
     )
 
 
+def evaluation_reference_identity(report):
+    """Return the held-out reference identity recorded by a verified evaluation."""
+    records = report.get("evaluation_images")
+    if not isinstance(records, list) or not records:
+        raise ValueError("Comparison run has no verified evaluation references")
+    identity = []
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError("Comparison evaluation reference is invalid")
+        name = record.get("name")
+        reference_sha256 = record.get("reference_sha256")
+        width = record.get("width")
+        height = record.get("height")
+        if (
+            not isinstance(name, str)
+            or not name
+            or not isinstance(reference_sha256, str)
+            or len(reference_sha256) != 64
+            or not isinstance(width, int)
+            or not isinstance(height, int)
+            or width <= 0
+            or height <= 0
+        ):
+            raise ValueError("Comparison evaluation reference is incomplete")
+        identity.append(
+            {
+                "name": name,
+                "reference_sha256": reference_sha256,
+                "width": width,
+                "height": height,
+            }
+        )
+    identity.sort(key=lambda item: item["name"])
+    if len({item["name"] for item in identity}) != len(identity):
+        raise ValueError("Comparison evaluation references contain duplicate names")
+    return identity
+
+
 def summarize(runs, repeats):
     result = []
     for scene in sorted({run["scene_index"] for run in runs}):
@@ -92,6 +130,17 @@ def summarize(runs, repeats):
             != 1
         ):
             raise ValueError("Comparison view splits differ")
+        identities = set()
+        for run in group:
+            try:
+                identity = evaluation_reference_identity(
+                    {"evaluation_images": run.get("evaluation_references")}
+                )
+            except ValueError as error:
+                raise ValueError("Comparison evaluation references are invalid") from error
+            identities.add(json.dumps(identity, sort_keys=True))
+        if len(identities) != 1:
+            raise ValueError("Comparison evaluation references differ")
         row = {"scene_index": scene, "runs_per_variant": repeats}
         for mode in ("baseline", "candidate"):
             selected = [run for run in group if run["variant"] == mode]
@@ -222,6 +271,7 @@ def main():
                     "evaluation": report["evaluation"],
                     "training_views": report["training_views"],
                     "evaluation_views": report["evaluation_views"],
+                    "evaluation_references": evaluation_reference_identity(report),
                     "exports": len(exports),
                     "export_bytes": sum(p.stat().st_size for p in exports),
                     "first_progress_seconds": next(

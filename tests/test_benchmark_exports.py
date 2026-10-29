@@ -3,11 +3,28 @@ import json
 import pytest
 
 from scripts.benchmark_exports import (
+    evaluation_reference_identity,
     freeze_adapters,
     run_order,
     summarize,
     write_comparison_artifacts,
 )
+
+
+EVALUATION_REFERENCES = [
+    {
+        "name": "0000.png",
+        "reference_sha256": "a" * 64,
+        "width": 512,
+        "height": 336,
+    },
+    {
+        "name": "0008.png",
+        "reference_sha256": "b" * 64,
+        "width": 512,
+        "height": 336,
+    },
+]
 
 
 def records():
@@ -22,6 +39,7 @@ def records():
             "seconds": seconds,
             "gaussians": 1000,
             "evaluation": {"psnr": 20 + repeat, "ssim": 0.8},
+            "evaluation_references": EVALUATION_REFERENCES,
         }
         for repeat, mode, seconds in [
             (0, "baseline", 10),
@@ -51,7 +69,18 @@ def test_repeated_runs_counterbalance_order_and_report_range():
     assert summary["runs_per_variant"] == 2
 
 
-@pytest.mark.parametrize("damage", ["missing", "duplicate", "input", "views", "metric"])
+@pytest.mark.parametrize(
+    "damage",
+    [
+        "missing",
+        "duplicate",
+        "input",
+        "views",
+        "references",
+        "missing_references",
+        "metric",
+    ],
+)
 def test_invalid_comparisons_cannot_produce_summary(damage):
     data = records()
     if damage == "missing":
@@ -62,10 +91,36 @@ def test_invalid_comparisons_cannot_produce_summary(damage):
         data[-1]["input_sha256"] = "different"
     elif damage == "metric":
         data[-1]["evaluation"]["psnr"] = float("nan")
+    elif damage == "references":
+        data[-1]["evaluation_references"] = [
+            {**EVALUATION_REFERENCES[0], "reference_sha256": "c" * 64},
+            EVALUATION_REFERENCES[1],
+        ]
+    elif damage == "missing_references":
+        del data[-1]["evaluation_references"]
     else:
         data[-1]["evaluation_views"] = 1
     with pytest.raises(ValueError):
         summarize(data, 2)
+
+
+def test_evaluation_reference_identity_excludes_render_hashes():
+    report = {
+        "evaluation_images": [
+            {**EVALUATION_REFERENCES[1], "sha256": "render-b"},
+            {**EVALUATION_REFERENCES[0], "sha256": "render-a"},
+        ]
+    }
+    assert evaluation_reference_identity(report) == EVALUATION_REFERENCES
+
+
+@pytest.mark.parametrize(
+    "images",
+    [[], [{"name": "0000.png"}], [EVALUATION_REFERENCES[0], EVALUATION_REFERENCES[0]]],
+)
+def test_evaluation_reference_identity_rejects_incomplete_or_duplicate_records(images):
+    with pytest.raises(ValueError):
+        evaluation_reference_identity({"evaluation_images": images})
 
 
 def test_adapter_edits_do_not_change_an_experiment_in_progress(tmp_path):
