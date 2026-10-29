@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Per-view relative sparse reprojection residual for manual photo review. It never filters photos or changes poses, SfM, or training.",
+  "method": {
+    "valid_point_filter": "COLMAP track length >= 2 and point reprojection error < 4 px",
+    "per_view_measurement": "mean Euclidean pixel residual between stored 2D observations and final COLMAP point reprojections",
+    "minimum_observations": 12,
+    "minimum_measured_views": 3,
+    "outlier_threshold": "per-capture median per-view residual * 1.3",
+    "units": "pixels"
+  },
+  "config": {
+    "backend": "Brush 0.3.0 Metal",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 300000,
+    "camera_mode": "shared",
+    "evaluation_mode": "holdout",
+    "seed": 42,
+    "fresh_sfm": true,
+    "gpu_execution": "serial"
+  },
+  "runs": [
+    {
+      "dataset": "ETH3D pipes",
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1845,
+      "reprojection_error": 0.937267187086593,
+      "view_reprojection": {
+        "measured_views": 14,
+        "median_reprojection_error_px": 0.9488,
+        "outlier_threshold_px": 1.2334,
+        "high_error_views": []
+      },
+      "training_views": 12,
+      "evaluation_views": 2,
+      "gaussians": 11190,
+      "ply_bytes": 2642390,
+      "ply_sh3_field": "f_rest_44",
+      "evaluation": {"psnr": 18.408628, "ssim": 0.74616444},
+      "timings_seconds": {"sfm": 6.0935, "training_and_export": 23.292, "end_to_end": 29.45}
+    },
+    {
+      "dataset": "ETH3D office",
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2518,
+      "reprojection_error": 0.9690637526223953,
+      "view_reprojection": {
+        "measured_views": 26,
+        "median_reprojection_error_px": 0.9725,
+        "outlier_threshold_px": 1.2642,
+        "high_error_views": [
+          {"photo": 6, "observations": 60, "mean_reprojection_error_px": 1.3281}
+        ]
+      },
+      "training_views": 22,
+      "evaluation_views": 4,
+      "gaussians": 14616,
+      "ply_bytes": 3450926,
+      "ply_sh3_field": "f_rest_44",
+      "evaluation": {"psnr": 21.93762, "ssim": 0.87928987},
+      "timings_seconds": {"sfm": 8.5413, "training_and_export": 23.2871, "end_to_end": 31.91}
+    }
+  ],
+  "browser_validation": {
+    "quality_report": "Office displayed the reprojection section with a 0.973 px median, 1.264 px threshold, and photo 6 at 1.328 px from 60 observations.",
+    "boundary": "The report states that the hint does not delete photos or change poses."
+  }
+}
