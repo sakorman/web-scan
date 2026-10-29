@@ -64,7 +64,7 @@ Apple Silicon macOS，同一组 26 张办公室照片，Brush 0.3.0，1000 步�
 
 ## 重复对照
 
-`scripts/benchmark_exports.py` 可用 `--repeats 2 --resolution 512` 重复比较候选适配器。每组输入固定，顺序交错，启动前保存适配器源码快照；汇总展示每种设置的均值及范围。一次或两次运行仍不足以建立一般性能结论。默认参数保持原有行为，增点策略的实际对照见 [REFINEMENT.md](REFINEMENT.md)。
+`scripts/benchmark_exports.py` 可用 `--repeats 2 --resolution 512` 重复比较候选适配器。每组输入固定，顺序交错，启动前保存适配器源码快照；汇总展示每种设置的均值及范围。汇总前会锁定所有留出照片的文件名、参考图摘要和画幅，防止数量相同但评测对象不同的结果混入同一对照。一次或两次运行仍不足以建立一般性能结论。默认参数保持原有行为，增点策略的实际对照见 [REFINEMENT.md](REFINEMENT.md)，身份检查的控制实验见 [BENCHMARK-IDENTITY.md](BENCHMARK-IDENTITY.md)。
 
 每个导出基准现在同时写出 `sfm/scene.json`、相机和报告工件，因此可直接交给 `compare_quality.py` 复核相机与留出照片后评分。200 步间隔筛查只少用约 4% 时间，却因显著减少高斯而在两组场景降低 PSNR / SSIM，不作为同画质提速。[完整口径与原始汇总](REFINEMENT-200.md)
 

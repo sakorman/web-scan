@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-29",
+  "purpose": "Verify that export comparisons reject a held-out reference set that differs despite matching view counts.",
+  "engine": "Brush 0.3.0",
+  "config": {
+    "steps": 500,
+    "resolution": 512,
+    "max_points": 150000,
+    "evaluation_mode": "holdout",
+    "seed": 42,
+    "repeats": 1,
+    "execution": "serial"
+  },
+  "checks": {
+    "reference_identity_fields": [
+      "name",
+      "reference_sha256",
+      "width",
+      "height"
+    ],
+    "render_sha256_excluded": true,
+    "complete_sh3_property": "f_rest_44"
+  },
+  "scenes": [
+    {
+      "scene": "ETH3D pipes",
+      "registered_images": 14,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation_size": [512, 336],
+      "references_match_across_variants": true,
+      "runs": {
+        "baseline": {
+          "seconds": 4.1424,
+          "gaussians": 2309,
+          "export_bytes": 546473,
+          "psnr": 16.432796,
+          "ssim": 0.665074
+        },
+        "candidate": {
+          "seconds": 4.1277,
+          "gaussians": 2313,
+          "export_bytes": 547417,
+          "psnr": 16.309784,
+          "ssim": 0.6616938
+        }
+      }
+    },
+    {
+      "scene": "ETH3D office",
+      "registered_images": 26,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation_size": [512, 333],
+      "references_match_across_variants": true,
+      "runs": {
+        "baseline": {
+          "seconds": 4.138,
+          "gaussians": 3099,
+          "export_bytes": 732913,
+          "psnr": 18.420063,
+          "ssim": 0.76825327
+        },
+        "candidate": {
+          "seconds": 4.1265,
+          "gaussians": 3077,
+          "export_bytes": 727721,
+          "psnr": 17.909174,
+          "ssim": 0.7580159
+        }
+      }
+    }
+  ],
+  "interpretation": "The adapters are identical control runs. Differences in metrics, point count, model bytes, or seconds are not quality or performance claims.",
+  "limitations": [
+    "Each setting ran once, so this control does not estimate training variance.",
+    "Held-out photographs still participate in upstream SfM and are not an independent end-to-end test."
+  ],
+  "references": [
+    "https://www.eth3d.net/datasets",
+    "https://arxiv.org/abs/2308.04079",
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/config.rs"
+  ]
+}
