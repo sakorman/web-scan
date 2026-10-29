@@ -7,6 +7,7 @@ from webscan.reconstruction import (
     camera_spacing_coverage,
     image_detail_coverage,
     sparse_view_coverage,
+    view_reprojection_coverage,
 )
 
 
@@ -48,6 +49,67 @@ def test_sparse_coverage_marks_only_relatively_weak_registered_views():
 
 def test_sparse_coverage_handles_empty_reconstructions():
     assert sparse_view_coverage(type("Empty", (), {"images": {}})(), set()) is None
+
+
+class ReprojectionPoint:
+    def __init__(self, point_id):
+        self.xyz = np.asarray([point_id, 0.0, 1.0])
+
+
+class ReprojectionObservation(Point):
+    def __init__(self, point_id, error):
+        super().__init__(point_id)
+        self.xy = np.asarray([error, 0.0])
+
+
+class ReprojectionImage:
+    def __init__(self, name, point_ids, error):
+        self.name = name
+        self.points2D = [ReprojectionObservation(point_id, error) for point_id in point_ids]
+
+    def project_point(self, xyz):
+        return np.zeros(2)
+
+
+class Reprojection:
+    def __init__(self):
+        ids = list(range(1, 13))
+        self.points3D = {point_id: ReprojectionPoint(point_id) for point_id in ids}
+        self.images = {
+            4: ReprojectionImage("0003.jpg", ids, 1.6),
+            1: ReprojectionImage("0000.jpg", ids, 1.0),
+            2: ReprojectionImage("0001.jpg", ids, 1.0),
+            3: ReprojectionImage("0002.jpg", ids, 1.0),
+        }
+
+
+def test_view_reprojection_marks_only_relative_residual_outlier():
+    coverage = view_reprojection_coverage(Reprojection(), range(1, 13))
+
+    assert coverage == {
+        "method": "per_view_sparse_reprojection_residual",
+        "units": "pixels",
+        "registered_views": 4,
+        "measured_views": 4,
+        "minimum_observations": 12,
+        "median_reprojection_error_px": 1.0,
+        "outlier_ratio": 1.3,
+        "outlier_threshold_px": 1.3,
+        "high_error_views": [
+            {
+                "image_name": "0003.jpg",
+                "observations": 12,
+                "mean_reprojection_error_px": 1.6,
+            }
+        ],
+    }
+
+
+def test_view_reprojection_requires_three_views_with_enough_observations():
+    reconstruction = Reprojection()
+    reconstruction.images.pop(4)
+    reconstruction.images.pop(3)
+    assert view_reprojection_coverage(reconstruction, range(1, 13)) is None
 
 
 def view(name, center):

@@ -17,6 +17,8 @@ CAMERA_SPACING_OUTLIER_RATIO = 2.5
 CAMERA_DIRECTION_NARROW_P90_DEGREES = 20.0
 IMAGE_DETAIL_OUTLIER_RATIO = 0.25
 IMAGE_DETAIL_MAX_LONG_EDGE = 512
+REPROJECTION_OUTLIER_RATIO = 1.3
+MIN_REPROJECTION_OBSERVATIONS = 12
 
 
 def match_images(database, *, mode="exhaustive", sequential_overlap=10):
@@ -115,6 +117,80 @@ def sparse_view_coverage(reconstruction, valid_point_ids):
         "median_observations": round(median, 1),
         "support_floor": floor,
         "weak_views": weak,
+    }
+
+
+def view_reprojection_coverage(reconstruction, valid_point_ids):
+    """Find views whose valid sparse observations have relatively high residuals.
+
+    The residual is recomputed from each stored 2D observation and its final
+    COLMAP 3D point. It is a within-capture review hint, not a pose-confidence
+    score: repeated texture, rolling shutter, an imperfect camera model and a
+    small number of observations can all raise it without making a photo bad.
+    """
+    valid_point_ids = set(valid_point_ids)
+    rows = []
+    for image in reconstruction.images.values():
+        errors = []
+        for observation in image.points2D:
+            if (
+                not observation.has_point3D()
+                or observation.point3D_id not in valid_point_ids
+            ):
+                continue
+            if observation.point3D_id not in reconstruction.points3D:
+                continue
+            point = reconstruction.points3D[observation.point3D_id]
+            try:
+                projected = image.project_point(point.xyz)
+            except (RuntimeError, TypeError, ValueError):
+                continue
+            if projected is None:
+                continue
+            error = float(
+                np.linalg.norm(
+                    np.asarray(observation.xy, dtype=np.float64)
+                    - np.asarray(projected, dtype=np.float64)
+                )
+            )
+            if np.isfinite(error):
+                errors.append(error)
+        if len(errors) >= MIN_REPROJECTION_OBSERVATIONS:
+            rows.append(
+                {
+                    "image_name": image.name,
+                    "observations": len(errors),
+                    "mean_reprojection_error_px": float(np.mean(errors)),
+                }
+            )
+    rows.sort(key=lambda item: item["image_name"])
+    if len(rows) < 3:
+        return None
+    median = float(np.median([item["mean_reprojection_error_px"] for item in rows]))
+    if not np.isfinite(median) or median <= np.finfo(np.float64).eps:
+        return None
+    threshold = median * REPROJECTION_OUTLIER_RATIO
+    high = [
+        {
+            "image_name": item["image_name"],
+            "observations": item["observations"],
+            "mean_reprojection_error_px": round(
+                item["mean_reprojection_error_px"], 4
+            ),
+        }
+        for item in rows
+        if item["mean_reprojection_error_px"] > threshold
+    ]
+    return {
+        "method": "per_view_sparse_reprojection_residual",
+        "units": "pixels",
+        "registered_views": len(reconstruction.images),
+        "measured_views": len(rows),
+        "minimum_observations": MIN_REPROJECTION_OBSERVATIONS,
+        "median_reprojection_error_px": round(median, 4),
+        "outlier_ratio": REPROJECTION_OUTLIER_RATIO,
+        "outlier_threshold_px": round(threshold, 4),
+        "high_error_views": high,
     }
 
 
@@ -532,6 +608,7 @@ def estimate_scene(
     if len(points) < 12:
         raise RuntimeError("有效三维点不足，请围绕目标缓慢移动并增加纹理与光照。")
     coverage = sparse_view_coverage(result, valid_point_ids)
+    reprojection = view_reprojection_coverage(result, valid_point_ids)
     xyz = np.array([p.xyz for p in points], dtype=np.float32)
     rgb = np.array([p.color for p in points], dtype=np.float32) / 255
     views = []
@@ -572,6 +649,7 @@ def estimate_scene(
         "reprojection_error": summary["reprojection_error"],
         "unregistered_images": summary["unregistered_images"],
         "sparse_view_coverage": coverage,
+        "view_reprojection_coverage": reprojection,
         "camera_spacing_coverage": spacing,
         "camera_direction_coverage": directions,
         "image_detail_coverage": image_detail,

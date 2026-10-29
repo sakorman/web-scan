@@ -136,6 +136,12 @@ def run(root: Path, jid: str):
                 f"{len(coverage['weak_views'])} 张已定位照片的稀疏支撑偏低；"
                 "如对应区域发软或有空洞，请补拍与相邻画面重叠的过渡视角。"
             )
+        reprojection = scene.get("view_reprojection_coverage")
+        if reprojection and reprojection.get("high_error_views"):
+            warnings.append(
+                f"{len(reprojection['high_error_views'])} 张已定位照片的相对重投影误差偏高；"
+                "请结合原图与相邻视角复查，确认后再补拍重叠画面。"
+            )
         spacing = scene.get("camera_spacing_coverage")
         if spacing and spacing.get("reason") == "coincident_camera_centers":
             warnings.append(
@@ -194,6 +200,7 @@ def run(root: Path, jid: str):
             reprojection_error=scene.get("reprojection_error"),
             unregistered_images=scene.get("unregistered_images", []),
             sparse_view_coverage=coverage,
+            view_reprojection_coverage=reprojection,
             camera_spacing_coverage=spacing,
             camera_direction_coverage=directions,
             image_detail_coverage=image_detail,
