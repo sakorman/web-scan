@@ -21,6 +21,21 @@ REPROJECTION_OUTLIER_RATIO = 1.3
 MIN_REPROJECTION_OBSERVATIONS = 12
 
 
+def camera_model_for_mode(camera_mode):
+    """Choose the least complex intrinsics model appropriate for this mode.
+
+    Automatic imports may combine photos from different devices, so they keep
+    COLMAP's one-parameter SIMPLE_RADIAL initialization.  The explicit shared
+    mode is only available for a single, fixed lens and can safely estimate the
+    second radial term.  This is intentionally not an image-quality setting.
+    """
+    if camera_mode == "auto":
+        return "SIMPLE_RADIAL"
+    if camera_mode == "shared":
+        return "RADIAL"
+    raise ValueError(f"不支持的相机模式：{camera_mode}")
+
+
 def match_images(database, *, mode="exhaustive", sequential_overlap=10):
     """Run the chosen COLMAP pairing strategy with the project's fixed checks.
 
@@ -433,6 +448,7 @@ def _map_scene(
         if camera_mode == "shared"
         else pycolmap.CameraMode.AUTO
     )
+    camera_model = camera_model_for_mode(camera_mode)
     with pycolmap.Database.open(db):
         pass
     pycolmap.import_images(
@@ -440,7 +456,7 @@ def _map_scene(
         image_path=images,
         camera_mode=mode,
         image_names=image_names,
-        options={"camera_model": "SIMPLE_RADIAL"},
+        options={"camera_model": camera_model},
     )
     progress("sfm", 0.08, "提取照片特征")
     pycolmap.extract_features(
@@ -471,6 +487,7 @@ def _map_scene(
     if not maps:
         return {
             "camera_mode": camera_mode,
+            "camera_model": camera_model,
             "matching": matching,
             "model": None,
             "summary": {
@@ -494,6 +511,7 @@ def _map_scene(
     }
     return {
         "camera_mode": camera_mode,
+        "camera_model": camera_model,
         "matching": matching,
         "model": best,
         "summary": summary,
@@ -642,6 +660,7 @@ def estimate_scene(
         "pose_source": "COLMAP",
         "camera_mode": camera_mode,
         "camera_mode_effective": selected["camera_mode"],
+        "camera_model": selected["camera_model"],
         "camera_mode_retry": retry,
         "matching_seed": selected["matching"]["ransac_seed"],
         "matching": selected["matching"],

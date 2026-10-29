@@ -194,6 +194,7 @@ def run(root: Path, jid: str):
             calibrated_fixture=session["kind"] == "fixture",
             camera_mode=scene.get("camera_mode", "auto"),
             camera_mode_effective=scene.get("camera_mode_effective"),
+            camera_model=scene.get("camera_model"),
             camera_mode_retry=scene.get("camera_mode_retry"),
             matching_seed=scene.get("matching_seed"),
             sparse_points=scene.get("sparse_points"),

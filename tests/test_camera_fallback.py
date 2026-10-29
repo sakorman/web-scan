@@ -1,4 +1,10 @@
-from webscan.reconstruction import prefer_shared_attempt, shared_retry_reason
+import pytest
+
+from webscan.reconstruction import (
+    camera_model_for_mode,
+    prefer_shared_attempt,
+    shared_retry_reason,
+)
 
 
 def attempt(registered, points, reprojection, total=26):
@@ -49,3 +55,10 @@ def test_shared_retry_needs_better_coverage_points_and_bounded_error():
     assert not prefer_shared_attempt(primary, attempt(26, 1700, 0.962))
     assert not prefer_shared_attempt(primary, attempt(20, 2497, 0.962))
     assert not prefer_shared_attempt(primary, attempt(26, 2497, 1.06))
+
+
+def test_camera_model_keeps_auto_conservative_and_uses_shared_lens_capacity():
+    assert camera_model_for_mode("auto") == "SIMPLE_RADIAL"
+    assert camera_model_for_mode("shared") == "RADIAL"
+    with pytest.raises(ValueError, match="不支持的相机模式"):
+        camera_model_for_mode("per-photo")
