@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-29",
+  "purpose": "Manual review priority from the intersection of relative weak sparse-track support and low image detail. It never filters photos or changes SfM/training.",
+  "config": {
+    "backend": "Brush 0.3.0 Metal",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 300000,
+    "camera_mode": "shared",
+    "evaluation_mode": "holdout",
+    "seed": 42,
+    "fresh_sfm": true,
+    "gpu_execution": "serial"
+  },
+  "runs": [
+    {
+      "dataset": "ETH3D office",
+      "session_id": "9e1903a242d54b1f9d78d19cecc9a654",
+      "job_id": "60ad270edda143b1afb728a830d68bba",
+      "input_images": 26,
+      "registered_images": 26,
+      "sparse_points": 2518,
+      "reprojection_error": 0.9690637526223953,
+      "weak_sparse_views": 6,
+      "low_detail_views": 3,
+      "priority_views": [
+        {"photo": 4, "observations": 107, "detail_score": 0.000709},
+        {"photo": 5, "observations": 87, "detail_score": 0.000572},
+        {"photo": 6, "observations": 60, "detail_score": 0.00072}
+      ],
+      "training_views": 22,
+      "evaluation_views": 4,
+      "gaussians": 14514,
+      "ply_bytes": 3426854,
+      "evaluation": {"psnr": 22.49098, "ssim": 0.884161},
+      "timings_seconds": {"sfm": 8.6766, "training_and_export": 23.2836, "end_to_end": 32.03}
+    },
+    {
+      "dataset": "ETH3D pipes",
+      "session_id": "c433a06a2e5348d580a0219671dd5336",
+      "job_id": "e3f66a50a71341dab3d0cb1998344ca1",
+      "input_images": 14,
+      "registered_images": 14,
+      "sparse_points": 1879,
+      "reprojection_error": 0.9492695930620472,
+      "weak_sparse_views": 1,
+      "low_detail_views": 0,
+      "priority_views": [],
+      "training_views": 12,
+      "evaluation_views": 2,
+      "gaussians": 11408,
+      "ply_bytes": 2693838,
+      "evaluation": {"psnr": 18.53648, "ssim": 0.75678825},
+      "timings_seconds": {"sfm": 6.1763, "training_and_export": 23.2694, "end_to_end": 29.51}
+    }
+  ],
+  "browser_validation": {
+    "quality_report": "Office displayed photos 4, 5, 6 in the priority section with both measures and the no-automatic-filtering boundary.",
+    "downloads": ["gaussians.ply", "preview.splat", "cameras.json", "report.json"]
+  }
+}

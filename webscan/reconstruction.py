@@ -261,6 +261,39 @@ def image_detail_coverage(views):
     }
 
 
+def capture_review_priority(sparse_coverage, image_detail):
+    """Return views supported by two independent, relative review hints.
+
+    Sparse-track support and image-detail energy each have benign explanations
+    on their own. Their intersection prioritises a manual source-photo check,
+    but must never filter a photo, alter poses, or imply that it is defective.
+    """
+    if not sparse_coverage or not image_detail:
+        return None
+    weak = {
+        item["image_name"]: item["observations"]
+        for item in sparse_coverage.get("weak_views", [])
+    }
+    low = {
+        item["image_name"]: item["detail_score"]
+        for item in image_detail.get("low_detail_views", [])
+    }
+    priority = [
+        {
+            "image_name": name,
+            "observations": weak[name],
+            "detail_score": low[name],
+        }
+        for name in sorted(weak.keys() & low.keys())
+    ]
+    return {
+        "method": "intersection_of_weak_sparse_support_and_low_image_detail",
+        "weak_sparse_views": len(weak),
+        "low_detail_views": len(low),
+        "priority_views": priority,
+    }
+
+
 def shared_retry_reason(camera_mode, image_sizes, attempt, focal_lengths=()):
     """Return why an automatic shared-intrinsics retry is or is not safe."""
     if camera_mode != "auto":
@@ -521,6 +554,7 @@ def estimate_scene(
     spacing = camera_spacing_coverage(views)
     directions = camera_direction_coverage(views)
     image_detail = image_detail_coverage(views)
+    priority = capture_review_priority(coverage, image_detail)
     return {
         "points": xyz,
         "colors": rgb,
@@ -541,6 +575,7 @@ def estimate_scene(
         "camera_spacing_coverage": spacing,
         "camera_direction_coverage": directions,
         "image_detail_coverage": image_detail,
+        "capture_review_priority": priority,
     }
 
 

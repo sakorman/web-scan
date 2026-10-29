@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image as PILImage
 
 from webscan.reconstruction import (
+    capture_review_priority,
     camera_direction_coverage,
     camera_spacing_coverage,
     image_detail_coverage,
@@ -168,3 +169,33 @@ def test_image_detail_marks_only_a_strong_relative_outlier(tmp_path):
     assert image_detail_coverage(
         [{"image_name": paths[0].name, "image": str(paths[0])}]
     ) is None
+
+
+def test_capture_review_priority_requires_both_relative_hints():
+    priority = capture_review_priority(
+        {
+            "weak_views": [
+                {"image_name": "0002.jpg", "observations": 21},
+                {"image_name": "0003.jpg", "observations": 34},
+            ]
+        },
+        {
+            "low_detail_views": [
+                {"image_name": "0001.jpg", "detail_score": 0.0002},
+                {"image_name": "0002.jpg", "detail_score": 0.0003},
+            ]
+        },
+    )
+    assert priority == {
+        "method": "intersection_of_weak_sparse_support_and_low_image_detail",
+        "weak_sparse_views": 2,
+        "low_detail_views": 2,
+        "priority_views": [
+            {
+                "image_name": "0002.jpg",
+                "observations": 21,
+                "detail_score": 0.0003,
+            }
+        ],
+    }
+    assert capture_review_priority(None, {"low_detail_views": []}) is None

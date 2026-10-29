@@ -164,6 +164,12 @@ def run(root: Path, jid: str):
                 f"{len(image_detail['low_detail_views'])} 张已定位照片的图像细节明显偏低；"
                 "请复查是否为纯色区域、失焦、抖动或严重曝光问题。"
             )
+        priority = scene.get("capture_review_priority")
+        if priority and priority.get("priority_views"):
+            warnings.append(
+                f"{len(priority['priority_views'])} 张已定位照片同时出现稀疏支撑偏低和图像细节偏低；"
+                "请优先结合原图复查，并按实际情况补拍相邻过渡视角。"
+            )
         if scene.get("camera_mode_effective") not in (None, scene.get("camera_mode")):
             retry = scene.get("camera_mode_retry", {})
             auto = retry.get("auto", {})
@@ -191,6 +197,7 @@ def run(root: Path, jid: str):
             camera_spacing_coverage=spacing,
             camera_direction_coverage=directions,
             image_detail_coverage=image_detail,
+            capture_review_priority=priority,
             warnings=warnings,
             sfm_reused=sfm_reused,
             sfm_cache_key=snapshot_key,
