@@ -1,0 +1,79 @@
+{
+  "method": "original_photo_domain",
+  "camera_models": {
+    "baseline": [
+      "SIMPLE_RADIAL"
+    ],
+    "candidate": [
+      "RADIAL"
+    ]
+  },
+  "baseline_job": "f2379e7237ea46288ec90011932556ae",
+  "candidate_job": "608dec28478345ac94233cff80853a99",
+  "requested_long_edge": 512,
+  "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+  "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+  "not_independent": "holdout photos still participated in upstream SfM",
+  "views": [
+    {
+      "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+      "raw_input_sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+      "original_size": {
+        "width": 1600,
+        "height": 1067
+      },
+      "scoring_size": {
+        "width": 512,
+        "height": 341
+      },
+      "common_valid_pixel_fraction": 0.9708119501466276,
+      "common_valid_pixels": 169496,
+      "common_valid_ssim_windows": 161126,
+      "baseline": {
+        "psnr": 22.528499640727922,
+        "ssim": 0.8124701576189793
+      },
+      "candidate": {
+        "psnr": 22.982266606024307,
+        "ssim": 0.8358215462650708
+      }
+    },
+    {
+      "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+      "raw_input_sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+      "original_size": {
+        "width": 1600,
+        "height": 1067
+      },
+      "scoring_size": {
+        "width": 512,
+        "height": 341
+      },
+      "common_valid_pixel_fraction": 0.9708119501466276,
+      "common_valid_pixels": 169496,
+      "common_valid_ssim_windows": 161126,
+      "baseline": {
+        "psnr": 13.832527432307508,
+        "ssim": 0.6260409389072871
+      },
+      "candidate": {
+        "psnr": 16.533323621914132,
+        "ssim": 0.7057136169444995
+      }
+    }
+  ],
+  "mean_per_view": {
+    "baseline": {
+      "psnr": 18.180513536517715,
+      "ssim": 0.7192555482631332
+    },
+    "candidate": {
+      "psnr": 19.75779511396922,
+      "ssim": 0.7707675816047852
+    }
+  },
+  "candidate_minus_baseline": {
+    "psnr": 1.5772815774515045,
+    "ssim": 0.051512033341652
+  }
+}

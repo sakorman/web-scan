@@ -1,0 +1,125 @@
+{
+  "method": "original_photo_domain",
+  "camera_models": {
+    "baseline": [
+      "SIMPLE_RADIAL"
+    ],
+    "candidate": [
+      "RADIAL"
+    ]
+  },
+  "baseline_job": "b377a668fb7944ce97e6f2735e2607e5",
+  "candidate_job": "d2186951b0c949fb9bcdb165a1702f97",
+  "requested_long_edge": 512,
+  "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+  "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+  "not_independent": "holdout photos still participated in upstream SfM",
+  "views": [
+    {
+      "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+      "raw_input_sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+      "original_size": {
+        "width": 1600,
+        "height": 1067
+      },
+      "scoring_size": {
+        "width": 512,
+        "height": 341
+      },
+      "common_valid_pixel_fraction": 0.9659090909090909,
+      "common_valid_pixels": 168640,
+      "common_valid_ssim_windows": 160270,
+      "baseline": {
+        "psnr": 23.72226346605029,
+        "ssim": 0.895205553034385
+      },
+      "candidate": {
+        "psnr": 24.055244859742384,
+        "ssim": 0.9127458440156311
+      }
+    },
+    {
+      "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+      "raw_input_sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+      "original_size": {
+        "width": 1600,
+        "height": 1067
+      },
+      "scoring_size": {
+        "width": 512,
+        "height": 341
+      },
+      "common_valid_pixel_fraction": 0.9659090909090909,
+      "common_valid_pixels": 168640,
+      "common_valid_ssim_windows": 160270,
+      "baseline": {
+        "psnr": 24.047501196324966,
+        "ssim": 0.9476974901063917
+      },
+      "candidate": {
+        "psnr": 23.60579749447227,
+        "ssim": 0.9453554351662401
+      }
+    },
+    {
+      "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+      "raw_input_sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+      "original_size": {
+        "width": 1600,
+        "height": 1067
+      },
+      "scoring_size": {
+        "width": 512,
+        "height": 341
+      },
+      "common_valid_pixel_fraction": 0.9659090909090909,
+      "common_valid_pixels": 168640,
+      "common_valid_ssim_windows": 160270,
+      "baseline": {
+        "psnr": 17.09329306564375,
+        "ssim": 0.7800656141049793
+      },
+      "candidate": {
+        "psnr": 17.014808791222123,
+        "ssim": 0.7897209961082814
+      }
+    },
+    {
+      "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+      "raw_input_sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+      "original_size": {
+        "width": 1600,
+        "height": 1067
+      },
+      "scoring_size": {
+        "width": 512,
+        "height": 341
+      },
+      "common_valid_pixel_fraction": 0.9659090909090909,
+      "common_valid_pixels": 168640,
+      "common_valid_ssim_windows": 160270,
+      "baseline": {
+        "psnr": 22.84929490941067,
+        "ssim": 0.8311355557923356
+      },
+      "candidate": {
+        "psnr": 23.56362894325772,
+        "ssim": 0.8589691096799008
+      }
+    }
+  ],
+  "mean_per_view": {
+    "baseline": {
+      "psnr": 21.92808815935742,
+      "ssim": 0.8635260532595228
+    },
+    "candidate": {
+      "psnr": 22.059870022173627,
+      "ssim": 0.8766978462425133
+    }
+  },
+  "candidate_minus_baseline": {
+    "psnr": 0.13178186281620796,
+    "ssim": 0.013171792982990538
+  }
+}

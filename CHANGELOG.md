@@ -4,6 +4,12 @@
 
 ## 2026-10-30
 
+### 跨相机模型原始域评测
+
+- 关键突破：新增 `compare_raw_quality.py`。它验证两次任务的原始照片摘要与留出视角，再用各自保存的 COLMAP 相机把渲染反投影到相同原始像素网格；PSNR / SSIM 只计双方有效区域交集，SSIM 进一步排除不完整的 11×11 窗口。不同去畸变参考图不再被错误地直接横比。
+- 验证与取舍：对已完成的 ETH3D pipes / office SIMPLE_RADIAL 与 RADIAL 固定镜头任务复评；两组共同有效区域为 97.0812% / 96.5909%。RADIAL 的均值变化为 pipes +1.577282 dB / +0.05151203 SSIM，office +0.131782 dB / +0.01317179 SSIM；两份任务均保持完整 SH3 和相机工件，并导出同视角原始域图供人工复查。
+- 代价与限制：原始域重投影需要逐像素逆畸变与双线性采样，只用于离线对照，不进入重建或网页预览。两场景各只跑一次，office 有两个视角小幅回落，且留出照片参与了上游 SfM；结果只佐证当前固定镜头选择，不能推广到自动、混合镜头、变焦或鱼眼，也不能声称训练加速。下一步在新的固定镜头采集重复配对并再评估外观差异。[完整记录](docs/SHARED-RADIAL.md) · [pipes 原始汇总](docs/benchmarks/shared-radial-raw-pipes.json) · [office 原始汇总](docs/benchmarks/shared-radial-raw-office.json) · [实现提交](https://github.com/sakorman/web-scan/commit/42c4b1f65a9c9a19e0d8de8aeb4f2bffb2da990c) · [COLMAP 投影模型](https://github.com/colmap/colmap/blob/main/doc/cameras.rst) · [3D Gaussian Splatting](https://arxiv.org/abs/2308.04079)
+
 ### 同镜头 RADIAL 内参
 
 - 关键突破：明确选择同镜头模式时，COLMAP 从 `SIMPLE_RADIAL` 改为 `RADIAL`，可估计固定镜头的第二个径向畸变系数；自动模式继续使用保守模型，任务报告记录实际 `camera_model`。不改匹配、训练、导出、照片或历史模型。

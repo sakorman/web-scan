@@ -31,6 +31,26 @@ Brush 原始日志分别在 512、1024 分辨率评分，不能直接横向比�
 
 重复导出基准在汇总前还会比较每张留出照片的文件名、参考图 SHA-256 和实际画幅；因此视角数量相同、但参考图不相同的两个结果不会被并列比较。渲染图摘要不在此身份集合中，模型输出不同不会触发误报。[检查与控制实验](BENCHMARK-IDENTITY.md)
 
+## 跨相机模型的原始像素对照 · 2026-10-30
+
+当候选改变 COLMAP 内参时，普通对照会正确拒绝不同去畸变参考图。`scripts/compare_raw_quality.py` 为这种情况单独读取各自保存的原始 COLMAP 相机：从原始像素反投影到归一化射线，再投到各自的去畸变针孔渲染；两次渲染最后都在同一原始照片的 512 像素长边网格评分。原始输入 SHA-256、评估视角集合和画幅必须一致，评分只使用两个重投影都有效的像素交集；SSIM 还会排除交集边缘不完整的 11×11 窗口。它不会把边缘填充或去畸变后的不同参考图混入比较。
+
+| 场景 | 模型 | 共同有效像素 | 原始域 PSNR | 原始域 SSIM |
+| --- | --- | ---: | ---: | ---: |
+| ETH3D pipes · 2 张 | SIMPLE_RADIAL | 97.0812% | 18.180514 | 0.71925555 |
+| ETH3D pipes · 2 张 | RADIAL | 97.0812% | 19.757795 | 0.77076758 |
+| ETH3D office · 4 张 | SIMPLE_RADIAL | 96.5909% | 21.928088 | 0.86352605 |
+| ETH3D office · 4 张 | RADIAL | 96.5909% | 22.059870 | 0.87669785 |
+
+在这一次固定照片、3,000 步 / 512 像素、30 万高斯上限的配对任务中，RADIAL 相比 SIMPLE_RADIAL 的均值差为 pipes +1.577282 dB / +0.05151203，office +0.131782 dB / +0.01317179。pipes 两个视角均提升；office 有两个视角的小幅回落，因此不把它推广为自动或混合镜头策略。两组都只运行一次，留出照片也参与过 SfM，只能作为当前固定镜头路径的可比证据。原始域图像保存在本地实验目录；机器可读结果见 [pipes](benchmarks/shared-radial-raw-pipes.json) 和 [office](benchmarks/shared-radial-raw-office.json)。
+
+```bash
+.venv/bin/python scripts/compare_raw_quality.py \
+  --baseline SIMPLE_JOB --candidate RADIAL_JOB \
+  --output .qa/raw-camera-quality.json \
+  --images-dir .qa/raw-camera-images
+```
+
 | 场景 | PSNR：快速 → 精细 | SSIM：快速 → 精细 | 评估视角数 |
 | --- | --- | --- | --- |
 | pipes | 18.159 → 18.430 | 0.7301 → 0.7578 | 2 |
