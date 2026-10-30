@@ -63,7 +63,7 @@ Web Scan 是一个在本地运行的三维重建工具。导入同一处空间�
 
 <img src="docs/screenshots/05-mobile.png" width="390" alt="390像素宽的办公室漫游页面">
 
-训练期间会显示实际步数与当前高斯数。最终模型校验通过后，自动清理这次任务的中间 PLY，保留最终 PLY 和 splat 下载。实验记录见 [持续迭代记录](docs/ITERATIONS.md)。
+训练期间会显示实际步数与当前高斯数。训练器退出后直接进入模型校验，减少等待下一次进度检查的延迟；[实测范围](docs/COMPLETION-WAIT.md)。最终模型校验通过后，自动清理这次任务的中间 PLY，保留最终 PLY 和 splat 下载。实验记录见 [持续迭代记录](docs/ITERATIONS.md)。
 
 网页预览的中间缓冲使用更高精度，固定模型的六个测试视角均有小幅评分改善；会增加一些 GPU 缓冲占用。[预览对照与代价](docs/VIEWER-PRECISION.md)
 

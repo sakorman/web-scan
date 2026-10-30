@@ -4,6 +4,12 @@
 
 ## 2026-10-31
 
+### 缩短训练结束等待
+
+- 改进：将进度循环的固定一秒睡眠改为可随子进程退出返回的等待，保留进度更新、取消和超时处理。18 次受控进程对照中，三组退出检测延迟中位数由 880 / 570 / 273 ms 降至 18 / 51 / 10 ms，采用此实现。
+- 验证：pipes / office 各完成一组 3,000 步、512 像素串行 Metal 重建；完整 SH3、相机和留出身份通过，同一原始输出经基线转换后 PLY / splat 逐字节一致。188 项后端、18 项前端、类型检查及构建通过，同视角图与逐次分数已保留。
+- 代价与限制：带超时等待增加进程检查频率，未测 CPU / 能耗；独立训练候选分数较低，不能据此宣称画质或训练速度提升，收益只限结束等待。下一步训练参数实验仍需重复对照，历史轮询耗时不追溯修改。[详细记录](docs/COMPLETION-WAIT.md) · [数据](docs/benchmarks/completion-wait.json) · [基线提交](https://github.com/sakorman/web-scan/commit/3611df6) · [Python 进程等待](https://docs.python.org/3.12/library/subprocess.html#subprocess.Popen.wait) · [Brush](https://github.com/ArthurBrussee/brush/releases/tag/v0.3.0)
+
 ### 初始点最短轨迹筛查（未采用）
 
 - 结论：只保留至少三次观测的 SfM 初始点后，pipes / office 平均少 26.89% / 19.47% 高斯，但 office 两次 SSIM 均下降，均值差为 -0.006004；最后一个留出视角 PSNR 分别下降 1.32 / 2.62 dB。pipes 的 SSIM 收益也不稳定，不采用为默认规则。

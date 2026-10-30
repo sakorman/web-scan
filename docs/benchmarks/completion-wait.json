@@ -1,0 +1,798 @@
+{
+  "date": "2026-10-31",
+  "baseline_commit": "3611df623ff3dd5fdc111c096edb5f300a3fb1c2",
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "control": {
+    "measurement": "controlled child exit marker to detection; no GPU or model",
+    "repeats": 3,
+    "runs": [
+      {
+        "child_delay_seconds": 0.1,
+        "adapter_seconds": 1.011862125247717,
+        "exit_marker_to_detection_seconds": 0.8893864168785512,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 0
+      },
+      {
+        "child_delay_seconds": 0.1,
+        "adapter_seconds": 0.13972775032743812,
+        "exit_marker_to_detection_seconds": 0.0034065842628479004,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 0
+      },
+      {
+        "child_delay_seconds": 0.1,
+        "adapter_seconds": 0.1334064588882029,
+        "exit_marker_to_detection_seconds": 0.017763250041753054,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 1
+      },
+      {
+        "child_delay_seconds": 0.1,
+        "adapter_seconds": 1.013208916876465,
+        "exit_marker_to_detection_seconds": 0.8804303747601807,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 1
+      },
+      {
+        "child_delay_seconds": 0.1,
+        "adapter_seconds": 1.0070833750069141,
+        "exit_marker_to_detection_seconds": 0.8753000004217029,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 2
+      },
+      {
+        "child_delay_seconds": 0.1,
+        "adapter_seconds": 0.1891209171153605,
+        "exit_marker_to_detection_seconds": 0.048282625153660774,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 2
+      },
+      {
+        "child_delay_seconds": 0.4,
+        "adapter_seconds": 0.49184029223397374,
+        "exit_marker_to_detection_seconds": 0.05100841727107763,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 0
+      },
+      {
+        "child_delay_seconds": 0.4,
+        "adapter_seconds": 1.0098980842158198,
+        "exit_marker_to_detection_seconds": 0.5691677089780569,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 0
+      },
+      {
+        "child_delay_seconds": 0.4,
+        "adapter_seconds": 1.0103448750451207,
+        "exit_marker_to_detection_seconds": 0.570119374897331,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 1
+      },
+      {
+        "child_delay_seconds": 0.4,
+        "adapter_seconds": 0.47618495812639594,
+        "exit_marker_to_detection_seconds": 0.036015791818499565,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 1
+      },
+      {
+        "child_delay_seconds": 0.4,
+        "adapter_seconds": 0.4973655827343464,
+        "exit_marker_to_detection_seconds": 0.05605304101482034,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 2
+      },
+      {
+        "child_delay_seconds": 0.4,
+        "adapter_seconds": 1.012711291667074,
+        "exit_marker_to_detection_seconds": 0.5796855837106705,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 2
+      },
+      {
+        "child_delay_seconds": 0.7,
+        "adapter_seconds": 1.007727375254035,
+        "exit_marker_to_detection_seconds": 0.2649456672370434,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 0
+      },
+      {
+        "child_delay_seconds": 0.7,
+        "adapter_seconds": 0.7489047502167523,
+        "exit_marker_to_detection_seconds": 0.007623500190675259,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 0
+      },
+      {
+        "child_delay_seconds": 0.7,
+        "adapter_seconds": 0.7645672908984125,
+        "exit_marker_to_detection_seconds": 0.021995915565639734,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 1
+      },
+      {
+        "child_delay_seconds": 0.7,
+        "adapter_seconds": 1.0134984171018004,
+        "exit_marker_to_detection_seconds": 0.2729079579003155,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 1
+      },
+      {
+        "child_delay_seconds": 0.7,
+        "adapter_seconds": 1.013793374877423,
+        "exit_marker_to_detection_seconds": 0.2730184169486165,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "variant": "baseline",
+        "repeat": 2
+      },
+      {
+        "child_delay_seconds": 0.7,
+        "adapter_seconds": 0.7496690838597715,
+        "exit_marker_to_detection_seconds": 0.009682334028184414,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "variant": "candidate",
+        "repeat": 2
+      }
+    ],
+    "median_ms_by_delay": {
+      "0.1": {
+        "baseline": 880.4303747601807,
+        "candidate": 17.763250041753054
+      },
+      "0.4": {
+        "baseline": 570.119374897331,
+        "candidate": 51.00841727107763
+      },
+      "0.7": {
+        "baseline": 272.9079579003155,
+        "candidate": 9.682334028184414
+      }
+    }
+  },
+  "gpu": {
+    "config": {
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "evaluation_mode": "holdout",
+      "backend": "brush"
+    },
+    "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "seed": 42,
+    "repeats": 1,
+    "measurement": "adapter training, evaluation and export; excludes SfM and input copy",
+    "runs": [
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "44537f26e3b34c5bb417deacb103ce47",
+        "variant": "baseline",
+        "seconds": 23.2342,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "input_sha256": "ccc1c6b96609d9c7af1747d0add64e6db8617980a25c72db5aa4496b078e7b9c",
+        "gaussians": 11709,
+        "evaluation": {
+          "psnr": 18.567501,
+          "ssim": 0.7821194
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation_references": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+            "width": 512,
+            "height": 341
+          }
+        ],
+        "exports": 1,
+        "export_bytes": 2764874,
+        "first_progress_seconds": 2.0752,
+        "same_source_conversion_identical": true,
+        "full_sh3_valid": true,
+        "cameras_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+        "model_bytes": 2764874,
+        "training_process_seconds": 23.1336
+      },
+      {
+        "scene_index": 0,
+        "repeat": 0,
+        "source_job": "44537f26e3b34c5bb417deacb103ce47",
+        "variant": "candidate",
+        "seconds": 22.8007,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "input_sha256": "ccc1c6b96609d9c7af1747d0add64e6db8617980a25c72db5aa4496b078e7b9c",
+        "gaussians": 11464,
+        "evaluation": {
+          "psnr": 18.028183,
+          "ssim": 0.7697823
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation_references": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+            "width": 512,
+            "height": 341
+          }
+        ],
+        "exports": 1,
+        "export_bytes": 2707054,
+        "first_progress_seconds": 2.0794,
+        "same_source_conversion_identical": true,
+        "full_sh3_valid": true,
+        "cameras_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+        "model_bytes": 2707054,
+        "training_process_seconds": 22.7236
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "c6a40f0953a54a9092430d295e2055a9",
+        "variant": "candidate",
+        "seconds": 23.4064,
+        "adapter_sha256": "1139cade2bcfe7699bcbf4647e1ef6e5f2994a511cf94876bdc282165546c542",
+        "input_sha256": "91c8c881d3d59e7c5bea8b4086475d54c4f61c96a5bbefc3196eb2f97352e75b",
+        "gaussians": 14718,
+        "evaluation": {
+          "psnr": 21.033258,
+          "ssim": 0.8713936
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation_references": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629",
+            "width": 512,
+            "height": 341
+          }
+        ],
+        "exports": 1,
+        "export_bytes": 3474998,
+        "first_progress_seconds": 2.0627,
+        "same_source_conversion_identical": true,
+        "full_sh3_valid": true,
+        "cameras_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+        "model_bytes": 3474998,
+        "training_process_seconds": 23.3214
+      },
+      {
+        "scene_index": 1,
+        "repeat": 0,
+        "source_job": "c6a40f0953a54a9092430d295e2055a9",
+        "variant": "baseline",
+        "seconds": 24.2559,
+        "adapter_sha256": "1591f088f0da21cd523d0bb3794c2b23a3d6cdd936c4fc371b20e7a97f51adce",
+        "input_sha256": "91c8c881d3d59e7c5bea8b4086475d54c4f61c96a5bbefc3196eb2f97352e75b",
+        "gaussians": 14661,
+        "evaluation": {
+          "psnr": 21.391806,
+          "ssim": 0.8878555
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation_references": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "width": 512,
+            "height": 341
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629",
+            "width": 512,
+            "height": 341
+          }
+        ],
+        "exports": 1,
+        "export_bytes": 3461546,
+        "first_progress_seconds": 2.0789,
+        "same_source_conversion_identical": true,
+        "full_sh3_valid": true,
+        "cameras_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+        "model_bytes": 3461546,
+        "training_process_seconds": 24.147
+      }
+    ],
+    "summary": [
+      {
+        "scene_index": 0,
+        "runs_per_variant": 1,
+        "baseline": {
+          "seconds": {
+            "mean": 23.2342,
+            "min": 23.2342,
+            "max": 23.2342
+          },
+          "gaussians": {
+            "mean": 11709,
+            "min": 11709,
+            "max": 11709
+          },
+          "psnr": {
+            "mean": 18.567501,
+            "min": 18.567501,
+            "max": 18.567501
+          },
+          "ssim": {
+            "mean": 0.7821194,
+            "min": 0.7821194,
+            "max": 0.7821194
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 22.8007,
+            "min": 22.8007,
+            "max": 22.8007
+          },
+          "gaussians": {
+            "mean": 11464,
+            "min": 11464,
+            "max": 11464
+          },
+          "psnr": {
+            "mean": 18.028183,
+            "min": 18.028183,
+            "max": 18.028183
+          },
+          "ssim": {
+            "mean": 0.7697823,
+            "min": 0.7697823,
+            "max": 0.7697823
+          }
+        }
+      },
+      {
+        "scene_index": 1,
+        "runs_per_variant": 1,
+        "baseline": {
+          "seconds": {
+            "mean": 24.2559,
+            "min": 24.2559,
+            "max": 24.2559
+          },
+          "gaussians": {
+            "mean": 14661,
+            "min": 14661,
+            "max": 14661
+          },
+          "psnr": {
+            "mean": 21.391806,
+            "min": 21.391806,
+            "max": 21.391806
+          },
+          "ssim": {
+            "mean": 0.8878555,
+            "min": 0.8878555,
+            "max": 0.8878555
+          }
+        },
+        "candidate": {
+          "seconds": {
+            "mean": 23.4064,
+            "min": 23.4064,
+            "max": 23.4064
+          },
+          "gaussians": {
+            "mean": 14718,
+            "min": 14718,
+            "max": 14718
+          },
+          "psnr": {
+            "mean": 21.033258,
+            "min": 21.033258,
+            "max": 21.033258
+          },
+          "ssim": {
+            "mean": 0.8713936,
+            "min": 0.8713936,
+            "max": 0.8713936
+          }
+        }
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "requested_comparison_size": 512,
+      "comparison_size": 512,
+      "resize_policy": "never_upscale",
+      "resampling": "Lanczos",
+      "quick_job": "0-baseline",
+      "detail_job": "0-candidate",
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "quick": {
+            "psnr": 22.453943828307693,
+            "ssim": 0.8409513831138611
+          },
+          "detail": {
+            "psnr": 21.703961572758438,
+            "ssim": 0.8313367962837219
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "quick": {
+            "psnr": 14.373787223885618,
+            "ssim": 0.6757400631904602
+          },
+          "detail": {
+            "psnr": 14.09061899737518,
+            "ssim": 0.6619594097137451
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.413865526096657,
+          "ssim": 0.7583457231521606
+        },
+        "detail": {
+          "psnr": 17.89729028506681,
+          "ssim": 0.7466481029987335
+        }
+      },
+      "scene": "pipes"
+    },
+    {
+      "requested_comparison_size": 512,
+      "comparison_size": 512,
+      "resize_policy": "never_upscale",
+      "resampling": "Lanczos",
+      "quick_job": "1-baseline",
+      "detail_job": "1-candidate",
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "quick": {
+            "psnr": 21.910677024231987,
+            "ssim": 0.9056916832923889
+          },
+          "detail": {
+            "psnr": 22.380471201827895,
+            "ssim": 0.9134560823440552
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "quick": {
+            "psnr": 24.044319701396685,
+            "ssim": 0.9446476697921753
+          },
+          "detail": {
+            "psnr": 23.017537898262063,
+            "ssim": 0.9405858516693115
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "quick": {
+            "psnr": 16.41506215286339,
+            "ssim": 0.7874522805213928
+          },
+          "detail": {
+            "psnr": 15.906560571052557,
+            "ssim": 0.7347710132598877
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "quick": {
+            "psnr": 22.693961363665554,
+            "ssim": 0.859453558921814
+          },
+          "detail": {
+            "psnr": 22.339007716180696,
+            "ssim": 0.844183623790741
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 21.266005060539403,
+          "ssim": 0.8743112981319427
+        },
+        "detail": {
+          "psnr": 20.9108943468308,
+          "ssim": 0.8582491427659988
+        }
+      },
+      "scene": "office"
+    }
+  ],
+  "sources": [
+    {
+      "scene": "pipes",
+      "source_job": "44537f26e3b34c5bb417deacb103ce47",
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "camera_model": "RADIAL",
+      "camera": {
+        "width": 1600,
+        "height": 1066,
+        "K": [
+          [
+            883.9916445174683,
+            0.0,
+            800.0
+          ],
+          [
+            0.0,
+            883.7085730850977,
+            533.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "original_camera": {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.091435630405,
+            800.0,
+            533.5,
+            -0.10091385666317157,
+            0.06728544184812109
+          ]
+        }
+      },
+      "sfm_seconds": null,
+      "end_to_end_seconds": null
+    },
+    {
+      "scene": "office",
+      "source_job": "c6a40f0953a54a9092430d295e2055a9",
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "camera_model": "RADIAL",
+      "camera": {
+        "width": 1600,
+        "height": 1067,
+        "K": [
+          [
+            884.8694165023509,
+            0.0,
+            800.0
+          ],
+          [
+            0.0,
+            884.8759943285257,
+            533.5
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "original_camera": {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.4381085295956,
+            800.0,
+            533.5,
+            -0.10327691090226823,
+            0.06959028672322837
+          ]
+        }
+      },
+      "sfm_seconds": null,
+      "end_to_end_seconds": null
+    }
+  ],
+  "source_files_unchanged": true,
+  "validation": {
+    "backend_tests": 188,
+    "frontend_tests": 18,
+    "typecheck": "passed",
+    "build": "passed",
+    "focused_tests": 61
+  },
+  "limitations": [
+    "Controlled child measurements include marker write and process exit overhead.",
+    "No change to Brush arguments, photos, cameras or model conversion.",
+    "GPU runs are single pairs, not a quality or training-speed claim.",
+    "SfM and input copy excluded; new Brush process; caches not flushed.",
+    "Held-out photos participate in SfM; not independent end-to-end evaluation.",
+    "POSIX timed waits poll internally; CPU/energy changes not measured."
+  ],
+  "screenshots": [
+    {
+      "scene": "pipes",
+      "variant": "baseline",
+      "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+      "path": "docs/screenshots/162-completion-pipes-baseline.png",
+      "sha256": "5a16fcea2dd52241d5a3e4d0734775afc8eb0828812c9360f96593b61d42383e"
+    },
+    {
+      "scene": "pipes",
+      "variant": "candidate",
+      "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+      "path": "docs/screenshots/163-completion-pipes-candidate.png",
+      "sha256": "c767b8a80a88829d887aa821606060c23144f9d75ab539f2cbd0b5a6ca271b5f"
+    },
+    {
+      "scene": "office",
+      "variant": "baseline",
+      "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+      "path": "docs/screenshots/164-completion-office-baseline.png",
+      "sha256": "3e93e86043db997385fe5e0794257ecb79393efda626c198198766ce2ee909cc"
+    },
+    {
+      "scene": "office",
+      "variant": "candidate",
+      "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+      "path": "docs/screenshots/165-completion-office-candidate.png",
+      "sha256": "863bf61941fb04b2d82b65f2e715d50c381762f6caa75ecb14e8c8e43d372a7e"
+    }
+  ]
+}

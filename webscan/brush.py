@@ -292,7 +292,12 @@ def train(scene, work, output, config, progress):
                     0.42 + 0.5 * tracker.step / steps,
                     f"{message} · {int(time.monotonic() - start)} 秒",
                 )
-                time.sleep(1)
+                # Keep the progress cadence, but begin validation as soon as
+                # the child exits instead of sleeping through its completion.
+                try:
+                    process.wait(timeout=1)
+                except subprocess.TimeoutExpired:
+                    pass
             if process.returncode:
                 detail = log_tail(log_path)
                 raise RuntimeError("Brush GPU 训练失败：" + detail)
