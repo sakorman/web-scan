@@ -2,6 +2,14 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-10-31
+
+### 初始点最短轨迹筛查（未采用）
+
+- 结论：只保留至少三次观测的 SfM 初始点后，pipes / office 平均少 26.89% / 19.47% 高斯，但 office 两次 SSIM 均下降，均值差为 -0.006004；最后一个留出视角 PSNR 分别下降 1.32 / 2.62 dB。pipes 的 SSIM 收益也不稳定，不采用为默认规则。
+- 验证：冻结相机、照片与训练设置，两场景各做两组 3,000 步 / 512 像素串行 Metal 对照，共 8 次。完整 SH3、稀疏图关联、相机和留出身份检查通过；同视角截图和浏览器拖动漫游仍见细线漂浮、桌面模糊与前景黑区。183 项后端、18 项前端、类型检查和构建通过。
+- 代价与限制：候选删去 32.43% / 25.95% 初始点，减少体积同时损失部分视角质量；复用已准备 SfM，未测端到端和训练内存，不宣称等质量提速。下一步先验证三角化角度与低覆盖区域，避免仅凭次数删点。[详细报告与截图](docs/TRACK-INITIALIZATION.md) · [逐次数据](docs/benchmarks/track-initialization.json) · [实验补丁](docs/benchmarks/track-initialization.patch) · [基线提交](https://github.com/sakorman/web-scan/commit/16d5a15) · [初始化研究](https://arxiv.org/abs/2510.17479) · [官方参考实现](https://github.com/zss171999645/ItG-GS) · [COLMAP 格式](https://colmap.github.io/format.html)
+
 ## 2026-10-30
 
 ### PLY 数值校验减少重复扫描
