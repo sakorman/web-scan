@@ -124,7 +124,8 @@ def convert_output(source, output, normalization, *, expected_sh_degree=None):
         data[f"scale_{i}"] -= np.log(radius)
     with (output / "gaussians.ply").open("wb") as f:
         f.write(("\n".join(header) + "\n").encode())
-        f.write(data.tobytes())
+        # Keep the explicit little-endian records without a full bytes copy.
+        data.tofile(f)
     splat = np.zeros(
         len(data),
         dtype=[
@@ -147,7 +148,7 @@ def convert_output(source, output, normalization, *, expected_sh_degree=None):
     quat = np.column_stack([data[f"rot_{i}"] for i in range(4)])
     quat /= np.maximum(np.linalg.norm(quat, axis=1, keepdims=True), 1e-8)
     splat["quat"] = np.clip(quat * 128 + 128, 0, 255).astype("u1")
-    (output / "preview.splat").write_bytes(splat.tobytes())
+    splat.tofile(output / "preview.splat")
     return len(data)
 
 
