@@ -26,6 +26,10 @@ def make_scene(root):
                 "image": str(image.resolve()),
                 "K": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
                 "view": [],
+                "original_camera": {
+                    "model": "RADIAL", "width": 1600, "height": 1067,
+                    "params": [906.09, 800, 533.5, -0.10, 0.067],
+                },
             }
         ],
         "points": [[1, 2, 3]],
@@ -63,6 +67,7 @@ def test_restored_scene_has_identical_geometry_and_new_local_image_paths(tmp_pat
         and scene["views"][0]["K"] == original["views"][0]["K"]
     )
     assert Path(scene["views"][0]["image"]).is_relative_to(restored)
+    assert scene["views"][0]["original_camera"] == original["views"][0]["original_camera"]
     assert Path(scene["views"][0]["image"]).read_bytes() == b"jpeg data"
     (restored / "undistorted/images/0001.jpg").write_bytes(b"task-local change")
     assert verified_snapshot(cache, "key"), (

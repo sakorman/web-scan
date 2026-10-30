@@ -630,11 +630,16 @@ def estimate_scene(
     xyz = np.array([p.xyz for p in points], dtype=np.float32)
     rgb = np.array([p.color for p in points], dtype=np.float32) / 255
     views = []
+    original_cameras = {
+        image.name: best.cameras[image.camera_id]
+        for image in best.images.values()
+    }
     for image in sorted(result.images.values(), key=lambda image: image.name):
         transform = image.cam_from_world()
         matrix = np.eye(4, dtype=np.float32)
         matrix[:3] = transform.matrix()
         cam = result.cameras[image.camera_id]
+        original = original_cameras[image.name]
         views.append(
             {
                 "image": str(undistorted / "images" / image.name),
@@ -643,6 +648,12 @@ def estimate_scene(
                 "width": cam.width,
                 "height": cam.height,
                 "image_name": image.name,
+                "original_camera": {
+                    "model": original.model.name,
+                    "width": original.width,
+                    "height": original.height,
+                    "params": original.params.tolist(),
+                },
             }
         )
     xyz, transform = normalize_scene(xyz, views)

@@ -47,6 +47,9 @@ def run(root: Path, jid: str):
             manifest = json.loads((source / "manifest.json").read_text())
             phase = time.monotonic()
             validate_inputs(source, manifest)
+            from .raw_inputs import snapshot_inputs
+
+            snapshot_inputs(work, session["id"], manifest)
             timings["input_validation_seconds"] = time.monotonic() - phase
             snapshot_key = cache_key(
                 manifest,

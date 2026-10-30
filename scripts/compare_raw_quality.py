@@ -1,7 +1,6 @@
 """Compare two completed Brush jobs in the same original-photo pixel domain."""
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 
@@ -11,11 +10,7 @@ from PIL import Image
 
 from webscan.evaluation import validate_evaluation
 from webscan.raw_evaluation import masked_metrics, scaled_size, warp_render_to_raw
-
-
-def _sha256(path):
-    with path.open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
+from webscan.raw_inputs import resolve_raw_input
 
 
 def _job(data, job_id):
@@ -36,14 +31,25 @@ def _job(data, job_id):
     )
     if report.get("evaluation_images") != checked["evaluation_images"]:
         raise ValueError("保存的留出图已变化或不完整")
-    reconstruction = pycolmap.Reconstruction(root / "sfm/chosen")
+    if all("original_camera" in view for view in scene["views"]):
+        cameras = {
+            view["image_name"]: pycolmap.Camera(**view["original_camera"])
+            for view in scene["views"]
+        }
+    else:
+        if not (root / "sfm/chosen").is_dir():
+            raise ValueError("旧缓存任务缺少原始相机；请重新重建以保存原始域评测数据")
+        reconstruction = pycolmap.Reconstruction(root / "sfm/chosen")
+        cameras = {
+            image.name: reconstruction.cameras[image.camera_id]
+            for image in reconstruction.images.values()
+        }
     return {
         "id": job_id,
         "root": root,
         "report": report,
         "scene_views": {view["image_name"]: view for view in scene["views"]},
-        "images": {image.name: image for image in reconstruction.images.values()},
-        "cameras": reconstruction.cameras,
+        "cameras": cameras,
         "evaluation": {row["name"]: row for row in checked["evaluation_images"]},
     }
 
@@ -52,10 +58,10 @@ def _models(job):
     names = set()
     for row in job["evaluation"].values():
         image_name = Path(row["name"]).with_suffix(".jpg").name
-        image = job["images"].get(image_name)
-        if image is None:
+        camera = job["cameras"].get(image_name)
+        if camera is None:
             raise ValueError(f"找不到评估视角 {image_name} 的原始相机")
-        names.add(str(job["cameras"][image.camera_id].model).split(".")[-1])
+        names.add(camera.model.name)
     return sorted(names)
 
 
@@ -69,25 +75,26 @@ def _save(path, image):
     Image.fromarray(np.rint(np.clip(image, 0, 1) * 255).astype(np.uint8)).save(path)
 
 
-def _warp(job, evaluation_name, output_size):
+def _warp(job, evaluation_name, raw_path, output_size):
     image_name = Path(evaluation_name).with_suffix(".jpg").name
     view = job["scene_views"].get(image_name)
-    image = job["images"].get(image_name)
-    if view is None or image is None:
+    camera = job["cameras"].get(image_name)
+    if view is None or camera is None:
         raise ValueError(f"任务 {job['id']} 缺少 {image_name} 的相机数据")
     render = _image(job["root"] / "brush" / f"eval_{job['report']['steps']}" / evaluation_name)
-    raw_path = job["root"] / "input" / image_name
-    raw = _image(raw_path)
-    camera = job["cameras"][image.camera_id]
+    with Image.open(raw_path) as source:
+        raw_size = source.size
+    if raw_size != (camera.width, camera.height):
+        raise ValueError(f"原始照片与 COLMAP 相机尺寸不一致：{image_name}")
     warped, mask = warp_render_to_raw(
         render,
-        (raw.shape[1], raw.shape[0]),
+        raw_size,
         camera,
         view["K"],
         (view["width"], view["height"]),
         output_size,
     )
-    return warped, mask, raw, raw_path, render.shape[1], render.shape[0]
+    return warped, mask
 
 
 def compare(data, baseline_id, candidate_id, size=512, images_dir=None):
@@ -102,11 +109,8 @@ def compare(data, baseline_id, candidate_id, size=512, images_dir=None):
         base_render = baseline["evaluation"][evaluation_name]
         candidate_render = candidate["evaluation"][evaluation_name]
         raw_name = Path(evaluation_name).with_suffix(".jpg").name
-        base_raw = baseline["root"] / "input" / raw_name
-        candidate_raw = candidate["root"] / "input" / raw_name
-        if not base_raw.is_file() or not candidate_raw.is_file():
-            raise ValueError(f"缺少原始照片 {raw_name}")
-        base_sha, candidate_sha = _sha256(base_raw), _sha256(candidate_raw)
+        base_raw, base_sha, base_identity = resolve_raw_input(data, baseline["root"], raw_name)
+        candidate_raw, candidate_sha, candidate_identity = resolve_raw_input(data, candidate["root"], raw_name)
         if base_sha != candidate_sha:
             raise ValueError(f"原始照片身份不一致：{raw_name}")
         with Image.open(base_raw) as source:
@@ -117,11 +121,11 @@ def compare(data, baseline_id, candidate_id, size=512, images_dir=None):
             max(candidate_render["width"], candidate_render["height"]),
         )
         output_size = scaled_size(*raw_size, native_cap)
-        base_warp, base_mask, raw, _, _, _ = _warp(
-            baseline, evaluation_name, output_size
+        base_warp, base_mask = _warp(
+            baseline, evaluation_name, base_raw, output_size
         )
-        candidate_warp, candidate_mask, _, _, _, _ = _warp(
-            candidate, evaluation_name, output_size
+        candidate_warp, candidate_mask = _warp(
+            candidate, evaluation_name, candidate_raw, output_size
         )
         with Image.open(base_raw) as source:
             reference = np.asarray(
@@ -140,6 +144,7 @@ def compare(data, baseline_id, candidate_id, size=512, images_dir=None):
             {
                 "view": evaluation_name,
                 "raw_input_sha256": base_sha,
+                "raw_identity": {"baseline": base_identity, "candidate": candidate_identity},
                 "original_size": {"width": raw_size[0], "height": raw_size[1]},
                 "scoring_size": {"width": output_size[0], "height": output_size[1]},
                 "common_valid_pixel_fraction": base_metrics["valid_pixel_fraction"],
