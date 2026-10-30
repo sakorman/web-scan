@@ -4,6 +4,12 @@
 
 ## 2026-10-30
 
+### PLY 数值校验减少重复扫描
+
+- 改进：按连续小块校验模型数值，替代逐字段反复扫描交错数据；保留完整 SH3、字段映射与异常拒绝规则，临时布尔数组限制为 1 MiB。两组大模型各三次交错对照，转换耗时中位数从 97.312 / 65.909 ms 降至 51.922 / 40.863 ms，12 次文件逐字节一致，采用此实现。
+- 验证：新增 10 项异常记录与附加字段回归；183 项后端、18 项前端、类型检查和构建通过。pipes / office 各完成 3,000 步实拍 Metal 重建，14 / 14、26 / 26 定位；同源原始 PLY 经新旧转换后完全一致，下载及 Range 检查通过。
+- 代价与限制：仍完整读入模型，峰值内存基本不变；省下约 25–45 毫秒不能写作训练或端到端同比提速。下一步优先验证训练与采集瓶颈；Brush 开发分支的新优化尚未接入。[详细记录](docs/PLY-VALIDATION-SCAN.md) · [逐次数据](docs/benchmarks/ply-validation-scan.json) · [实现提交](https://github.com/sakorman/web-scan/commit/c4ad755) · [NumPy 字段布局](https://numpy.org/doc/stable/user/basics.rec.html) · [Brush 开发记录](https://github.com/ArthurBrussee/brush/blob/1388f74c6fe0236f68ee4915564bf00e9d2e3747/CHANGELOG.md)
+
 ### 完整模型导出减少内存复制
 
 - 改进：PLY / splat 从整数组 `tobytes()` 复制后写入改为直接写数组，保留完整 SH3、小端格式和归一化计算。两个历史实拍大模型各交错重复三次，转换进程峰值内存中位数由 214.89 / 172.05 MiB 降至 138.03 / 112.86 MiB，下降 35.77% / 34.40%；12 次输出逐字节一致。
