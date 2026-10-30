@@ -93,7 +93,7 @@ def read_ply(path, *, expected_sh_degree=None):
         data = np.fromfile(file, dtype=fields, count=count)
         if len(data) != count:
             raise ValueError("PLY 内容不完整")
-        for key in [
+        required = [
             "x",
             "y",
             "z",
@@ -109,8 +109,19 @@ def read_ply(path, *, expected_sh_degree=None):
             "f_dc_1",
             "f_dc_2",
             *sorted(sh_fields),
-        ]:
-            if key not in data.dtype.names or not np.isfinite(data[key]).all():
+        ]
+        if any(key not in data.dtype.names for key in required):
+            raise ValueError("PLY 参数缺失或非有限")
+        # All parsed fields are packed little-endian float32. Scan consecutive
+        # records once instead of revisiting the interleaved buffer per field.
+        # Limit the temporary boolean array to 1 MiB and retain the existing
+        # policy for extra properties (e.g. unused normals).
+        columns = [data.dtype.names.index(key) for key in required]
+        values = data.view("<f4").reshape(count, len(fields))
+        block_rows = max(1, (1024 * 1024) // len(fields))
+        for start in range(0, count, block_rows):
+            finite = np.isfinite(values[start : start + block_rows]).all(axis=0)
+            if not finite[columns].all():
                 raise ValueError("PLY 参数缺失或非有限")
     return header, data
 
