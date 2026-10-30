@@ -4,6 +4,12 @@
 
 ## 2026-10-30
 
+### 缓存任务恢复原始域评测
+
+- 修复：真实 pipes 缓存任务训练成功后，原始域评测却因缺少原始相机失败。现将原始内参随 SfM 场景缓存保存，并为每次任务冻结照片摘要、尺寸和顺序；缓存评测直接校验并读取采集原图，无需额外复制照片或完整稀疏模型。
+- 验证：pipes / office 各完成一组 500 步、512 像素的冷启动与缓存 Metal 重建，均为完整定位、SH3 和相机保真，6 张留出视角可在同一原始网格评分；历史两组原始域评分逐项不变。173 项后端、18 项前端、类型检查和构建通过。本轮只修复评测可用性，不把短训练波动写成画质或速度收益。
+- 代价与限制：每任务多约 2–4 KB 清单及少量相机参数；旧缓存首次需重新求解，历史缺内参的缓存任务不能追溯补证，原图丢失或被修改时拒绝评分。下一步用缓存路径支持新的重复训练对照。[详细报告](docs/RAW-CACHE-EVALUATION.md) · [实测数据](docs/benchmarks/raw-cache-evaluation.json) · [实现提交](https://github.com/sakorman/web-scan/commit/b0a7ed1) · [COLMAP 格式](https://colmap.github.io/format.html) · [Brush 相机](https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-render/src/camera.rs)
+
 ### 跨相机模型原始域评测
 
 - 关键突破：新增 `compare_raw_quality.py`。它验证两次任务的原始照片摘要与留出视角，再用各自保存的 COLMAP 相机把渲染反投影到相同原始像素网格；PSNR / SSIM 只计双方有效区域交集，SSIM 进一步排除不完整的 11×11 窗口。不同去畸变参考图不再被错误地直接横比。

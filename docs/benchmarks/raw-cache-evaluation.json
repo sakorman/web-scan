@@ -1,0 +1,512 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Verify raw-domain evaluation of cold and cached reconstructions, not quality or speed improvement.",
+  "before": {
+    "job_id": "8c014fa2bd9044a1a8fc46b53beaf56e",
+    "sfm_reused": true,
+    "training_status": "succeeded",
+    "comparison_exit_code": 1,
+    "error": "Missing sfm/chosen in cached task."
+  },
+  "runs": [
+    {
+      "scene": "pipes",
+      "phase": "cold",
+      "job_id": "6ea72a6d027348f6ae89252a7d088cae",
+      "config": {
+        "session_id": "c433a06a2e5348d580a0219671dd5336",
+        "backend": "brush",
+        "steps": 500,
+        "resolution": 512,
+        "max_points": 300000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "report": {
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "color_model": "SH3",
+        "steps": 500,
+        "resolution": 512,
+        "registered_images": 14,
+        "input_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_mode_effective": "shared",
+        "camera_model": "RADIAL",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 16.113037,
+          "ssim": 0.66382027
+        },
+        "gaussians": 2344,
+        "sparse_points": 1881,
+        "sfm_reused": false,
+        "sfm_cache_key": "aab4a3ea6b3791d619000c07e575640ed5e9c72a304bd54cf757c2c074217625",
+        "seconds": 10.81,
+        "timings": {
+          "input_validation_seconds": 0.0112,
+          "sfm_seconds": 6.6,
+          "cache_publish_seconds": 0.0247,
+          "training_and_model_export_seconds": 4.1205
+        }
+      },
+      "ply_bytes": 554733,
+      "source_manifest_bytes": 2176,
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.091435630405,
+            800.0,
+            533.5,
+            -0.10091385666317157,
+            0.06728544184812109
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "pipes",
+      "phase": "warm",
+      "job_id": "f3a61b054427410d94ad46889ffa82f3",
+      "config": {
+        "session_id": "c433a06a2e5348d580a0219671dd5336",
+        "backend": "brush",
+        "steps": 500,
+        "resolution": 512,
+        "max_points": 300000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "report": {
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "color_model": "SH3",
+        "steps": 500,
+        "resolution": 512,
+        "registered_images": 14,
+        "input_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_mode_effective": "shared",
+        "camera_model": "RADIAL",
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 16.283886,
+          "ssim": 0.6659883
+        },
+        "gaussians": 2338,
+        "sparse_points": 1881,
+        "sfm_reused": true,
+        "sfm_cache_key": "aab4a3ea6b3791d619000c07e575640ed5e9c72a304bd54cf757c2c074217625",
+        "seconds": 4.17,
+        "timings": {
+          "input_validation_seconds": 0.0075,
+          "sfm_seconds": 0.022,
+          "training_and_model_export_seconds": 4.1065
+        }
+      },
+      "ply_bytes": 553317,
+      "source_manifest_bytes": 2176,
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.091435630405,
+            800.0,
+            533.5,
+            -0.10091385666317157,
+            0.06728544184812109
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "office",
+      "phase": "cold",
+      "job_id": "48915f24aab048bc8c91dbf80d721811",
+      "config": {
+        "session_id": "9e1903a242d54b1f9d78d19cecc9a654",
+        "backend": "brush",
+        "steps": 500,
+        "resolution": 512,
+        "max_points": 300000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "report": {
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "color_model": "SH3",
+        "steps": 500,
+        "resolution": 512,
+        "registered_images": 26,
+        "input_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_mode_effective": "shared",
+        "camera_model": "RADIAL",
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 17.019373,
+          "ssim": 0.7537717
+        },
+        "gaussians": 3049,
+        "sparse_points": 2482,
+        "sfm_reused": false,
+        "sfm_cache_key": "a9a593291019f4f0dcd1486c036a6cb6266ede106b75f85f87ef07c483579368",
+        "seconds": 12.82,
+        "timings": {
+          "input_validation_seconds": 0.0131,
+          "sfm_seconds": 8.6131,
+          "cache_publish_seconds": 0.0401,
+          "training_and_model_export_seconds": 4.1132
+        }
+      },
+      "ply_bytes": 721113,
+      "source_manifest_bytes": 3976,
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.4381085295956,
+            800.0,
+            533.5,
+            -0.10327691090226823,
+            0.06959028672322837
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "office",
+      "phase": "warm",
+      "job_id": "378760ab38ab4a2cb088bfe30060a550",
+      "config": {
+        "session_id": "9e1903a242d54b1f9d78d19cecc9a654",
+        "backend": "brush",
+        "steps": 500,
+        "resolution": 512,
+        "max_points": 300000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "report": {
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "color_model": "SH3",
+        "steps": 500,
+        "resolution": 512,
+        "registered_images": 26,
+        "input_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_mode_effective": "shared",
+        "camera_model": "RADIAL",
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 17.457016,
+          "ssim": 0.75578284
+        },
+        "gaussians": 3055,
+        "sparse_points": 2482,
+        "sfm_reused": true,
+        "sfm_cache_key": "a9a593291019f4f0dcd1486c036a6cb6266ede106b75f85f87ef07c483579368",
+        "seconds": 4.19,
+        "timings": {
+          "input_validation_seconds": 0.0083,
+          "sfm_seconds": 0.0311,
+          "training_and_model_export_seconds": 4.1149
+        }
+      },
+      "ply_bytes": 722529,
+      "source_manifest_bytes": 3976,
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.4381085295956,
+            800.0,
+            533.5,
+            -0.10327691090226823,
+            0.06959028672322837
+          ]
+        }
+      ]
+    }
+  ],
+  "comparisons": {
+    "pipes": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "6ea72a6d027348f6ae89252a7d088cae",
+      "candidate_job": "f3a61b054427410d94ad46889ffa82f3",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "raw_input_sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9751191348973607,
+          "common_valid_pixels": 170248,
+          "common_valid_ssim_windows": 161718,
+          "baseline": {
+            "psnr": 16.523386671102173,
+            "ssim": 0.6525222591966353
+          },
+          "candidate": {
+            "psnr": 16.98544045264885,
+            "ssim": 0.6769911072360397
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "raw_input_sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9751191348973607,
+          "common_valid_pixels": 170248,
+          "common_valid_ssim_windows": 161718,
+          "baseline": {
+            "psnr": 15.43380607081379,
+            "ssim": 0.6150755338871364
+          },
+          "candidate": {
+            "psnr": 15.290263023931498,
+            "ssim": 0.6009459456698776
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 15.97859637095798,
+          "ssim": 0.6337988965418859
+        },
+        "candidate": {
+          "psnr": 16.137851738290173,
+          "ssim": 0.6389685264529587
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 0.15925536733219303,
+        "ssim": 0.005169629911072726
+      }
+    },
+    "office": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "48915f24aab048bc8c91dbf80d721811",
+      "candidate_job": "378760ab38ab4a2cb088bfe30060a550",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "raw_input_sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9742943548387096,
+          "common_valid_pixels": 170104,
+          "common_valid_ssim_windows": 161574,
+          "baseline": {
+            "psnr": 17.81521488108195,
+            "ssim": 0.7275010791849835
+          },
+          "candidate": {
+            "psnr": 18.333366408768203,
+            "ssim": 0.7238357297668306
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "raw_input_sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9742943548387096,
+          "common_valid_pixels": 170104,
+          "common_valid_ssim_windows": 161574,
+          "baseline": {
+            "psnr": 19.690598427846332,
+            "ssim": 0.9036313627116163
+          },
+          "candidate": {
+            "psnr": 20.818290678966417,
+            "ssim": 0.9084507486602933
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "raw_input_sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9742943548387096,
+          "common_valid_pixels": 170104,
+          "common_valid_ssim_windows": 161574,
+          "baseline": {
+            "psnr": 13.974107551504718,
+            "ssim": 0.6343639012346644
+          },
+          "candidate": {
+            "psnr": 13.8393480421988,
+            "ssim": 0.6318307246678097
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "raw_input_sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9742943548387096,
+          "common_valid_pixels": 170104,
+          "common_valid_ssim_windows": 161574,
+          "baseline": {
+            "psnr": 16.361885754326227,
+            "ssim": 0.6912261465603652
+          },
+          "candidate": {
+            "psnr": 16.52621781879786,
+            "ssim": 0.6985688929734238
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 16.960451653689805,
+          "ssim": 0.7391806224229073
+        },
+        "candidate": {
+          "psnr": 17.37930573718282,
+          "ssim": 0.7406715240170894
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 0.418854083493013,
+        "ssim": 0.0014909015941820813
+      }
+    }
+  },
+  "checks": {
+    "cached_scene_identical_except_image_paths": true,
+    "camera_artifacts_identical": true,
+    "original_cameras_equal_chosen": true,
+    "all_ply_sh3": true,
+    "warm_jobs_have_no_input_or_chosen_copy": true,
+    "historical_paired_results_exactly_unchanged": true,
+    "backend_tests": 173,
+    "frontend_tests": 18,
+    "typecheck_and_build": "passed"
+  },
+  "limitations": [
+    "500-step runs only test evaluation plumbing.",
+    "Only one cold/warm pair per scene; timings are not a new optimization claim.",
+    "Holdout photos participated in upstream SfM.",
+    "Historical cached jobs without original cameras require a new reconstruction.",
+    "Warm evaluation needs unchanged capture originals; deletion or mismatch fails closed."
+  ],
+  "references": [
+    "https://colmap.github.io/format.html",
+    "https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-render/src/camera.rs",
+    "https://www.eth3d.net/datasets"
+  ]
+}
