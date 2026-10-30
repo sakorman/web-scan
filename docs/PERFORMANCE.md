@@ -59,6 +59,8 @@ Apple Silicon macOS，同一组 26 张办公室照片，Brush 0.3.0，1000 步�
 
 ## 训练导出
 
+2026-10-30，PLY / splat 直接写数组以减少临时副本。真实 30 万 / 23.14 万高斯模型各三次交错测量，独立转换进程峰值 RSS 中位数分别减少 76.86 / 59.19 MiB；全部输出逐字节一致。转换耗时仅少约 12 / 16 毫秒，不能写作整条重建流程提速。[测量范围、复现和完整回归](EXPORT-MEMORY.md)
+
 训练进度已改为读取 Brush 的实际 refinement 日志，每轮轮询最多读取 64 KiB；不再依赖中间 PLY 来驱动进度条。训练器仍每 500 步导出一次；最终模型通过目标步数、完整顶点数据和必要数值检查，并完成转换后，才清理这次任务的较早 PLY。以前的任务不会被批量清理。
 
 模型报告新增 `export_policy`、`export_written_files`、`export_written_bytes`、`export_files`、`export_bytes`、`export_removed_bytes`、`export_cleanup_errors`、`training_process_seconds` 与 `progress_source`。其中 `export_written_bytes` 是训练器写出的 PLY 总量，`export_bytes` 是清理后留存量，不含评估图、下载用的规范化 PLY、splat 或 SfM 缓存。实测结果见 [迭代记录](ITERATIONS.md)。

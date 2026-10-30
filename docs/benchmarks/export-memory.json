@@ -1,0 +1,488 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "measurement": "fresh process peak RSS; conversion wall time excludes imports and hashing; filesystem cache not flushed; no fsync or GPU",
+  "adapters": {
+    "baseline": "63c17f0cfbf8c2b7cd4ae3abd5c8974175175266cf742fb80b0ebf9c81164a12",
+    "candidate": "b7eb54cabacb590cefc09fef1edbd3d261f3faf22e5e1165d74c0a5124e76c51"
+  },
+  "runs": [
+    {
+      "seconds": 0.10234791599214077,
+      "process_peak_rss_bytes": 226181120,
+      "gaussians": 300000,
+      "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 70801551,
+          "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+        },
+        "preview.splat": {
+          "bytes": 9600000,
+          "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+        }
+      },
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "variant": "baseline",
+      "repeat": 0
+    },
+    {
+      "seconds": 0.09305620891973376,
+      "process_peak_rss_bytes": 145571840,
+      "gaussians": 300000,
+      "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 70801551,
+          "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+        },
+        "preview.splat": {
+          "bytes": 9600000,
+          "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+        }
+      },
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "variant": "candidate",
+      "repeat": 0
+    },
+    {
+      "seconds": 0.09584829118102789,
+      "process_peak_rss_bytes": 144719872,
+      "gaussians": 300000,
+      "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 70801551,
+          "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+        },
+        "preview.splat": {
+          "bytes": 9600000,
+          "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+        }
+      },
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "variant": "candidate",
+      "repeat": 1
+    },
+    {
+      "seconds": 0.11221833294257522,
+      "process_peak_rss_bytes": 225181696,
+      "gaussians": 300000,
+      "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 70801551,
+          "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+        },
+        "preview.splat": {
+          "bytes": 9600000,
+          "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+        }
+      },
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "variant": "baseline",
+      "repeat": 1
+    },
+    {
+      "seconds": 0.10548004182055593,
+      "process_peak_rss_bytes": 225329152,
+      "gaussians": 300000,
+      "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 70801551,
+          "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+        },
+        "preview.splat": {
+          "bytes": 9600000,
+          "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+        }
+      },
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "variant": "baseline",
+      "repeat": 2
+    },
+    {
+      "seconds": 0.09348975028842688,
+      "process_peak_rss_bytes": 144736256,
+      "gaussians": 300000,
+      "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 70801551,
+          "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+        },
+        "preview.splat": {
+          "bytes": 9600000,
+          "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+        }
+      },
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "variant": "candidate",
+      "repeat": 2
+    },
+    {
+      "seconds": 0.08065158315002918,
+      "process_peak_rss_bytes": 118325248,
+      "gaussians": 231428,
+      "source_sha256": "6902044fcfaa1d78e21ca79b8b267cbae7be6d541b04ff56278e2a18913283b9",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 54618559,
+          "sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276"
+        },
+        "preview.splat": {
+          "bytes": 7405696,
+          "sha256": "9fe05dae631893db784a3fddb429b734fe5aa7a43a6193c8aded7bd189ec2fc1"
+        }
+      },
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "candidate",
+      "repeat": 0
+    },
+    {
+      "seconds": 0.08301645796746016,
+      "process_peak_rss_bytes": 180404224,
+      "gaussians": 231428,
+      "source_sha256": "6902044fcfaa1d78e21ca79b8b267cbae7be6d541b04ff56278e2a18913283b9",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 54618559,
+          "sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276"
+        },
+        "preview.splat": {
+          "bytes": 7405696,
+          "sha256": "9fe05dae631893db784a3fddb429b734fe5aa7a43a6193c8aded7bd189ec2fc1"
+        }
+      },
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "baseline",
+      "repeat": 0
+    },
+    {
+      "seconds": 0.09812283422797918,
+      "process_peak_rss_bytes": 180486144,
+      "gaussians": 231428,
+      "source_sha256": "6902044fcfaa1d78e21ca79b8b267cbae7be6d541b04ff56278e2a18913283b9",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 54618559,
+          "sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276"
+        },
+        "preview.splat": {
+          "bytes": 7405696,
+          "sha256": "9fe05dae631893db784a3fddb429b734fe5aa7a43a6193c8aded7bd189ec2fc1"
+        }
+      },
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "baseline",
+      "repeat": 1
+    },
+    {
+      "seconds": 0.06489583291113377,
+      "process_peak_rss_bytes": 118374400,
+      "gaussians": 231428,
+      "source_sha256": "6902044fcfaa1d78e21ca79b8b267cbae7be6d541b04ff56278e2a18913283b9",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 54618559,
+          "sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276"
+        },
+        "preview.splat": {
+          "bytes": 7405696,
+          "sha256": "9fe05dae631893db784a3fddb429b734fe5aa7a43a6193c8aded7bd189ec2fc1"
+        }
+      },
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "candidate",
+      "repeat": 1
+    },
+    {
+      "seconds": 0.06746116606518626,
+      "process_peak_rss_bytes": 118341632,
+      "gaussians": 231428,
+      "source_sha256": "6902044fcfaa1d78e21ca79b8b267cbae7be6d541b04ff56278e2a18913283b9",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 54618559,
+          "sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276"
+        },
+        "preview.splat": {
+          "bytes": 7405696,
+          "sha256": "9fe05dae631893db784a3fddb429b734fe5aa7a43a6193c8aded7bd189ec2fc1"
+        }
+      },
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "candidate",
+      "repeat": 2
+    },
+    {
+      "seconds": 0.08151887496933341,
+      "process_peak_rss_bytes": 180371456,
+      "gaussians": 231428,
+      "source_sha256": "6902044fcfaa1d78e21ca79b8b267cbae7be6d541b04ff56278e2a18913283b9",
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 54618559,
+          "sha256": "0af14259673b165001a9e84f27b6e19a55e924e0432e491e9701229f1c24e276"
+        },
+        "preview.splat": {
+          "bytes": 7405696,
+          "sha256": "9fe05dae631893db784a3fddb429b734fe5aa7a43a6193c8aded7bd189ec2fc1"
+        }
+      },
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "variant": "baseline",
+      "repeat": 2
+    }
+  ],
+  "summary": [
+    {
+      "job_id": "82acea65e9874f64806815a592015dec",
+      "baseline": {
+        "seconds": {
+          "median": 0.10548004182055593,
+          "min": 0.10234791599214077,
+          "max": 0.11221833294257522
+        },
+        "process_peak_rss_bytes": {
+          "median": 225329152,
+          "min": 225181696,
+          "max": 226181120
+        }
+      },
+      "candidate": {
+        "seconds": {
+          "median": 0.09348975028842688,
+          "min": 0.09305620891973376,
+          "max": 0.09584829118102789
+        },
+        "process_peak_rss_bytes": {
+          "median": 144736256,
+          "min": 144719872,
+          "max": 145571840
+        }
+      }
+    },
+    {
+      "job_id": "59bb5740d2e945d9a459ca2514c66bb2",
+      "baseline": {
+        "seconds": {
+          "median": 0.08301645796746016,
+          "min": 0.08151887496933341,
+          "max": 0.09812283422797918
+        },
+        "process_peak_rss_bytes": {
+          "median": 180404224,
+          "min": 180371456,
+          "max": 180486144
+        }
+      },
+      "candidate": {
+        "seconds": {
+          "median": 0.06746116606518626,
+          "min": 0.06489583291113377,
+          "max": 0.08065158315002918
+        },
+        "process_peak_rss_bytes": {
+          "median": 118341632,
+          "min": 118325248,
+          "max": 118374400
+        }
+      }
+    }
+  ],
+  "date": "2026-10-30",
+  "prechange_baseline": {
+    "seconds": 0.11272866604849696,
+    "process_peak_rss_bytes": 226394112,
+    "gaussians": 300000,
+    "source_sha256": "8dae6378a199d1cbe3a0b9647c0462a384454b1e158d344617ffc0955fa2ef2c",
+    "outputs": {
+      "gaussians.ply": {
+        "bytes": 70801551,
+        "sha256": "b716afb08b23e18feed481eb8307238da7ba0788aea705601c7c66e022a51caf"
+      },
+      "preview.splat": {
+        "bytes": 9600000,
+        "sha256": "f524a0fa36d0c56d16be5942d6ea380c8ce1caf0317ae7126db1e9f32fb3528c"
+      }
+    }
+  },
+  "reconstruction": [
+    {
+      "scene": "pipes",
+      "job_id": "abf388e07fbd4c09a1579ff3a07e8453",
+      "config": {
+        "session_id": "c433a06a2e5348d580a0219671dd5336",
+        "backend": "brush",
+        "steps": 3000,
+        "resolution": 512,
+        "max_points": 300000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "report": {
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "steps": 3000,
+        "resolution": 512,
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 18.979542,
+          "ssim": 0.78132665
+        },
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "797e8d68438f0eb069d73dec8813391f902a0234a814438608c2b9c752ee1b12",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "13d56394503f9ddc2df256bcf5e6beb604937c261a64f90f8d174651c6156f0e",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          }
+        ],
+        "gaussians": 11441,
+        "camera_mode": "shared",
+        "camera_mode_effective": "shared",
+        "camera_model": "RADIAL",
+        "color_model": "SH3",
+        "sfm_reused": true,
+        "timings": {
+          "input_validation_seconds": 0.0089,
+          "sfm_seconds": 0.0291,
+          "training_and_model_export_seconds": 23.3086
+        },
+        "seconds": 23.38
+      }
+    },
+    {
+      "scene": "office",
+      "job_id": "191641eed43c4af6b3dbfb42a6235956",
+      "config": {
+        "session_id": "9e1903a242d54b1f9d78d19cecc9a654",
+        "backend": "brush",
+        "steps": 3000,
+        "resolution": 512,
+        "max_points": 300000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "report": {
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "steps": 3000,
+        "resolution": 512,
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 21.917908,
+          "ssim": 0.890942
+        },
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "689918b9cea3e3ac82f92838c0dab76f44d8480c4bbbd8e686dd516c03c672ec",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "cf52aba9d2b22ff78ad54e7d1e9ba103e7f60b3027c081a0e72184a4986bb582",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "543dce4be06a873cf4c6943ffaa276653f7c90a430a64fc487cce9c09f9db0f8",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "134b47d087d144ea1201ecc6eb5923d15575fed67528463beb6a81661f295042",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          }
+        ],
+        "gaussians": 14380,
+        "camera_mode": "shared",
+        "camera_mode_effective": "shared",
+        "camera_model": "RADIAL",
+        "color_model": "SH3",
+        "sfm_reused": true,
+        "timings": {
+          "input_validation_seconds": 0.0124,
+          "sfm_seconds": 0.0394,
+          "training_and_model_export_seconds": 24.2365
+        },
+        "seconds": 24.32
+      }
+    }
+  ],
+  "new_output_identity": [
+    {
+      "scene": "pipes",
+      "job_id": "abf388e07fbd4c09a1579ff3a07e8453",
+      "conversion_identical": true,
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 2701626,
+          "sha256": "894c4254df606b39fd3402671c650904e60d7bb16bbf52174fa79abcc6676ea2"
+        },
+        "preview.splat": {
+          "bytes": 366112,
+          "sha256": "515fbba1ff795c35dc920a963f9ff9c2c53b3896862be29330fae1c518de15bf"
+        }
+      }
+    },
+    {
+      "scene": "office",
+      "job_id": "191641eed43c4af6b3dbfb42a6235956",
+      "conversion_identical": true,
+      "outputs": {
+        "gaussians.ply": {
+          "bytes": 3395230,
+          "sha256": "67314afa79db3972862ed4ece308fec8f65d56ceb7a3c334e3076b5b361feab2"
+        },
+        "preview.splat": {
+          "bytes": 460160,
+          "sha256": "daa7e355c6abfb0f5fc45e084e3c8b68b96576ade04c05228a14272c0ff08ab2"
+        }
+      }
+    }
+  ],
+  "checks": {
+    "backend_tests": 173,
+    "frontend_tests": 18,
+    "typecheck_build": "passed",
+    "conversion_regression_tests": 24
+  },
+  "notes": [
+    "Large models are pre-existing real ETH3D reconstructions; no retraining in the conversion microbenchmark.",
+    "Source and result SHA-256 checked for each run.",
+    "Peak RSS includes Python and imports; it is not GPU or whole-worker memory.",
+    "Repeated local file reads; no cold filesystem or durable-storage speed claim.",
+    "Task PSNR/SSIM are held-out render checks; their photos participated in upstream SfM."
+  ]
+}
