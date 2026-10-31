@@ -4,6 +4,12 @@
 
 ## 2026-10-31
 
+### 初始点三角化视差筛查（未采用）
+
+- 结论：初始点最大三角化角提高到 3° 后，office 两次 PSNR / SSIM 均下降，均值差为 -0.515582 dB / -0.007452；pipes 无稳定收益，生产代码和默认设置不变。
+- 验证：冻结照片、相机和 3,000 步 / 512 像素配置，完成两场景各两组串行 Metal 对照，共 8 次。稀疏模型关联、源文件摘要、完整 SH3 和留出身份有效；188 项后端、18 项前端、类型检查及构建通过。同视角与浏览器漫游仍见模糊、漂浮细线和覆盖不足。
+- 代价与限制：pipes / office 删去 0.80% / 6.77% 初始点，office 平均少 6.83% 高斯但损失质量，不称为优化收益；复用 SfM，未测端到端与训练内存。Pi-GS 官方仓库尚无训练实现，未接入。下一步优先补充覆盖证据或验证可用的几何约束，停止无依据的全局阈值筛查。[详细报告与截图](docs/ANGLE-INITIALIZATION.md) · [逐次数据](docs/benchmarks/angle-initialization.json) · [实验补丁](docs/benchmarks/angle-initialization.patch) · [基线提交](https://github.com/sakorman/web-scan/commit/34b8b31) · [COLMAP 角度规则](https://github.com/colmap/colmap/blob/3.13.0/src/colmap/sfm/incremental_mapper.h) · [Pi-GS 论文](https://arxiv.org/abs/2602.03327) · [官方仓库](https://github.com/Mango0000/Pi-GS)
+
 ### 缩短训练结束等待
 
 - 改进：将进度循环的固定一秒睡眠改为可随子进程退出返回的等待，保留进度更新、取消和超时处理。18 次受控进程对照中，三组退出检测延迟中位数由 880 / 570 / 273 ms 降至 18 / 51 / 10 ms，采用此实现。

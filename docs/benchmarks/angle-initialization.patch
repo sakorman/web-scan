@@ -1,0 +1,87 @@
+--- a/brush.py
++++ b/brush.py
+@@ -354,3 +354,84 @@
+         )
+         + "网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。",
+     }
++
++
++# Experimental adapter: remove low-parallax sparse points only in the run's copied
++# COLMAP model. Keep retained records in their original byte order.
++def filter_initial_angles(folder, minimum=3.0):
++    import struct
++    import pycolmap
++
++    reconstruction = pycolmap.Reconstruction(str(folder))
++    centers = {i: im.projection_center() for i, im in reconstruction.images.items()}
++    angles = {}
++    for point_id, point in reconstruction.points3D.items():
++        rays = np.asarray([centers[e.image_id] - point.xyz for e in point.track.elements])
++        lengths = np.linalg.norm(rays, axis=1)
++        if len(rays) < 2 or not np.isfinite(rays).all() or np.any(lengths <= 0):
++            raise ValueError("Invalid triangulation rays")
++        rays /= lengths[:, None]
++        # Use the acute angle of each ray pair; opposing collinear rays do
++        # not supply triangulation stability. Keep any sufficiently wide pair.
++        angles[point_id] = float(np.rad2deg(np.arccos(np.clip(np.abs(rays @ rays.T), 0, 1))).max())
++
++    points_path, images_path = folder / "points3D.bin", folder / "images.bin"
++    points, images = points_path.read_bytes(), bytearray(images_path.read_bytes())
++    count = struct.unpack_from("<Q", points, 0)[0]
++    offset, kept, removed = 8, [], set()
++    for _ in range(count):
++        point_id = struct.unpack_from("<Q", points, offset)[0]
++        track_count = struct.unpack_from("<Q", points, offset + 43)[0]
++        end = offset + 51 + 8 * track_count
++        if end > len(points):
++            raise ValueError("Truncated sparse point record")
++        if angles[point_id] >= minimum:
++            kept.append(points[offset:end])
++        else:
++            removed.add(point_id)
++        offset = end
++    if offset != len(points) or len(kept) < 12:
++        raise ValueError("Invalid or insufficient retained sparse points")
++    image_count = struct.unpack_from("<Q", images, 0)[0]
++    offset, unlinked = 8, 0
++    for _ in range(image_count):
++        offset = images.index(0, offset + 64) + 1
++        observations = struct.unpack_from("<Q", images, offset)[0]
++        offset += 8
++        if offset + observations * 24 > len(images):
++            raise ValueError("Truncated image observations")
++        for index in range(observations):
++            position = offset + index * 24 + 16
++            if struct.unpack_from("<q", images, position)[0] in removed:
++                struct.pack_into("<q", images, position, -1)
++                unlinked += 1
++        offset += observations * 24
++    if offset != len(images):
++        raise ValueError("Invalid image records")
++    result = struct.pack("<Q", len(kept)) + b"".join(kept)
++    # Both complete buffers are checked before modifying this isolated copy.
++    points_path.write_bytes(result)
++    images_path.write_bytes(images)
++    return {
++        "minimum_angle_degrees": minimum,
++        "source_angle_quantiles": np.quantile(list(angles.values()), [0, .05, .1, .25, .5, 1]).tolist(),
++        "source_points": count,
++        "retained_points": len(kept),
++        "removed_points": len(removed),
++        "unlinked_observations": unlinked,
++        "source_points_sha256": hashlib.sha256(points).hexdigest(),
++        "filtered_points_sha256": hashlib.sha256(result).hexdigest(),
++        "retained_record_bytes_unchanged": True,
++    }
++
++
++_unfiltered_train = train
++
++
++def train(scene, work, output, config, progress):
++    started = time.monotonic()
++    metadata = filter_initial_angles(work / "sfm/undistorted/sparse")
++    metadata["filter_seconds"] = time.monotonic() - started
++    report = _unfiltered_train(scene, work, output, config, progress)
++    report["initialization_filter"] = metadata
++    return report
