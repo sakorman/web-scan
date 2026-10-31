@@ -4,6 +4,12 @@
 
 ## 2026-10-31
 
+### DSP-SIFT 特征对照（不改默认）
+
+- 结论：只开启描述区域尺度汇合，pipes 两次原始域留出均值都提升，平均 +1.099518 dB / +0.017373 SSIM；office 的 SSIM 两次下降，平均 -0.003199，未通过跨场景门槛，不启用为默认。
+- 验证：两场景、两变体各重复两次，共 8 次新 SfM 与串行 Metal 重建；全部 14 / 14、26 / 26 定位，固定 3000 步 / 512 像素 / 15 万高斯预算。原图摘要、相机、完整 SH3 与留出集合有效，评分统一到原图 512×341 网格。193 项后端、18 项前端、类型检查、构建和四模型漫游检查通过。
+- 代价与局限：内点与稀疏点增多，但有效图像对减少、重投影误差升高；pipes 总计平均增加 1.15 秒，两场景模型均增大。留出照片参与 SfM，仿射形状估计未开启，不代表完整 DSP/仿射组合。下一步复查 office 局部匹配与覆盖。近期 AV1 匹配论文的作者代码链接返回 404，未接入或复现。[报告、截图与复现](docs/DSP-SIFT.md) · [逐次数据](docs/benchmarks/dsp-sift.json) · [基线提交](https://github.com/sakorman/web-scan/commit/5c16597) · [DSP-SIFT 论文](https://arxiv.org/abs/1412.8556) · [COLMAP 实现](https://github.com/colmap/colmap/blob/3.13.0/src/colmap/feature/sift.cc) · [近期初始化研究](https://arxiv.org/abs/2605.14629)
+
 ### 复用离线评分的参考统计量
 
 - CI 复核：首次 Ubuntu 运行的亮部公式测试失败，暴露 Float32 二阶矩相减的跨平台误差。改为与同后端冻结旧公式严格相等，并保留有纹理图的独立双精度校验；未放宽新旧成绩兼容要求或修改生产计算。[初次 CI](https://github.com/sakorman/web-scan/actions/runs/41179540032) · [实现提交](https://github.com/sakorman/web-scan/commit/00f5f22)

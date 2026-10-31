@@ -1,0 +1,30 @@
+{
+  "baseline_commit": "5c16597efb45f58f9ae54d314a333ff126c6ec50",
+  "candidate": {
+    "sift.domain_size_pooling": true
+  },
+  "unchanged": {
+    "estimate_affine_shape": false,
+    "dsp_min_scale": 0.16666666666666666,
+    "dsp_max_scale": 3.0,
+    "dsp_num_scales": 10,
+    "max_image_size": 1600,
+    "max_num_features": 8192,
+    "num_threads": 4,
+    "camera_mode": "shared",
+    "camera_model": "RADIAL",
+    "matching": "exhaustive",
+    "guided_matching": true,
+    "ransac_seed": 42
+  },
+  "training": {
+    "backend": "brush",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 150000,
+    "evaluation_mode": "holdout"
+  },
+  "hypothesis": "Domain-size pooling may improve sparse-photo constraints and held-out quality at additional CPU cost; test full pipeline without affine shape adaptation.",
+  "gate": "Require full registration, identical held-out names, no scene-level PSNR/SSIM regression across two repeats before any default change; report runtime trade-off.",
+  "cache": "Fresh SfM database per run; OS disk cache not purged; GPU training serial."
+}

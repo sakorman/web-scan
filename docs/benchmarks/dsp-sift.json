@@ -1,0 +1,2418 @@
+{
+  "config": {
+    "baseline_commit": "5c16597efb45f58f9ae54d314a333ff126c6ec50",
+    "candidate": {
+      "sift.domain_size_pooling": true
+    },
+    "unchanged": {
+      "estimate_affine_shape": false,
+      "dsp_min_scale": 0.16666666666666666,
+      "dsp_max_scale": 3.0,
+      "dsp_num_scales": 10,
+      "max_image_size": 1600,
+      "max_num_features": 8192,
+      "num_threads": 4,
+      "camera_mode": "shared",
+      "camera_model": "RADIAL",
+      "matching": "exhaustive",
+      "guided_matching": true,
+      "ransac_seed": 42
+    },
+    "training": {
+      "backend": "brush",
+      "steps": 3000,
+      "resolution": 512,
+      "max_points": 150000,
+      "evaluation_mode": "holdout"
+    },
+    "hypothesis": "Domain-size pooling may improve sparse-photo constraints and held-out quality at additional CPU cost; test full pipeline without affine shape adaptation.",
+    "gate": "Require full registration, identical held-out names, no scene-level PSNR/SSIM regression across two repeats before any default change; report runtime trade-off.",
+    "cache": "Fresh SfM database per run; OS disk cache not purged; GPU training serial."
+  },
+  "runs": [
+    {
+      "name": "pipes-r1-baseline",
+      "variant": "baseline",
+      "source_job": "44537f26e3b34c5bb417deacb103ce47",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+          "sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+          "sha256": "02efb93314a750abcabc008ad7e55a6200cb18e02c8bee747f2bf665c649ecab",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-76e314c595694f019b029d5733fa8868.jpg",
+          "sha256": "70e93cc0df437669bfb6039b4a647160e5057754557f2859b362db326336e317",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-7e75d56967684ba18f8f75463680f0b9.jpg",
+          "sha256": "e23b78cf1589092cc4a6afc57eef3ce31c3bdd1e953d4bb727526f64f655c7b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-0ade0143395b404b994ff2ac415d4cd0.jpg",
+          "sha256": "4ca31b438c577458b2c28eb1a008051f4a9966b45b61357b61718ac522cf767f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-44b496441aaf40839a3a200a8ec65dc3.jpg",
+          "sha256": "35b9d1cf2ba4c7c1ed7225631fccfdce5b92963b27529fd5962c64afd8dab87a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-0d7f4eaa55c04d088dcc4cbc7c36deb0.jpg",
+          "sha256": "8abd6c03e5ddffce250b3a50d678461f5831dcfde79eb332b8ceba896dd67e4e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-049f22b3d8d64ae7aa993422ad375b68.jpg",
+          "sha256": "7e2b4cf99c06a8e75adcab9857ce7970936170265dc9f04430775fef4f801331",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+          "sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-3db9fbd27ae2464db22f70cce6a49f2a.jpg",
+          "sha256": "84c01b55c3f7e7b4ac2432477a4f37c458d354e8cf494f9fbe4c13229c15a34a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-ba00cacf4f7a4e1bb86e4cad50f16509.jpg",
+          "sha256": "33292759aa81691512443be93bdeedf4de62cd495250edf0f29998c7a1693bda",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-dd48eaf4728d465cb4d7f2da83a35bc9.jpg",
+          "sha256": "599e0018122130cd34056f5dc69c19da53f6de4251f5bb768708ada715c6dea0",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-273a1194133e449b9d6ee8a3aab2ba1a.jpg",
+          "sha256": "9b49f80ee59a445533df86f3a8a2dcdd4aad158f172e94f13695b814bbdb50cc",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-8cac83022daf4c7cb23945f089b28c48.jpg",
+          "sha256": "739c0945ddd55d288720ff749b7d96da53bb10d6a9a3acf15e5eb495b9a41886",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "82564ed3dcdb5f4236eacb78cd92da9be5ed6f59977a567ac1a10f99d9b36e33",
+      "sfm_seconds": 5.957684750203043,
+      "sfm": {
+        "input_images": 14,
+        "registered_images": 14,
+        "sparse_points": 1881,
+        "reprojection_error": 0.5676130227212903,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 40440,
+        "verified_pairs": 49,
+        "verified_inliers": 10375
+      },
+      "training_export_seconds": 22.931094207800925,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0686,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 10087204,
+        "export_removed_bytes": 7368114,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 2719090,
+        "training_process_seconds": 22.8449,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 11515,
+        "steps": 3000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 18.987738,
+          "ssim": 0.76766706
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "c6e1cd7db22e84adee1fa029aa6a3e7305c196fcdf69c78bf1732da83c26f5ef",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "0ace1819253d5b1309692243de4692b66f94249a5a975ac27c98e19000428e66",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 2719090,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 3.907290166709572,
+        "match_exhaustive": 1.0717206662520766,
+        "incremental_mapping": 0.6093477909453213,
+        "undistort_images": 0.13184362510219216
+      },
+      "end_to_end_seconds": 28.922361417207867,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "pipes-r1-candidate",
+      "variant": "candidate",
+      "source_job": "44537f26e3b34c5bb417deacb103ce47",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+          "sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+          "sha256": "02efb93314a750abcabc008ad7e55a6200cb18e02c8bee747f2bf665c649ecab",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-76e314c595694f019b029d5733fa8868.jpg",
+          "sha256": "70e93cc0df437669bfb6039b4a647160e5057754557f2859b362db326336e317",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-7e75d56967684ba18f8f75463680f0b9.jpg",
+          "sha256": "e23b78cf1589092cc4a6afc57eef3ce31c3bdd1e953d4bb727526f64f655c7b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-0ade0143395b404b994ff2ac415d4cd0.jpg",
+          "sha256": "4ca31b438c577458b2c28eb1a008051f4a9966b45b61357b61718ac522cf767f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-44b496441aaf40839a3a200a8ec65dc3.jpg",
+          "sha256": "35b9d1cf2ba4c7c1ed7225631fccfdce5b92963b27529fd5962c64afd8dab87a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-0d7f4eaa55c04d088dcc4cbc7c36deb0.jpg",
+          "sha256": "8abd6c03e5ddffce250b3a50d678461f5831dcfde79eb332b8ceba896dd67e4e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-049f22b3d8d64ae7aa993422ad375b68.jpg",
+          "sha256": "7e2b4cf99c06a8e75adcab9857ce7970936170265dc9f04430775fef4f801331",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+          "sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-3db9fbd27ae2464db22f70cce6a49f2a.jpg",
+          "sha256": "84c01b55c3f7e7b4ac2432477a4f37c458d354e8cf494f9fbe4c13229c15a34a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-ba00cacf4f7a4e1bb86e4cad50f16509.jpg",
+          "sha256": "33292759aa81691512443be93bdeedf4de62cd495250edf0f29998c7a1693bda",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-dd48eaf4728d465cb4d7f2da83a35bc9.jpg",
+          "sha256": "599e0018122130cd34056f5dc69c19da53f6de4251f5bb768708ada715c6dea0",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-273a1194133e449b9d6ee8a3aab2ba1a.jpg",
+          "sha256": "9b49f80ee59a445533df86f3a8a2dcdd4aad158f172e94f13695b814bbdb50cc",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-8cac83022daf4c7cb23945f089b28c48.jpg",
+          "sha256": "739c0945ddd55d288720ff749b7d96da53bb10d6a9a3acf15e5eb495b9a41886",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "d2fea6e69cef15cf4c4fc0086a3bddd81f1cb463e79a723d5bc907617f1a5879",
+      "sfm_seconds": 6.597749541979283,
+      "sfm": {
+        "input_images": 14,
+        "registered_images": 14,
+        "sparse_points": 1957,
+        "reprojection_error": 0.6697701379139122,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              905.6875303571735,
+              800.0,
+              533.5,
+              -0.10084817137478201,
+              0.06639266684464569
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1067
+          ]
+        ],
+        "features": 42185,
+        "verified_pairs": 48,
+        "verified_inliers": 10990
+      },
+      "training_export_seconds": 23.347944958135486,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0677,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 10496192,
+        "export_removed_bytes": 7668070,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 2828122,
+        "training_process_seconds": 23.263,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 11977,
+        "steps": 3000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 20.140839,
+          "ssim": 0.7950976
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "cd96e3f4f01b5a73d45abb9bf6670d9bb70eda5024918faf23409a3a87be5eb8",
+            "reference_sha256": "017ce24a2cfdb6cc3ebb75bac53827289a672bae857864da9f7d393f69490145"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "5d968155522ed7e9a226b13ab5cc018385ad96a57c96f1f2ab536e23fe66812c",
+            "reference_sha256": "416ce2528bbc68941319f0ada787bf7e96451674403f7d7443b695aed008f6cd"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 2828122,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 4.548565000295639,
+        "match_exhaustive": 1.050093166064471,
+        "incremental_mapping": 0.6456763343885541,
+        "undistort_images": 0.11879174970090389
+      },
+      "end_to_end_seconds": 29.97244279133156,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "pipes-r2-baseline",
+      "variant": "baseline",
+      "source_job": "44537f26e3b34c5bb417deacb103ce47",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+          "sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+          "sha256": "02efb93314a750abcabc008ad7e55a6200cb18e02c8bee747f2bf665c649ecab",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-76e314c595694f019b029d5733fa8868.jpg",
+          "sha256": "70e93cc0df437669bfb6039b4a647160e5057754557f2859b362db326336e317",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-7e75d56967684ba18f8f75463680f0b9.jpg",
+          "sha256": "e23b78cf1589092cc4a6afc57eef3ce31c3bdd1e953d4bb727526f64f655c7b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-0ade0143395b404b994ff2ac415d4cd0.jpg",
+          "sha256": "4ca31b438c577458b2c28eb1a008051f4a9966b45b61357b61718ac522cf767f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-44b496441aaf40839a3a200a8ec65dc3.jpg",
+          "sha256": "35b9d1cf2ba4c7c1ed7225631fccfdce5b92963b27529fd5962c64afd8dab87a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-0d7f4eaa55c04d088dcc4cbc7c36deb0.jpg",
+          "sha256": "8abd6c03e5ddffce250b3a50d678461f5831dcfde79eb332b8ceba896dd67e4e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-049f22b3d8d64ae7aa993422ad375b68.jpg",
+          "sha256": "7e2b4cf99c06a8e75adcab9857ce7970936170265dc9f04430775fef4f801331",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+          "sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-3db9fbd27ae2464db22f70cce6a49f2a.jpg",
+          "sha256": "84c01b55c3f7e7b4ac2432477a4f37c458d354e8cf494f9fbe4c13229c15a34a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-ba00cacf4f7a4e1bb86e4cad50f16509.jpg",
+          "sha256": "33292759aa81691512443be93bdeedf4de62cd495250edf0f29998c7a1693bda",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-dd48eaf4728d465cb4d7f2da83a35bc9.jpg",
+          "sha256": "599e0018122130cd34056f5dc69c19da53f6de4251f5bb768708ada715c6dea0",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-273a1194133e449b9d6ee8a3aab2ba1a.jpg",
+          "sha256": "9b49f80ee59a445533df86f3a8a2dcdd4aad158f172e94f13695b814bbdb50cc",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-8cac83022daf4c7cb23945f089b28c48.jpg",
+          "sha256": "739c0945ddd55d288720ff749b7d96da53bb10d6a9a3acf15e5eb495b9a41886",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "82564ed3dcdb5f4236eacb78cd92da9be5ed6f59977a567ac1a10f99d9b36e33",
+      "sfm_seconds": 5.869089040905237,
+      "sfm": {
+        "input_images": 14,
+        "registered_images": 14,
+        "sparse_points": 1881,
+        "reprojection_error": 0.5676130227212903,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 40440,
+        "verified_pairs": 49,
+        "verified_inliers": 10375
+      },
+      "training_export_seconds": 22.892794124782085,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0726,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 10133460,
+        "export_removed_bytes": 7392894,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 2740566,
+        "training_process_seconds": 22.8013,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 11606,
+        "steps": 3000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 18.696892,
+          "ssim": 0.7823193
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "d95089ec9025f11c4070ece301c97307a7f2ba311c9b1f307a43af2360db4991",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "68611011c8a4a63c6a310d0393852053dd7a9bdd3af08dd9bdcdc60baa574d0c",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 2740566,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 3.7211549999192357,
+        "match_exhaustive": 1.171413708012551,
+        "incremental_mapping": 0.6150141661055386,
+        "undistort_images": 0.12989404192194343
+      },
+      "end_to_end_seconds": 28.788474457804114,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "pipes-r2-candidate",
+      "variant": "candidate",
+      "source_job": "44537f26e3b34c5bb417deacb103ce47",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+          "sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+          "sha256": "02efb93314a750abcabc008ad7e55a6200cb18e02c8bee747f2bf665c649ecab",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-76e314c595694f019b029d5733fa8868.jpg",
+          "sha256": "70e93cc0df437669bfb6039b4a647160e5057754557f2859b362db326336e317",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-7e75d56967684ba18f8f75463680f0b9.jpg",
+          "sha256": "e23b78cf1589092cc4a6afc57eef3ce31c3bdd1e953d4bb727526f64f655c7b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-0ade0143395b404b994ff2ac415d4cd0.jpg",
+          "sha256": "4ca31b438c577458b2c28eb1a008051f4a9966b45b61357b61718ac522cf767f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-44b496441aaf40839a3a200a8ec65dc3.jpg",
+          "sha256": "35b9d1cf2ba4c7c1ed7225631fccfdce5b92963b27529fd5962c64afd8dab87a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-0d7f4eaa55c04d088dcc4cbc7c36deb0.jpg",
+          "sha256": "8abd6c03e5ddffce250b3a50d678461f5831dcfde79eb332b8ceba896dd67e4e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-049f22b3d8d64ae7aa993422ad375b68.jpg",
+          "sha256": "7e2b4cf99c06a8e75adcab9857ce7970936170265dc9f04430775fef4f801331",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+          "sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-3db9fbd27ae2464db22f70cce6a49f2a.jpg",
+          "sha256": "84c01b55c3f7e7b4ac2432477a4f37c458d354e8cf494f9fbe4c13229c15a34a",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-ba00cacf4f7a4e1bb86e4cad50f16509.jpg",
+          "sha256": "33292759aa81691512443be93bdeedf4de62cd495250edf0f29998c7a1693bda",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-dd48eaf4728d465cb4d7f2da83a35bc9.jpg",
+          "sha256": "599e0018122130cd34056f5dc69c19da53f6de4251f5bb768708ada715c6dea0",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-273a1194133e449b9d6ee8a3aab2ba1a.jpg",
+          "sha256": "9b49f80ee59a445533df86f3a8a2dcdd4aad158f172e94f13695b814bbdb50cc",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-8cac83022daf4c7cb23945f089b28c48.jpg",
+          "sha256": "739c0945ddd55d288720ff749b7d96da53bb10d6a9a3acf15e5eb495b9a41886",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "d2fea6e69cef15cf4c4fc0086a3bddd81f1cb463e79a723d5bc907617f1a5879",
+      "sfm_seconds": 6.958406209014356,
+      "sfm": {
+        "input_images": 14,
+        "registered_images": 14,
+        "sparse_points": 1957,
+        "reprojection_error": 0.6697701379139122,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              905.6875303571735,
+              800.0,
+              533.5,
+              -0.10084817137478201,
+              0.06639266684464569
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1067
+          ]
+        ],
+        "features": 42185,
+        "verified_pairs": 48,
+        "verified_inliers": 10990
+      },
+      "training_export_seconds": 23.053134750109166,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0654,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 10375832,
+        "export_removed_bytes": 7583110,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 2792722,
+        "training_process_seconds": 22.9682,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 11827,
+        "steps": 3000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 19.88903,
+          "ssim": 0.7884449
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "76b917c837ea39cbbfaf35a416cc46026506aa620968975faa7f9c85bcbb52d7",
+            "reference_sha256": "017ce24a2cfdb6cc3ebb75bac53827289a672bae857864da9f7d393f69490145"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "3f07ee4a7b72680206530ceae7b102c62a9189ddfb25f0c85f56543817e4bcc6",
+            "reference_sha256": "416ce2528bbc68941319f0ada787bf7e96451674403f7d7443b695aed008f6cd"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 2792722,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 4.607491625007242,
+        "match_exhaustive": 1.3430416667833924,
+        "incremental_mapping": 0.651050915941596,
+        "undistort_images": 0.11910649994388223
+      },
+      "end_to_end_seconds": 30.043056750204414,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "office-r1-baseline",
+      "variant": "baseline",
+      "source_job": "c6a40f0953a54a9092430d295e2055a9",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+          "sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+          "sha256": "45fb5c3334be3b635d73c3c31950f29966349a6c232db33f81ccd8ea447804ce",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-d525c43f77ff425d8dc9057664c4acb5.jpg",
+          "sha256": "a4e53c514de13c83e12fd954ed4b4b1722d40b9557e83a44d0ec68672d6224c2",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-0225130d8b654d668aa161d73e64114b.jpg",
+          "sha256": "610d998bde414e4ab4e7fc123729c0c4d2823b1637e277bc4a46d01069e6b715",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-4018d10956384e0589295d3211bec2ea.jpg",
+          "sha256": "3ceb257883d981c9096e019e1dcc37059423534033aaa4085448452554942dcf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-23f40fd91f1e4decaf02bef154c509a7.jpg",
+          "sha256": "4fdad0a3b6c9e332f739bbf7ccf096eb02fbe36091f31637c8b0ddc4eb93360f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-b5a95c29bb844bc69b909d595d138225.jpg",
+          "sha256": "eea41b24f55bf6dec6c7e7c35cd7258f2e37e32d245ee0ac1ef220e2c4e306bf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-d5c28891dff14e7bb62f673888c76515.jpg",
+          "sha256": "a86213fabf12e74e568dc7752834f3cf8d21a0d60f0fc17373b2042c775dbc04",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+          "sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-aef411e32e1c4a18ae1b3e0e625e9d9d.jpg",
+          "sha256": "93c8af02c8c72b7f3c1bb548d4ab32634b7654d15fc3f6fa7cb009909f4d633c",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-e66fe07d1f79483d96c808f8d2168bec.jpg",
+          "sha256": "df7abbdd804d4a2243294089d0755c4a18be8f12f5335a97b9fc635f5d2d1225",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-f7ad23c5d5f94408b70dbedf41061df6.jpg",
+          "sha256": "30f432fdda8e8fca37b8bb7895b5f962c21884fe550f3efeaafb2bcd7b779662",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-d9bc61c6b9b94970a9cf191aa3a5b888.jpg",
+          "sha256": "3be3624d95d83b63f877a5f358a6cebedaf94a4ea8c7a6aa54490651704dbf1b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-96d04f46674645c3b3d3f1e7aed4aeb2.jpg",
+          "sha256": "1d2c424a1b254c314a88e2a28f07d5449af091a0acce3a9f7da2bcee6f3972b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0014-91a80238d9854a398a357bda5c58193a.jpg",
+          "sha256": "98df003f35123e4cd1d7d376e3db5c9fcae62040c79565ea56806b96755cdd1f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0015-35b3a879e3c04d6bb0d53f7ce023e046.jpg",
+          "sha256": "2d23bd35376f0940183143be16bb8133b2fdf1d640e3face4a15dfa0417b7dea",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+          "sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0017-32459e6aed3e4ed4805b588ff01016ca.jpg",
+          "sha256": "0945489aef280e6a77a60309953993b590132632c0b3af0f888d7869239d4139",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0018-b4a02fdfc1334dd59c778d170924df25.jpg",
+          "sha256": "0096457a4af580ad981c5545eca040543d3a2ed25a36be3309e226f59851ed00",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0019-3d734d2fb2914faca11185c6253a3856.jpg",
+          "sha256": "c5279f40798a15bc29dd19340f3bc07dcb44cbfd5514fc517ddbac0c881637b7",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0020-7336746343894fe1a517cf8d83702c67.jpg",
+          "sha256": "9e98218c1fc35ccc8a867d62188f65dbdda1f03d25eb395c400d7e776e84d89e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0021-8ee9ed229d7b4abc860ef4c187cacf58.jpg",
+          "sha256": "a1a2d5f0cae189ad733865a9c1d490f2ec877195048d877fab9ca4a44305c9b1",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0022-51aadc538648480dbd58fddc7eba67d0.jpg",
+          "sha256": "ba205225e34f05ceb31c4d2a2ba17a050fdf1e77fd35d5838cf17f598885c08b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0023-2ff6ae08a66b476c8b9e40959ef54911.jpg",
+          "sha256": "e448b1a2a29e3c4a6d6f01287ad319152ae0cebc3697ec172b1271f5cea88299",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+          "sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0025-4bd0221deb0f4745a0ed061cf3560163.jpg",
+          "sha256": "f78e88eb9498278b8304eab37724a2550519afb56e5a7220bf0282f8b0698c7b",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "82564ed3dcdb5f4236eacb78cd92da9be5ed6f59977a567ac1a10f99d9b36e33",
+      "sfm_seconds": 8.425532334018499,
+      "sfm": {
+        "input_images": 26,
+        "registered_images": 26,
+        "sparse_points": 2482,
+        "reprojection_error": 0.7507439796632426,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1067
+          ]
+        ],
+        "features": 36280,
+        "verified_pairs": 147,
+        "verified_inliers": 17752
+      },
+      "training_export_seconds": 23.481343917082995,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0681,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 12861621,
+        "export_removed_bytes": 9434295,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 3427326,
+        "training_process_seconds": 23.39,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 14516,
+        "steps": 3000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 21.799623,
+          "ssim": 0.8938327
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "311543298efd4cad9cfcbda65233dadb30ffc5456e30dd32ebd5f234010bc12e",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "aa4a84a949ab67fe9e9e446b0b549074b54ef3851b30b302139949465dc1f11c",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "e7de42f30553b930dfbf27f7feb69d7550a3eb8412fcb147aeebf4bbb695ff58",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "70d56849e0853cabfe09699d634abf811798ebf5b02f6f9759ccd772822776cb",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 3427326,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 6.2455692500807345,
+        "match_exhaustive": 0.7647512499243021,
+        "incremental_mapping": 0.8487432501278818,
+        "undistort_images": 0.20589087530970573
+      },
+      "end_to_end_seconds": 31.93987570796162,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "office-r1-candidate",
+      "variant": "candidate",
+      "source_job": "c6a40f0953a54a9092430d295e2055a9",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+          "sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+          "sha256": "45fb5c3334be3b635d73c3c31950f29966349a6c232db33f81ccd8ea447804ce",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-d525c43f77ff425d8dc9057664c4acb5.jpg",
+          "sha256": "a4e53c514de13c83e12fd954ed4b4b1722d40b9557e83a44d0ec68672d6224c2",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-0225130d8b654d668aa161d73e64114b.jpg",
+          "sha256": "610d998bde414e4ab4e7fc123729c0c4d2823b1637e277bc4a46d01069e6b715",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-4018d10956384e0589295d3211bec2ea.jpg",
+          "sha256": "3ceb257883d981c9096e019e1dcc37059423534033aaa4085448452554942dcf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-23f40fd91f1e4decaf02bef154c509a7.jpg",
+          "sha256": "4fdad0a3b6c9e332f739bbf7ccf096eb02fbe36091f31637c8b0ddc4eb93360f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-b5a95c29bb844bc69b909d595d138225.jpg",
+          "sha256": "eea41b24f55bf6dec6c7e7c35cd7258f2e37e32d245ee0ac1ef220e2c4e306bf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-d5c28891dff14e7bb62f673888c76515.jpg",
+          "sha256": "a86213fabf12e74e568dc7752834f3cf8d21a0d60f0fc17373b2042c775dbc04",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+          "sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-aef411e32e1c4a18ae1b3e0e625e9d9d.jpg",
+          "sha256": "93c8af02c8c72b7f3c1bb548d4ab32634b7654d15fc3f6fa7cb009909f4d633c",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-e66fe07d1f79483d96c808f8d2168bec.jpg",
+          "sha256": "df7abbdd804d4a2243294089d0755c4a18be8f12f5335a97b9fc635f5d2d1225",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-f7ad23c5d5f94408b70dbedf41061df6.jpg",
+          "sha256": "30f432fdda8e8fca37b8bb7895b5f962c21884fe550f3efeaafb2bcd7b779662",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-d9bc61c6b9b94970a9cf191aa3a5b888.jpg",
+          "sha256": "3be3624d95d83b63f877a5f358a6cebedaf94a4ea8c7a6aa54490651704dbf1b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-96d04f46674645c3b3d3f1e7aed4aeb2.jpg",
+          "sha256": "1d2c424a1b254c314a88e2a28f07d5449af091a0acce3a9f7da2bcee6f3972b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0014-91a80238d9854a398a357bda5c58193a.jpg",
+          "sha256": "98df003f35123e4cd1d7d376e3db5c9fcae62040c79565ea56806b96755cdd1f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0015-35b3a879e3c04d6bb0d53f7ce023e046.jpg",
+          "sha256": "2d23bd35376f0940183143be16bb8133b2fdf1d640e3face4a15dfa0417b7dea",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+          "sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0017-32459e6aed3e4ed4805b588ff01016ca.jpg",
+          "sha256": "0945489aef280e6a77a60309953993b590132632c0b3af0f888d7869239d4139",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0018-b4a02fdfc1334dd59c778d170924df25.jpg",
+          "sha256": "0096457a4af580ad981c5545eca040543d3a2ed25a36be3309e226f59851ed00",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0019-3d734d2fb2914faca11185c6253a3856.jpg",
+          "sha256": "c5279f40798a15bc29dd19340f3bc07dcb44cbfd5514fc517ddbac0c881637b7",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0020-7336746343894fe1a517cf8d83702c67.jpg",
+          "sha256": "9e98218c1fc35ccc8a867d62188f65dbdda1f03d25eb395c400d7e776e84d89e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0021-8ee9ed229d7b4abc860ef4c187cacf58.jpg",
+          "sha256": "a1a2d5f0cae189ad733865a9c1d490f2ec877195048d877fab9ca4a44305c9b1",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0022-51aadc538648480dbd58fddc7eba67d0.jpg",
+          "sha256": "ba205225e34f05ceb31c4d2a2ba17a050fdf1e77fd35d5838cf17f598885c08b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0023-2ff6ae08a66b476c8b9e40959ef54911.jpg",
+          "sha256": "e448b1a2a29e3c4a6d6f01287ad319152ae0cebc3697ec172b1271f5cea88299",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+          "sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0025-4bd0221deb0f4745a0ed061cf3560163.jpg",
+          "sha256": "f78e88eb9498278b8304eab37724a2550519afb56e5a7220bf0282f8b0698c7b",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "d2fea6e69cef15cf4c4fc0086a3bddd81f1cb463e79a723d5bc907617f1a5879",
+      "sfm_seconds": 8.429312333930284,
+      "sfm": {
+        "input_images": 26,
+        "registered_images": 26,
+        "sparse_points": 2594,
+        "reprojection_error": 0.781037083980772,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.2856238240701,
+              800.0,
+              533.5,
+              -0.10225015295389923,
+              0.06888883727500497
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 37926,
+        "verified_pairs": 140,
+        "verified_inliers": 19068
+      },
+      "training_export_seconds": 23.627670125104487,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.061,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 13345893,
+        "export_removed_bytes": 9784047,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 3561846,
+        "training_process_seconds": 23.5428,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 15086,
+        "steps": 3000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 21.6737,
+          "ssim": 0.88893986
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "19414cc97ec3ab8b30f44ec756e8d8505c1bf2243704e071836c30d86a55bc7d",
+            "reference_sha256": "c9b33358154d7b5a6e9811c3a0ca36f2a17668916341a6ac81d93801184589e1"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "0e3d05e18000f3c663c4969fa56e61ad74c37ad7198b31830050fadfb9dd702e",
+            "reference_sha256": "14bb445023db7ae457f60fd757b326c7fccd6ea3bed684e65d2dc4688d0cbe31"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "89cebd0114203bc8fe750aea6484508e798d41013dc1285cbdc1b8e58944e8b6",
+            "reference_sha256": "85cce30e82773a56d5f1cfa77bb4d59e4c646918994a17c22240ecc8f63fab44"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "a3d79c4f3b02a537cdf841d25914bf3d98ea9b2d5fdf55f70005a2c419c0a3e4",
+            "reference_sha256": "f2711f7f4dd20ebadb3ba23117ea587b33f49cdd0f9f0f95b7b32d790f1b31dc"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 3561846,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 6.022749041672796,
+        "match_exhaustive": 0.711646833922714,
+        "incremental_mapping": 1.1204320420511067,
+        "undistort_images": 0.21438804175704718
+      },
+      "end_to_end_seconds": 32.101187208201736,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "office-r2-baseline",
+      "variant": "baseline",
+      "source_job": "c6a40f0953a54a9092430d295e2055a9",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+          "sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+          "sha256": "45fb5c3334be3b635d73c3c31950f29966349a6c232db33f81ccd8ea447804ce",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-d525c43f77ff425d8dc9057664c4acb5.jpg",
+          "sha256": "a4e53c514de13c83e12fd954ed4b4b1722d40b9557e83a44d0ec68672d6224c2",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-0225130d8b654d668aa161d73e64114b.jpg",
+          "sha256": "610d998bde414e4ab4e7fc123729c0c4d2823b1637e277bc4a46d01069e6b715",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-4018d10956384e0589295d3211bec2ea.jpg",
+          "sha256": "3ceb257883d981c9096e019e1dcc37059423534033aaa4085448452554942dcf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-23f40fd91f1e4decaf02bef154c509a7.jpg",
+          "sha256": "4fdad0a3b6c9e332f739bbf7ccf096eb02fbe36091f31637c8b0ddc4eb93360f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-b5a95c29bb844bc69b909d595d138225.jpg",
+          "sha256": "eea41b24f55bf6dec6c7e7c35cd7258f2e37e32d245ee0ac1ef220e2c4e306bf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-d5c28891dff14e7bb62f673888c76515.jpg",
+          "sha256": "a86213fabf12e74e568dc7752834f3cf8d21a0d60f0fc17373b2042c775dbc04",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+          "sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-aef411e32e1c4a18ae1b3e0e625e9d9d.jpg",
+          "sha256": "93c8af02c8c72b7f3c1bb548d4ab32634b7654d15fc3f6fa7cb009909f4d633c",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-e66fe07d1f79483d96c808f8d2168bec.jpg",
+          "sha256": "df7abbdd804d4a2243294089d0755c4a18be8f12f5335a97b9fc635f5d2d1225",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-f7ad23c5d5f94408b70dbedf41061df6.jpg",
+          "sha256": "30f432fdda8e8fca37b8bb7895b5f962c21884fe550f3efeaafb2bcd7b779662",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-d9bc61c6b9b94970a9cf191aa3a5b888.jpg",
+          "sha256": "3be3624d95d83b63f877a5f358a6cebedaf94a4ea8c7a6aa54490651704dbf1b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-96d04f46674645c3b3d3f1e7aed4aeb2.jpg",
+          "sha256": "1d2c424a1b254c314a88e2a28f07d5449af091a0acce3a9f7da2bcee6f3972b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0014-91a80238d9854a398a357bda5c58193a.jpg",
+          "sha256": "98df003f35123e4cd1d7d376e3db5c9fcae62040c79565ea56806b96755cdd1f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0015-35b3a879e3c04d6bb0d53f7ce023e046.jpg",
+          "sha256": "2d23bd35376f0940183143be16bb8133b2fdf1d640e3face4a15dfa0417b7dea",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+          "sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0017-32459e6aed3e4ed4805b588ff01016ca.jpg",
+          "sha256": "0945489aef280e6a77a60309953993b590132632c0b3af0f888d7869239d4139",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0018-b4a02fdfc1334dd59c778d170924df25.jpg",
+          "sha256": "0096457a4af580ad981c5545eca040543d3a2ed25a36be3309e226f59851ed00",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0019-3d734d2fb2914faca11185c6253a3856.jpg",
+          "sha256": "c5279f40798a15bc29dd19340f3bc07dcb44cbfd5514fc517ddbac0c881637b7",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0020-7336746343894fe1a517cf8d83702c67.jpg",
+          "sha256": "9e98218c1fc35ccc8a867d62188f65dbdda1f03d25eb395c400d7e776e84d89e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0021-8ee9ed229d7b4abc860ef4c187cacf58.jpg",
+          "sha256": "a1a2d5f0cae189ad733865a9c1d490f2ec877195048d877fab9ca4a44305c9b1",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0022-51aadc538648480dbd58fddc7eba67d0.jpg",
+          "sha256": "ba205225e34f05ceb31c4d2a2ba17a050fdf1e77fd35d5838cf17f598885c08b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0023-2ff6ae08a66b476c8b9e40959ef54911.jpg",
+          "sha256": "e448b1a2a29e3c4a6d6f01287ad319152ae0cebc3697ec172b1271f5cea88299",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+          "sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0025-4bd0221deb0f4745a0ed061cf3560163.jpg",
+          "sha256": "f78e88eb9498278b8304eab37724a2550519afb56e5a7220bf0282f8b0698c7b",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "82564ed3dcdb5f4236eacb78cd92da9be5ed6f59977a567ac1a10f99d9b36e33",
+      "sfm_seconds": 8.547465625219047,
+      "sfm": {
+        "input_images": 26,
+        "registered_images": 26,
+        "sparse_points": 2490,
+        "reprojection_error": 0.7426058359715788,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.66156906868,
+              800.0,
+              533.5,
+              -0.10304110995447285,
+              0.06957128279027483
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 36280,
+        "verified_pairs": 147,
+        "verified_inliers": 17752
+      },
+      "training_export_seconds": 23.485359500162303,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0669,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 12808049,
+        "export_removed_bytes": 9394647,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 3413402,
+        "training_process_seconds": 23.3937,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 14457,
+        "steps": 3000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 21.907812,
+          "ssim": 0.89192516
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "70e680068c27b3f99bfd51d7483e887bbdaa203eac6f6d5f6dd3f97d00eabe6c",
+            "reference_sha256": "e17fd39bf04e3f8ac1f01638c8794326ffc2bec02f520e8c78dd36265543672f"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "e2e6508714a24280165d571a64feac89d577d44ab27ec77e9ff6e176736c9a9d",
+            "reference_sha256": "1e23d8b9f67f0b678e3cf68afb9f3d4ee06e218e38c20e773abefa096a297fcf"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "fb4cefc308d0d08a7112b4c89ab7d756522a0e936f59f5e4c319e18e92fa1be0",
+            "reference_sha256": "985c167a2629dac15c9e28e7db0d5e90d5050f699ec3da25f361af04bfa545bb"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "3377195587c2fe3237323238ff1f0324efde8cc9d8433bcbe8138645bd6645ec",
+            "reference_sha256": "eb2bba68820da243d3d05bdbb6705c492731fb71fbb29eeb0a035916cb6da9f5"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 3413402,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 6.271358083002269,
+        "match_exhaustive": 0.7796632079407573,
+        "incremental_mapping": 0.9261083328165114,
+        "undistort_images": 0.2178178746253252
+      },
+      "end_to_end_seconds": 32.076172083150595,
+      "camera_and_sh3_verified": true
+    },
+    {
+      "name": "office-r2-candidate",
+      "variant": "candidate",
+      "source_job": "c6a40f0953a54a9092430d295e2055a9",
+      "pycolmap": "3.13.0",
+      "status": "complete",
+      "inputs": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+          "sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+          "sha256": "45fb5c3334be3b635d73c3c31950f29966349a6c232db33f81ccd8ea447804ce",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0002-d525c43f77ff425d8dc9057664c4acb5.jpg",
+          "sha256": "a4e53c514de13c83e12fd954ed4b4b1722d40b9557e83a44d0ec68672d6224c2",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0003-0225130d8b654d668aa161d73e64114b.jpg",
+          "sha256": "610d998bde414e4ab4e7fc123729c0c4d2823b1637e277bc4a46d01069e6b715",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0004-4018d10956384e0589295d3211bec2ea.jpg",
+          "sha256": "3ceb257883d981c9096e019e1dcc37059423534033aaa4085448452554942dcf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0005-23f40fd91f1e4decaf02bef154c509a7.jpg",
+          "sha256": "4fdad0a3b6c9e332f739bbf7ccf096eb02fbe36091f31637c8b0ddc4eb93360f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0006-b5a95c29bb844bc69b909d595d138225.jpg",
+          "sha256": "eea41b24f55bf6dec6c7e7c35cd7258f2e37e32d245ee0ac1ef220e2c4e306bf",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0007-d5c28891dff14e7bb62f673888c76515.jpg",
+          "sha256": "a86213fabf12e74e568dc7752834f3cf8d21a0d60f0fc17373b2042c775dbc04",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+          "sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0009-aef411e32e1c4a18ae1b3e0e625e9d9d.jpg",
+          "sha256": "93c8af02c8c72b7f3c1bb548d4ab32634b7654d15fc3f6fa7cb009909f4d633c",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0010-e66fe07d1f79483d96c808f8d2168bec.jpg",
+          "sha256": "df7abbdd804d4a2243294089d0755c4a18be8f12f5335a97b9fc635f5d2d1225",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0011-f7ad23c5d5f94408b70dbedf41061df6.jpg",
+          "sha256": "30f432fdda8e8fca37b8bb7895b5f962c21884fe550f3efeaafb2bcd7b779662",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0012-d9bc61c6b9b94970a9cf191aa3a5b888.jpg",
+          "sha256": "3be3624d95d83b63f877a5f358a6cebedaf94a4ea8c7a6aa54490651704dbf1b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0013-96d04f46674645c3b3d3f1e7aed4aeb2.jpg",
+          "sha256": "1d2c424a1b254c314a88e2a28f07d5449af091a0acce3a9f7da2bcee6f3972b5",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0014-91a80238d9854a398a357bda5c58193a.jpg",
+          "sha256": "98df003f35123e4cd1d7d376e3db5c9fcae62040c79565ea56806b96755cdd1f",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0015-35b3a879e3c04d6bb0d53f7ce023e046.jpg",
+          "sha256": "2d23bd35376f0940183143be16bb8133b2fdf1d640e3face4a15dfa0417b7dea",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+          "sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0017-32459e6aed3e4ed4805b588ff01016ca.jpg",
+          "sha256": "0945489aef280e6a77a60309953993b590132632c0b3af0f888d7869239d4139",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0018-b4a02fdfc1334dd59c778d170924df25.jpg",
+          "sha256": "0096457a4af580ad981c5545eca040543d3a2ed25a36be3309e226f59851ed00",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0019-3d734d2fb2914faca11185c6253a3856.jpg",
+          "sha256": "c5279f40798a15bc29dd19340f3bc07dcb44cbfd5514fc517ddbac0c881637b7",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0020-7336746343894fe1a517cf8d83702c67.jpg",
+          "sha256": "9e98218c1fc35ccc8a867d62188f65dbdda1f03d25eb395c400d7e776e84d89e",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0021-8ee9ed229d7b4abc860ef4c187cacf58.jpg",
+          "sha256": "a1a2d5f0cae189ad733865a9c1d490f2ec877195048d877fab9ca4a44305c9b1",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0022-51aadc538648480dbd58fddc7eba67d0.jpg",
+          "sha256": "ba205225e34f05ceb31c4d2a2ba17a050fdf1e77fd35d5838cf17f598885c08b",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0023-2ff6ae08a66b476c8b9e40959ef54911.jpg",
+          "sha256": "e448b1a2a29e3c4a6d6f01287ad319152ae0cebc3697ec172b1271f5cea88299",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+          "sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "width": 1600,
+          "height": 1067
+        },
+        {
+          "name": "0025-4bd0221deb0f4745a0ed061cf3560163.jpg",
+          "sha256": "f78e88eb9498278b8304eab37724a2550519afb56e5a7220bf0282f8b0698c7b",
+          "width": 1600,
+          "height": 1067
+        }
+      ],
+      "adapter_sha256": "d2fea6e69cef15cf4c4fc0086a3bddd81f1cb463e79a723d5bc907617f1a5879",
+      "sfm_seconds": 8.423690875060856,
+      "sfm": {
+        "input_images": 26,
+        "registered_images": 26,
+        "sparse_points": 2594,
+        "reprojection_error": 0.781037083980772,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.2856238240701,
+              800.0,
+              533.5,
+              -0.10225015295389923,
+              0.06888883727500497
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 37926,
+        "verified_pairs": 140,
+        "verified_inliers": 19068
+      },
+      "training_export_seconds": 23.50979100028053,
+      "report": {
+        "backend": "brush",
+        "engine": "Brush 0.3.0",
+        "engine_version": "0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "engine_identity_seconds": 0.0606,
+        "training_seed": 42,
+        "determinism_guaranteed": false,
+        "export_policy": "periodic_final_retained",
+        "export_written_files": 6,
+        "export_written_bytes": 13189189,
+        "export_removed_bytes": 9678555,
+        "export_cleanup_errors": [],
+        "export_files": 1,
+        "export_bytes": 3510634,
+        "training_process_seconds": 23.4237,
+        "progress_source": "brush_refinement_log",
+        "gaussians": 14869,
+        "steps": 3000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 21.884281,
+          "ssim": 0.89047503
+        },
+        "evaluation_verified": true,
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "c2af0f3247e7d84948b3fa754aba7897449d2d6ed03964402cf5cce489441113",
+            "reference_sha256": "c9b33358154d7b5a6e9811c3a0ca36f2a17668916341a6ac81d93801184589e1"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "df743e05140ff4ce2e8a940a1ac5bde1a388e9c4398ea47f4eb3135ae3b44baf",
+            "reference_sha256": "14bb445023db7ae457f60fd757b326c7fccd6ea3bed684e65d2dc4688d0cbe31"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "6637597fb3a7d92d28a573003fe1c3732d3073dbd6b03bd3c9f1f120ae8e8995",
+            "reference_sha256": "85cce30e82773a56d5f1cfa77bb4d59e4c646918994a17c22240ecc8f63fab44"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "72d17ecd1ebf44a274a8d40fb5955e3bc6619f969600684c02368e9fc7833579",
+            "reference_sha256": "f2711f7f4dd20ebadb3ba23117ea587b33f49cdd0f9f0f95b7b32d790f1b31dc"
+          }
+        ],
+        "color_model": "SH3",
+        "preview_color_model": "SH3 (PLY)",
+        "splat_color_model": "SH0",
+        "resolution": 512,
+        "evaluation_mode": "holdout",
+        "thumbnail_source": "evaluation_render",
+        "note": "每 8 张留出评估；这些图像参与过上游 SfM。网页 PLY 预览保留高阶 SH；下载 splat 只保留 SH0。"
+      },
+      "model_bytes": 3510634,
+      "inputs_unchanged": true,
+      "stages_seconds": {
+        "extract_features": 6.006499000359327,
+        "match_exhaustive": 0.7333487500436604,
+        "incremental_mapping": 1.1210646671243012,
+        "undistort_images": 0.21236924966797233
+      },
+      "end_to_end_seconds": 31.968067665584385,
+      "camera_and_sh3_verified": true
+    }
+  ],
+  "comparisons": [
+    {
+      "scene": "pipes",
+      "repeat": 1,
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "pipes-r1-baseline",
+      "candidate_job": "pipes-r1-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "raw_input_sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9749816715542522,
+          "common_valid_pixels": 170224,
+          "common_valid_ssim_windows": 161694,
+          "baseline": {
+            "psnr": 23.042071167636227,
+            "ssim": 0.8216567132312885
+          },
+          "candidate": {
+            "psnr": 23.69421309519414,
+            "ssim": 0.83757983243242
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "raw_input_sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9749816715542522,
+          "common_valid_pixels": 170224,
+          "common_valid_ssim_windows": 161694,
+          "baseline": {
+            "psnr": 14.402032098920959,
+            "ssim": 0.656114078145269
+          },
+          "candidate": {
+            "psnr": 15.908645300915534,
+            "ssim": 0.695477412570693
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 18.722051633278593,
+          "ssim": 0.7388853956882788
+        },
+        "candidate": {
+          "psnr": 19.801429198054837,
+          "ssim": 0.7665286225015564
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 1.0793775647762445,
+        "ssim": 0.027643226813277577
+      }
+    },
+    {
+      "scene": "pipes",
+      "repeat": 2,
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "pipes-r2-baseline",
+      "candidate_job": "pipes-r2-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "raw_input_sha256": "86139febc03f7d75e0b9c19b6691fcb8ed1d7995aaeee3920aca2930e268dbd6",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9749816715542522,
+          "common_valid_pixels": 170224,
+          "common_valid_ssim_windows": 161694,
+          "baseline": {
+            "psnr": 22.141530107863012,
+            "ssim": 0.825051067877142
+          },
+          "candidate": {
+            "psnr": 23.71283984775749,
+            "ssim": 0.8406631675424042
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "raw_input_sha256": "feaabd8885c68ff626629e46be411460aef07d9413d28565fef5e5163f17b77a",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9749816715542522,
+          "common_valid_pixels": 170224,
+          "common_valid_ssim_windows": 161694,
+          "baseline": {
+            "psnr": 14.71054243410582,
+            "ssim": 0.6800795463774447
+          },
+          "candidate": {
+            "psnr": 15.378551336282714,
+            "ssim": 0.6786720625019884
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 18.426036270984415,
+          "ssim": 0.7525653071272933
+        },
+        "candidate": {
+          "psnr": 19.545695592020103,
+          "ssim": 0.7596676150221964
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 1.1196593210356873,
+        "ssim": 0.0071023078949030705
+      }
+    },
+    {
+      "scene": "office",
+      "repeat": 1,
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "office-r1-baseline",
+      "candidate_job": "office-r1-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "raw_input_sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9737445014662757,
+          "common_valid_pixels": 170008,
+          "common_valid_ssim_windows": 161478,
+          "baseline": {
+            "psnr": 21.270738534876305,
+            "ssim": 0.9036450776022698
+          },
+          "candidate": {
+            "psnr": 24.028444535704743,
+            "ssim": 0.9065542487896732
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "raw_input_sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9737445014662757,
+          "common_valid_pixels": 170008,
+          "common_valid_ssim_windows": 161478,
+          "baseline": {
+            "psnr": 24.15850856815664,
+            "ssim": 0.9497928607846585
+          },
+          "candidate": {
+            "psnr": 22.58680131079942,
+            "ssim": 0.9439170929509088
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "raw_input_sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9737445014662757,
+          "common_valid_pixels": 170008,
+          "common_valid_ssim_windows": 161478,
+          "baseline": {
+            "psnr": 17.48344323500374,
+            "ssim": 0.8035315251282732
+          },
+          "candidate": {
+            "psnr": 17.689322631037868,
+            "ssim": 0.7922015800148257
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "raw_input_sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9737445014662757,
+          "common_valid_pixels": 170008,
+          "common_valid_ssim_windows": 161478,
+          "baseline": {
+            "psnr": 23.726425914411557,
+            "ssim": 0.863668680436396
+          },
+          "candidate": {
+            "psnr": 21.978751929399873,
+            "ssim": 0.8556952577005853
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 21.65977906311206,
+          "ssim": 0.8801595359878993
+        },
+        "candidate": {
+          "psnr": 21.570830101735478,
+          "ssim": 0.8745920448639981
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": -0.08894896137658392,
+        "ssim": -0.005567491123901203
+      }
+    },
+    {
+      "scene": "office",
+      "repeat": 2,
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "office-r2-baseline",
+      "candidate_job": "office-r2-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "raw_input_sha256": "6e92a3acc6350b8d3e601da9c0fd32b85c5f1ab396c6400a1f8b289a697dc562",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9736986803519062,
+          "common_valid_pixels": 170000,
+          "common_valid_ssim_windows": 161470,
+          "baseline": {
+            "psnr": 22.119098115059145,
+            "ssim": 0.9048783490624221
+          },
+          "candidate": {
+            "psnr": 24.149229160067915,
+            "ssim": 0.9128610088976218
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "raw_input_sha256": "aa7a0697783c51ea8b611730dc9f4353d7c377e0a99db97e7d095b3eca659c82",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9736986803519062,
+          "common_valid_pixels": 170000,
+          "common_valid_ssim_windows": 161470,
+          "baseline": {
+            "psnr": 23.606968003579468,
+            "ssim": 0.9442500412673585
+          },
+          "candidate": {
+            "psnr": 23.264144985559987,
+            "ssim": 0.942124682048459
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "raw_input_sha256": "e17a7058b6e487f24e64a9b8b7a9bb3a60520b1aeab5639ab5fc08d587e3af91",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9736986803519062,
+          "common_valid_pixels": 170000,
+          "common_valid_ssim_windows": 161470,
+          "baseline": {
+            "psnr": 17.151049468395815,
+            "ssim": 0.8024835090717599
+          },
+          "candidate": {
+            "psnr": 16.975306646794216,
+            "ssim": 0.7885264008535842
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "raw_input_sha256": "6c47e4dfe8ffd00ae97457b37d81afc657869ac5d3da6150cef739b6df80abef",
+          "raw_identity": {
+            "baseline": "frozen_job_manifest",
+            "candidate": "frozen_job_manifest"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9736986803519062,
+          "common_valid_pixels": 170000,
+          "common_valid_ssim_windows": 161470,
+          "baseline": {
+            "psnr": 24.09631488063706,
+            "ssim": 0.8556423445778677
+          },
+          "candidate": {
+            "psnr": 22.699091876602267,
+            "ssim": 0.8604204352155099
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 21.74335761691787,
+          "ssim": 0.8768135609948521
+        },
+        "candidate": {
+          "psnr": 21.771943167256097,
+          "ssim": 0.8759831317537937
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 0.02858555033822796,
+        "ssim": -0.0008304292410583614
+      }
+    }
+  ],
+  "summary": [
+    {
+      "scene": "pipes",
+      "baseline": {
+        "sfm_seconds": 5.91338689555414,
+        "training_export_seconds": 22.911944166291505,
+        "end_to_end_seconds": 28.85541793750599,
+        "model_bytes": 2729828,
+        "gaussians": 11560.5,
+        "psnr": 18.574043952131504,
+        "ssim": 0.7457253514077861
+      },
+      "candidate": {
+        "sfm_seconds": 6.77807787549682,
+        "training_export_seconds": 23.200539854122326,
+        "end_to_end_seconds": 30.007749770767987,
+        "model_bytes": 2810422,
+        "gaussians": 11902,
+        "psnr": 19.67356239503747,
+        "ssim": 0.7630981187618764
+      },
+      "candidate_minus_baseline": {
+        "sfm_seconds": 0.8646909799426794,
+        "training_export_seconds": 0.2885956878308207,
+        "end_to_end_seconds": 1.1523318332619965,
+        "model_bytes": 80594,
+        "gaussians": 341.5,
+        "psnr": 1.0995184429059677,
+        "ssim": 0.017372767354090324
+      }
+    },
+    {
+      "scene": "office",
+      "baseline": {
+        "sfm_seconds": 8.486498979618773,
+        "training_export_seconds": 23.48335170862265,
+        "end_to_end_seconds": 32.00802389555611,
+        "model_bytes": 3420364,
+        "gaussians": 14486.5,
+        "psnr": 21.701568340014965,
+        "ssim": 0.8784865484913758
+      },
+      "candidate": {
+        "sfm_seconds": 8.42650160449557,
+        "training_export_seconds": 23.568730562692508,
+        "end_to_end_seconds": 32.03462743689306,
+        "model_bytes": 3536240,
+        "gaussians": 14977.5,
+        "psnr": 21.67138663449579,
+        "ssim": 0.875287588308896
+      },
+      "candidate_minus_baseline": {
+        "sfm_seconds": -0.0599973751232028,
+        "training_export_seconds": 0.08537885406985879,
+        "end_to_end_seconds": 0.02660354133695364,
+        "model_bytes": 115876,
+        "gaussians": 491.0,
+        "psnr": -0.030181705519176205,
+        "ssim": -0.003198960182479782
+      }
+    }
+  ],
+  "date": "2026-10-31",
+  "decision": "Do not enable DSP-SIFT by default: pipes improves, office SSIM regresses in both repeats.",
+  "platform": {
+    "cpu": "Apple M5",
+    "ram_bytes": 34359738368,
+    "sfm": "PyCOLMAP 3.13.0 CPU",
+    "training": "Brush 0.3.0 Metal"
+  }
+}
