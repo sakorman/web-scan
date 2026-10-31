@@ -4,6 +4,12 @@
 
 ## 2026-11-01
 
+### 深度跨视图支撑与冲突诊断
+
+- 改进：新增离线重投影检查，区分视野外、疑似遮挡、前方深度冲突、往返失败与低视差；要求另外两张训练照片提供支持。pipes / office 单图筛查后仅 10.75% / 8.78% 采样位置通过，采用诊断工具，继续放弃直接补点。
+- 证据：office 两票通过的位置仍有 66.23% 与其他视角冲突，单图对齐或少数视图一致都不能证明密集几何可信。两次新 SfM 和 3000 步 / 512 像素 Metal 基线完整定位 14/14、26/26，完整 SH3 与源图校验通过；211 项后端、18 项前端、类型检查和构建通过，图示和逐视图数据已保存。
+- 代价与下一步：282 个有序视图对的 CPU 检查约 1.05 秒，未测峰值内存，不是训练或画质提升。采样位置未融合、不能当作新增点数；疑似遮挡也可能源于预测误差。下一步先以独立深度真值或真正的多视图深度验证，再考虑补点。[详细报告](docs/DEPTH-CONSISTENCY.md) · [逐对数据](docs/benchmarks/depth-consistency.json) · [基点提交](https://github.com/sakorman/web-scan/commit/7ad863f) · [COLMAP 融合实现](https://github.com/colmap/colmap/blob/3.13.0/src/colmap/mvs/fusion.cc) · [In Depth We Trust](https://arxiv.org/abs/2604.05715) · [StereoGS](https://arxiv.org/abs/2606.30545v2)
+
 ### 单目深度对齐筛查（暂不补点）
 
 - 进展：Depth Anything V2 Small 在本机 MPS 跑通；新增离线工具，将相对预测对齐到 SfM 相机轴向深度，并用固定图像区域分别拟合、检查。34 张训练图仅 23 张通过预设门槛，暂不采用直接补点，默认重建不变。
