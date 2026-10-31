@@ -1,0 +1,44 @@
+{
+  "baseline_commit": "b8d1d529cfc398e4e0502a31bbe61a261db2bc36",
+  "training": {
+    "backend": "brush",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 150000,
+    "evaluation_mode": "holdout"
+  },
+  "depth_model": "Depth-Anything-V2-Small",
+  "encoder": "vits",
+  "input_size": 518,
+  "device": "mps",
+  "precision": "float32",
+  "scope": "Training photos only; probe does not inject points or change Gaussian training.",
+  "alignment": "Least-squares scale and shift to inverse SfM camera Z; 4x4 checkerboard cells split fit/check anchors.",
+  "diagnostic_gate": {
+    "min_anchors_per_split": 20,
+    "positive_slope": true,
+    "max_invalid_dense_fraction": 0.01,
+    "max_check_median_abs_rel": 0.1,
+    "max_check_p90_abs_rel": 0.25
+  },
+  "gate_note": "Predeclared engineering screening thresholds; passing is not evidence of true dense geometry or improved 3DGS.",
+  "depth_code_revision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+  "weight_revision": "03876f8651c73a60fe4c2c48294e09fcb6838fcf",
+  "weight_sha256": "715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378",
+  "weight_bytes": 99218434,
+  "dependencies": {
+    "torch": "2.14.1",
+    "torchvision": "0.29.1",
+    "opencv-python-headless": "4.13.0.92"
+  },
+  "hardware": {
+    "model": "Mac17,2",
+    "chip": "Apple M5",
+    "memory_bytes": 34359738368
+  },
+  "mps_fallback": false,
+  "source_jobs": {
+    "pipes": "44537f26e3b34c5bb417deacb103ce47",
+    "office": "c6a40f0953a54a9092430d295e2055a9"
+  }
+}

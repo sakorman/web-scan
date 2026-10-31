@@ -227,6 +227,8 @@ WEBSCAN_ALLOWED_HOSTS=192.168.1.10 \
 
 DSP 与仿射形状估计也完成了实拍对照，但 office 留出 SSIM 仍下降，默认保留普通 SIFT。更多特征或稀疏点不能单独证明覆盖和画质改善。[DSP 对照](docs/DSP-SIFT.md) · [仿射组合与局部支撑](docs/AFFINE-DSP.md)
 
+可选离线脚本 `scripts/benchmark_depth_prior.py` 用独立图像区域检查相对深度与 SfM 的对齐。Depth Anything V2 Small 已在 MPS 跑通，但仅 23/34 张训练图通过本轮门槛，暂不用于补点；模型和依赖单独下载，不增加应用运行依赖。[坐标约定、许可、结果与复现](docs/DEPTH-PRIOR.md)
+
 ## 技术架构
 
 ```mermaid

@@ -56,6 +56,10 @@ Browser bundle license texts are preserved under `licenses/` and copied into `di
 
 `docs/benchmarks/lpips_score.rs` is a local scoring adapter that calls Brush's LPIPS module and records the compiled weight identity. Its original adapter code is covered by this project's MIT license; Brush and its converted weights keep their upstream provenance and terms. No model weights are added to this repository. The separately cited LPIPS project is by Richard Zhang and collaborators: https://github.com/richzhang/PerceptualSimilarity .
 
+## Optional relative-depth screening
+
+Depth Anything V2, by Lihe Yang, Bingyi Kang, Zilong Huang, Zhen Zhao, Xiaogang Xu, Jiashi Feng, and Hengshuang Zhao: https://arxiv.org/abs/2406.09414v2 . The optional offline screening script calls the official implementation, downloaded separately: https://github.com/DepthAnything/Depth-Anything-V2/tree/a561b849ebae10a6f5ef49e26c83cbbcd36c71bf . The code and selected Small checkpoint are Apache-2.0; the Base/Large/Giant checkpoints have different terms and are not used. Small checkpoint provenance: https://huggingface.co/depth-anything/Depth-Anything-V2-Small/tree/03876f8651c73a60fe4c2c48294e09fcb6838fcf . No upstream source tree or weights are bundled with Web Scan. The original adapter and diagnostic tests use this project's MIT license; dataset-derived figures retain the dataset terms below. TWINGS is cited only as research context, with no implementation or weights copied.
+
 ## Test dataset
 
 ETH3D office (26 photos) and pipes (14 photos): https://www.eth3d.net/datasets . The photos are downloaded separately from official dataset archives. Attribution: Thomas Schöps, Johannes L. Schönberger, Silvano Galliani, Torsten Sattler, Konrad Schindler, Marc Pollefeys, and Andreas Geiger, *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos*, CVPR 2017.
