@@ -18,29 +18,40 @@ from PIL import Image
 from webscan.evaluation import validate_evaluation
 
 
+class ReferenceMetrics:
+    """Reuse only this view's fixed reference statistics for its paired renders."""
+
+    def __init__(self, reference):
+        self.reference = np.asarray(reference).astype(np.float64) / 255
+        self.y = torch.tensor(self.reference.transpose(2, 0, 1)[None], dtype=torch.float32)
+        axis = torch.arange(11, dtype=torch.float32) - 5
+        kernel = torch.exp(-(axis**2) / (2 * 1.5**2))
+        kernel /= kernel.sum()
+        self.window = (kernel[:, None] * kernel[None, :]).expand(3, 1, 11, 11)
+        self.my = self.blur(self.y)
+        self.vy = self.blur(self.y * self.y) - self.my * self.my
+
+    def blur(self, value):
+        return F.conv2d(value, self.window, groups=3)
+
+    def score(self, render):
+        a = np.asarray(render).astype(np.float64) / 255
+        mse = np.mean((a - self.reference) ** 2)
+        psnr = float(-10 * np.log10(max(mse, 1e-12)))
+        x = torch.tensor(a.transpose(2, 0, 1)[None], dtype=torch.float32)
+        mx, my, vy = self.blur(x), self.my, self.vy
+        vx = self.blur(x * x) - mx * mx
+        cov = self.blur(x * self.y) - mx * my
+        ssim = (
+            (2 * mx * my + 0.01**2)
+            * (2 * cov + 0.03**2)
+            / ((mx * mx + my * my + 0.01**2) * (vx + vy + 0.03**2))
+        ).mean()
+        return {"psnr": psnr, "ssim": float(ssim)}
+
+
 def metrics(render, reference):
-    a = np.asarray(render).astype(np.float64) / 255
-    b = np.asarray(reference).astype(np.float64) / 255
-    mse = np.mean((a - b) ** 2)
-    psnr = float(-10 * np.log10(max(mse, 1e-12)))
-    x = torch.tensor(a.transpose(2, 0, 1)[None], dtype=torch.float32)
-    y = torch.tensor(b.transpose(2, 0, 1)[None], dtype=torch.float32)
-    axis = torch.arange(11, dtype=torch.float32) - 5
-    kernel = torch.exp(-(axis**2) / (2 * 1.5**2))
-    kernel /= kernel.sum()
-    window = (kernel[:, None] * kernel[None, :]).expand(3, 1, 11, 11)
-
-    def blur(v):
-        return F.conv2d(v, window, groups=3)
-
-    mx, my = blur(x), blur(y)
-    vx, vy, cov = blur(x * x) - mx * mx, blur(y * y) - my * my, blur(x * y) - mx * my
-    ssim = (
-        (2 * mx * my + 0.01**2)
-        * (2 * cov + 0.03**2)
-        / ((mx * mx + my * my + 0.01**2) * (vx + vy + 0.03**2))
-    ).mean()
-    return {"psnr": psnr, "ssim": float(ssim)}
+    return ReferenceMetrics(reference).score(render)
 
 
 def _lpips_scores(scorer, directory, count):
@@ -175,10 +186,11 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
                 qimage = image.convert("RGB").resize(reference.size, Image.Resampling.LANCZOS)
             with Image.open(ddir / name) as image:
                 dimage = image.convert("RGB").resize(reference.size, Image.Resampling.LANCZOS)
+            scorer = ReferenceMetrics(reference)
             row = {
                 "view": name,
-                "quick": metrics(qimage, reference),
-                "detail": metrics(dimage, reference),
+                "quick": scorer.score(qimage),
+                "detail": scorer.score(dimage),
                 "scoring_dimensions": {
                     "width": reference.width,
                     "height": reference.height,
@@ -187,6 +199,8 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
                     "detail_native": detail_native,
                 },
             }
+            # Do not keep full-resolution reference tensors across views.
+            del scorer
             if folder is not None:
                 provenance = {}
                 for mode, image in [("quick", qimage), ("detail", dimage)]:

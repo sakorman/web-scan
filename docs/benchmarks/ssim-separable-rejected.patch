@@ -1,0 +1,11 @@
+--- a/compare_quality.py
++++ b/compare_quality.py
+@@ -31 +31,2 @@
+-    window = (kernel[:, None] * kernel[None, :]).expand(3, 1, 11, 11)
++    horizontal = kernel.reshape(1, 1, 1, 11).expand(3, 1, 1, 11)
++    vertical = kernel.reshape(1, 1, 11, 1).expand(3, 1, 11, 1)
+@@ -34 +35,3 @@
+-        return F.conv2d(v, window, groups=3)
++        # The same valid 11x11 Gaussian window, factored along its two axes.
++        # Keep RGB, sigma, support and score reduction identical to the dense form.
++        return F.conv2d(F.conv2d(v, horizontal, groups=3), vertical, groups=3)

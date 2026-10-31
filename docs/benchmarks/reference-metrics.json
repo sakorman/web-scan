@@ -1,0 +1,1668 @@
+{
+  "date": "2026-10-31",
+  "baseline_commit": "9129eeda15589a7e6b65fec2a85af4a4e7e9b1e2",
+  "decision": "adopt per-view reference statistics reuse; reject separable convolution due to numerical drift",
+  "historical_scoring": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "torch": "2.14.1",
+    "threads": 4,
+    "adapters": {
+      "baseline": "bcfa29fdd977081b639ecb2e8130cc2b6230c765f5d907adb296d57973b0f443",
+      "candidate": "33f9a15c7fe2c329cd5a6c22e446d1dfea0abba4f8ff88f0ea17a5f6ddcadc1a"
+    },
+    "requested_size": 1024,
+    "repeats": 3,
+    "measurement": "CPU comparison including validation, decoding, resizing and metrics; excludes imports and one warmup per implementation/job; filesystem cache not flushed; no GPU",
+    "warmups": [
+      {
+        "job": "pipes512",
+        "variant": "baseline",
+        "seconds": 0.6247727922163904
+      },
+      {
+        "job": "pipes512",
+        "variant": "candidate",
+        "seconds": 0.5090166670270264
+      },
+      {
+        "job": "office512",
+        "variant": "baseline",
+        "seconds": 1.2511392091400921
+      },
+      {
+        "job": "office512",
+        "variant": "candidate",
+        "seconds": 1.0123134590685368
+      },
+      {
+        "job": "pipes1024",
+        "variant": "baseline",
+        "seconds": 2.401086791884154
+      },
+      {
+        "job": "pipes1024",
+        "variant": "candidate",
+        "seconds": 2.0178251252509654
+      },
+      {
+        "job": "office1024",
+        "variant": "baseline",
+        "seconds": 4.970749875064939
+      },
+      {
+        "job": "office1024",
+        "variant": "candidate",
+        "seconds": 4.2215135409496725
+      }
+    ],
+    "runs": [
+      {
+        "job": "pipes512",
+        "repeat": 0,
+        "variant": "baseline",
+        "seconds": 0.6067383335903287
+      },
+      {
+        "job": "pipes512",
+        "repeat": 0,
+        "variant": "candidate",
+        "seconds": 0.5168222920037806
+      },
+      {
+        "job": "pipes512",
+        "repeat": 1,
+        "variant": "candidate",
+        "seconds": 0.5063869170844555
+      },
+      {
+        "job": "pipes512",
+        "repeat": 1,
+        "variant": "baseline",
+        "seconds": 0.595981583930552
+      },
+      {
+        "job": "pipes512",
+        "repeat": 2,
+        "variant": "baseline",
+        "seconds": 0.6046396251767874
+      },
+      {
+        "job": "pipes512",
+        "repeat": 2,
+        "variant": "candidate",
+        "seconds": 0.5098466668277979
+      },
+      {
+        "job": "office512",
+        "repeat": 0,
+        "variant": "candidate",
+        "seconds": 1.012495375238359
+      },
+      {
+        "job": "office512",
+        "repeat": 0,
+        "variant": "baseline",
+        "seconds": 1.2058074166998267
+      },
+      {
+        "job": "office512",
+        "repeat": 1,
+        "variant": "baseline",
+        "seconds": 1.210819583851844
+      },
+      {
+        "job": "office512",
+        "repeat": 1,
+        "variant": "candidate",
+        "seconds": 1.0870008748024702
+      },
+      {
+        "job": "office512",
+        "repeat": 2,
+        "variant": "candidate",
+        "seconds": 1.0237991251051426
+      },
+      {
+        "job": "office512",
+        "repeat": 2,
+        "variant": "baseline",
+        "seconds": 1.2422186248004436
+      },
+      {
+        "job": "pipes1024",
+        "repeat": 0,
+        "variant": "baseline",
+        "seconds": 2.3887670836411417
+      },
+      {
+        "job": "pipes1024",
+        "repeat": 0,
+        "variant": "candidate",
+        "seconds": 2.081137124914676
+      },
+      {
+        "job": "pipes1024",
+        "repeat": 1,
+        "variant": "candidate",
+        "seconds": 2.381754499860108
+      },
+      {
+        "job": "pipes1024",
+        "repeat": 1,
+        "variant": "baseline",
+        "seconds": 2.7276817499659956
+      },
+      {
+        "job": "pipes1024",
+        "repeat": 2,
+        "variant": "baseline",
+        "seconds": 2.623522291891277
+      },
+      {
+        "job": "pipes1024",
+        "repeat": 2,
+        "variant": "candidate",
+        "seconds": 2.0485090408474207
+      },
+      {
+        "job": "office1024",
+        "repeat": 0,
+        "variant": "candidate",
+        "seconds": 4.3257130002602935
+      },
+      {
+        "job": "office1024",
+        "repeat": 0,
+        "variant": "baseline",
+        "seconds": 5.223088125232607
+      },
+      {
+        "job": "office1024",
+        "repeat": 1,
+        "variant": "baseline",
+        "seconds": 5.12284787511453
+      },
+      {
+        "job": "office1024",
+        "repeat": 1,
+        "variant": "candidate",
+        "seconds": 4.23081941716373
+      },
+      {
+        "job": "office1024",
+        "repeat": 2,
+        "variant": "candidate",
+        "seconds": 4.291575709357858
+      },
+      {
+        "job": "office1024",
+        "repeat": 2,
+        "variant": "baseline",
+        "seconds": 4.950168082956225
+      }
+    ],
+    "summary": [
+      {
+        "job": "pipes512",
+        "max_ssim_absolute_delta": 0.0,
+        "scores": {
+          "baseline": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 512,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "pipes512",
+            "detail_job": "pipes512",
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "quick": {
+                  "psnr": 22.624767540361063,
+                  "ssim": 0.8409828543663025
+                },
+                "detail": {
+                  "psnr": 22.624767540361063,
+                  "ssim": 0.8409828543663025
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "quick": {
+                  "psnr": 16.07466796308748,
+                  "ssim": 0.702576756477356
+                },
+                "detail": {
+                  "psnr": 16.07466796308748,
+                  "ssim": 0.702576756477356
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 19.34971775172427,
+                "ssim": 0.7717798054218292
+              },
+              "detail": {
+                "psnr": 19.34971775172427,
+                "ssim": 0.7717798054218292
+              }
+            }
+          },
+          "candidate": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 512,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "pipes512",
+            "detail_job": "pipes512",
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "quick": {
+                  "psnr": 22.624767540361063,
+                  "ssim": 0.8409828543663025
+                },
+                "detail": {
+                  "psnr": 22.624767540361063,
+                  "ssim": 0.8409828543663025
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "quick": {
+                  "psnr": 16.07466796308748,
+                  "ssim": 0.702576756477356
+                },
+                "detail": {
+                  "psnr": 16.07466796308748,
+                  "ssim": 0.702576756477356
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 19.34971775172427,
+                "ssim": 0.7717798054218292
+              },
+              "detail": {
+                "psnr": 19.34971775172427,
+                "ssim": 0.7717798054218292
+              }
+            }
+          }
+        },
+        "baseline": {
+          "median_seconds": 0.6046396251767874,
+          "min_seconds": 0.595981583930552,
+          "max_seconds": 0.6067383335903287
+        },
+        "candidate": {
+          "median_seconds": 0.5098466668277979,
+          "min_seconds": 0.5063869170844555,
+          "max_seconds": 0.5168222920037806
+        },
+        "model": {
+          "steps": 3000,
+          "resolution": 512,
+          "training_views": 12,
+          "evaluation_views": 2,
+          "registered_images": 14,
+          "gaussians": 11447,
+          "ply_bytes": 2703042,
+          "ply_sha256": "5699d15af3fd3a81d1669b90c1fbaa7de1d0c890da1a5fc85792b2130b088be4",
+          "camera_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+          "full_sh3_valid": true,
+          "evaluation_images": [
+            {
+              "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+              "width": 512,
+              "height": 341,
+              "sha256": "93714ed79b6a222233f82498e15affa0399123d53f8a33e50f5d600bbe914a18",
+              "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+            },
+            {
+              "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+              "width": 512,
+              "height": 341,
+              "sha256": "e726b0f39b0231066d0eccaaad460f2842fc369775cce6a92098a48299cddd26",
+              "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+            }
+          ],
+          "training_process_seconds": 22.7765,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42
+        },
+        "source_directory": ".data/benchmarks/angle-init-20261031/runs/0-0-baseline"
+      },
+      {
+        "job": "office512",
+        "max_ssim_absolute_delta": 0.0,
+        "scores": {
+          "baseline": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 512,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "office512",
+            "detail_job": "office512",
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "quick": {
+                  "psnr": 22.80810464846477,
+                  "ssim": 0.9119776487350464
+                },
+                "detail": {
+                  "psnr": 22.80810464846477,
+                  "ssim": 0.9119776487350464
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "quick": {
+                  "psnr": 23.667608870187713,
+                  "ssim": 0.9484806060791016
+                },
+                "detail": {
+                  "psnr": 23.667608870187713,
+                  "ssim": 0.9484806060791016
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "quick": {
+                  "psnr": 17.50048853209223,
+                  "ssim": 0.8036397099494934
+                },
+                "detail": {
+                  "psnr": 17.50048853209223,
+                  "ssim": 0.8036397099494934
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "quick": {
+                  "psnr": 23.229903868026057,
+                  "ssim": 0.8652610182762146
+                },
+                "detail": {
+                  "psnr": 23.229903868026057,
+                  "ssim": 0.8652610182762146
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 21.801526479692694,
+                "ssim": 0.882339745759964
+              },
+              "detail": {
+                "psnr": 21.801526479692694,
+                "ssim": 0.882339745759964
+              }
+            }
+          },
+          "candidate": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 512,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "office512",
+            "detail_job": "office512",
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "quick": {
+                  "psnr": 22.80810464846477,
+                  "ssim": 0.9119776487350464
+                },
+                "detail": {
+                  "psnr": 22.80810464846477,
+                  "ssim": 0.9119776487350464
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "quick": {
+                  "psnr": 23.667608870187713,
+                  "ssim": 0.9484806060791016
+                },
+                "detail": {
+                  "psnr": 23.667608870187713,
+                  "ssim": 0.9484806060791016
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "quick": {
+                  "psnr": 17.50048853209223,
+                  "ssim": 0.8036397099494934
+                },
+                "detail": {
+                  "psnr": 17.50048853209223,
+                  "ssim": 0.8036397099494934
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "quick": {
+                  "psnr": 23.229903868026057,
+                  "ssim": 0.8652610182762146
+                },
+                "detail": {
+                  "psnr": 23.229903868026057,
+                  "ssim": 0.8652610182762146
+                },
+                "scoring_dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 21.801526479692694,
+                "ssim": 0.882339745759964
+              },
+              "detail": {
+                "psnr": 21.801526479692694,
+                "ssim": 0.882339745759964
+              }
+            }
+          }
+        },
+        "baseline": {
+          "median_seconds": 1.210819583851844,
+          "min_seconds": 1.2058074166998267,
+          "max_seconds": 1.2422186248004436
+        },
+        "candidate": {
+          "median_seconds": 1.0237991251051426,
+          "min_seconds": 1.012495375238359,
+          "max_seconds": 1.0870008748024702
+        },
+        "model": {
+          "steps": 3000,
+          "resolution": 512,
+          "training_views": 22,
+          "evaluation_views": 4,
+          "registered_images": 26,
+          "gaussians": 14684,
+          "ply_bytes": 3466974,
+          "ply_sha256": "ca07a0fe76348bee66a1669040e5c95bddb4aa0ea631d814920839ef25350920",
+          "camera_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+          "full_sh3_valid": true,
+          "evaluation_images": [
+            {
+              "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+              "width": 512,
+              "height": 341,
+              "sha256": "5674cdecb0144795d54d8bcf5ea011d7eef1a98f919ea32e8a33be73d06d656b",
+              "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+            },
+            {
+              "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+              "width": 512,
+              "height": 341,
+              "sha256": "53c5c94b920703b1069097ca1518ef82acc80fbe7773dbd3562e68067945ada8",
+              "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+            },
+            {
+              "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+              "width": 512,
+              "height": 341,
+              "sha256": "bf6129c669e5d898dc5ed8f096b2f40c070ffb1186c180375f1cebfd54f8994e",
+              "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+            },
+            {
+              "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+              "width": 512,
+              "height": 341,
+              "sha256": "b0b28908622368f9f042a3fdf6a42c757d9f28c61fc2880dae8271333cbf3a9a",
+              "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+            }
+          ],
+          "training_process_seconds": 23.4151,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42
+        },
+        "source_directory": ".data/benchmarks/angle-init-20261031/runs/1-0-baseline"
+      },
+      {
+        "job": "pipes1024",
+        "max_ssim_absolute_delta": 0.0,
+        "scores": {
+          "baseline": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 1024,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "pipes1024",
+            "detail_job": "pipes1024",
+            "views": [
+              {
+                "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+                "quick": {
+                  "psnr": 19.122573439648434,
+                  "ssim": 0.8219828605651855
+                },
+                "detail": {
+                  "psnr": 19.122573439648434,
+                  "ssim": 0.8219828605651855
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 673,
+                  "reference_native": [
+                    1600,
+                    1051
+                  ],
+                  "quick_native": [
+                    1024,
+                    673
+                  ],
+                  "detail_native": [
+                    1024,
+                    673
+                  ]
+                }
+              },
+              {
+                "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+                "quick": {
+                  "psnr": 15.006925891981966,
+                  "ssim": 0.7133699059486389
+                },
+                "detail": {
+                  "psnr": 15.006925891981966,
+                  "ssim": 0.7133699059486389
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 673,
+                  "reference_native": [
+                    1600,
+                    1051
+                  ],
+                  "quick_native": [
+                    1024,
+                    673
+                  ],
+                  "detail_native": [
+                    1024,
+                    673
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 17.0647496658152,
+                "ssim": 0.7676763832569122
+              },
+              "detail": {
+                "psnr": 17.0647496658152,
+                "ssim": 0.7676763832569122
+              }
+            }
+          },
+          "candidate": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 1024,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "pipes1024",
+            "detail_job": "pipes1024",
+            "views": [
+              {
+                "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+                "quick": {
+                  "psnr": 19.122573439648434,
+                  "ssim": 0.8219828605651855
+                },
+                "detail": {
+                  "psnr": 19.122573439648434,
+                  "ssim": 0.8219828605651855
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 673,
+                  "reference_native": [
+                    1600,
+                    1051
+                  ],
+                  "quick_native": [
+                    1024,
+                    673
+                  ],
+                  "detail_native": [
+                    1024,
+                    673
+                  ]
+                }
+              },
+              {
+                "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+                "quick": {
+                  "psnr": 15.006925891981966,
+                  "ssim": 0.7133699059486389
+                },
+                "detail": {
+                  "psnr": 15.006925891981966,
+                  "ssim": 0.7133699059486389
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 673,
+                  "reference_native": [
+                    1600,
+                    1051
+                  ],
+                  "quick_native": [
+                    1024,
+                    673
+                  ],
+                  "detail_native": [
+                    1024,
+                    673
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 17.0647496658152,
+                "ssim": 0.7676763832569122
+              },
+              "detail": {
+                "psnr": 17.0647496658152,
+                "ssim": 0.7676763832569122
+              }
+            }
+          }
+        },
+        "baseline": {
+          "median_seconds": 2.623522291891277,
+          "min_seconds": 2.3887670836411417,
+          "max_seconds": 2.7276817499659956
+        },
+        "candidate": {
+          "median_seconds": 2.081137124914676,
+          "min_seconds": 2.0485090408474207,
+          "max_seconds": 2.381754499860108
+        },
+        "model": {
+          "steps": 6000,
+          "resolution": 1024,
+          "training_views": 12,
+          "evaluation_views": 2,
+          "registered_images": 14,
+          "gaussians": 79498,
+          "ply_bytes": 18763078,
+          "ply_sha256": "9ba9eb7585c193f10ab690bcd895a59c7efc50c97a13262059698970b2f6e6b0",
+          "camera_sha256": "71b67307ab5e37e85984304795294b9efdf6228fbc0009ec7754423bb096c5f0",
+          "full_sh3_valid": true,
+          "evaluation_images": [
+            {
+              "name": "0000-2bd85cc2e3134090b614199e2671400c.png",
+              "width": 1024,
+              "height": 673,
+              "sha256": "b0f31b5af4b65b0014800ad0b9b16715fc0463856661b55aaf62fca333d1a51e",
+              "reference_sha256": "2233fbd3dac8971cdf75fb02b123fe954a7369ce592f2c84ec80401de1138c0b"
+            },
+            {
+              "name": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+              "width": 1024,
+              "height": 673,
+              "sha256": "a843b23e36da089bdf6b7a22e196b0c7970c31036741a4e452fe3a6798c2fdbf",
+              "reference_sha256": "e57f36fbaf8927fd393349aebee486a5521d371a65fb794d2873fba4c0f7ea79"
+            }
+          ],
+          "training_process_seconds": 195.0987,
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "source_directory": ".data/benchmarks/ssim-tail-default-20261025/runs/0-0-baseline"
+      },
+      {
+        "job": "office1024",
+        "max_ssim_absolute_delta": 0.0,
+        "scores": {
+          "baseline": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 1024,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "office1024",
+            "detail_job": "office1024",
+            "views": [
+              {
+                "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+                "quick": {
+                  "psnr": 22.269702792061913,
+                  "ssim": 0.9009091854095459
+                },
+                "detail": {
+                  "psnr": 22.269702792061913,
+                  "ssim": 0.9009091854095459
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              },
+              {
+                "view": "0008-1c6da61406eb4744893572435799058c.png",
+                "quick": {
+                  "psnr": 21.76265767909365,
+                  "ssim": 0.9448590874671936
+                },
+                "detail": {
+                  "psnr": 21.76265767909365,
+                  "ssim": 0.9448590874671936
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              },
+              {
+                "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+                "quick": {
+                  "psnr": 17.425638329398254,
+                  "ssim": 0.8253629207611084
+                },
+                "detail": {
+                  "psnr": 17.425638329398254,
+                  "ssim": 0.8253629207611084
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              },
+              {
+                "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+                "quick": {
+                  "psnr": 22.40275343296341,
+                  "ssim": 0.8644627928733826
+                },
+                "detail": {
+                  "psnr": 22.40275343296341,
+                  "ssim": 0.8644627928733826
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 20.965188058379308,
+                "ssim": 0.8838984966278076
+              },
+              "detail": {
+                "psnr": 20.965188058379308,
+                "ssim": 0.8838984966278076
+              }
+            }
+          },
+          "candidate": {
+            "requested_comparison_size": 1024,
+            "comparison_size": 1024,
+            "resize_policy": "never_upscale",
+            "resampling": "Lanczos",
+            "quick_job": "office1024",
+            "detail_job": "office1024",
+            "views": [
+              {
+                "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+                "quick": {
+                  "psnr": 22.269702792061913,
+                  "ssim": 0.9009091854095459
+                },
+                "detail": {
+                  "psnr": 22.269702792061913,
+                  "ssim": 0.9009091854095459
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              },
+              {
+                "view": "0008-1c6da61406eb4744893572435799058c.png",
+                "quick": {
+                  "psnr": 21.76265767909365,
+                  "ssim": 0.9448590874671936
+                },
+                "detail": {
+                  "psnr": 21.76265767909365,
+                  "ssim": 0.9448590874671936
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              },
+              {
+                "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+                "quick": {
+                  "psnr": 17.425638329398254,
+                  "ssim": 0.8253629207611084
+                },
+                "detail": {
+                  "psnr": 17.425638329398254,
+                  "ssim": 0.8253629207611084
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              },
+              {
+                "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+                "quick": {
+                  "psnr": 22.40275343296341,
+                  "ssim": 0.8644627928733826
+                },
+                "detail": {
+                  "psnr": 22.40275343296341,
+                  "ssim": 0.8644627928733826
+                },
+                "scoring_dimensions": {
+                  "width": 1024,
+                  "height": 667,
+                  "reference_native": [
+                    1600,
+                    1042
+                  ],
+                  "quick_native": [
+                    1024,
+                    667
+                  ],
+                  "detail_native": [
+                    1024,
+                    667
+                  ]
+                }
+              }
+            ],
+            "mean": {
+              "quick": {
+                "psnr": 20.965188058379308,
+                "ssim": 0.8838984966278076
+              },
+              "detail": {
+                "psnr": 20.965188058379308,
+                "ssim": 0.8838984966278076
+              }
+            }
+          }
+        },
+        "baseline": {
+          "median_seconds": 5.12284787511453,
+          "min_seconds": 4.950168082956225,
+          "max_seconds": 5.223088125232607
+        },
+        "candidate": {
+          "median_seconds": 4.291575709357858,
+          "min_seconds": 4.23081941716373,
+          "max_seconds": 4.3257130002602935
+        },
+        "model": {
+          "steps": 6000,
+          "resolution": 1024,
+          "training_views": 22,
+          "evaluation_views": 4,
+          "registered_images": 26,
+          "gaussians": 77399,
+          "ply_bytes": 18267714,
+          "ply_sha256": "5809d48e73da7b24b4b41ad07cd52a0b1c350da6c5b5eb975ad130007b0c8240",
+          "camera_sha256": "1ab4ec0470f78a02bba87986c90a565b95abb465696143f51f9bf4d9ce786f9d",
+          "full_sh3_valid": true,
+          "evaluation_images": [
+            {
+              "name": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+              "width": 1024,
+              "height": 667,
+              "sha256": "601af4ef23b5726cba23303901cb51a49830355503d1c0ad86d2f349a2f40592",
+              "reference_sha256": "d2570aac393c2428bf238a95d1b42f77893f0fac4c5aff68593fbcd46b9e0157"
+            },
+            {
+              "name": "0008-1c6da61406eb4744893572435799058c.png",
+              "width": 1024,
+              "height": 667,
+              "sha256": "703a46618f118d12fc11d3c1e70d42434f26512dd74723f91eb255bb109b46f5",
+              "reference_sha256": "690d085a3a13741c6c2fab85f2835bdf12860bd50c6e9aec1be8b1835639c026"
+            },
+            {
+              "name": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+              "width": 1024,
+              "height": 667,
+              "sha256": "2bd69a4530f9c6c3cc3f0921566e4763c8a9f640a8c521b073a0899bfb819273",
+              "reference_sha256": "368c59ad872c370c55acb4a15f5a6df891077114f0a5932f61686556231dd766"
+            },
+            {
+              "name": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+              "width": 1024,
+              "height": 667,
+              "sha256": "a40fb98e9c61f19c4c02a5284b126d34c6382d2346d88bb6447a50c9d68bb6b9",
+              "reference_sha256": "dcf7f83660a4ea75b9ce3a1b1a3b2892f8b6d0885229fe309f3b02f434aaf669"
+            }
+          ],
+          "training_process_seconds": 191.2527,
+          "engine_sha256": "c4bcf128e8176737483c89283bb372c134cf8f32f58ea0fb862929cd08902037",
+          "training_seed": 42
+        },
+        "source_directory": ".data/benchmarks/ssim-tail-default-20261025/runs/1-0-baseline"
+      }
+    ]
+  },
+  "fresh_reconstructions": [
+    {
+      "scene": "pipes",
+      "config": {
+        "session_id": "c433a06a2e5348d580a0219671dd5336",
+        "backend": "brush",
+        "steps": 3000,
+        "resolution": 512,
+        "max_points": 150000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "job_id": "0be362d66c314ab7a2b06b59cc1aa8dd",
+      "status": "succeeded",
+      "report": {
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_model": "RADIAL",
+        "sfm_reused": true,
+        "timings": {
+          "input_validation_seconds": 0.0101,
+          "sfm_seconds": 0.0246,
+          "training_and_model_export_seconds": 22.9311
+        },
+        "seconds": 23.01,
+        "normalization": {
+          "center": [
+            0.6892553567886353,
+            -1.0655944347381592,
+            8.913317680358887
+          ],
+          "scale": 13.804060935974121,
+          "units": "relative"
+        },
+        "evaluation": {
+          "psnr": 19.697483,
+          "ssim": 0.79332274
+        },
+        "source": {
+          "name": "ETH3D pipes",
+          "url": "https://www.eth3d.net/datasets",
+          "archive_url": "https://www.eth3d.net/data/pipes_dslr_jpg.7z",
+          "authors": "Schöps et al., ETH3D, CVPR 2017",
+          "license": "CC BY-NC-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "images": 14,
+          "type": "real indoor multiview dataset",
+          "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+        },
+        "steps": 3000,
+        "resolution": 512,
+        "training_views": 12,
+        "evaluation_views": 2
+      },
+      "message": "模型已生成",
+      "max_ssim_absolute_delta": 0.0,
+      "comparison": {
+        "requested_comparison_size": 512,
+        "comparison_size": 512,
+        "resize_policy": "never_upscale",
+        "resampling": "Lanczos",
+        "quick_job": "0be362d66c314ab7a2b06b59cc1aa8dd",
+        "detail_job": "0be362d66c314ab7a2b06b59cc1aa8dd",
+        "views": [
+          {
+            "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "quick": {
+              "psnr": 23.194127278602675,
+              "ssim": 0.8400762677192688
+            },
+            "detail": {
+              "psnr": 23.194127278602675,
+              "ssim": 0.8400762677192688
+            },
+            "scoring_dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            }
+          },
+          {
+            "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "quick": {
+              "psnr": 15.83160031525434,
+              "ssim": 0.6995945572853088
+            },
+            "detail": {
+              "psnr": 15.83160031525434,
+              "ssim": 0.6995945572853088
+            },
+            "scoring_dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            }
+          }
+        ],
+        "mean": {
+          "quick": {
+            "psnr": 19.512863796928507,
+            "ssim": 0.7698354125022888
+          },
+          "detail": {
+            "psnr": 19.512863796928507,
+            "ssim": 0.7698354125022888
+          }
+        }
+      },
+      "model": {
+        "steps": 3000,
+        "resolution": 512,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "registered_images": 14,
+        "gaussians": 11789,
+        "ply_bytes": 2783754,
+        "ply_sha256": "60b7f76d63bed92d540e5be9cb64f3cc302db5d86a8a2e07aa0051ffc605732e",
+        "camera_sha256": "484ba1c25e02ca31867bcf3be4f646c4e66b6ce2331fd1a09c507a24d5b91905",
+        "full_sh3_valid": true,
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "42fdc7628edb24e9f6ffeb4d28a48fc816f419f783fcc553c985904421d80e41",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "b4898b796eaf57cad6534bc8b2938dfdb4af88ba0606424078a999641c9aaa33",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          }
+        ],
+        "training_process_seconds": 22.8342,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42
+      },
+      "files_unchanged": true,
+      "screenshot": {
+        "path": "docs/screenshots/172-reference-metrics-pipes.png",
+        "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+        "sha256": "b4898b796eaf57cad6534bc8b2938dfdb4af88ba0606424078a999641c9aaa33"
+      }
+    },
+    {
+      "scene": "office",
+      "config": {
+        "session_id": "9e1903a242d54b1f9d78d19cecc9a654",
+        "backend": "brush",
+        "steps": 3000,
+        "resolution": 512,
+        "max_points": 150000,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "job_id": "841ddb9f31b34f1e83e5753d332c6d56",
+      "status": "succeeded",
+      "report": {
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "camera_model": "RADIAL",
+        "sfm_reused": true,
+        "timings": {
+          "input_validation_seconds": 0.0131,
+          "sfm_seconds": 0.0362,
+          "training_and_model_export_seconds": 23.4861
+        },
+        "seconds": 23.58,
+        "normalization": {
+          "center": [
+            -1.10989248752594,
+            3.6539227962493896,
+            12.544998168945312
+          ],
+          "scale": 23.771953582763672,
+          "units": "relative"
+        },
+        "evaluation": {
+          "psnr": 21.78004,
+          "ssim": 0.89367545
+        },
+        "source": {
+          "name": "ETH3D office",
+          "url": "https://www.eth3d.net/datasets",
+          "archive_url": "https://www.eth3d.net/data/office_dslr_jpg.7z",
+          "authors": "Schöps et al., ETH3D, CVPR 2017",
+          "license": "CC BY-NC-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "images": 26,
+          "type": "real indoor multiview dataset",
+          "preprocessing": "EXIF orientation; resize to 1600px long edge; JPEG quality 95; preserve valid 35mm focal-length hint"
+        },
+        "steps": 3000,
+        "resolution": 512,
+        "training_views": 22,
+        "evaluation_views": 4
+      },
+      "message": "模型已生成",
+      "max_ssim_absolute_delta": 0.0,
+      "comparison": {
+        "requested_comparison_size": 512,
+        "comparison_size": 512,
+        "resize_policy": "never_upscale",
+        "resampling": "Lanczos",
+        "quick_job": "841ddb9f31b34f1e83e5753d332c6d56",
+        "detail_job": "841ddb9f31b34f1e83e5753d332c6d56",
+        "views": [
+          {
+            "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "quick": {
+              "psnr": 24.196756430482917,
+              "ssim": 0.9121820330619812
+            },
+            "detail": {
+              "psnr": 24.196756430482917,
+              "ssim": 0.9121820330619812
+            },
+            "scoring_dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            }
+          },
+          {
+            "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "quick": {
+              "psnr": 23.603658358121564,
+              "ssim": 0.9450989961624146
+            },
+            "detail": {
+              "psnr": 23.603658358121564,
+              "ssim": 0.9450989961624146
+            },
+            "scoring_dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            }
+          },
+          {
+            "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "quick": {
+              "psnr": 16.651092033764247,
+              "ssim": 0.8032345175743103
+            },
+            "detail": {
+              "psnr": 16.651092033764247,
+              "ssim": 0.8032345175743103
+            },
+            "scoring_dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            }
+          },
+          {
+            "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "quick": {
+              "psnr": 22.104638267190207,
+              "ssim": 0.8579605221748352
+            },
+            "detail": {
+              "psnr": 22.104638267190207,
+              "ssim": 0.8579605221748352
+            },
+            "scoring_dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            }
+          }
+        ],
+        "mean": {
+          "quick": {
+            "psnr": 21.639036272389735,
+            "ssim": 0.8796190172433853
+          },
+          "detail": {
+            "psnr": 21.639036272389735,
+            "ssim": 0.8796190172433853
+          }
+        }
+      },
+      "model": {
+        "steps": 3000,
+        "resolution": 512,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "registered_images": 26,
+        "gaussians": 14602,
+        "ply_bytes": 3447622,
+        "ply_sha256": "eaccb8fb2e6eb4c44d0123ee0d02bc889d3c7c8d7fb49b92c185aef5e8d16a8e",
+        "camera_sha256": "925a8d822e70d51b77e469426c4c721154d92e01469eb9b4afba4be1dc5c2111",
+        "full_sh3_valid": true,
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "df800789a97a2d41fc4c9cc815ee3bced7ec185b20c2235dda0774ece157c545",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "076da4cf9f08cabd74100373e5e60d8186f924e0023a95957910301e4fca2c24",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "1d29789e209d54bd6161bab94a8508aa849eb51cf8aa7bb9b6165297d04d259c",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "949f54a3f446ad22f8fb4ea0ba19f52b73176a3c74d7419f96eb8105c70be2f6",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          }
+        ],
+        "training_process_seconds": 23.4043,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42
+      },
+      "files_unchanged": true,
+      "screenshot": {
+        "path": "docs/screenshots/173-reference-metrics-office.png",
+        "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+        "sha256": "949f54a3f446ad22f8fb4ea0ba19f52b73176a3c74d7419f96eb8105c70be2f6"
+      }
+    }
+  ],
+  "rejected_experiment": {
+    "variant": "separable 11x11 Gaussian",
+    "decision": "rejected",
+    "ssim_absolute_tolerance": 5e-06,
+    "observed_max_error_first_scene": 7.3909759521484375e-06,
+    "first_scene": "pipes512",
+    "error": "SSIM drift exceeds predeclared tolerance; no timing claim"
+  },
+  "limitations": [
+    "CPU offline scoring only; not Brush training loss, GPU speed or quality improvement.",
+    "Held-out photographs participated in SfM; cached poses reused for fresh jobs.",
+    "No cold-start or peak-memory claim; one view of reference statistics retained at a time."
+  ],
+  "validation": {
+    "backend_tests": 193,
+    "frontend_tests": 18,
+    "typecheck": "passed",
+    "build": "passed",
+    "browser": "not repeated; no display or interaction changes",
+    "fresh_sh3_models": 2,
+    "historical_unique_views": 12,
+    "fresh_unique_views": 6,
+    "max_psnr_delta": 0,
+    "max_ssim_delta": 0
+  }
+}
