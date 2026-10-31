@@ -1663,6 +1663,16 @@
     "historical_unique_views": 12,
     "fresh_unique_views": 6,
     "max_psnr_delta": 0,
-    "max_ssim_delta": 0
+    "max_ssim_delta": 0,
+    "initial_ci": {
+      "url": "https://github.com/sakorman/web-scan/actions/runs/41179540032",
+      "conclusion": "failure",
+      "failed_tests": 1,
+      "passed_tests": 192,
+      "failure": "near-white Float32 vs Float64 error exceeded 1e-4 on Linux",
+      "reported_ssim": 0.9961110949516296,
+      "float64_reference": 0.9957789285422579,
+      "repair": "require exact equality to frozen dense Float32 formula on the same backend; retain independent Float64 textured-image tests; no production calculation change"
+    }
   }
 }

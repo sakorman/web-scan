@@ -6,6 +6,7 @@
 
 ### 复用离线评分的参考统计量
 
+- CI 复核：首次 Ubuntu 运行的亮部公式测试失败，暴露 Float32 二阶矩相减的跨平台误差。改为与同后端冻结旧公式严格相等，并保留有纹理图的独立双精度校验；未放宽新旧成绩兼容要求或修改生产计算。[初次 CI](https://github.com/sakorman/web-scan/actions/runs/41179540032) · [实现提交](https://github.com/sakorman/web-scan/commit/00f5f22)
 - 改进：共同网格对照只计算一次参考照片的 SSIM 均值与方差，再评测两个模型；保持原卷积和评分定义，每个视角结束后释放引用。四组固定模型各交错重复三次，完整 CPU 评分中位耗时减少 15.4%–20.7%，采用此实现。
 - 验证：12 张历史留出图和两次新 Metal 重建的 6 张留出图，PSNR / SSIM 与旧实现逐项完全一致；新模型完整 SH3、相机和文件摘要有效。新增 5 项回归，全量 193 项后端、18 项前端、类型检查及构建通过。
 - 取舍与限制：先试的分离卷积偏差 `7.39e-6` 超过预设 `5e-6` 容差，放弃并归档。最终收益仅限离线评分，不代表训练、画质或端到端提速；评分峰值内存未测。后续按实际评分规模再决定扩展，不改历史成绩。[详细报告与截图](docs/REFERENCE-METRICS.md) · [逐次数据](docs/benchmarks/reference-metrics.json) · [基线提交](https://github.com/sakorman/web-scan/commit/9129eed) · [SSIM 论文与定义](https://www.cns.nyu.edu/~lcv/ssim/) · [参考项目](https://github.com/VainF/pytorch-msssim)
