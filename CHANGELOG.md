@@ -4,6 +4,12 @@
 
 ## 2026-10-31
 
+### 仿射 DSP 组合筛查（未采用）
+
+- 结论：在 DSP 基线上仅开启仿射形状估计，office 两次 SSIM 均下降，平均 -0.004850；pipes 两次升降方向相反，未形成稳定收益。未通过门槛，不改默认 SIFT，也不继续增加同组参数筛查。
+- 验证：8 次新 SfM 与串行 Metal 重建，14 / 14、26 / 26 全部定位，固定 3000 步 / 512 像素 / 15 万高斯预算；相同原图网格评分、完整 SH3、相机与源图摘要通过。新增离线局部支撑分析，office 照片 9 虽从 130 增到 144 个观测，仍只占 4×4 网格中的 7 格。193 项后端、18 项前端、类型检查、构建和四模型漫游通过。
+- 代价与下一步：两场景总计平均多约 0.85 秒，低纹理支撑仍集中；留出图参与 SfM，未测峰值内存。后续先验证深度/多视图初始化的运行条件、许可及坐标兼容性。TWINGS 官方实现使用 CUDA 与学习先验，本轮仅审阅，未宣称 Metal 复现。[完整报告与截图](docs/AFFINE-DSP.md) · [逐次数据](docs/benchmarks/affine-dsp.json) · [基点提交](https://github.com/sakorman/web-scan/commit/0372f6c) · [COLMAP 建议](https://colmap.github.io/faq.html#increase-number-of-matches-sparse-3d-points) · [TWINGS 论文](https://arxiv.org/abs/2605.22069v3) · [官方实现](https://github.com/sandokim/TWINGS-official/tree/1585e8933516a6abadf6383346e887746e1128e4)
+
 ### DSP-SIFT 特征对照（不改默认）
 
 - 结论：只开启描述区域尺度汇合，pipes 两次原始域留出均值都提升，平均 +1.099518 dB / +0.017373 SSIM；office 的 SSIM 两次下降，平均 -0.003199，未通过跨场景门槛，不启用为默认。

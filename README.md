@@ -225,6 +225,8 @@ WEBSCAN_ALLOWED_HOSTS=192.168.1.10 \
 
 位姿流程先按采集顺序登记照片，再并行提取特征，避免完成先后改变图像编号。两视图几何验证使用固定种子并写入报告，后续相机求解和训练仍可能波动。连续照片的顺序匹配已完成筛查，但定位覆盖和留出画质没有同时通过，因此默认仍用穷举匹配。[图像顺序](docs/SFM-ORDER.md) · [几何匹配重复性](docs/SFM-SEED.md) · [顺序匹配筛查](docs/SFM-SEQUENTIAL.md)
 
+DSP 与仿射形状估计也完成了实拍对照，但 office 留出 SSIM 仍下降，默认保留普通 SIFT。更多特征或稀疏点不能单独证明覆盖和画质改善。[DSP 对照](docs/DSP-SIFT.md) · [仿射组合与局部支撑](docs/AFFINE-DSP.md)
+
 ## 技术架构
 
 ```mermaid

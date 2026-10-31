@@ -1,0 +1,49 @@
+{
+  "baseline_commit": "0372f6c985e9889abc25e62cf3e4e2e257912021",
+  "candidate": {
+    "sift.estimate_affine_shape": true
+  },
+  "unchanged": {
+    "dsp_min_scale": 0.16666666666666666,
+    "dsp_max_scale": 3.0,
+    "dsp_num_scales": 10,
+    "max_image_size": 1600,
+    "max_num_features": 8192,
+    "num_threads": 4,
+    "camera_mode": "shared",
+    "camera_model": "RADIAL",
+    "matching": "exhaustive",
+    "guided_matching": true,
+    "ransac_seed": 42,
+    "domain_size_pooling": true
+  },
+  "training": {
+    "backend": "brush",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 150000,
+    "evaluation_mode": "holdout"
+  },
+  "hypothesis": "Affine shape adaptation on the DSP-SIFT baseline may spread valid local constraints and recover the office held-out regression; verify both scenes before considering any production change.",
+  "gate": "Require complete registration and no scene-level PSNR or SSIM loss in both repeats; any production adoption additionally requires comparison to stock SIFT. Increased point count is not an optimization claim.",
+  "cache": "Fresh SfM database per run; OS disk cache not purged; GPU training serial.",
+  "baseline_extra": {
+    "sift.domain_size_pooling": true,
+    "sift.estimate_affine_shape": false
+  },
+  "run_order": [
+    "office-r1-baseline",
+    "office-r1-candidate",
+    "office-r2-candidate",
+    "office-r2-baseline",
+    "pipes-r1-baseline",
+    "pipes-r1-candidate",
+    "pipes-r2-candidate",
+    "pipes-r2-baseline"
+  ],
+  "reference_implementation": {
+    "repository": "sandokim/TWINGS-official",
+    "revision": "1585e8933516a6abadf6383346e887746e1128e4",
+    "scope": "Read only; CUDA setup and learned-depth initialization were not installed or benchmarked."
+  }
+}

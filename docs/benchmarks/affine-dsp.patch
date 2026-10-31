@@ -1,0 +1,11 @@
+--- baseline.py
++++ candidate.py
+@@ -467,7 +467,7 @@
+         device=pycolmap.Device.cpu,
+         extraction_options={
+             "max_image_size": 1600,
+-            "sift": {"max_num_features": 8192, "domain_size_pooling": True},
++            "sift": {"max_num_features": 8192, "domain_size_pooling": True, "estimate_affine_shape": True},
+             "num_threads": 4,
+         },
+     )
