@@ -4,6 +4,12 @@
 
 ## 2026-11-01
 
+### 用传感器深度核验相对先验
+
+- 进展：新增离线传感器核验，TUM 预选 12 张训练照片中 11 张在 20 ms 内匹配深度；只用拟合格求一个全场景尺度，在检查格的逐视图平均相对误差为 5.66%，常量对照为 22.84%。采用核验工具，仍不补点。
+- 验证：新 TUM 纯 RGB 任务 96/96 定位，3000 步 / 512 像素，71,756 个完整 SH3 高斯；12 张留出 RGB 为 22.8859 dB / 0.83931 SSIM。复核 ETH3D 固定基准、原图和完整模型；221 项后端、18 项前端、类型检查和构建通过，同相机与深度误差图已保存。
+- 代价与局限：11 张 MPS 推理约 1.70 秒，CPU 核验约 0.11–0.12 秒，未测峰值内存。26.97% 检查位置缺测，一张时间差 382 ms 的照片被排除；准备阶段的缺测中断和 JSON 布尔类型失败均保留记录并修复。传感器辅助尺度不等于纯照片米制精度，也不是训练提速或画质提升。下一步核验跨视图掩码与传感器误差。[报告](docs/SENSOR-DEPTH.md) · [逐图数据](docs/benchmarks/depth-sensor.json) · [基点提交](https://github.com/sakorman/web-scan/commit/b3e9251) · [TUM 格式](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/file_formats) · [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2/tree/a561b849ebae10a6f5ef49e26c83cbbcd36c71bf) · [DOC-GS](https://arxiv.org/abs/2604.06739)
+
 ### 深度跨视图支撑与冲突诊断
 
 - 改进：新增离线重投影检查，区分视野外、疑似遮挡、前方深度冲突、往返失败与低视差；要求另外两张训练照片提供支持。pipes / office 单图筛查后仅 10.75% / 8.78% 采样位置通过，采用诊断工具，继续放弃直接补点。

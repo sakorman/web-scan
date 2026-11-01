@@ -1,0 +1,38 @@
+{
+  "baseline_commit": "b3e9251056a0131414d0ac1d6b57f40877a4b0c9",
+  "training": {
+    "backend": "brush",
+    "steps": 3000,
+    "resolution": 512,
+    "max_points": 150000,
+    "evaluation_mode": "holdout"
+  },
+  "probe_indices": [
+    1,
+    9,
+    17,
+    25,
+    33,
+    41,
+    49,
+    57,
+    65,
+    73,
+    81,
+    89
+  ],
+  "association_max_seconds": 0.02,
+  "depth_factor": 5000,
+  "grid_step": 4,
+  "scale_fit": "one scene-wide median sensor/SfM ratio, sparse fit-checkerboard anchors only",
+  "sensor_check": "odd 4x4 checkerboard cells on raw RGB pixels; nearest sensor; zero/invalid sensor excluded and counted; invalid predictions count as failures",
+  "scope": "sensor diagnostic only; no sensor depth or supplied poses used in SfM/Brush or per-image prior fitting",
+  "gate": {
+    "median_abs_rel": 0.1,
+    "p90_abs_rel": 0.25
+  },
+  "depth_model": "Depth-Anything-V2-Small",
+  "prediction_device": "mps",
+  "input_size": 518,
+  "weight_sha256": "715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378"
+}
