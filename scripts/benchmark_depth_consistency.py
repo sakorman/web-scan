@@ -41,15 +41,16 @@ def project(points, calibration):
     return xy, local[:, 2]
 
 
-def check_pair(xy, z, source_camera, target_camera, target_depth, config):
+def check_pair(xy, z, source_camera, target_camera, target_depth, config, *,
+               project_fn=project, unproject_fn=unproject):
     source_valid = np.isfinite(z) & (z > 0) & np.isfinite(xy).all(axis=1)
-    points = unproject(xy, z, source_camera)
-    target_xy, projected_z = project(points, target_camera)
+    points = unproject_fn(xy, z, source_camera)
+    target_xy, projected_z = project_fn(points, target_camera)
     sampled_z, inside = sample_depth(target_depth, target_xy)
     visible = source_valid & inside & (projected_z > 0) & np.isfinite(sampled_z) & (sampled_z > 0)
     # "Visible" here means sampleable projection, not proven physical visibility.
-    back_points = unproject(target_xy, sampled_z, target_camera)
-    back_xy, back_z = project(back_points, source_camera)
+    back_points = unproject_fn(target_xy, sampled_z, target_camera)
+    back_xy, back_z = project_fn(back_points, source_camera)
     with np.errstate(divide="ignore", invalid="ignore"):
         signed_error = (projected_z - sampled_z) / sampled_z
         back_error = np.abs(back_z / z - 1)
@@ -84,7 +85,7 @@ def grid(width, height, step):
     return np.column_stack([xx.ravel(), yy.ravel()]), xx.shape
 
 
-def run(args):
+def run(args, *, camera_factory=camera, project_fn=project, unproject_fn=unproject):
     started = time.monotonic()
     config = json.loads(args.config.read_text())["cross_view"]
     if (config["grid_step"] < 1 or config["min_other_views"] < 1
@@ -126,7 +127,7 @@ def run(args):
                 inverse = row["scale"] * prediction.astype(np.float64) + row["shift"]
                 depth = np.full(inverse.shape, np.nan)
                 np.divide(1, inverse, out=depth, where=np.isfinite(inverse) & (inverse > 0))
-                selected.append({**view, "depth": depth, "camera": camera(view)})
+                selected.append({**view, "depth": depth, "camera": camera_factory(view)})
             scene = {"job": job, "selected_views": len(selected), "excluded_views": excluded,
                      "views": [], "pairs": []}
             for source in selected:
@@ -140,7 +141,8 @@ def run(args):
                 for target in selected:
                     if target["name"] == source["name"]:
                         continue
-                    masks = check_pair(xy, z, source["camera"], target["camera"], target["depth"], config)
+                    masks = check_pair(xy, z, source["camera"], target["camera"], target["depth"], config,
+                                       project_fn=project_fn, unproject_fn=unproject_fn)
                     votes += masks["supported"]
                     projected += ~(masks["invalid_source"] | masks["unavailable_target"])
                     occlusions += masks["occlusion_candidate"]

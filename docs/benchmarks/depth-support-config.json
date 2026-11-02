@@ -1,0 +1,19 @@
+{
+  "baseline_commit": "35cbdd0d3e5ebf1d78d8b623ca32bf647c2ee621",
+  "source": "depth-sensor-20261101",
+  "camera_domain": "raw RADIAL, native pixel centers",
+  "cross_view": {
+    "grid_step": 4,
+    "min_other_views": 2,
+    "relative_depth_tolerance": 0.05,
+    "roundtrip_pixels": 2.0,
+    "min_parallax_degrees": 1.0
+  },
+  "variants": [
+    "all",
+    "supported",
+    "supported_no_front_conflict"
+  ],
+  "evaluation": "frozen sensor scale and odd checkerboard; masks computed before reading sensor; report pooled and equal-view metrics, coverage and good/bad retention; no threshold tuning",
+  "adoption": "diagnostic only; no point injection or training change"
+}
