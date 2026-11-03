@@ -1,4 +1,5 @@
 """Frozen RGB-only TUM reconstruction for the sensor-depth diagnostic."""
+import argparse
 import json
 import shutil
 import time
@@ -9,7 +10,9 @@ from scripts.benchmark_exports import write_comparison_artifacts
 from webscan.brush import train
 from webscan.reconstruction import estimate_scene
 
-root = Path('.data/benchmarks/depth-sensor-20261101')
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--root', type=Path, default=Path('.data/benchmarks/depth-sensor-20261101'))
+root = parser.parse_args().root
 config = json.loads((root / 'config.json').read_text())
 work = root / 'jobs/tum-baseline'
 work.mkdir(parents=True, exist_ok=False)
