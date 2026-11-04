@@ -54,7 +54,12 @@ def test_pinhole_grid_places_sparse_track_and_rejects_swapped_mask(tmp_path):
     args = (view, row, tmp_path, dict(grid_step=1, min_other_views=2), dict(scale=1, shift=0),
             {'view': dict(path=prediction, prediction_sha256=digest(prediction), image_sha256=digest(photo))},
             np.array([[.5, .5]]), np.array([[0., 0., 2.]]), None, None, None)
-    counts = measure(*args)['levels']['0.01']
+    captured = []
+    baseline = measure(*args)
+    assert measure(*args, sample_sink=captured.append) == baseline
+    assert captured[0]['grid_index'].tolist() == [0, 1, 2, 3]
+    assert np.allclose(captured[0]['world'], [[0, 0, 2], [2, 0, 2], [0, 2, 2], [2, 2, 2]])
+    counts = baseline['levels']['0.01']
     assert counts['eligible'] == counts['supported'] == 4
     assert counts['both_far'] == 3 and counts['both_far_no_front_conflict'] == 2
     mask.write_bytes(b'not the frozen map')

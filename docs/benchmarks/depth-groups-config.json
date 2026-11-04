@@ -1,0 +1,11 @@
+{
+  "baseline_commit": "dfaddfd51408f7eb8ece516925f579baca7b3b27",
+  "candidate": "two supports, no front conflict, image distance / diagonal > 0.01, nearest sparse distance / source Z > 0.01; TUM check cells only",
+  "group_radii": [0.005, 0.01, 0.02],
+  "primary_radius": 0.01,
+  "ordering": ["name_then_grid_index", "reverse"],
+  "assignment": "nearest existing leader within radius * min(source Z, leader Z); leader is never moved; no transitive merging",
+  "distinct_view_test": "nearest member per image; three source images with every pair of camera rays at least 1 degree apart at the leader",
+  "sensor_audit": "after grouping, compare leader with measured world point of nearest member per source image; distance / measured source Z <= 0.01 and measured point / source Z farther than 0.01 from sparse cloud",
+  "training": "frozen real RGB reconstructions, unchanged; no point injection"
+}

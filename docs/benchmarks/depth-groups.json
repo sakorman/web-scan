@@ -1,0 +1,554 @@
+{
+  "config": {
+    "baseline_commit": "dfaddfd51408f7eb8ece516925f579baca7b3b27",
+    "candidate": "two supports, no front conflict, image distance / diagonal > 0.01, nearest sparse distance / source Z > 0.01; TUM check cells only",
+    "group_radii": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "primary_radius": 0.01,
+    "ordering": [
+      "name_then_grid_index",
+      "reverse"
+    ],
+    "assignment": "nearest existing leader within radius * min(source Z, leader Z); leader is never moved; no transitive merging",
+    "distinct_view_test": "nearest member per image; three source images with every pair of camera rays at least 1 degree apart at the leader",
+    "sensor_audit": "after grouping, compare leader with measured world point of nearest member per source image; distance / measured source Z <= 0.01 and measured point / source Z farther than 0.01 from sparse cloud",
+    "training": "frozen real RGB reconstructions, unchanged; no point injection"
+  },
+  "scenes": {
+    "pipes-baseline": {
+      "variants": [
+        {
+          "radius": 0.005,
+          "order": "forward",
+          "summary": {
+            "samples": 13977,
+            "groups": 11369,
+            "groups_by_views": {
+              "1": 9164,
+              "2": 1852,
+              "3": 327,
+              "4": 25,
+              "5": 1
+            },
+            "three_views": 353,
+            "diverse_three": 353
+          },
+          "map_sha256": "98e3bbd2f2cef3cf4d67bbc197ff4dc25a4b4135a99f59d4b84e47b19e97bc2e"
+        },
+        {
+          "radius": 0.005,
+          "order": "reverse",
+          "summary": {
+            "samples": 13977,
+            "groups": 11317,
+            "groups_by_views": {
+              "1": 9142,
+              "2": 1801,
+              "3": 331,
+              "4": 39,
+              "5": 4
+            },
+            "three_views": 374,
+            "diverse_three": 374
+          },
+          "map_sha256": "3704943b576439497ac344e26922c1e65abeac137fbf1a42d6e72fd9a2942fff"
+        },
+        {
+          "radius": 0.01,
+          "order": "forward",
+          "summary": {
+            "samples": 13977,
+            "groups": 4580,
+            "groups_by_views": {
+              "1": 2559,
+              "2": 1139,
+              "3": 744,
+              "4": 100,
+              "5": 38
+            },
+            "three_views": 882,
+            "diverse_three": 882
+          },
+          "map_sha256": "ee27996fcad6fa7796db248d63e5f51c9bb40ff53716b390269129f62c74f6a5"
+        },
+        {
+          "radius": 0.01,
+          "order": "reverse",
+          "summary": {
+            "samples": 13977,
+            "groups": 4449,
+            "groups_by_views": {
+              "1": 2602,
+              "2": 999,
+              "3": 710,
+              "4": 92,
+              "5": 46
+            },
+            "three_views": 848,
+            "diverse_three": 848
+          },
+          "map_sha256": "4f75c50ac6958336ecadb41cac9b32c9492a9712ef565249a4c072874516c682"
+        },
+        {
+          "radius": 0.02,
+          "order": "forward",
+          "summary": {
+            "samples": 13977,
+            "groups": 1545,
+            "groups_by_views": {
+              "1": 631,
+              "2": 338,
+              "3": 406,
+              "4": 103,
+              "5": 53,
+              "6": 14
+            },
+            "three_views": 576,
+            "diverse_three": 576
+          },
+          "map_sha256": "1beceff3f193374ba70f3c8c5847ad39ac55024cfd9df28dbaecf2b96f315b35"
+        },
+        {
+          "radius": 0.02,
+          "order": "reverse",
+          "summary": {
+            "samples": 13977,
+            "groups": 1485,
+            "groups_by_views": {
+              "1": 662,
+              "2": 319,
+              "3": 355,
+              "4": 102,
+              "5": 39,
+              "6": 8
+            },
+            "three_views": 504,
+            "diverse_three": 504
+          },
+          "map_sha256": "9897fbfea59e6aae8f17ddec8759b2045da680bb3c3f0e2e8a0f1152bf8fa743"
+        }
+      ],
+      "grouping_seconds": 4.744698208291084,
+      "extraction_seconds": 0.2948712087236345,
+      "samples_sha256": "786119f47f55c0f0c67aa69fd72dfc75812070bdc8f5746c1c13a398ccff1df4",
+      "baseline_counts_and_source_files_verified": true
+    },
+    "office-baseline": {
+      "variants": [
+        {
+          "radius": 0.005,
+          "order": "forward",
+          "summary": {
+            "samples": 9032,
+            "groups": 8327,
+            "groups_by_views": {
+              "1": 7713,
+              "2": 549,
+              "3": 53,
+              "4": 11,
+              "6": 1
+            },
+            "three_views": 65,
+            "diverse_three": 65
+          },
+          "map_sha256": "f6d223bd1753743f034ebeaaeb1187e3d43a2a4e6e371accd5c2eab491ff67a4"
+        },
+        {
+          "radius": 0.005,
+          "order": "reverse",
+          "summary": {
+            "samples": 9032,
+            "groups": 8339,
+            "groups_by_views": {
+              "1": 7710,
+              "2": 569,
+              "3": 57,
+              "4": 3
+            },
+            "three_views": 60,
+            "diverse_three": 60
+          },
+          "map_sha256": "b2eeb8bf8e2c67bbffc11b5a4720a81b5f10ad977582a13188dcdf31c6783fcb"
+        },
+        {
+          "radius": 0.01,
+          "order": "forward",
+          "summary": {
+            "samples": 9032,
+            "groups": 4047,
+            "groups_by_views": {
+              "1": 3168,
+              "2": 649,
+              "3": 200,
+              "4": 24,
+              "5": 5,
+              "6": 1
+            },
+            "three_views": 230,
+            "diverse_three": 224
+          },
+          "map_sha256": "3b269c7394a9f1aadffdc77f229bb5cf37e79351ea6dd4c9aeb1d0a906a7e0e5"
+        },
+        {
+          "radius": 0.01,
+          "order": "reverse",
+          "summary": {
+            "samples": 9032,
+            "groups": 4119,
+            "groups_by_views": {
+              "1": 3089,
+              "2": 776,
+              "3": 233,
+              "4": 21
+            },
+            "three_views": 254,
+            "diverse_three": 250
+          },
+          "map_sha256": "00839a6c3e7cc896a695ebba9bcb58943559bc556259d17f1b53a268301d6335"
+        },
+        {
+          "radius": 0.02,
+          "order": "forward",
+          "summary": {
+            "samples": 9032,
+            "groups": 1589,
+            "groups_by_views": {
+              "1": 1053,
+              "2": 262,
+              "3": 226,
+              "4": 34,
+              "5": 7,
+              "6": 5,
+              "7": 2
+            },
+            "three_views": 274,
+            "diverse_three": 267
+          },
+          "map_sha256": "ccf9a7b83b9e5ede321aa974853e14abb472e82216365937d31c0ace11314949"
+        },
+        {
+          "radius": 0.02,
+          "order": "reverse",
+          "summary": {
+            "samples": 9032,
+            "groups": 1654,
+            "groups_by_views": {
+              "1": 1004,
+              "2": 357,
+              "3": 237,
+              "4": 43,
+              "5": 10,
+              "6": 2,
+              "7": 1
+            },
+            "three_views": 293,
+            "diverse_three": 291
+          },
+          "map_sha256": "6abac78c9f4dd626e493b42582b9b73db7989338b97556111b60e0e3393c48cf"
+        }
+      ],
+      "grouping_seconds": 2.349338708911091,
+      "extraction_seconds": 0.5966294161044061,
+      "samples_sha256": "4b0094694f28511869421f30e76e91d9406aadb1d0805e67c07f7fb08ab5958b",
+      "baseline_counts_and_source_files_verified": true
+    },
+    "tum": {
+      "variants": [
+        {
+          "radius": 0.005,
+          "order": "forward",
+          "summary": {
+            "samples": 2734,
+            "groups": 2420,
+            "groups_by_views": {
+              "1": 2133,
+              "2": 273,
+              "3": 14
+            },
+            "three_views": 14,
+            "diverse_three": 14,
+            "diverse_with_three_sensor_views": 13,
+            "diverse_sensor_confirmed": 1
+          },
+          "map_sha256": "49746351f2f7d8e25d7b1d0647ccc207d4e7a71a8a858581957b5b50fd936ff2"
+        },
+        {
+          "radius": 0.005,
+          "order": "reverse",
+          "summary": {
+            "samples": 2734,
+            "groups": 2416,
+            "groups_by_views": {
+              "1": 2132,
+              "2": 276,
+              "3": 8
+            },
+            "three_views": 8,
+            "diverse_three": 8,
+            "diverse_with_three_sensor_views": 7,
+            "diverse_sensor_confirmed": 0
+          },
+          "map_sha256": "afc4d93298a0fbb089eac73d515b146481e07a13caa297ca7732a532ab3b1773"
+        },
+        {
+          "radius": 0.01,
+          "order": "forward",
+          "summary": {
+            "samples": 2734,
+            "groups": 1184,
+            "groups_by_views": {
+              "1": 945,
+              "2": 210,
+              "3": 29
+            },
+            "three_views": 29,
+            "diverse_three": 29,
+            "diverse_with_three_sensor_views": 26,
+            "diverse_sensor_confirmed": 1
+          },
+          "map_sha256": "f938fdb2e6a008b8aca85eff9e9ed67261710611cc16dd35645104018716043c"
+        },
+        {
+          "radius": 0.01,
+          "order": "reverse",
+          "summary": {
+            "samples": 2734,
+            "groups": 1147,
+            "groups_by_views": {
+              "1": 917,
+              "2": 195,
+              "3": 35
+            },
+            "three_views": 35,
+            "diverse_three": 35,
+            "diverse_with_three_sensor_views": 32,
+            "diverse_sensor_confirmed": 0
+          },
+          "map_sha256": "4077a2a58de5efaec3b36a9210c948620cd547b0712021e112198ca3fce400a8"
+        },
+        {
+          "radius": 0.02,
+          "order": "forward",
+          "summary": {
+            "samples": 2734,
+            "groups": 516,
+            "groups_by_views": {
+              "1": 394,
+              "2": 102,
+              "3": 19,
+              "4": 1
+            },
+            "three_views": 20,
+            "diverse_three": 20,
+            "diverse_with_three_sensor_views": 16,
+            "diverse_sensor_confirmed": 1
+          },
+          "map_sha256": "a891e7380303cc2a070d65c98c7a0875e7ecfd3a6920a344ffe121a498ad915a"
+        },
+        {
+          "radius": 0.02,
+          "order": "reverse",
+          "summary": {
+            "samples": 2734,
+            "groups": 524,
+            "groups_by_views": {
+              "1": 381,
+              "2": 110,
+              "3": 32,
+              "4": 1
+            },
+            "three_views": 33,
+            "diverse_three": 33,
+            "diverse_with_three_sensor_views": 27,
+            "diverse_sensor_confirmed": 1
+          },
+          "map_sha256": "a4dff6ca6df2606c46542523f5c3f1f723828eefefb849c25e9a036c0f2e5e4c"
+        }
+      ],
+      "grouping_seconds": 0.36150833312422037,
+      "extraction_seconds": 0.8616697499528527,
+      "samples_sha256": "0ecc7c9d0455a6920d292964aedaf734f668ab43a64db1e31547042eba49d4ba",
+      "baseline_counts_and_source_files_verified": true
+    }
+  },
+  "frozen_rgb_baselines": {
+    "office": {
+      "sfm": {
+        "input_images": 26,
+        "registered_images": 26,
+        "sparse_points": 2488,
+        "reprojection_error": 0.741989650263063,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.6628029340853,
+              800.0,
+              533.5,
+              -0.10301719924275823,
+              0.06955364689099952
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 36280,
+        "verified_pairs": 147,
+        "verified_inliers": 17752
+      },
+      "sfm_seconds": 8.57247483311221,
+      "training_export_seconds": 23.408445208799094,
+      "end_to_end_seconds": 32.025631207972765,
+      "model_bytes": 3412222,
+      "engine_version": "0.3.0",
+      "training_seed": 42,
+      "steps": 3000,
+      "resolution": 512,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "gaussians": 14452,
+      "model_sha256": "ad54d3c92822d431cbb6b064df1a764254313a597898017449995a5b1452bb65",
+      "score": {
+        "psnr": 21.602198346457502,
+        "ssim": 0.8706037700176239
+      },
+      "held_out_views": [
+        "0000-fb0957d3f08b497c97ad3120db509705.png",
+        "0008-94a3485567114808a05c4a658ee90ee2.png",
+        "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+        "0024-babe0fdf2b664c9c913779d4e7279812.png"
+      ]
+    },
+    "pipes": {
+      "sfm": {
+        "input_images": 14,
+        "registered_images": 14,
+        "sparse_points": 1881,
+        "reprojection_error": 0.5676130227212903,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 40440,
+        "verified_pairs": 49,
+        "verified_inliers": 10375
+      },
+      "sfm_seconds": 6.060365709010512,
+      "training_export_seconds": 22.72959908284247,
+      "end_to_end_seconds": 28.825473874807358,
+      "model_bytes": 2699266,
+      "engine_version": "0.3.0",
+      "training_seed": 42,
+      "steps": 3000,
+      "resolution": 512,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "gaussians": 11431,
+      "model_sha256": "f6b3c7d7b8d2c60a0ea0f70f5d7bfa5fe7b4657bc9758448a6dade7f3f060987",
+      "score": {
+        "psnr": 18.648025560863584,
+        "ssim": 0.7566335499286652
+      },
+      "held_out_views": [
+        "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+        "0008-9a76c2d0778d48ee9916c29248b0476b.png"
+      ]
+    },
+    "tum": {
+      "sfm": {
+        "input_images": 96,
+        "registered_images": 96,
+        "sparse_points": 16410,
+        "reprojection_error": 1.0987175730537482,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 640,
+            "height": 480,
+            "params": [
+              545.3933351139074,
+              320.0,
+              240.0,
+              0.1401522122322305,
+              -0.2378178461746728
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            626,
+            469
+          ]
+        ]
+      },
+      "sfm_seconds": 44.48698883317411,
+      "training_export_seconds": 43.33341783285141,
+      "end_to_end_seconds": 87.98082979209721,
+      "model_bytes": 16929830,
+      "engine_version": "0.3.0",
+      "training_seed": 42,
+      "steps": 3000,
+      "resolution": 512,
+      "training_views": 84,
+      "evaluation_views": 12,
+      "gaussians": 71730,
+      "model_sha256": "5d3e6225b631815ae7aa013eee85d7e5865c089a434295c4d675608381a3a7cf",
+      "score": {
+        "psnr": 22.948967657948298,
+        "ssim": 0.8386953771114349
+      },
+      "held_out_views": [
+        "0000-1305031452.791720.png",
+        "0008-1305031454.527700.png",
+        "0016-1305031456.227678.png",
+        "0024-1305031457.959632.png",
+        "0032-1305031459.659641.png",
+        "0040-1305031461.391708.png",
+        "0048-1305031463.095809.png",
+        "0056-1305031464.827759.png",
+        "0064-1305031466.527538.png",
+        "0072-1305031468.259754.png",
+        "0080-1305031469.959805.png",
+        "0088-1305031471.695609.png"
+      ]
+    }
+  },
+  "script_sha256": {
+    "scripts/benchmark_depth_groups.py": "85f74539aa6552d7140669e597cd08d13f73194cd9b72a0cb603ff40de8f734a",
+    "scripts/benchmark_depth_overlap.py": "4bfeb2b37dff04b3899278becf1b313b021a07956c33a495ba1701121242e44e"
+  }
+}

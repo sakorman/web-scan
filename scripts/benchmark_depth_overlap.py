@@ -85,7 +85,7 @@ def observations(model, im, view):
     return np.asarray(xy)
 
 
-def measure(view, row, cross_dir, cfg, analysis, predictions, xy_ref, cloud, sensor_row, sensor_dir, scale):
+def measure(view, row, cross_dir, cfg, analysis, predictions, xy_ref, cloud, sensor_row, sensor_dir, scale, *, sample_sink=None):
     w, h = view['width'], view['height']
     xy, shape = grid(w, h, cfg['grid_step'])
     c = checked_map(cross_dir, row)
@@ -139,6 +139,16 @@ def measure(view, row, cross_dir, cfg, analysis, predictions, xy_ref, cloud, sen
         displacement = np.full(len(z), np.nan)
         displacement[good] = np.linalg.norm(world[good] - measured_world, axis=1) / true_z
         error[good] = np.abs(z[good] / true_z - 1)
+    if sample_sink is not None:
+        sample = dict(world=world, z=z, grid_index=np.flatnonzero(keep),
+                      image_distance=image_dist[keep], space_distance=space_dist,
+                      conflict=c['conflict'].ravel()[keep] > 0)
+        if sensor_row is not None:
+            measured = np.full(world.shape, np.nan)
+            measured[good] = measured_world
+            sample.update(sensor_world=measured, sensor_z=reference / scale,
+                          sensor_distance=measured_dist)
+        sample_sink(sample)
     levels = {}
     for t in FRACTIONS:
         counts = classify(t, image_dist[keep], space_dist, c['conflict'].ravel()[keep] > 0, measured_dist, error, displacement)
@@ -198,11 +208,24 @@ def run(args):
             raise ValueError('Raw and training sparse point clouds differ')
     images = {im.name: im for im in model.images.values()}
     cloud = np.array([p.xyz for p in model.points3D.values()])
-    stats = []
+    samples = getattr(args, 'samples', None)
+    if samples is not None:
+        samples.mkdir(parents=True, exist_ok=False)
+    if len({views[n]['image_sha256'] for n in rows}) != len(rows):
+        raise ValueError('Duplicate photographs are not independent views')
+    stats, sample_rows = [], []
     for n, r in rows.items():
         linked = observations(model, images[n], views[n])
+        def write_sample(values):
+            path = samples / (str(len(sample_rows)).zfill(4) + '.npz')
+            np.savez_compressed(path, **values)
+            pose = np.asarray(views[n]['cam_from_world'])
+            sample_rows.append(dict(name=n, map=path.name, map_sha256=digest(path),
+                                    center=(-pose[:, :3].T @ pose[:, 3]).tolist(),
+                                    image_sha256=views[n]['image_sha256']))
         stats.append(measure(views[n], r, args.consistency.parent, cross['config'], align[n], predictions,
-                             linked, cloud, sensors.get(n), args.sensor.parent if args.sensor else None, scale))
+                             linked, cloud, sensors.get(n), args.sensor.parent if args.sensor else None, scale,
+                             sample_sink=write_sample if samples else None))
     pooled = {t: {key: sum(v['levels'][t][key] for v in stats) for key in counts}
               for t, counts in stats[0]['levels'].items()}
     output = {'job': args.job.name, 'camera_domain': next(iter(kinds)), 'sparse_points': len(cloud),
@@ -211,6 +234,9 @@ def run(args):
               'training_points_sha256': digest(training_sparse / 'points3D.bin'),
               'consistency_sha256': digest(args.consistency), 'sensor_sha256': digest(args.sensor) if args.sensor else None,
               'scale_m_per_sfm_unit': scale, 'views': stats, 'pooled': pooled, 'seconds': time.monotonic() - start}
+    if samples:
+        save(samples / 'samples.json', dict(views=sample_rows, overlap=output,
+             scope='training candidate observations; sensor data for audit only'))
     with args.output.open('x') as stream:
         json.dump(output, stream, indent=2, allow_nan=False)
         stream.write('\n')
@@ -222,4 +248,5 @@ if __name__ == '__main__':
     for flag in ('job', 'anchors', 'analysis', 'predictions', 'consistency', 'output'):
         parser.add_argument('--' + flag, type=Path, required=True)
     parser.add_argument('--sensor', type=Path)
+    parser.add_argument('--samples', type=Path, help='New directory for auditable candidate arrays')
     run(parser.parse_args())
