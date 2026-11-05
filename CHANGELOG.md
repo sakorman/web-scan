@@ -2,6 +2,14 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-11-05
+
+### 用原生深度图重投影补查候选支持
+
+- 针对离散网格可能漏掉真实支撑的问题，新增原生坐标重投影审计：固定分组代表投影到完整深度图，检查其他照片的轴向深度一致性；TUM 另用独立 RGB-D 深度做事后核验。1% 正序下，office / pipes / TUM 分别有 4,043/4,047、4,580/4,580、1,184/1,184 组获得至少两个其他视图的 5% 原生支持；TUM 其中 1,054 组还有至少两个传感器支持。结果说明网格门槛偏保守，但单目深度仍不是几何真值，暂不融合补点。
+- 复用固定实拍模型与预测，输入为 office 26/26（22/4）、pipes 14/14（12/2）、TUM 96/96（84/12）；重投影 CPU 耗时约 7.01 / 3.56 / 2.47 秒，无新训练、无 PSNR/SSIM 或漫游收益。新增身份、投影支持和容差回归；248 项后端、18 项前端、类型检查与构建通过。[方法与逐场景结果](docs/DEPTH-REPROJECTION.md) · [DepthSplat 论文](https://openaccess.thecvf.com/content/CVPR2025/html/Xu_DepthSplat_Connecting_Gaussian_Splatting_and_Depth_CVPR2025_paper.html) · [DepthSplat 实现](https://github.com/cvg/depthsplat) · [ConfidentSplat](https://arxiv.org/abs/2509.16863) · [基点提交](https://github.com/sakorman/web-scan/commit/eeddc1b)
+- 局限与下一步：重投影支持仍依赖同一单目深度先验，TUM 受时间、遮挡、传感器缺测和尺度误差影响；先在有独立真值的小样本上做初始化前后对照，未通过前不修改默认 SfM 或 Brush 流程。
+
 ## 2026-11-04
 
 ### 深度候选去重后仍缺少稳定的多图几何
