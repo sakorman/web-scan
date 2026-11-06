@@ -1,5 +1,7 @@
 # 原生深度图重投影核验
 
+> 2026-11-06 更正：以下保留历史计数；旧规则为 5% 轴向支持，混入传感器尺度拟合格，未要求来源及同一组三张 RGB / 传感器支持照片。它不能证明网格漏检或新增几何可靠。完整身份校验与恢复几何条件后的结果见[更正报告](DEPTH-REPROJECTION-AUDIT.md)。
+
 2026-11-05，基点 [eeddc1b](https://github.com/sakorman/web-scan/commit/eeddc1b)。上一轮的候选按固定像素网格分组；本轮把每个分组代表点投影到其他训练照片的完整原生深度图，在真实投影坐标取双线性深度。目标像素不必落在候选网格上。该流程只做诊断，不修改 SfM、Brush、初始化点云或渲染。
 
 ## 依据与方法
@@ -20,24 +22,17 @@
 
 TUM 的原生投影共检查 7,572 个目标视图位置，其中 6,408 个有有效独立传感器深度；传感器支持的 1% 分组中，1,054 组有至少两个通过的传感器来源。office、pipes 没有独立深度真值，`native` 结果只能说明模型深度先验的跨图一致性，不能证明几何准确。TUM 传感器也有时间、遮挡、缺测和 RGB/SfM 全局尺度误差，不能把支持组直接写入初始化。
 
-分组顺序敏感性仍存在：本轮使用的 1% 反向结果为 office 4,117 组、pipes 4,449 组、TUM 1,147 组；对应原生 `native>=2` 分别为 4,117、4,449、1,147。原生重投影减少了“目标恰好落在网格上”的漏检，但不能消除固定代表和单目深度的偏差。
+分组顺序敏感性仍存在：本轮使用的 1% 反向结果为 office 4,119 组、pipes 4,449 组、TUM 1,147 组；对应原生 `native>=2` 分别为 4,117、4,449、1,147。原生重投影不要求目标落在候选网格上，但这里同时改变了距离定义与视差条件，不能由计数差证明漏检减少；候选自身也已经过原生重投影筛选。
 
 ## 成本、验证与下一步
 
-重投影审计在本机 M5 / 32 GB 上复用冻结预测和模型，office / pipes / TUM 分别耗 CPU 墙钟约 7.01 / 3.56 / 2.47 秒；未运行 GPU 训练、未改变模型文件，未测峰值内存。新增 `scripts/benchmark_depth_reprojection.py`，样本、分组、相机、预测和传感器文件均校验 SHA-256；新增两项输入形状、正深度和容差回归。下一步只在小规模且有明确独立真值的候选上比较初始化前后质量；若没有独立验证，将保留此审计而不融合点云。
+重投影审计在本机 M5 / 32 GB 上复用冻结预测和模型，office / pipes / TUM 分别耗 CPU 墙钟约 7.01 / 3.56 / 2.47 秒；未运行 GPU 训练、未改变模型文件，未测峰值内存。新增 `scripts/benchmark_depth_reprojection.py`，旧版记录了部分 SHA-256，但没有完整校验文件身份链；新增两项输入形状、正深度和容差回归。11-06 已补齐输入校验并撤回直接进入初始化对照的建议，下一步先验证真正的多视图深度与独立几何支撑。
 
-复现（需要已有冻结基准）：
+复现历史与更正规则（需要已有冻结基准，新目录不能已存在）：
 
 ```sh
-mkdir -p .data/benchmarks/depth-reprojection-repeat
-PYTHONPATH=. .venv/bin/python scripts/benchmark_depth_reprojection.py \
-  --samples .data/benchmarks/depth-groups-20261104/verified/tum-samples \
-  --groups .data/benchmarks/depth-groups-20261104/verified/tum \
-  --anchors .data/benchmarks/depth-overlap-20261103/sensor/anchors.json \
-  --analysis .data/benchmarks/depth-overlap-20261103/analysis.json \
-  --predictions .data/benchmarks/depth-overlap-20261103/predictions \
-  --job tum-baseline --sensor-manifest .data/benchmarks/depth-overlap-20261103/sensor/sensor.json \
-  --sensor-scale 0.2318619668017296 \
-  --output .data/benchmarks/depth-reprojection-repeat/tum.json
+PYTHONPATH=. .venv/bin/python docs/benchmarks/depth-reprojection-audit-run.py \
+  --root .data/benchmarks/depth-reprojection-audit-repeat
 ```
 
+运行器从提交 `3142c6b` 提取本报告的旧脚本，先核对历史计数，再运行当前核验；当前命令行使用 `--work`、`--consistency` 和配对的 `--sensor-evaluation`，不再接受手填传感器尺度。详见[完整复现与逐次数据](DEPTH-REPROJECTION-AUDIT.md)。

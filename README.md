@@ -233,6 +233,8 @@ DSP 与仿射形状估计也完成了实拍对照，但 office 留出 SSIM 仍�
 
 `scripts/benchmark_sensor_depth.py` 可用 TUM 已配准传感器深度离线核验相对预测。预选照片中 11 张匹配有效，检查区域平均相对误差为 5.66%，另有约 27% 位置缺测；测量值只用于全局尺度与评分，不进入重建或补点。[方法、数据与限制](docs/SENSOR-DEPTH.md)
 
+`scripts/benchmark_depth_reprojection.py` 核验固定分组代表，要求来源与两个目标都有视差，并将传感器核验限制在同一组 RGB 支持照片的检查格。旧版宽松轴向支持计数不能证明新增几何可靠；更正后 TUM 1% 正 / 逆序仅 7 / 5 组通过，仍不启用补点。[核验规则、输入校验与复现](docs/DEPTH-REPROJECTION-AUDIT.md)
+
 `scripts/benchmark_depth_support.py` 在原始 RADIAL 相机下生成纯 RGB / SfM 支持掩码，再与冻结传感器检查位置对照。当前 TUM 支持区域误差较低，但仅保留 7.37% 位置；仍作为离线诊断，不进入默认补点或训练。[结果与复现](docs/DEPTH-SUPPORT.md)。另可[核验候选与已有稀疏点的距离](docs/DEPTH-OVERLAP.md)，区分图像上的空白和可能的新三维覆盖。[空间分组与照片来源检查](docs/DEPTH-GROUPS.md)显示支持数仍不足以直接决定补点。
 
 ## 技术架构

@@ -2,12 +2,22 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-11-06
+
+### 修正深度重投影的核验条件
+
+- 更正上轮推断：5% 轴向深度支持不能与 1% 三维距离分组直接比较，且旧传感器计数混入尺度拟合格、未要求同一组三张支持照片。恢复来源视角、两两视差、往返检查与独立检查格；TUM 1% 正序旧计数仍为 1,054，但同组可测仅 175 组，三维与稀疏点距离核验后为 7 组，逆序为 5 组。继续不补点，不把高通过数作为网格漏检证据。
+- 补齐输入身份链和逐组掩码，三场景六种冻结分组均复现旧计数，原图、相机和完整 SH3 通过核验。新增 14 项回归；262 项后端、18 项前端、类型检查和构建通过。CPU 核验 pipes / office / TUM 约 0.542 / 0.665 / 1.094 秒；规则不同，不作提速对照，本轮无新训练或画质收益。
+- 局限与下一步：缺测、位姿误差和代表顺序仍限制可验证范围；先准备真正多视图深度的本机对照，不依据这批测量调阈值或挑点训练。[报告与图示](docs/DEPTH-REPROJECTION-AUDIT.md) · [逐次记录](docs/benchmarks/depth-reprojection-audit.json) · [基点提交](https://github.com/sakorman/web-scan/commit/3142c6b) · [StereoGS v2](https://arxiv.org/abs/2606.30545v2) · [作者重投影实现](https://github.com/StringerYwh00/StereoGS/blob/2238f559ce6da2c8f9b0e98110eedc7e53ea952b/submodules/mvs_modules/fusion.py) · [COLMAP 3.13.0](https://github.com/colmap/colmap/blob/3.13.0/src/colmap/mvs/fusion.cc)
+
 ## 2026-11-05
 
 ### 用原生深度图重投影补查候选支持
 
+2026-11-06 更正：下列旧计数可复现，但“结果说明网格门槛偏保守”的推断已撤回；旧版未隔离传感器拟合格，也未完整校验身份链。新增的两项测试仅覆盖数组形状、正深度和容差。[更正依据](docs/DEPTH-REPROJECTION-AUDIT.md)
+
 - 针对离散网格可能漏掉真实支撑的问题，新增原生坐标重投影审计：固定分组代表投影到完整深度图，检查其他照片的轴向深度一致性；TUM 另用独立 RGB-D 深度做事后核验。1% 正序下，office / pipes / TUM 分别有 4,043/4,047、4,580/4,580、1,184/1,184 组获得至少两个其他视图的 5% 原生支持；TUM 其中 1,054 组还有至少两个传感器支持。结果说明网格门槛偏保守，但单目深度仍不是几何真值，暂不融合补点。
-- 复用固定实拍模型与预测，输入为 office 26/26（22/4）、pipes 14/14（12/2）、TUM 96/96（84/12）；重投影 CPU 耗时约 7.01 / 3.56 / 2.47 秒，无新训练、无 PSNR/SSIM 或漫游收益。新增身份、投影支持和容差回归；248 项后端、18 项前端、类型检查与构建通过。[方法与逐场景结果](docs/DEPTH-REPROJECTION.md) · [DepthSplat 论文](https://openaccess.thecvf.com/content/CVPR2025/html/Xu_DepthSplat_Connecting_Gaussian_Splatting_and_Depth_CVPR2025_paper.html) · [DepthSplat 实现](https://github.com/cvg/depthsplat) · [ConfidentSplat](https://arxiv.org/abs/2509.16863) · [基点提交](https://github.com/sakorman/web-scan/commit/eeddc1b)
+- 复用固定实拍模型与预测，输入为 office 26/26（22/4）、pipes 14/14（12/2）、TUM 96/96（84/12）；重投影 CPU 耗时约 7.01 / 3.56 / 2.47 秒，无新训练、无 PSNR/SSIM 或漫游收益。新增身份、投影支持和容差回归；248 项后端、18 项前端、类型检查与构建通过。[方法与逐场景结果](docs/DEPTH-REPROJECTION.md) · [DepthSplat 论文](https://openaccess.thecvf.com/content/CVPR2025/html/Xu_DepthSplat_Connecting_Gaussian_Splatting_and_Depth_CVPR_2025_paper.html) · [DepthSplat 实现](https://github.com/cvg/depthsplat) · [ConfidentSplat](https://arxiv.org/abs/2509.16863) · [基点提交](https://github.com/sakorman/web-scan/commit/eeddc1b)
 - 局限与下一步：重投影支持仍依赖同一单目深度先验，TUM 受时间、遮挡、传感器缺测和尺度误差影响；先在有独立真值的小样本上做初始化前后对照，未通过前不修改默认 SfM 或 Brush 流程。
 
 ## 2026-11-04
