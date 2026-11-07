@@ -1,0 +1,1797 @@
+{
+  "baseline_commit": "c67c550404c24401ee2cd6af42f8a290e08c7a69",
+  "scenes": {
+    "pipes": {
+      "scores": {
+        "status": "complete",
+        "pairs_sha256": "4cc95c52535488c363fee440013fc8d25fa729c606ccaa49528daeceac498411",
+        "inference": {
+          "status": "complete",
+          "pairs_sha256": "4cc95c52535488c363fee440013fc8d25fa729c606ccaa49528daeceac498411",
+          "device": "mps",
+          "torch": "2.14.1",
+          "views": [
+            {
+              "name": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+              "depth": "0001-2768e9ec33a04cac87c0221f381e324b.npy",
+              "sha256": "65b9c3d325425d6523e0050b6dfe1920f704216d09d527d20a450e152084e56e",
+              "seconds": 2.6417064159177244,
+              "min": 7.11709451675415,
+              "max": 12.481416702270508,
+              "size": [
+                512,
+                352
+              ]
+            }
+          ],
+          "upstream": "943a99006950ab6c84ea72a72beb147fdd03c19a",
+          "weights_sha256": "d3d1efb5d1615404828574b6bad63e138c8f4fd8077557392b18b57324982b49",
+          "weights_bytes": 18768907,
+          "seconds": 2.9674105001613498
+        },
+        "views": [
+          {
+            "name": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+            "target": "0010-ba00cacf4f7a4e1bb86e4cad50f16509.jpg",
+            "shared_tracks": 584,
+            "median_angle": 5.53039719780317,
+            "near": 2.7290446577834158,
+            "far": 30.0052170032543,
+            "sparse_check": {
+              "reference_samples": 469,
+              "missing_reference": 0,
+              "invalid_predictions": 1,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.03844531987740152,
+                "p90_abs_rel": 0.13535482865203177,
+                "mean_abs_rel": 0.06524642894451917,
+                "rmse_sfm_units": 2.9011954023256723
+              },
+              "within_10_percent": 0.8038379530916845,
+              "delta_1_25": 0.9722814498933902,
+              "passed": false
+            }
+          }
+        ]
+      },
+      "pairs_sha256": "4cc95c52535488c363fee440013fc8d25fa729c606ccaa49528daeceac498411",
+      "model_sha256": "f6b3c7d7b8d2c60a0ea0f70f5d7bfa5fe7b4657bc9758448a6dade7f3f060987",
+      "sparse_sha256": {
+        "rigs.bin": "73e4d5f0da0a84a5711b46ae716a149f1532832f95bb09b4b01e73cf2c5afbe9",
+        "cameras.bin": "2b6c657b989f1fa8ff51bc8dcf3c8e501081c99e0b3b4985df8ce02f315aceca",
+        "images.bin": "c5cbbd84f933ab346267730e07f7244d73cf8f89da5090a06f2800952414b06a",
+        "frames.bin": "e504aaf7b4552d219c673c0103b159123bdaf2fa2fceae8a708b9576d79c89ac",
+        "points3D.bin": "ccc1d5536379c76f69a4df7b3ad3aca92e4fde5b44cd14b6c87b7c3abf1d45f4"
+      },
+      "pairs": [
+        {
+          "source": "0001-2768e9ec33a04cac87c0221f381e324b.jpg",
+          "target": "0010-ba00cacf4f7a4e1bb86e4cad50f16509.jpg",
+          "source_sha256": "b7c9c0cfd16b7c1243db42d43428b1e58130d8f6e9da249456ce64f63853c789",
+          "target_sha256": "b38ae3c932463316fa91c2f63afbd7f6101ffbbd3b40211f55126365f2d8bd59",
+          "network_K": [
+            [
+              282.87732624558987,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              291.806207998081,
+              175.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9890612945341029,
+              0.0019734384214449285,
+              0.14749190213473196,
+              -1.1581431967651168
+            ],
+            [
+              -0.04128225702161176,
+              0.9636553383313656,
+              0.26393969796274047,
+              0.008502824739016993
+            ],
+            [
+              -0.14161049011187757,
+              -0.2671413379585006,
+              0.9531956644068498,
+              -0.009370497150110013
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            352
+          ],
+          "near": 2.7290446577834158,
+          "far": 30.0052170032543
+        }
+      ]
+    },
+    "office": {
+      "scores": {
+        "status": "complete",
+        "pairs_sha256": "e25890ab278078265e734eb3b22ebd88500d15a342a8c72568aa7be9cd4d85c9",
+        "inference": {
+          "status": "complete",
+          "pairs_sha256": "e25890ab278078265e734eb3b22ebd88500d15a342a8c72568aa7be9cd4d85c9",
+          "device": "mps",
+          "torch": "2.14.1",
+          "views": [
+            {
+              "name": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+              "depth": "0001-ad85efc2e9544c609db927b5ac824fa8.npy",
+              "sha256": "01d2877ecca00689a249a8c2ed7ac9caac95ad70be616d09fbdca4b63bbdb8da",
+              "seconds": 0.24924670811742544,
+              "min": 8.181168556213379,
+              "max": 29.373130798339844,
+              "size": [
+                512,
+                352
+              ]
+            }
+          ],
+          "upstream": "943a99006950ab6c84ea72a72beb147fdd03c19a",
+          "weights_sha256": "d3d1efb5d1615404828574b6bad63e138c8f4fd8077557392b18b57324982b49",
+          "weights_bytes": 18768907,
+          "seconds": 0.4212579997256398
+        },
+        "views": [
+          {
+            "name": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+            "target": "0021-8ee9ed229d7b4abc860ef4c187cacf58.jpg",
+            "shared_tracks": 287,
+            "median_angle": 6.032654760763377,
+            "near": 3.7188558910424194,
+            "far": 86.1129175796821,
+            "sparse_check": {
+              "reference_samples": 457,
+              "missing_reference": 0,
+              "invalid_predictions": 4,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.05883249282003977,
+                "p90_abs_rel": 0.2303480988189358,
+                "mean_abs_rel": 0.09765934767866251,
+                "rmse_sfm_units": 5.692759203314657
+              },
+              "within_10_percent": 0.7527352297592997,
+              "delta_1_25": 0.8796498905908097,
+              "passed": false
+            }
+          }
+        ]
+      },
+      "pairs_sha256": "e25890ab278078265e734eb3b22ebd88500d15a342a8c72568aa7be9cd4d85c9",
+      "model_sha256": "ad54d3c92822d431cbb6b064df1a764254313a597898017449995a5b1452bb65",
+      "sparse_sha256": {
+        "rigs.bin": "73e4d5f0da0a84a5711b46ae716a149f1532832f95bb09b4b01e73cf2c5afbe9",
+        "cameras.bin": "57b934d0d58c14c1166d8dc13d1bcb6c3e607d6ee4023a9aedc02000690d5ccc",
+        "images.bin": "8a16140c20a701e84af36fb31b09af55db7bd83f3c2e9f5c9b519b5ed3a2cc27",
+        "frames.bin": "5f9ce45393c4bd1ef5c914b3b05db6775ceb9e1ec30f86caa683ed17d927c7d9",
+        "points3D.bin": "bbb62ee7dba08b18afc6fc1ae3c6955734c54b4f3a65d7c9134708bb6bb3b8d2"
+      },
+      "pairs": [
+        {
+          "source": "0001-ad85efc2e9544c609db927b5ac824fa8.jpg",
+          "target": "0021-8ee9ed229d7b4abc860ef4c187cacf58.jpg",
+          "source_sha256": "f30c9c94e57da89b02f989cb5f968415bf97241e851d7b7f4ea1f851a23c979b",
+          "target_sha256": "0189d6cefabad634f26d295298053842092ef90df9f5cb96261f1bee4cff5349",
+          "network_K": [
+            [
+              283.2284045773348,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              292.2576068065916,
+              175.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9339350591872352,
+              -0.02189746724093071,
+              0.35677136397049597,
+              -1.3386434592063456
+            ],
+            [
+              0.10987176317935562,
+              0.9673852925569849,
+              -0.22824086268741747,
+              0.9301563408922442
+            ],
+            [
+              -0.3401374734968132,
+              0.2523612424142609,
+              0.9058809537959914,
+              -4.170260006763159
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            352
+          ],
+          "near": 3.7188558910424194,
+          "far": 86.1129175796821
+        }
+      ]
+    },
+    "tum": {
+      "scores": {
+        "status": "complete",
+        "pairs_sha256": "0f051996692456ef9d208e5f28f88f0928ec7d7d6aa3ef6772fd4f45c7751982",
+        "inference": {
+          "status": "complete",
+          "pairs_sha256": "0f051996692456ef9d208e5f28f88f0928ec7d7d6aa3ef6772fd4f45c7751982",
+          "device": "mps",
+          "torch": "2.14.1",
+          "views": [
+            {
+              "name": "0009-1305031454.727659.jpg",
+              "depth": "0009-1305031454.727659.npy",
+              "sha256": "089a55b88bf63a36e6bb39a6d7c3d0ad28c3c7b86a13ec9f51a368ce9b63810f",
+              "seconds": 0.5793601670302451,
+              "min": 3.53261661529541,
+              "max": 9.52939224243164,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0017-1305031456.459610.jpg",
+              "depth": "0017-1305031456.459610.npy",
+              "sha256": "d8e2900b0eb6d2a33ff8da29e1465033809b9045c1d798a024bf50a0cf01c5ec",
+              "seconds": 0.0744632501155138,
+              "min": 3.6367099285125732,
+              "max": 8.103011131286621,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0025-1305031458.159638.jpg",
+              "depth": "0025-1305031458.159638.npy",
+              "sha256": "a1ab594465c488e3f40cdc91b960c2b6191158b06891728265e1aa85a48f28d2",
+              "seconds": 0.07198691694065928,
+              "min": 3.776547908782959,
+              "max": 10.833700180053711,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0033-1305031459.891596.jpg",
+              "depth": "0033-1305031459.891596.npy",
+              "sha256": "6128244d9338327c936fcee3bc00e174405b7f45c21fbccd2c1dc2f4ea4d075e",
+              "seconds": 0.07125358283519745,
+              "min": 2.3676204681396484,
+              "max": 9.45383071899414,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0041-1305031461.591690.jpg",
+              "depth": "0041-1305031461.591690.npy",
+              "sha256": "071f07102c84353642c0e26c7844c0df4e99880145a4c28e0c02d744e6b31fde",
+              "seconds": 0.07063662493601441,
+              "min": 2.988281488418579,
+              "max": 7.808400630950928,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0049-1305031463.327739.jpg",
+              "depth": "0049-1305031463.327739.npy",
+              "sha256": "4d028393f16938a9b6de95f7ec990613ed9a8f9b27080c968628d202970fbed3",
+              "seconds": 0.07032083300873637,
+              "min": 2.4380009174346924,
+              "max": 9.305706024169922,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0057-1305031465.027823.jpg",
+              "depth": "0057-1305031465.027823.npy",
+              "sha256": "40f12420178dfce7c5120cf9d7373f1c6c31017770d8758043e56349c1b75e71",
+              "seconds": 0.07024695910513401,
+              "min": 3.1313202381134033,
+              "max": 28.79182243347168,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0065-1305031466.759637.jpg",
+              "depth": "0065-1305031466.759637.npy",
+              "sha256": "d5561ac8883aa38f4d5fcfa99e308e8f0c90a4a2c45f861660b041e7ad72a575",
+              "seconds": 0.07029270799830556,
+              "min": 3.416177988052368,
+              "max": 26.709280014038086,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0073-1305031468.459759.jpg",
+              "depth": "0073-1305031468.459759.npy",
+              "sha256": "75c3cc4497dd578294e3f6c4ccb709903730f73803df6c73fad6a4da1ece20ee",
+              "seconds": 0.07030154066160321,
+              "min": 4.179778099060059,
+              "max": 13.756957054138184,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0081-1305031470.196092.jpg",
+              "depth": "0081-1305031470.196092.npy",
+              "sha256": "cc509541b00bc2902dc42494849cb477212f306e787b56bd0599d20111657a6e",
+              "seconds": 0.07074808375909925,
+              "min": 2.1636030673980713,
+              "max": 12.21490478515625,
+              "size": [
+                512,
+                384
+              ]
+            },
+            {
+              "name": "0089-1305031471.895604.jpg",
+              "depth": "0089-1305031471.895604.npy",
+              "sha256": "bcc32bb4dd42d2ba3d3c990197235a5113ceedf35a81f35ea7235489d99421c2",
+              "seconds": 0.07047087466344237,
+              "min": 2.09612774848938,
+              "max": 8.390422821044922,
+              "size": [
+                512,
+                384
+              ]
+            }
+          ],
+          "upstream": "943a99006950ab6c84ea72a72beb147fdd03c19a",
+          "weights_sha256": "d3d1efb5d1615404828574b6bad63e138c8f4fd8077557392b18b57324982b49",
+          "weights_bytes": 18768907,
+          "seconds": 1.5689696660265326
+        },
+        "views": [
+          {
+            "name": "0009-1305031454.727659.jpg",
+            "target": "0011-1305031455.159720.jpg",
+            "shared_tracks": 578,
+            "median_angle": 5.949527827318555,
+            "near": 1.7743687137283104,
+            "far": 14.150183744248633,
+            "sparse_check": {
+              "reference_samples": 477,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.029907714380879247,
+                "p90_abs_rel": 0.1373403466975524,
+                "mean_abs_rel": 0.060595518166995724,
+                "rmse_sfm_units": 1.0753753657834546
+              },
+              "within_10_percent": 0.859538784067086,
+              "delta_1_25": 0.9350104821802935,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 7349,
+                "missing_reference": 2141,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.04457276492159978,
+                  "p90_abs_rel": 0.2358408233236881,
+                  "mean_abs_rel": 0.08043257994829713,
+                  "rmse_m": 0.335906195111277
+                },
+                "within_10_percent": 0.7964348891005579,
+                "delta_1_25": 0.8764457749353654,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 7349,
+                "missing_reference": 2141,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.026739255313134924,
+                  "p90_abs_rel": 0.13413587809856642,
+                  "mean_abs_rel": 0.053403551581834706,
+                  "rmse_m": 0.20444027013659646
+                },
+                "within_10_percent": 0.8436521975779018,
+                "delta_1_25": 0.9492447952102326,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0017-1305031456.459610.jpg",
+            "target": "0019-1305031456.859634.jpg",
+            "shared_tracks": 1097,
+            "median_angle": 7.1838251051325885,
+            "near": 1.8936651675817242,
+            "far": 17.013440883490084,
+            "sparse_check": {
+              "reference_samples": 794,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.01591301825318303,
+                "p90_abs_rel": 0.05308228558296665,
+                "mean_abs_rel": 0.02588435355214975,
+                "rmse_sfm_units": 1.033718563757818
+              },
+              "within_10_percent": 0.9735516372795969,
+              "delta_1_25": 0.9924433249370277,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 6645,
+                "missing_reference": 2845,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.026227487443448494,
+                  "p90_abs_rel": 0.0732828171425652,
+                  "mean_abs_rel": 0.0371892071912672,
+                  "rmse_m": 0.09025213286552404
+                },
+                "within_10_percent": 0.9574115876598946,
+                "delta_1_25": 0.9835966892400301,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 6645,
+                "missing_reference": 2845,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.028566004884745255,
+                  "p90_abs_rel": 0.06343868235885262,
+                  "mean_abs_rel": 0.03632784114073192,
+                  "rmse_m": 0.0655271674480798
+                },
+                "within_10_percent": 0.9756207674943567,
+                "delta_1_25": 0.9954853273137697,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0025-1305031458.159638.jpg",
+            "target": "0023-1305031457.727669.jpg",
+            "shared_tracks": 794,
+            "median_angle": 9.564757633298838,
+            "near": 1.9124368804977596,
+            "far": 22.547319902067393,
+            "sparse_check": {
+              "reference_samples": 970,
+              "missing_reference": 0,
+              "invalid_predictions": 2,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.02247284735929128,
+                "p90_abs_rel": 0.27798554697252287,
+                "mean_abs_rel": 0.07175671153369659,
+                "rmse_sfm_units": 1.2965491345040152
+              },
+              "within_10_percent": 0.8030927835051547,
+              "delta_1_25": 0.843298969072165,
+              "passed": false
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 6854,
+                "missing_reference": 2636,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.025199710451868695,
+                  "p90_abs_rel": 0.14619618106110524,
+                  "mean_abs_rel": 0.05342596823275451,
+                  "rmse_m": 0.23141870770543568
+                },
+                "within_10_percent": 0.8683980157572221,
+                "delta_1_25": 0.9318646046104464,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 6854,
+                "missing_reference": 2636,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.025708625227141957,
+                  "p90_abs_rel": 0.07799583871941985,
+                  "mean_abs_rel": 0.038154860502585236,
+                  "rmse_m": 0.10326504879202116
+                },
+                "within_10_percent": 0.948497227896119,
+                "delta_1_25": 0.9883279836591772,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0033-1305031459.891596.jpg",
+            "target": "0035-1305031460.291689.jpg",
+            "shared_tracks": 308,
+            "median_angle": 8.458289638656602,
+            "near": 1.1769858823828103,
+            "far": 18.727842320649618,
+            "sparse_check": {
+              "reference_samples": 346,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.030858746218479505,
+                "p90_abs_rel": 0.10763574335899334,
+                "mean_abs_rel": 0.06694276433155799,
+                "rmse_sfm_units": 0.5876367156438851
+              },
+              "within_10_percent": 0.884393063583815,
+              "delta_1_25": 0.9797687861271677,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 6545,
+                "missing_reference": 2945,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.037520071391999754,
+                  "p90_abs_rel": 0.14085378280467242,
+                  "mean_abs_rel": 0.07770087435376413,
+                  "rmse_m": 0.1830866520568561
+                },
+                "within_10_percent": 0.8282658517952636,
+                "delta_1_25": 0.9550802139037433,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 6545,
+                "missing_reference": 2945,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.04888337401044118,
+                  "p90_abs_rel": 0.13134753698446902,
+                  "mean_abs_rel": 0.08858447747460642,
+                  "rmse_m": 0.18402408915562407
+                },
+                "within_10_percent": 0.7938884644766998,
+                "delta_1_25": 0.9566080977845683,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0041-1305031461.591690.jpg",
+            "target": "0038-1305031460.959649.jpg",
+            "shared_tracks": 542,
+            "median_angle": 7.667942922092086,
+            "near": 1.5351649830537057,
+            "far": 14.713270287922615,
+            "sparse_check": {
+              "reference_samples": 348,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.018608428980890768,
+                "p90_abs_rel": 0.07146676053001678,
+                "mean_abs_rel": 0.03169769233620887,
+                "rmse_sfm_units": 0.24546647666286484
+              },
+              "within_10_percent": 0.9367816091954023,
+              "delta_1_25": 0.9913793103448276,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 5790,
+                "missing_reference": 3700,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.021952724943440916,
+                  "p90_abs_rel": 0.11990046386207048,
+                  "mean_abs_rel": 0.05344271236571288,
+                  "rmse_m": 0.1745762673996702
+                },
+                "within_10_percent": 0.883419689119171,
+                "delta_1_25": 0.9455958549222798,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 5790,
+                "missing_reference": 3700,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.019621286068791877,
+                  "p90_abs_rel": 0.08654673181506596,
+                  "mean_abs_rel": 0.04718798634205493,
+                  "rmse_m": 0.17165730544828076
+                },
+                "within_10_percent": 0.9119170984455959,
+                "delta_1_25": 0.9545768566493955,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0049-1305031463.327739.jpg",
+            "target": "0046-1305031462.659660.jpg",
+            "shared_tracks": 296,
+            "median_angle": 19.076213551248735,
+            "near": 1.3987435868786653,
+            "far": 9.305706028975806,
+            "sparse_check": {
+              "reference_samples": 318,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.010307247839067335,
+                "p90_abs_rel": 0.03772382014789777,
+                "mean_abs_rel": 0.01937439353216685,
+                "rmse_sfm_units": 0.2430156963721545
+              },
+              "within_10_percent": 0.9842767295597484,
+              "delta_1_25": 0.9937106918238994,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 7669,
+                "missing_reference": 1821,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.025361158188320854,
+                  "p90_abs_rel": 0.32467550303107917,
+                  "mean_abs_rel": 0.07515524292659975,
+                  "rmse_m": 0.18309018586564
+                },
+                "within_10_percent": 0.8036249837006129,
+                "delta_1_25": 0.863345938192724,
+                "passed": false
+              },
+              "monocular": {
+                "reference_samples": 7669,
+                "missing_reference": 1821,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.01871663705428883,
+                  "p90_abs_rel": 0.06504462207963639,
+                  "mean_abs_rel": 0.029839459791890125,
+                  "rmse_m": 0.05993547860594257
+                },
+                "within_10_percent": 0.9625766071195723,
+                "delta_1_25": 0.9941322206285044,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0057-1305031465.027823.jpg",
+            "target": "0025-1305031458.159638.jpg",
+            "shared_tracks": 446,
+            "median_angle": 5.573011170385259,
+            "near": 2.5936181205534714,
+            "far": 28.791821587690308,
+            "sparse_check": {
+              "reference_samples": 340,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.05194154543371593,
+                "p90_abs_rel": 0.5630347230138324,
+                "mean_abs_rel": 0.1337040600401485,
+                "rmse_sfm_units": 2.5733647991924076
+              },
+              "within_10_percent": 0.7058823529411765,
+              "delta_1_25": 0.8205882352941176,
+              "passed": false
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 6525,
+                "missing_reference": 2965,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.10849862258337639,
+                  "p90_abs_rel": 0.5401350389825128,
+                  "mean_abs_rel": 0.2054080123749213,
+                  "rmse_m": 0.7360340054678349
+                },
+                "within_10_percent": 0.48367816091954025,
+                "delta_1_25": 0.6308045977011494,
+                "passed": false
+              },
+              "monocular": {
+                "reference_samples": 6525,
+                "missing_reference": 2965,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.09126089304631058,
+                  "p90_abs_rel": 0.1721645513930971,
+                  "mean_abs_rel": 0.09542999151367255,
+                  "rmse_m": 0.26485461456419307
+                },
+                "within_10_percent": 0.5465134099616858,
+                "delta_1_25": 0.9491187739463601,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0065-1305031466.759637.jpg",
+            "target": "0066-1305031466.959728.jpg",
+            "shared_tracks": 570,
+            "median_angle": 4.1993635953848845,
+            "near": 1.8749275489746073,
+            "far": 26.709281612627652,
+            "sparse_check": {
+              "reference_samples": 542,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.028272774080142116,
+                "p90_abs_rel": 0.11045494956661003,
+                "mean_abs_rel": 0.055438510047092084,
+                "rmse_sfm_units": 0.652714940379251
+              },
+              "within_10_percent": 0.8690036900369004,
+              "delta_1_25": 0.9704797047970479,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 6907,
+                "missing_reference": 2583,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.031136060214515537,
+                  "p90_abs_rel": 0.13600926066293986,
+                  "mean_abs_rel": 0.06064569128580186,
+                  "rmse_m": 0.1654367049793363
+                },
+                "within_10_percent": 0.8229332561169828,
+                "delta_1_25": 0.9667004488200377,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 6907,
+                "missing_reference": 2583,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.031968202204386786,
+                  "p90_abs_rel": 0.13724502745143558,
+                  "mean_abs_rel": 0.06369177208855221,
+                  "rmse_m": 0.15589755934506305
+                },
+                "within_10_percent": 0.8359635152743593,
+                "delta_1_25": 0.9601853192413493,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0073-1305031468.459759.jpg",
+            "target": "0011-1305031455.159720.jpg",
+            "shared_tracks": 777,
+            "median_angle": 8.599025822085396,
+            "near": 2.1857402238062393,
+            "far": 28.984420225037944,
+            "sparse_check": {
+              "reference_samples": 606,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.03321982138848362,
+                "p90_abs_rel": 0.20178016418694483,
+                "mean_abs_rel": 0.0733696504451605,
+                "rmse_sfm_units": 3.262648047229405
+              },
+              "within_10_percent": 0.8168316831683168,
+              "delta_1_25": 0.9026402640264026,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 7485,
+                "missing_reference": 2005,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.06178364094623334,
+                  "p90_abs_rel": 0.24537470735344333,
+                  "mean_abs_rel": 0.09726338101958486,
+                  "rmse_m": 0.37415617291023207
+                },
+                "within_10_percent": 0.6498329993319973,
+                "delta_1_25": 0.8344689378757515,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 7485,
+                "missing_reference": 2005,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.026307048470225025,
+                  "p90_abs_rel": 0.14013320174042376,
+                  "mean_abs_rel": 0.04844609502415916,
+                  "rmse_m": 0.21117391647034617
+                },
+                "within_10_percent": 0.8561122244488978,
+                "delta_1_25": 0.9931863727454909,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0081-1305031470.196092.jpg",
+            "target": "0082-1305031470.395823.jpg",
+            "shared_tracks": 390,
+            "median_angle": 7.603408966744244,
+            "near": 1.2057513427911328,
+            "far": 12.21490457414854,
+            "sparse_check": {
+              "reference_samples": 483,
+              "missing_reference": 0,
+              "invalid_predictions": 1,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.023185400091781216,
+                "p90_abs_rel": 0.09607692118207345,
+                "mean_abs_rel": 0.04533082692054703,
+                "rmse_sfm_units": 0.3775049769477821
+              },
+              "within_10_percent": 0.906832298136646,
+              "delta_1_25": 0.9772256728778468,
+              "passed": false
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 7680,
+                "missing_reference": 1810,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.022996917078959456,
+                  "p90_abs_rel": 0.07345361552982374,
+                  "mean_abs_rel": 0.03442808732832272,
+                  "rmse_m": 0.05764584902830274
+                },
+                "within_10_percent": 0.9563802083333334,
+                "delta_1_25": 0.99296875,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 7680,
+                "missing_reference": 1810,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.0586727286593095,
+                  "p90_abs_rel": 0.18621712617132521,
+                  "mean_abs_rel": 0.0841138057773894,
+                  "rmse_m": 0.1345726937364626
+                },
+                "within_10_percent": 0.7046875,
+                "delta_1_25": 0.9125,
+                "passed": true
+              }
+            }
+          },
+          {
+            "name": "0089-1305031471.895604.jpg",
+            "target": "0087-1305031471.459647.jpg",
+            "shared_tracks": 1037,
+            "median_angle": 3.1139534269098648,
+            "near": 1.0705205756402192,
+            "far": 8.390422837939147,
+            "sparse_check": {
+              "reference_samples": 790,
+              "missing_reference": 0,
+              "invalid_predictions": 0,
+              "valid_prediction_metrics": {
+                "median_abs_rel": 0.02241929768407963,
+                "p90_abs_rel": 0.13632165456173748,
+                "mean_abs_rel": 0.05181406657466948,
+                "rmse_sfm_units": 0.556634733845855
+              },
+              "within_10_percent": 0.8455696202531645,
+              "delta_1_25": 0.9607594936708861,
+              "passed": true
+            },
+            "sensor": {
+              "check_grid": 9600,
+              "outside_network": 110,
+              "gmdepth": {
+                "reference_samples": 7657,
+                "missing_reference": 1833,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.02289638973954289,
+                  "p90_abs_rel": 0.07044116116322915,
+                  "mean_abs_rel": 0.033251956088270244,
+                  "rmse_m": 0.044635239361243986
+                },
+                "within_10_percent": 0.9505028078882068,
+                "delta_1_25": 0.9937312263288495,
+                "passed": true
+              },
+              "monocular": {
+                "reference_samples": 7657,
+                "missing_reference": 1833,
+                "invalid_predictions": 0,
+                "valid_prediction_metrics": {
+                  "median_abs_rel": 0.027868034242186868,
+                  "p90_abs_rel": 0.054948526977253456,
+                  "mean_abs_rel": 0.03774211269288639,
+                  "rmse_m": 0.05606277061192886
+                },
+                "within_10_percent": 0.9430586391537156,
+                "delta_1_25": 0.9943842235862609,
+                "passed": true
+              }
+            }
+          }
+        ],
+        "sensor_evaluation_sha256": "29de9a490307fc973128124f20e397a97bb934f30c975e2384c2958c9ae68d03"
+      },
+      "pairs_sha256": "0f051996692456ef9d208e5f28f88f0928ec7d7d6aa3ef6772fd4f45c7751982",
+      "model_sha256": "5d3e6225b631815ae7aa013eee85d7e5865c089a434295c4d675608381a3a7cf",
+      "sparse_sha256": {
+        "rigs.bin": "73e4d5f0da0a84a5711b46ae716a149f1532832f95bb09b4b01e73cf2c5afbe9",
+        "cameras.bin": "e83009f7e294728324aa250195cc6ac701cf1b8391487a9f0b3848acd607971b",
+        "images.bin": "4b9923cc802815e0c1e6524105ae09e9cb37ea041bf2276e41c9327c01e32a7d",
+        "frames.bin": "6de6509c2b0978bfd0a3a47d6320d9b95e67e76c6ef843cc3b93dede25cdfbe5",
+        "points3D.bin": "62203dbf37a6af99fd0510fcd7e1744cbc80ad223ad3a4dac4ef03cd37ca637c"
+      },
+      "pairs": [
+        {
+          "source": "0009-1305031454.727659.jpg",
+          "target": "0011-1305031455.159720.jpg",
+          "source_sha256": "15e98d4723f0a4625e79b3caf4ad8163d6bd8860eff0394b023fe6b04ffc4f37",
+          "target_sha256": "2ab30d6ee0034bcfaced259fd0a182f41991af951732c2516e8a47a177b3802b",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9869058294128312,
+              0.14395051484900384,
+              -0.0727676655230739,
+              0.2965482448687893
+            ],
+            [
+              -0.14650785242437425,
+              0.9887207119696044,
+              -0.031093454300166856,
+              -0.3947243279113679
+            ],
+            [
+              0.0674709793093966,
+              0.0413473457071368,
+              0.996864115089918,
+              0.07376666217254413
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.7743687137283104,
+          "far": 14.150183744248633
+        },
+        {
+          "source": "0017-1305031456.459610.jpg",
+          "target": "0019-1305031456.859634.jpg",
+          "source_sha256": "cfac367cec76aed65a10facc71a810ddc5b2edcaf5adc7e60eec72a29cc81d62",
+          "target_sha256": "6e326190e976da2974d114354808609e26ba012c0399907ce8a4d794940673d1",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9845353132477187,
+              0.1712961697800679,
+              -0.036712929424036256,
+              0.6527501073947268
+            ],
+            [
+              -0.1740845305888433,
+              0.980085033359886,
+              -0.09554006276747579,
+              -0.0053272269982290454
+            ],
+            [
+              0.019616145846679794,
+              0.10045371870980821,
+              0.9947483386362064,
+              -0.5610547406144843
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.8936651675817242,
+          "far": 17.013440883490084
+        },
+        {
+          "source": "0025-1305031458.159638.jpg",
+          "target": "0023-1305031457.727669.jpg",
+          "source_sha256": "3a1c377a31967868e7a7ec76545e614495394d290253586327ca9a37a9a92916",
+          "target_sha256": "a84c3696d0c26f2fa4215e6f8fef0296a64b4f97958b48603ba7e300e6b0bdb6",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9910631182775043,
+              -0.040306482628566176,
+              0.1271584957766571,
+              -0.9002216986320154
+            ],
+            [
+              0.05849342994979062,
+              0.9880349677824543,
+              -0.14270746683980268,
+              -0.18902372721696636
+            ],
+            [
+              -0.11988500424480954,
+              0.14887004365297118,
+              0.9815626805558495,
+              -0.20534515503486062
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.9124368804977596,
+          "far": 22.547319902067393
+        },
+        {
+          "source": "0033-1305031459.891596.jpg",
+          "target": "0035-1305031460.291689.jpg",
+          "source_sha256": "b9f7adaeee5687dd6fca83540a6e370c94bc4e59d1f716a01753485cdcd385e3",
+          "target_sha256": "4b998a01e5c605e95c9d4a9474bd5eafbb1250f333f5d47d99b750e6cd3b5621",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9934605333257193,
+              0.11408649937918391,
+              0.0045209936497199454,
+              0.7462350152565256
+            ],
+            [
+              -0.11388466179517365,
+              0.9929751412215875,
+              -0.03210378052141162,
+              0.1271656698143775
+            ],
+            [
+              -0.008151842244317892,
+              0.031378967085796954,
+              0.9994743157743736,
+              -0.09117848599966116
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.1769858823828103,
+          "far": 18.727842320649618
+        },
+        {
+          "source": "0041-1305031461.591690.jpg",
+          "target": "0038-1305031460.959649.jpg",
+          "source_sha256": "5e14720bf9450db3f2afdb3e4875a13db8ae3932034bb36d8edc213663bfb4c1",
+          "target_sha256": "0dc4ea1e15500f1e123d8c866854bd63028dfbc562ee5599881bf1f190566d37",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9963399682869147,
+              0.07198482016577509,
+              0.04609613063729595,
+              -0.40912557480423506
+            ],
+            [
+              -0.07066766599888952,
+              0.9970607849954923,
+              -0.029595134844122323,
+              -0.37469763880516993
+            ],
+            [
+              -0.048091044658013116,
+              0.0262293097483223,
+              0.9984985101310004,
+              0.38566289754518457
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.5351649830537057,
+          "far": 14.713270287922615
+        },
+        {
+          "source": "0049-1305031463.327739.jpg",
+          "target": "0046-1305031462.659660.jpg",
+          "source_sha256": "5aa95480269ec042532d884168eb67630dceb23036d2d3deecacd811f3d9f8d5",
+          "target_sha256": "ee5b7e5281585413ca8980602e4094da87d35c92a7ecd52c83e20ca3848204f6",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9349754171343403,
+              0.26999977672791925,
+              -0.2300458430864168,
+              1.2816298879431818
+            ],
+            [
+              -0.29275408257776264,
+              0.9535740156368014,
+              -0.0706515664112116,
+              0.32393051018380525
+            ],
+            [
+              0.20028983121596294,
+              0.13340433752010897,
+              0.970611799970669,
+              -0.3893731587462633
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.3987435868786653,
+          "far": 9.305706028975806
+        },
+        {
+          "source": "0057-1305031465.027823.jpg",
+          "target": "0025-1305031458.159638.jpg",
+          "source_sha256": "c735a4642937825479d7c8ae87b60165c1ab0bcc1e068b6b5503f1fb7fd854f4",
+          "target_sha256": "3a1c377a31967868e7a7ec76545e614495394d290253586327ca9a37a9a92916",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9533667863543617,
+              0.2922799200966785,
+              -0.07526100573760833,
+              -0.5728020961113782
+            ],
+            [
+              -0.30161420529212124,
+              0.9317135124126563,
+              -0.20233339307606427,
+              -0.45831621476461726
+            ],
+            [
+              0.010983708042334308,
+              0.21559772516413567,
+              0.9764204929545932,
+              -0.6146080608081179
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 2.5936181205534714,
+          "far": 28.791821587690308
+        },
+        {
+          "source": "0065-1305031466.759637.jpg",
+          "target": "0066-1305031466.959728.jpg",
+          "source_sha256": "7d9aebe778b94665c23b453ee654e9326cb4fbcbca87eeaf1b9ce369d4dc53ab",
+          "target_sha256": "a2704a9916abfeeddadb76311ad621a690a41a3f796cd7eef09f37ae86b86f57",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9944374898017555,
+              -0.01956509768143029,
+              0.10349534206668319,
+              -0.4095644921748056
+            ],
+            [
+              0.017527388798860663,
+              0.9996349324791023,
+              0.02056191648155592,
+              -0.12960726040238346
+            ],
+            [
+              -0.10385985518320948,
+              -0.018633537512158016,
+              0.9944173780466157,
+              0.22173589719121312
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.8749275489746073,
+          "far": 26.709281612627652
+        },
+        {
+          "source": "0073-1305031468.459759.jpg",
+          "target": "0011-1305031455.159720.jpg",
+          "source_sha256": "5e9130d5bf5cf7929c9346f0efa14da4697456a3898d68123465162fe0bf7568",
+          "target_sha256": "2ab30d6ee0034bcfaced259fd0a182f41991af951732c2516e8a47a177b3802b",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.994401408650453,
+              -0.0884340052356277,
+              0.057838267539574675,
+              0.18491867775409654
+            ],
+            [
+              0.09716104273730228,
+              0.980386370340291,
+              -0.171470978959094,
+              0.6545736616417839
+            ],
+            [
+              -0.04153998372886751,
+              0.17613060940385944,
+              0.9834899278502198,
+              -1.1577271341356907
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 2.1857402238062393,
+          "far": 28.984420225037944
+        },
+        {
+          "source": "0081-1305031470.196092.jpg",
+          "target": "0082-1305031470.395823.jpg",
+          "source_sha256": "66c4730ed312ff6edbf98a607619667a7e52eec5c23c68eba4debaa1cd00eac0",
+          "target_sha256": "ec62f90d870441c83f856bb0064b1c341655e3c394100e192843da168b3965e3",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9987021337311648,
+              0.050367962774741815,
+              0.007557539728067554,
+              0.41945121050352574
+            ],
+            [
+              -0.049915322297656384,
+              0.9974323930200905,
+              -0.05135252626830413,
+              -0.11484548045981213
+            ],
+            [
+              -0.010124657067781723,
+              0.050908640525337154,
+              0.9986519922571235,
+              -0.13236053256313365
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.2057513427911328,
+          "far": 12.21490457414854
+        },
+        {
+          "source": "0089-1305031471.895604.jpg",
+          "target": "0087-1305031471.459647.jpg",
+          "source_sha256": "873338181ab8a92c4ca433444b9ac6304a526c238b6e37720efc7253acce951f",
+          "target_sha256": "13b4134096cf5d0e788383cb8b02f66f650163e90501f7342979ca9d843209e1",
+          "network_K": [
+            [
+              446.0725041187229,
+              0.0,
+              255.5
+            ],
+            [
+              0.0,
+              446.5480611593612,
+              191.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "target_from_source": [
+            [
+              0.9871301488562956,
+              -0.13039936169398736,
+              0.09257470328739152,
+              -0.16703535831928373
+            ],
+            [
+              0.12923373025449647,
+              0.9914415329019896,
+              0.018502156670543366,
+              0.025417735346363678
+            ],
+            [
+              -0.09419507515499928,
+              -0.006300262435323164,
+              0.9955338238903739,
+              -0.09456170422906847
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "size": [
+            512,
+            384
+          ],
+          "near": 1.0705205756402192,
+          "far": 8.390422837939147
+        }
+      ]
+    }
+  },
+  "controls": {
+    "pipes": {
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "resolution": 512,
+        "max_points": 150000,
+        "evaluation_mode": "holdout"
+      },
+      "sfm": {
+        "input_images": 14,
+        "registered_images": 14,
+        "sparse_points": 1881,
+        "reprojection_error": 0.5676130227212903,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 40440,
+        "verified_pairs": 49,
+        "verified_inliers": 10375
+      },
+      "sfm_reused": true,
+      "sfm_seconds": 0,
+      "training_export_seconds": 23.757416374981403,
+      "end_to_end_seconds": 23.81222258321941,
+      "model_bytes": 2716730,
+      "model_sha256": "f509e556bbc658b6554ac6e467f3beda4c6d504dd3f04f464ec783e23bdb3c9d",
+      "report": {
+        "steps": 3000,
+        "resolution": 512,
+        "gaussians": 11505,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "evaluation": {
+          "psnr": 19.02061,
+          "ssim": 0.7749686
+        },
+        "evaluation_images": [
+          {
+            "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "fa2ea7f4c774d1c7ebcb5d9eef59285d9167c58e10433b790a43d3405f259383",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+          },
+          {
+            "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "840e6229c8bfb2589e0a1dd3c2f0c7bc39cf11cb2060939fac92908ed3bf859f",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          }
+        ],
+        "engine_version": "0.3.0",
+        "training_seed": 42
+      },
+      "camera_reference_verified": true
+    },
+    "office": {
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "resolution": 512,
+        "max_points": 150000,
+        "evaluation_mode": "holdout"
+      },
+      "sfm": {
+        "input_images": 26,
+        "registered_images": 26,
+        "sparse_points": 2488,
+        "reprojection_error": 0.741989650263063,
+        "unregistered_images": [],
+        "camera_model": "RADIAL",
+        "camera_mode_effective": "shared",
+        "original_cameras": [
+          {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.6628029340853,
+              800.0,
+              533.5,
+              -0.10301719924275823,
+              0.06955364689099952
+            ]
+          }
+        ],
+        "undistorted_sizes": [
+          [
+            1600,
+            1066
+          ]
+        ],
+        "features": 36280,
+        "verified_pairs": 147,
+        "verified_inliers": 17752
+      },
+      "sfm_reused": true,
+      "sfm_seconds": 0,
+      "training_export_seconds": 23.65675299987197,
+      "end_to_end_seconds": 23.737454125192016,
+      "model_bytes": 3406322,
+      "model_sha256": "fc2a20ac83cc5030520f0c759bf69fc1cab491f4320fb92e92f4bb75bf260fb2",
+      "report": {
+        "steps": 3000,
+        "resolution": 512,
+        "gaussians": 14427,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "evaluation": {
+          "psnr": 21.715462,
+          "ssim": 0.88855505
+        },
+        "evaluation_images": [
+          {
+            "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "a3ed2d5f47cd62eaf92ac466c39c052ecc0a8458d23f6991c319cc521a1f7f3a",
+            "reference_sha256": "efee0c954ee029708dc9dbab4801ec80db406df07b23309617823fd0d3dbb542"
+          },
+          {
+            "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "c7f8eff40f2c6109b14c46e12a3b25b45e345d55c10f6f37fd64725091994867",
+            "reference_sha256": "8cf814a100fda16cdd6ef92beb32dc1aedfac2117b00b337b20f662e3c796586"
+          },
+          {
+            "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "455bd5b722a1cc675bfedb1dc4b3fc822234c349b736b07f8d1e9590d7e4eaba",
+            "reference_sha256": "d6426f7e6de6b31ddc3707bc359142af33d1d2d367e0fea0ecf9ae2b7e6ca975"
+          },
+          {
+            "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "width": 512,
+            "height": 341,
+            "sha256": "9d848857a9023f69379104ad30137e296e3e4c63e98dc9e19adf772b3f9fb78a",
+            "reference_sha256": "1ad78a08dce899c6937e1f1281de920b35049981428d0d5829edc56b96bd7a76"
+          }
+        ],
+        "engine_version": "0.3.0",
+        "training_seed": 42
+      },
+      "camera_reference_verified": true
+    }
+  },
+  "script_sha256": "cade0a090a56b8a340cad9cb866a581790ab0016ca91f11e99c29caae543f240",
+  "scope": "paired depth feasibility, no Gaussian initialization change",
+  "cpu_mps_parity": {
+    "mean_relative": 6.524900300064473e-07,
+    "max_relative": 3.933906555175781e-06
+  },
+  "sensor_summary": {
+    "gmdepth": {
+      "mean_view_abs_rel": 0.0734857921013906,
+      "reference_samples": 77106,
+      "invalid_predictions": 0
+    },
+    "monocular": {
+      "mean_view_abs_rel": 0.056629268539123916,
+      "reference_samples": 77106,
+      "invalid_predictions": 0
+    },
+    "outside_network": 1210
+  }
+}

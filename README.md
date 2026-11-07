@@ -229,6 +229,8 @@ DSP 与仿射形状估计也完成了实拍对照，但 office 留出 SSIM 仍�
 
 可选离线脚本 `scripts/benchmark_depth_prior.py` 用独立图像区域检查相对深度与 SfM 的对齐。Depth Anything V2 Small 已在 MPS 跑通，但仅 23/34 张训练图通过本轮门槛，暂不用于补点；模型和依赖单独下载，不增加应用运行依赖。[坐标约定、许可、结果与复现](docs/DEPTH-PRIOR.md)
 
+`scripts/benchmark_gmdepth.py` 可用训练图对与 SfM 位姿离线运行 UniMatch 深度估计，支持 CPU/MPS。固定实拍检查未优于已有单目基线，暂不接入初始化；外部源码与权重单独准备。[相机适配、实测与复现](docs/GMDEPTH.md)
+
 `scripts/benchmark_depth_consistency.py` 进一步检查跨视图深度、往返重投影和视差，输出支持与冲突分布。当前两场景只有约 9%–11% 候选采样位置获得两个额外视角支持，且部分仍有其他视角冲突，尚不生成补充点云。[结果与适用范围](docs/DEPTH-CONSISTENCY.md)
 
 `scripts/benchmark_sensor_depth.py` 可用 TUM 已配准传感器深度离线核验相对预测。预选照片中 11 张匹配有效，检查区域平均相对误差为 5.66%，另有约 27% 位置缺测；测量值只用于全局尺度与评分，不进入重建或补点。[方法、数据与限制](docs/SENSOR-DEPTH.md)
