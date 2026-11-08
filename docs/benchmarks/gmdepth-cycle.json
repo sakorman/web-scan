@@ -1,0 +1,105 @@
+{
+  "baseline_commit": "0f211294a97f415735e0f0b07b03c211085191db",
+  "report_script_sha256": "da3f72a73b9911321071d57f24ca3fb11e48a200912253b73fb31b695c54fd77",
+  "cycle_script_sha256": "6adf3646457f2f42c45627872cfdd35647a4da550c549bcd814ca8eac6ecce6e",
+  "hypothesis": "reciprocal RGB depth agreement can screen reliable regions without changing Gaussian initialization",
+  "scope": "RGB/SfM reciprocal audit; TUM sensor scores are held-out diagnostics; no point injection",
+  "config": {
+    "relative_depth_tolerance": 0.05,
+    "roundtrip_pixels": 2,
+    "min_parallax_degrees": 1,
+    "grid_step": 4,
+    "hypothesis": "Reciprocal paired-depth agreement reduces retained sensor error versus rejected pixels, with coverage reported; no point injection or tuning on sensor results",
+    "baseline_commit": "0f211294a97f415735e0f0b07b03c211085191db"
+  },
+  "scenes": {
+    "pipes": {
+      "audit_sha256": "1862181e42cf7da314629cc24f7bbe12caef10717638fde2427fda4baa4c1ce5",
+      "views": 1,
+      "check_samples": 53067,
+      "counts": {
+        "supported": 30424,
+        "occlusion_candidate": 3526,
+        "front_depth_conflict": 1334,
+        "roundtrip_failed": 163,
+        "low_parallax": 0
+      },
+      "coverage": 0.5733129817023762,
+      "seconds": 0.055397083051502705
+    },
+    "office": {
+      "audit_sha256": "6b0a234c387d84ad49373810948481b0225ce6425ba13d39d94953f08c0a530d",
+      "views": 1,
+      "check_samples": 53067,
+      "counts": {
+        "supported": 5814,
+        "occlusion_candidate": 18288,
+        "front_depth_conflict": 743,
+        "roundtrip_failed": 1803,
+        "low_parallax": 52
+      },
+      "coverage": 0.10955961331901182,
+      "seconds": 0.05519733298569918
+    },
+    "tum": {
+      "audit_sha256": "ca55a3504b8365d264f93c1bf80efb36a7d818cd1087d1c7b1b24b464a615f1b",
+      "views": 11,
+      "check_samples": 104390,
+      "counts": {
+        "supported": 63613,
+        "occlusion_candidate": 5232,
+        "front_depth_conflict": 3771,
+        "roundtrip_failed": 5579,
+        "low_parallax": 0
+      },
+      "coverage": 0.6093782929399367,
+      "seconds": 0.23063158290460706
+    }
+  },
+  "tum_sensor_regions": {
+    "all": {
+      "grid_samples": 104390,
+      "gmdepth": {
+        "mean_view_abs_rel": 0.0734857921013906,
+        "median_view_abs_rel": 0.060645691285801814,
+        "views": 11
+      },
+      "monocular": {
+        "mean_view_abs_rel": 0.056629268539123916,
+        "median_view_abs_rel": 0.04844609502415916,
+        "views": 11
+      }
+    },
+    "retained": {
+      "grid_samples": 63613,
+      "gmdepth": {
+        "mean_view_abs_rel": 0.04283890240580398,
+        "median_view_abs_rel": 0.038958256909270135,
+        "views": 11
+      },
+      "monocular": {
+        "mean_view_abs_rel": 0.04491415089157483,
+        "median_view_abs_rel": 0.03572291028539045,
+        "views": 11
+      }
+    },
+    "rejected": {
+      "grid_samples": 40777,
+      "gmdepth": {
+        "mean_view_abs_rel": 0.13276386715899158,
+        "median_view_abs_rel": 0.11784696358938532,
+        "views": 11
+      },
+      "monocular": {
+        "mean_view_abs_rel": 0.09462709115159598,
+        "median_view_abs_rel": 0.10033944414103285,
+        "views": 11
+      }
+    }
+  },
+  "tum_sensor_score_sha256": "a8ceab256a1e422cdf27065e3d2417d65eb31acd6111eb79f376bbafba8166fa",
+  "upstream": {
+    "unimatch_commit": "943a99006950ab6c84ea72a72beb147fdd03c19a",
+    "weights_sha256": "d3d1efb5d1615404828574b6bad63e138c8f4fd8077557392b18b57324982b49"
+  }
+}

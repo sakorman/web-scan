@@ -1,0 +1,8 @@
+{
+  "relative_depth_tolerance": 0.05,
+  "roundtrip_pixels": 2,
+  "min_parallax_degrees": 1,
+  "grid_step": 4,
+  "hypothesis": "Reciprocal paired-depth agreement reduces retained sensor error versus rejected pixels, with coverage reported; no point injection or tuning on sensor results",
+  "baseline_commit": "0f211294a97f415735e0f0b07b03c211085191db"
+}
