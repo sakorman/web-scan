@@ -2,6 +2,13 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-11-09
+
+### 查明双向深度差异来自搜索范围
+
+- 13 个实拍图对中，UniMatch 内置正向与冻结基线逐元素相同；内置与独立反向最大相对差为 190.33%，仅对齐近远界后降至 0.000435% 以下。保留逐视角估计范围，不用这一差值判断置信度。唯一有传感器参考的目标图上，共用 / 独立范围 AbsRel 为 19.53% / 17.57%；下一步需要更多目标视角。
+- 推理与传感器评分拆为独立进程，解决 OpenMP 冲突。两次纯 RGB Metal 控制重建完整定位（pipes 14/14、office 26/26）。未将深度注入训练，也无等质量提速结论。[报告、数据与截图](docs/GMDEPTH-BIDIR.md) · [上轮基线](https://github.com/sakorman/web-scan/commit/356b0f4) · [UniMatch 实现](https://github.com/autonomousvision/unimatch/blob/943a99006950ab6c84ea72a72beb147fdd03c19a/unimatch/matching.py#L214-L218) · [Confidence matters](https://arxiv.org/abs/2608.06117)
+
 ## 2026-11-08
 
 ### 双向深度筛出低误差子集，仍不接入训练
