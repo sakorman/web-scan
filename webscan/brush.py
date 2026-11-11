@@ -137,6 +137,15 @@ def convert_output(source, output, normalization, *, expected_sh_degree=None):
         f.write(("\n".join(header) + "\n").encode())
         # Keep the explicit little-endian records without a full bytes copy.
         data.tofile(f)
+    # Keep conversion temporaries bounded independently of the model size.
+    # PLY validation and normalization above still operate on the full model.
+    with (output / "preview.splat").open("wb") as stream:
+        for start in range(0, len(data), 32768):
+            _splat_records(data[start : start + 32768]).tofile(stream)
+    return len(data)
+
+
+def _splat_records(data):
     splat = np.zeros(
         len(data),
         dtype=[
@@ -159,8 +168,7 @@ def convert_output(source, output, normalization, *, expected_sh_degree=None):
     quat = np.column_stack([data[f"rot_{i}"] for i in range(4)])
     quat /= np.maximum(np.linalg.norm(quat, axis=1, keepdims=True), 1e-8)
     splat["quat"] = np.clip(quat * 128 + 128, 0, 255).astype("u1")
-    splat.tofile(output / "preview.splat")
-    return len(data)
+    return splat
 
 
 class TrainingProgress:

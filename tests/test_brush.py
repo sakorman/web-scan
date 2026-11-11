@@ -184,3 +184,42 @@ def test_cleanup_failure_preserves_final_model_and_reports_leftovers(
     removed, errors = prune_intermediate_exports(tmp_path, 6000)
     assert removed == 0 and errors == ["export_0500.ply"]
     assert (tmp_path / "export_6000.ply").read_bytes() == b"final"
+
+
+@pytest.mark.parametrize("count", [32768, 65537])
+def test_chunked_splat_keeps_record_order_tail_and_sh3(tmp_path, count):
+    import struct
+    from tests.test_ply_validation import write_ply
+
+    source = tmp_path / "source.ply"
+    data = write_ply(source, count=count)
+    data["x"] = np.arange(count, dtype="f4")
+    data["scale_0"] = np.log(np.float32(2))
+    data["scale_1"] = np.log(np.float32(4))
+    data["scale_2"] = np.log(np.float32(8))
+    # Non-identity WXYZ rotation, zero logit = 50% opacity; SH3 must survive.
+    data["rot_0"], data["rot_1"] = 0, 2
+    data["f_rest_44"] = np.arange(count, dtype="f4") / count
+    header = source.read_bytes().split(b"end_header\n", 1)[0] + b"end_header\n"
+    with source.open("wb") as stream:
+        stream.write(header)
+        data.tofile(stream)
+    original = source.read_bytes()
+    output = tmp_path / "out"
+    output.mkdir()
+    assert convert_output(
+        source, output, {"center": [1, 0, 0], "scale": 1}, expected_sh_degree=3
+    ) == count
+    assert source.read_bytes() == original
+    _, normalized = read_ply(output / "gaussians.ply", expected_sh_degree=3)
+    for name in data.dtype.names:
+        np.testing.assert_array_equal(
+            normalized[name], data[name] - 1 if name == "x" else data[name]
+        )
+    payload = (output / "preview.splat").read_bytes()
+    assert len(payload) == count * 32
+    # Check every position, especially full blocks and the one-record tail.
+    for index, row in enumerate(struct.iter_unpack("<6f8B", payload)):
+        assert row[:3] == (index - 1, 0, 0)
+        assert row[3:6] == pytest.approx((2, 4, 8))
+        assert row[6:] == (127, 127, 127, 127, 128, 255, 128, 128)
