@@ -1,0 +1,226 @@
+{
+  "baseline_commit": "48518c73dd969208f4cdaa26b789175e5ea557fb",
+  "before": {
+    "health": {
+      "http_status": 200,
+      "body": {
+        "status": "ok",
+        "mode": "local",
+        "versions": {
+          "torch": null,
+          "pycolmap": null,
+          "gsplat": null
+        },
+        "reference_available": false,
+        "cuda_backend_installed": false,
+        "brush_available": true,
+        "indoor_sample_available": false,
+        "max_frames": 200,
+        "min_capture_frames": 12,
+        "max_source_pixels": 48000000,
+        "normalized_image_max_dimension": 2400
+      }
+    },
+    "sessions": {
+      "http_status": 500
+    },
+    "local_counts": {
+      "sessions": 19,
+      "frames": 321,
+      "jobs": 52
+    },
+    "active_jobs": 0
+  },
+  "restored_counts": {
+    "sessions": 19,
+    "frames": 321,
+    "jobs": 52
+  },
+  "restored_health": {
+    "status": "ok",
+    "database_available": true,
+    "worker_running": true,
+    "mode": "local",
+    "versions": {
+      "torch": "2.14.1",
+      "pycolmap": "3.13.0",
+      "gsplat": null
+    },
+    "reference_available": true,
+    "cuda_backend_installed": false,
+    "brush_available": true,
+    "indoor_sample_available": true,
+    "max_frames": 200,
+    "min_capture_frames": 12,
+    "max_source_pixels": 48000000,
+    "normalized_image_max_dimension": 2400
+  },
+  "history_http_status": 200,
+  "runs": [
+    {
+      "engine_version": "0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "gaussians": 11780,
+      "steps": 3000,
+      "resolution": 512,
+      "color_model": "SH3",
+      "evaluation_mode": "holdout",
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 19.481394,
+        "ssim": 0.78931653
+      },
+      "evaluation_images": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "e71a9131326ac9c1e66d2d29889ab82bb271983327df634f18efc2f187ad44ca",
+          "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "8e05211b9dce5ac3211cc0df879627dffb4c7873e6eded6329f8785c8a1d994c",
+          "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+        }
+      ],
+      "registered_images": 14,
+      "input_images": 14,
+      "unregistered_images": [],
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0104,
+        "sfm_seconds": 0.0304,
+        "training_and_model_export_seconds": 23.9822
+      },
+      "seconds": 24.07,
+      "scene": "pipes",
+      "job_id": "2a808c31efd44bf1a11761b3b5cf2ac4",
+      "model_bytes": 2781630,
+      "model_sha256": "6100516c3350a585568913bb19f333239a388c877b52df31e7af788aec21eb9a",
+      "range_status": 206,
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.091435630405,
+            800.0,
+            533.5,
+            -0.10091385666317157,
+            0.06728544184812109
+          ]
+        }
+      ],
+      "health_checks": 24,
+      "all_health_checks_ok": true
+    },
+    {
+      "engine_version": "0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "gaussians": 14408,
+      "steps": 3000,
+      "resolution": 512,
+      "color_model": "SH3",
+      "evaluation_mode": "holdout",
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {
+        "psnr": 21.932487,
+        "ssim": 0.88952523
+      },
+      "evaluation_images": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "d0ece0695cd88f1ede2e3887d838a818a8bdc5942d4f04f72de588981f1fd7b1",
+          "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "c6ceff382ac6d6a34be47e22af7fa98b7718effff8b960adca71dd54e96c31e1",
+          "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "cbd3274f5f953761b4c05c7a219c18aefec418b336a478cbfc4f2b019805026c",
+          "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "cfe0159598000c1f56dbee80e6343c3bbbf524610465b4b02e983bdf6b8cb80a",
+          "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+        }
+      ],
+      "registered_images": 26,
+      "input_images": 26,
+      "unregistered_images": [],
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0131,
+        "sfm_seconds": 0.0439,
+        "training_and_model_export_seconds": 23.6298
+      },
+      "seconds": 23.74,
+      "scene": "office",
+      "job_id": "0b6b402c432a40dc8ecce54ad0bef473",
+      "model_bytes": 3401838,
+      "model_sha256": "2a5ff3fa47e47b243501e327cbf25a104992bd91bdc6a4746c035bd668a03ca6",
+      "range_status": 206,
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.4381085295956,
+            800.0,
+            533.5,
+            -0.10327691090226823,
+            0.06959028672322837
+          ]
+        }
+      ],
+      "health_checks": 25,
+      "all_health_checks_ok": true
+    }
+  ],
+  "final_health": {
+    "status": "ok",
+    "database_available": true,
+    "worker_running": true,
+    "mode": "local",
+    "versions": {
+      "torch": "2.14.1",
+      "pycolmap": "3.13.0",
+      "gsplat": null
+    },
+    "reference_available": true,
+    "cuda_backend_installed": false,
+    "brush_available": true,
+    "indoor_sample_available": true,
+    "max_frames": 200,
+    "min_capture_frames": 12,
+    "max_source_pixels": 48000000,
+    "normalized_image_max_dimension": 2400
+  },
+  "probe_seconds": {
+    "count": 50,
+    "median": 8.545839227735996e-05,
+    "max": 0.00025166571140289307,
+    "scope": "read-only catalog probe; filesystem cache not flushed; no HTTP or capability checks"
+  }
+}

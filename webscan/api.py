@@ -165,6 +165,7 @@ def create_app(
 
             runner = Runner(store)
             task = asyncio.create_task(runner.loop())
+            app.state.worker_task = task
         yield
         if task:
             task.cancel()
@@ -173,6 +174,7 @@ def create_app(
 
     app = FastAPI(title="Web Scan local API", version="0.1.0", lifespan=lifespan)
     app.state.store = store
+    app.state.worker_task = None
     app.add_middleware(
         TrustedHostMiddleware,
         allowed_hosts=[
@@ -211,27 +213,36 @@ def create_app(
     def health():
         from .brush import executable
 
+        database_available = store.readable()
+        worker = app.state.worker_task
+        worker_running = (worker is not None and not worker.done()) if run_worker else None
+        ready = database_available and worker_running is not False
         versions = {}
         for name in ["torch", "pycolmap", "gsplat"]:
             try:
                 versions[name] = importlib.metadata.version(name)
             except importlib.metadata.PackageNotFoundError:
                 versions[name] = None
-        return {
-            "status": "ok",
-            "mode": "local",
-            "versions": versions,
-            "reference_available": bool(versions["torch"]),
-            "cuda_backend_installed": bool(versions["gsplat"]),
-            "brush_available": executable() is not None,
-            "indoor_sample_available": bool(
-                prepared_photos(sample_root, SAMPLES["eth3d-office"])
-            ),
-            "max_frames": 200,
-            "min_capture_frames": MIN_CAPTURE_FRAMES,
-            "max_source_pixels": MAX_SOURCE_PIXELS,
-            "normalized_image_max_dimension": NORMALIZED_IMAGE_MAX_DIMENSION,
-        }
+        return JSONResponse(
+            {
+                "status": "ok" if ready else "degraded",
+                "database_available": database_available,
+                "worker_running": worker_running,
+                "mode": "local",
+                "versions": versions,
+                "reference_available": bool(versions["torch"]),
+                "cuda_backend_installed": bool(versions["gsplat"]),
+                "brush_available": executable() is not None,
+                "indoor_sample_available": bool(
+                    prepared_photos(sample_root, SAMPLES["eth3d-office"])
+                ),
+                "max_frames": 200,
+                "min_capture_frames": MIN_CAPTURE_FRAMES,
+                "max_source_pixels": MAX_SOURCE_PIXELS,
+                "normalized_image_max_dimension": NORMALIZED_IMAGE_MAX_DIMENSION,
+            },
+            status_code=200 if ready else 503,
+        )
 
     @app.get("/api/sessions")
     def sessions():

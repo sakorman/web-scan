@@ -4,6 +4,7 @@ import json
 import sqlite3
 import time
 import uuid
+from contextlib import closing
 from pathlib import Path
 from .frame_order import ordered_frames
 
@@ -38,6 +39,17 @@ class Store:
         db.row_factory = sqlite3.Row
         db.execute("PRAGMA busy_timeout=30000")
         return db
+
+    def readable(self):
+        """Probe the existing catalog without creating a missing database."""
+        uri = (self.root / "state.sqlite3").as_uri() + "?mode=ro"
+        try:
+            with closing(sqlite3.connect(uri, uri=True, timeout=0.25)) as db:
+                for table in ("sessions", "frames", "jobs"):
+                    db.execute(f"SELECT * FROM {table} LIMIT 1").fetchone()
+            return True
+        except (sqlite3.Error, OSError):
+            return False
 
     def session_dir(self, sid):
         return self.root / "sessions" / sid

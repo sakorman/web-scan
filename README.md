@@ -135,6 +135,8 @@ npm run build
 
 照片、任务和结果都放在 `.data/`，不会提交到 Git。API 文档在 `/docs`。
 
+`GET /api/health` 会检查项目记录可读性与后台队列是否运行；失败返回 503，并提供 `database_available` / `worker_running` 字段。此检查不保证所有文件或 GPU 训练可用。[故障检查与恢复验证](docs/SERVICE-READINESS.md)
+
 ### 启用 Mac GPU 训练
 
 ```bash
