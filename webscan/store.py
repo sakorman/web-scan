@@ -34,11 +34,30 @@ class Store:
                   report TEXT, created REAL NOT NULL, updated REAL NOT NULL);
             """)
 
-    def connect(self):
-        db = sqlite3.connect(self.root / "state.sqlite3", timeout=30)
+    def connect(self, *, timeout=30):
+        db = sqlite3.connect(self.root / "state.sqlite3", timeout=timeout)
         db.row_factory = sqlite3.Row
-        db.execute("PRAGMA busy_timeout=30000")
         return db
+
+    def claim_next_job(self):
+        """Poll without waiting for another writer; the runner retries next tick."""
+        try:
+            with closing(self.connect(timeout=0)) as db, db:
+                row = db.execute(
+                    "SELECT id FROM jobs WHERE status='queued' ORDER BY created, rowid LIMIT 1"
+                ).fetchone()
+                if row is not None:
+                    # Cancellation can commit after the read and before the update.
+                    changed = db.execute(
+                        "UPDATE jobs SET status='running',updated=? WHERE id=? AND status='queued'",
+                        (time.time(), row["id"]),
+                    ).rowcount
+                    if changed:
+                        return row["id"]
+        except sqlite3.OperationalError as exc:
+            if exc.sqlite_errorcode & 0xFF != sqlite3.SQLITE_BUSY:
+                raise
+        return None
 
     def readable(self):
         """Probe the existing catalog without creating a missing database."""

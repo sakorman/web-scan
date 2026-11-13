@@ -54,18 +54,8 @@ class Runner:
                         self.process = None
                         self.log = None
                 if not self.process:
-                    with self.store.connect() as db:
-                        db.execute("BEGIN IMMEDIATE")
-                        row = db.execute(
-                            "SELECT id FROM jobs WHERE status='queued' ORDER BY created LIMIT 1"
-                        ).fetchone()
-                        if row:
-                            self.jid = row["id"]
-                            db.execute(
-                                "UPDATE jobs SET status='running',updated=? WHERE id=?",
-                                (time.time(), self.jid),
-                            )
-                    if row:
+                    self.jid = self.store.claim_next_job()
+                    if self.jid is not None:
                         try:
                             path = self.store.job_dir(self.jid)
                             path.mkdir(parents=True, exist_ok=True)

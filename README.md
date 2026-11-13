@@ -135,6 +135,8 @@ npm run build
 
 照片、任务和结果都放在 `.data/`，不会提交到 Git。API 文档在 `/docs`。
 
+队列按创建顺序领取重建任务。数据库正被其他请求写入时，待领任务保留到下次轮询；空队列只读取状态。[锁竞争实测](docs/QUEUE-LOCK.md)
+
 `GET /api/health` 会检查项目记录可读性与后台队列是否运行；失败返回 503，并提供 `database_available` / `worker_running` 字段。此检查不保证所有文件或 GPU 训练可用。[故障检查与恢复验证](docs/SERVICE-READINESS.md)
 
 ### 启用 Mac GPU 训练

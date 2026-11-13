@@ -1,0 +1,211 @@
+{
+  "baseline_commit": "9f8968452fbb30f66121d876295eb7cd969d17ad",
+  "before": [
+    {
+      "writer_hold_seconds": 1.2,
+      "first_50ms_timer_seconds": 1.248434,
+      "worker_alive_after_release": true,
+      "sqlite_error": null
+    },
+    {
+      "writer_hold_seconds": 31,
+      "first_50ms_timer_seconds": 31.057156,
+      "worker_alive_after_release": true,
+      "sqlite_error": null
+    }
+  ],
+  "after": [
+    {
+      "writer_hold_seconds": 1.2,
+      "first_50ms_timer_seconds": 0.050069,
+      "worker_alive_after_release": true,
+      "sqlite_error": null
+    },
+    {
+      "writer_hold_seconds": 31,
+      "first_50ms_timer_seconds": 0.052137,
+      "worker_alive_after_release": true,
+      "sqlite_error": null
+    }
+  ],
+  "runs": [
+    {
+      "engine_version": "0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "gaussians": 11676,
+      "steps": 3000,
+      "resolution": 512,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "evaluation": {
+        "psnr": 18.672209,
+        "ssim": 0.7825366
+      },
+      "evaluation_images": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "c933ea2cb60a903e2fc61760d0960ee3c835b6f83265de5e4b0320a92481ad31",
+          "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "fb010390bca37b03ef858484389bd5ceed2e9a4c654458d469f77f40debf8c65",
+          "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+        }
+      ],
+      "registered_images": 14,
+      "input_images": 14,
+      "unregistered_images": [],
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0094,
+        "sfm_seconds": 0.0294,
+        "training_and_model_export_seconds": 22.7978
+      },
+      "seconds": 22.87,
+      "color_model": "SH3",
+      "camera_mode_effective": "shared",
+      "scene": "pipes",
+      "job_id": "6ccb76bf56254ce484f12138cb17c84b",
+      "baseline_job_id": "2a808c31efd44bf1a11761b3b5cf2ac4",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "model_bytes": 2757086,
+      "model_sha256": "df799372dc7f6beb0537a330952baf1dc8c2b06447bb820eed8a13e6203d5b0f",
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.091435630405,
+            800.0,
+            533.5,
+            -0.10091385666317157,
+            0.06728544184812109
+          ]
+        }
+      ],
+      "geometry_matches_baseline": true,
+      "eval_references_match_baseline": true,
+      "aligned_scores": {
+        "baseline": {
+          "psnr": 19.306960154207182,
+          "ssim": 0.7661182880401611
+        },
+        "current": {
+          "psnr": 18.528407124757216,
+          "ssim": 0.7574580013751984
+        }
+      },
+      "enqueue_to_success_seconds": 23.1144
+    },
+    {
+      "engine_version": "0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "gaussians": 14434,
+      "steps": 3000,
+      "resolution": 512,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "evaluation": {
+        "psnr": 21.890978,
+        "ssim": 0.8915353
+      },
+      "evaluation_images": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "0713a839cc20f07a8d5d4c8acce4bc7a5e804c38322bae87a3b72e0642b24bf7",
+          "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "7b272ae17bfeebcec9eeeb73f3c8ef5ae0bdea2fa9a822ad74a4478286ba9607",
+          "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "c155c5bfe06e69063aa199b958e3feb990430fe4e388310d1eb082ba685f09ba",
+          "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "eaf8a79f1587766e89192b6d7ec4ed16d3f96573b7c5394946f70ca385872628",
+          "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+        }
+      ],
+      "registered_images": 26,
+      "input_images": 26,
+      "unregistered_images": [],
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0123,
+        "sfm_seconds": 0.0342,
+        "training_and_model_export_seconds": 23.6284
+      },
+      "seconds": 23.71,
+      "color_model": "SH3",
+      "camera_mode_effective": "shared",
+      "scene": "office",
+      "job_id": "d029608ae9ec423b843f988a6554fd33",
+      "baseline_job_id": "0b6b402c432a40dc8ecce54ad0bef473",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "model_bytes": 3407974,
+      "model_sha256": "26c86c8011f58a1bc91523c9bd39e815d82fe1d2f3fe9d92f19b77b35065fe9a",
+      "original_cameras": [
+        {
+          "model": "RADIAL",
+          "width": 1600,
+          "height": 1067,
+          "params": [
+            906.4381085295956,
+            800.0,
+            533.5,
+            -0.10327691090226823,
+            0.06959028672322837
+          ]
+        }
+      ],
+      "geometry_matches_baseline": true,
+      "eval_references_match_baseline": true,
+      "aligned_scores": {
+        "baseline": {
+          "psnr": 21.791243228883026,
+          "ssim": 0.8763835579156876
+        },
+        "current": {
+          "psnr": 21.75413646760665,
+          "ssim": 0.8777889013290405
+        }
+      },
+      "enqueue_to_success_seconds": 24.09
+    }
+  ]
+}
