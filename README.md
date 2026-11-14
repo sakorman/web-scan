@@ -85,6 +85,8 @@ Web Scan 是一个在本地运行的三维重建工具。导入同一处空间�
 
 DSP-SIFT 两次对照改善 pipes，但 office 的 SSIM 两次回退，因此仍保留现有默认特征提取；不把更多稀疏点直接视为质量提升。[配置、原始域评分与截图](docs/DSP-SIFT.md)
 
+同一相机下比较两份模型时，可给 `scripts/compare_quality.py` 加 `--error-grid 4`，查看每张留出照片 16 个区域的 RGB 均方误差，定位需要放大复查的位置。[示例与实拍对照](docs/HOLDOUT-GRID.md)
+
 离线共同网格评分会复用同一参考照片的局部统计；四组固定模型实测耗时减少约 15%–21%，验证照片的新旧 PSNR / SSIM 完全一致。这只加快评分，不改变重建质量。[范围与复现](docs/REFERENCE-METRICS.md)
 
 新任务会保存原始内参与照片身份清单，复用 SfM 缓存的任务也可进行原始域评测；原图被改动或丢失时拒绝评分。历史缓存任务若缺少原始内参，需要重新重建。[验证与兼容范围](docs/RAW-CACHE-EVALUATION.md)

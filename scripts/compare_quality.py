@@ -34,9 +34,12 @@ class ReferenceMetrics:
     def blur(self, value):
         return F.conv2d(value, self.window, groups=3)
 
-    def score(self, render):
+    def score(self, render, *, error_grid=None):
         a = np.asarray(render).astype(np.float64) / 255
-        mse = np.mean((a - self.reference) ** 2)
+        squared_error = (a - self.reference) ** 2
+        mse = squared_error.mean()
+        tiles = error_tiles(squared_error, error_grid) if error_grid is not None else None
+        del squared_error
         psnr = float(-10 * np.log10(max(mse, 1e-12)))
         x = torch.tensor(a.transpose(2, 0, 1)[None], dtype=torch.float32)
         mx, my, vy = self.blur(x), self.my, self.vy
@@ -47,7 +50,27 @@ class ReferenceMetrics:
             * (2 * cov + 0.03**2)
             / ((mx * mx + my * my + 0.01**2) * (vx + vy + 0.03**2))
         ).mean()
-        return {"psnr": psnr, "ssim": float(ssim)}
+        result = {"psnr": psnr, "ssim": float(ssim)}
+        if tiles is not None:
+            result["error_tiles"] = tiles
+        return result
+
+
+def error_tiles(squared_error, divisions):
+    """Tile bounds are half-open on the scoring grid; MSE uses RGB in [0, 1]."""
+    height, width = squared_error.shape[:2]
+    if not 1 <= divisions <= min(16, height, width):
+        raise ValueError("Error grid must fit the scoring image and be between 1 and 16")
+    tiles = []
+    for row in range(divisions):
+        top, bottom = row * height // divisions, (row + 1) * height // divisions
+        for col in range(divisions):
+            left, right = col * width // divisions, (col + 1) * width // divisions
+            tiles.append({
+                "xyxy": [left, top, right, bottom],
+                "mse": float(squared_error[top:bottom, left:right].mean()),
+            })
+    return tiles
 
 
 def metrics(render, reference):
@@ -101,7 +124,9 @@ def _lpips_scores(scorer, directory, count):
     }
 
 
-def compare(data, quick, detail, size=512, lpips_scorer=None):
+def compare(data, quick, detail, size=512, lpips_scorer=None, *, error_grid=None):
+    if error_grid is not None and not 1 <= error_grid <= 16:
+        raise ValueError("Error grid must be between 1 and 16")
     if size < 16:
         raise ValueError("Comparison size must be at least 16 pixels")
     qa = data / "jobs" / quick
@@ -189,8 +214,8 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
             scorer = ReferenceMetrics(reference)
             row = {
                 "view": name,
-                "quick": scorer.score(qimage),
-                "detail": scorer.score(dimage),
+                "quick": scorer.score(qimage, error_grid=error_grid),
+                "detail": scorer.score(dimage, error_grid=error_grid),
                 "scoring_dimensions": {
                     "width": reference.width,
                     "height": reference.height,
@@ -241,6 +266,8 @@ def compare(data, quick, detail, size=512, lpips_scorer=None):
             for mode in ["quick", "detail"]
         },
     }
+    if error_grid is not None:
+        result["error_grid"] = error_grid
     if lpips_scorer:
         result["lpips_scorer"] = scorer_info
     return result
@@ -259,9 +286,11 @@ def main():
     p.add_argument(
         "--lpips-scorer", type=Path, help="Optional offline Brush LPIPS scorer executable"
     )
+    p.add_argument("--error-grid", type=int, metavar="N",
+                   help="Also report RGB MSE for N by N tiles per scored view (1–16)")
     args = p.parse_args()
     torch.set_num_threads(4)
-    result = compare(args.data, args.quick, args.detail, args.size, args.lpips_scorer)
+    result = compare(args.data, args.quick, args.detail, args.size, args.lpips_scorer, error_grid=args.error_grid)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))

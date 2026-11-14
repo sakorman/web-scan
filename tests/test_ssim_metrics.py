@@ -79,3 +79,30 @@ def test_paired_renders_reuse_only_their_own_reference_without_mutation():
     assert [scorer.score(render) for render in reversed(renders)] == list(reversed(expected))
     other_reference = Image.new('RGB', reference.size, 'white')
     assert ReferenceMetrics(other_reference).score(renders[1]) != expected[1]
+
+
+def test_error_tiles_locate_one_channel_error_and_recover_whole_frame_mse():
+    reference = Image.new('RGB', (17, 13))
+    rendered = reference.copy()
+    rendered.putpixel((16, 12), (0, 255, 0))
+    scorer = ReferenceMetrics(reference)
+    measured = scorer.score(rendered, error_grid=4)
+    tiles = measured.pop('error_tiles')
+    assert measured == scorer.score(rendered)
+    counts = np.zeros((13, 17), dtype=int)
+    error_sum = 0
+    for tile in tiles:
+        x0, y0, x1, y1 = tile['xyxy']
+        counts[y0:y1, x0:x1] += 1
+        weighted = tile['mse'] * (x1 - x0) * (y1 - y0)
+        assert weighted == pytest.approx(1/3 if x0 <= 16 < x1 and y0 <= 12 < y1 else 0)
+        error_sum += weighted
+    assert len(tiles) == 16 and np.all(counts == 1)
+    assert error_sum / counts.size == pytest.approx(10 ** (-measured['psnr'] / 10))
+
+
+@pytest.mark.parametrize('divisions', [0, 14, 17])
+def test_error_grid_rejects_empty_or_oversized_tiles(divisions):
+    image = Image.new('RGB', (17, 13))
+    with pytest.raises(ValueError, match='grid'):
+        ReferenceMetrics(image).score(image, error_grid=divisions)
