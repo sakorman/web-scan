@@ -2,6 +2,8 @@
 
 2026-11-16。针对 [局部轨迹核验](HOLDOUT-SUPPORT.md) 发现的 pipes 反光地面高误差，测试更慢的高阶球谐颜色更新。应用基线为 [967ec39](https://github.com/sakorman/web-scan/commit/967ec39)，实验只在独立适配器中追加 `--lr-coeffs-sh-scale 40`，其余参数与默认除数 20 相同。完整 SH3 保留，不截断球谐系数。
 
+后续核验：2026-11-17 的 [10000 步对照](SH-LONG-LEARNING.md)未通过质量筛查，除数 40 不采用为通用默认值。下面保留原始 3000 步实测条件与结果。
+
 ## 研究与假设
 
 Shuangkang Fang、I-Chao Shen 等人的 [DropAnSH-GS（CVPR 2026，v1）](https://arxiv.org/abs/2602.20933v1) 将高阶 SH 过拟合作为稀疏视角问题的一部分，提出邻域与 SH dropout。[作者仓库 a7b1639](https://github.com/Fangkang515/DropAnSH-GS/tree/a7b1639a86c34ddaa8899a66c74e992f52e75e5e) 最后更新于 2026-03-12，本次核对仍只有 README，训练代码未发布，也无顶层许可证。这里据此提出可本地检验的弱假设：在有限训练步数内减缓高阶系数更新，可能缓解视角相关颜色过拟合。学习率减半不是 dropout，也不能验证论文方法本身。

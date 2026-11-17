@@ -33,14 +33,19 @@ def save(path, data):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
+    parser.add_argument('--steps', type=int, default=3000,
+                        help='Total steps for both variants; resolution remains 512')
     args = parser.parse_args()
+    if not 500 <= args.steps <= 30000 or args.steps % 500:
+        parser.error('--steps must be a multiple of 500 between 500 and 30000')
+    config = {**CONFIG, 'steps': args.steps}
     root = args.root.resolve()
     root.mkdir(parents=True, exist_ok=False)
     (root / 'adapters').mkdir()
     baseline = root / 'adapters/baseline.py'
     shutil.copy2('webscan/brush.py', baseline)
     binary = Path('.tools/brush/brush_app').resolve()
-    plan = dict(config=CONFIG, sources=SOURCES, order=ORDER, seed=42,
+    plan = dict(config=config, sources=SOURCES, order=ORDER, seed=42,
                 engine_sha256=sha(binary), baseline_adapter_sha256=sha(baseline),
                 baseline_sh_divisor=20, candidate_sh_divisor=40,
                 threshold=dict(min_psnr_delta=-0.2, min_ssim_delta=-0.005),
@@ -72,7 +77,7 @@ def main():
         adapter.executable = lambda: binary
         print(f'Start {work.name}', flush=True)
         training_start = time.monotonic()
-        report = adapter.train(scene, work, work / 'artifacts', CONFIG, lambda *_: None)
+        report = adapter.train(scene, work, work / 'artifacts', config, lambda *_: None)
         training_seconds = time.monotonic() - training_start
         write_comparison_artifacts(work, scene, report)
         _, points = adapter.read_ply(work / 'artifacts/gaussians.ply', expected_sh_degree=3)
