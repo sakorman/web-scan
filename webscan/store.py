@@ -4,7 +4,7 @@ import json
 import sqlite3
 import time
 import uuid
-from contextlib import closing
+from contextlib import closing, contextmanager
 from pathlib import Path
 from .frame_order import ordered_frames
 
@@ -17,7 +17,7 @@ class Store:
     def __init__(self, root: Path):
         self.root = root.resolve()
         self.root.mkdir(parents=True, exist_ok=True)
-        with self.connect() as db:
+        with self.transaction() as db:
             db.executescript("""
                 PRAGMA journal_mode=WAL;
                 CREATE TABLE IF NOT EXISTS sessions (
@@ -35,14 +35,21 @@ class Store:
             """)
 
     def connect(self, *, timeout=30):
+        """Open a raw connection; callers own its lifetime. Prefer transaction()."""
         db = sqlite3.connect(self.root / "state.sqlite3", timeout=timeout)
         db.row_factory = sqlite3.Row
         return db
 
+    @contextmanager
+    def transaction(self, *, timeout=30):
+        """Commit or roll back, then close without waiting for garbage collection."""
+        with closing(self.connect(timeout=timeout)) as db, db:
+            yield db
+
     def claim_next_job(self):
         """Poll without waiting for another writer; the runner retries next tick."""
         try:
-            with closing(self.connect(timeout=0)) as db, db:
+            with self.transaction(timeout=0) as db:
                 row = db.execute(
                     "SELECT id FROM jobs WHERE status='queued' ORDER BY created, rowid LIMIT 1"
                 ).fetchone()
@@ -77,7 +84,7 @@ class Store:
         return self.root / "jobs" / jid
 
     def session(self, sid):
-        with self.connect() as db:
+        with self.transaction() as db:
             row = db.execute("SELECT * FROM sessions WHERE id=?", (sid,)).fetchone()
             if not row or row["status"] == "deleted":
                 raise KeyError("采集不存在")
@@ -101,7 +108,7 @@ class Store:
     def create_session(self, name, kind="photos"):
         sid = uid()
         (self.session_dir(sid) / "images").mkdir(parents=True)
-        with self.connect() as db:
+        with self.transaction() as db:
             db.execute(
                 "INSERT INTO sessions(id,name,kind,created) VALUES(?,?,?,?)",
                 (sid, name, kind, time.time()),
@@ -116,14 +123,14 @@ class Store:
         return value
 
     def job(self, jid):
-        with self.connect() as db:
+        with self.transaction() as db:
             row = db.execute("SELECT * FROM jobs WHERE id=?", (jid,)).fetchone()
             if not row:
                 raise KeyError("任务不存在")
             return self.decode_job(row)
 
     def update(self, jid, *, stage, progress, message, status=None, report=None):
-        with self.connect() as db:
+        with self.transaction() as db:
             db.execute(
                 """UPDATE jobs SET stage=?, progress=?, message=?, updated=?,
                          status=COALESCE(?,status), report=COALESCE(?,report)

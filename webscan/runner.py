@@ -25,7 +25,7 @@ class Runner:
             raise RuntimeError(
                 "此数据目录已有服务在运行，请关闭旧进程或指定其他 --data。"
             )
-        with store.connect() as db:
+        with store.transaction() as db:
             db.execute(
                 "UPDATE jobs SET status='failed',stage='interrupted',message='服务被中断；可以重新提交重建',updated=? WHERE status='running'",
                 (time.time(),),

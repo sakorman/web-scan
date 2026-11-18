@@ -97,7 +97,7 @@ def ingest_image(store, sid, raw, metadata):
     ) as e:
         raise HTTPException(422, f"无法读取图片：{e}")
     sha = hashlib.sha256(content).hexdigest()
-    with store.connect() as db:
+    with store.transaction() as db:
         db.execute("BEGIN IMMEDIATE")
         current = db.execute(
             "SELECT status,kind FROM sessions WHERE id=?", (sid,)
@@ -246,7 +246,7 @@ def create_app(
 
     @app.get("/api/sessions")
     def sessions():
-        with store.connect() as db:
+        with store.transaction() as db:
             result = [
                 dict(r)
                 for r in db.execute(
@@ -272,7 +272,7 @@ def create_app(
     @app.delete("/api/sessions/{sid}")
     def remove_session(sid: str):
         valid_id(sid)
-        with store.connect() as db:
+        with store.transaction() as db:
             db.execute("BEGIN IMMEDIATE")
             if not db.execute("SELECT id FROM sessions WHERE id=?", (sid,)).fetchone():
                 raise HTTPException(404, "采集不存在")
@@ -287,7 +287,7 @@ def create_app(
     @app.post("/api/sessions/{sid}/restore")
     def restore_session(sid: str):
         valid_id(sid)
-        with store.connect() as db:
+        with store.transaction() as db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute(
                 "SELECT status,kind FROM sessions WHERE id=?", (sid,)
@@ -337,7 +337,7 @@ def create_app(
     def frame_image(sid: str, fid: str):
         valid_id(sid)
         valid_id(fid)
-        with store.connect() as db:
+        with store.transaction() as db:
             if not db.execute(
                 "SELECT id FROM frames WHERE id=? AND session_id=?", (fid, sid)
             ).fetchone():
@@ -349,7 +349,7 @@ def create_app(
     @app.post("/api/sessions/{sid}/finalize")
     def finalize(sid: str):
         valid_id(sid)
-        with store.connect() as db:
+        with store.transaction() as db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute("SELECT * FROM sessions WHERE id=?", (sid,)).fetchone()
             if not row or row["status"] == "deleted":
@@ -385,7 +385,7 @@ def create_app(
             folder = store.session_dir(sample["id"])
             try:
                 meta = await asyncio.to_thread(create_fixture, folder / "images")
-                with store.connect() as db:
+                with store.transaction() as db:
                     for v in meta["views"]:
                         previous = folder / "images" / v["name"]
                         raw = previous.read_bytes()
@@ -411,7 +411,7 @@ def create_app(
                     )
                 return store.session(sample["id"])
             except Exception:
-                with store.connect() as db:
+                with store.transaction() as db:
                     db.execute(
                         "UPDATE sessions SET status='failed' WHERE id=?",
                         (sample["id"],),
@@ -476,7 +476,7 @@ def create_app(
                 finalize(sample["id"])
                 return store.session(sample["id"])
             except Exception:
-                with store.connect() as db:
+                with store.transaction() as db:
                     db.execute(
                         "UPDATE sessions SET status='failed' WHERE id=?",
                         (sample["id"],),
@@ -525,7 +525,7 @@ def create_app(
                 422, "同镜头模式要求所有照片尺寸一致；混合照片请使用自动模式"
             )
         config = body.model_dump(exclude={"session_id"})
-        with store.connect() as db:
+        with store.transaction() as db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute(
                 "SELECT status FROM sessions WHERE id=?", (body.session_id,)
@@ -563,7 +563,7 @@ def create_app(
     def cancel(jid: str):
         valid_id(jid)
         store.job(jid)
-        with store.connect() as db:
+        with store.transaction() as db:
             db.execute(
                 "UPDATE jobs SET status='cancelled',stage='cancelled',message='任务已取消',updated=? WHERE id=? AND status IN ('queued','running')",
                 (time.time(), jid),
@@ -578,7 +578,7 @@ def create_app(
         return value
 
     def download_filename(value, name):
-        with store.connect() as db:
+        with store.transaction() as db:
             row = db.execute(
                 "SELECT name FROM sessions WHERE id=?", (value["session_id"],)
             ).fetchone()

@@ -2,6 +2,12 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-11-18
+
+### 事务结束后立即释放数据库连接
+
+独立读取测试确认连接会等待垃圾回收：200 次读取后，正常 / 暂停回收时残留 109 / 401 个文件描述符，统一事务关闭后均为 0，保留提交与回滚语义。采用此修复，但此前服务无法打开数据库的根因仍未确认。五次实拍重建完成，123 次健康及历史检查正常；pipes 两次评分低于本轮基线，未作画质或提速结论。309 项后端、18 项前端、类型检查、构建与四模型浏览器验证通过。代价是可能增加重开文件与 WAL 收尾开销，长期吞吐未测；下一步复查训练波动并观察长期服务。[报告、数据与截图](docs/CONNECTION-LIFETIME.md) · [基线](https://github.com/sakorman/web-scan/commit/297aefc) · [Python 连接约定](https://docs.python.org/3.12/library/sqlite3.html#how-to-use-the-connection-context-manager) · [BoundedGS](https://arxiv.org/abs/2610.34233v1) · [Brush 近期实现](https://github.com/ArthurBrussee/brush/pull/556)
+
 ## 2026-11-17
 
 ### 长训练未支持修改 SH 默认参数
