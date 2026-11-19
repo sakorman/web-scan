@@ -1,0 +1,3228 @@
+{
+  "plan": {
+    "baseline_commit": "c5d55af880ec593c6eeeebbf328c8f8544ba6c2b",
+    "config": {
+      "backend": "brush",
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "camera_mode": "shared",
+      "evaluation_mode": "holdout"
+    },
+    "seed": 42,
+    "runs_per_scene": 3,
+    "order": [
+      "pipes",
+      "office",
+      "office",
+      "pipes",
+      "pipes",
+      "office"
+    ],
+    "purpose": "Describe same-configuration variability, no best-run selection or parameter tuning",
+    "cache": "Reuse verified SfM, fresh Brush processes, no Metal or system cache reset",
+    "previous_jobs": {
+      "pipes": [
+        "25db943c3f0d4e9193cd6086080815d5",
+        "761b5d8842a046099949b7ea182df339",
+        "e77425109faf41d3813a9e638139d65c"
+      ],
+      "office": [
+        "9c211f32cd6a48aa85beba8379febd48",
+        "9d2e88aa95964c3e910cc9851da17dc2"
+      ]
+    }
+  },
+  "scenes": {
+    "pipes": {
+      "new": {
+        "identity": {
+          "config": {
+            "backend": "brush",
+            "steps": 3000,
+            "max_points": 150000,
+            "resolution": 512,
+            "camera_mode": "shared",
+            "evaluation_mode": "holdout"
+          },
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42,
+          "inputs_sha256": "2e814d722802634f809834565adc285903738757bc3489d6b39df2d200687d82",
+          "scene_sha256": "eb73afec964543196d2480d779d0f6c5b1f10ddc5431df8c183ef99f0abd5056",
+          "cameras_sha256": "f0192a1c921693aada3ea43f23347a09e58c574ec175555c54cb451cac79701a",
+          "training_views": 12,
+          "evaluation_views": 2
+        },
+        "requested_size": 512,
+        "runs": [
+          {
+            "job_id": "a2229147134a4332b75c2f0dc91681ee",
+            "gaussians": 11630,
+            "model_bytes": 2746230,
+            "timings": {
+              "input_validation_seconds": 0.0097,
+              "sfm_seconds": 0.035,
+              "training_and_model_export_seconds": 22.9918
+            },
+            "task_seconds": 23.07,
+            "scores": {
+              "psnr": 18.966296337224655,
+              "ssim": 0.7569559216499329
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.211023721103835,
+                "ssim": 0.8430847525596619
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 14.721568953345477,
+                "ssim": 0.6708270907402039
+              }
+            ]
+          },
+          {
+            "job_id": "ca14d9ea5323449b85271ed3ce6f3e1b",
+            "gaussians": 11585,
+            "model_bytes": 2735610,
+            "timings": {
+              "input_validation_seconds": 0.0105,
+              "sfm_seconds": 0.0301,
+              "training_and_model_export_seconds": 22.8062
+            },
+            "task_seconds": 22.9,
+            "scores": {
+              "psnr": 19.140341787815622,
+              "ssim": 0.7616322636604309
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.18961953780997,
+                "ssim": 0.8427965641021729
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 15.091064037821273,
+                "ssim": 0.680467963218689
+              }
+            ]
+          },
+          {
+            "job_id": "dc5da8009bc846baaa5ed7f3f821145b",
+            "gaussians": 11580,
+            "model_bytes": 2734430,
+            "timings": {
+              "input_validation_seconds": 0.0072,
+              "sfm_seconds": 0.022,
+              "training_and_model_export_seconds": 22.6797
+            },
+            "task_seconds": 22.75,
+            "scores": {
+              "psnr": 19.155015161824615,
+              "ssim": 0.7632572054862976
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.64721021083,
+                "ssim": 0.8382043838500977
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 15.662820112819231,
+                "ssim": 0.6883100271224976
+              }
+            ]
+          }
+        ],
+        "score_summary": {
+          "psnr": {
+            "count": 3,
+            "mean": 19.087217762288297,
+            "sample_std": 0.10497771313840124,
+            "min": 18.966296337224655,
+            "max": 19.155015161824615,
+            "range": 0.1887188245999596
+          },
+          "ssim": {
+            "count": 3,
+            "mean": 0.7606151302655538,
+            "sample_std": 0.003271462173682983,
+            "min": 0.7569559216499329,
+            "max": 0.7632572054862976,
+            "range": 0.006301283836364746
+          }
+        },
+        "view_summary": [
+          {
+            "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 23.01595115658127,
+              "sample_std": 0.31951830709800416,
+              "min": 22.64721021083,
+              "max": 23.211023721103835,
+              "range": 0.5638135102738353
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.8413619001706442,
+              "sample_std": 0.0027382832455108536,
+              "min": 0.8382043838500977,
+              "max": 0.8430847525596619,
+              "range": 0.004880368709564209
+            }
+          },
+          {
+            "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 15.158484367995326,
+              "sample_std": 0.47423365759217856,
+              "min": 14.721568953345477,
+              "max": 15.662820112819231,
+              "range": 0.9412511594737545
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.6798683603604635,
+              "sample_std": 0.008756877801335721,
+              "min": 0.6708270907402039,
+              "max": 0.6883100271224976,
+              "range": 0.0174829363822937
+            }
+          }
+        ],
+        "gaussians": {
+          "count": 3,
+          "mean": 11598.333333333334,
+          "sample_std": 27.53785273643051,
+          "min": 11580,
+          "max": 11630,
+          "range": 50
+        },
+        "model_bytes": {
+          "count": 3,
+          "mean": 2738756.6666666665,
+          "sample_std": 6498.933245797601,
+          "min": 2734430,
+          "max": 2746230,
+          "range": 11800
+        },
+        "interpretation": "Observed same-seed variation only; not a confidence interval, causal test or quality acceptance threshold."
+      },
+      "previous": {
+        "identity": {
+          "config": {
+            "backend": "brush",
+            "steps": 3000,
+            "max_points": 150000,
+            "resolution": 512,
+            "camera_mode": "shared",
+            "evaluation_mode": "holdout"
+          },
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42,
+          "inputs_sha256": "2e814d722802634f809834565adc285903738757bc3489d6b39df2d200687d82",
+          "scene_sha256": "eb73afec964543196d2480d779d0f6c5b1f10ddc5431df8c183ef99f0abd5056",
+          "cameras_sha256": "f0192a1c921693aada3ea43f23347a09e58c574ec175555c54cb451cac79701a",
+          "training_views": 12,
+          "evaluation_views": 2
+        },
+        "requested_size": 512,
+        "runs": [
+          {
+            "job_id": "25db943c3f0d4e9193cd6086080815d5",
+            "gaussians": 11654,
+            "model_bytes": 2751894,
+            "timings": {
+              "input_validation_seconds": 0.0148,
+              "sfm_seconds": 0.0312,
+              "training_and_model_export_seconds": 23.0952
+            },
+            "task_seconds": 23.21,
+            "scores": {
+              "psnr": 19.426018728389742,
+              "ssim": 0.7651645243167877
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.419242051240946,
+                "ssim": 0.838452935218811
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 15.432795405538535,
+                "ssim": 0.6918761134147644
+              }
+            ]
+          },
+          {
+            "job_id": "761b5d8842a046099949b7ea182df339",
+            "gaussians": 11601,
+            "model_bytes": 2739386,
+            "timings": {
+              "input_validation_seconds": 0.01,
+              "sfm_seconds": 0.0214,
+              "training_and_model_export_seconds": 22.7414
+            },
+            "task_seconds": 22.81,
+            "scores": {
+              "psnr": 18.91475086248021,
+              "ssim": 0.7524196207523346
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.01346468431418,
+                "ssim": 0.8351688385009766
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 14.81603704064624,
+                "ssim": 0.6696704030036926
+              }
+            ]
+          },
+          {
+            "job_id": "e77425109faf41d3813a9e638139d65c",
+            "gaussians": 11568,
+            "model_bytes": 2731598,
+            "timings": {
+              "input_validation_seconds": 0.0093,
+              "sfm_seconds": 0.0249,
+              "training_and_model_export_seconds": 22.7936
+            },
+            "task_seconds": 22.86,
+            "scores": {
+              "psnr": 18.500024385876216,
+              "ssim": 0.7503946423530579
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.66379676802883,
+                "ssim": 0.8368358612060547
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 14.336252003723597,
+                "ssim": 0.663953423500061
+              }
+            ]
+          }
+        ],
+        "score_summary": {
+          "psnr": {
+            "count": 3,
+            "mean": 18.946931325582057,
+            "sample_std": 0.4638351724975709,
+            "min": 18.500024385876216,
+            "max": 19.426018728389742,
+            "range": 0.9259943425135262
+          },
+          "ssim": {
+            "count": 3,
+            "mean": 0.7559929291407267,
+            "sample_std": 0.008007106402099532,
+            "min": 0.7503946423530579,
+            "max": 0.7651645243167877,
+            "range": 0.014769881963729858
+          }
+        },
+        "view_summary": [
+          {
+            "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 23.032167834527986,
+              "sample_std": 0.37806976849888213,
+              "min": 22.66379676802883,
+              "max": 23.419242051240946,
+              "range": 0.755445283212115
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.8368192116419474,
+              "sample_std": 0.0016421116645988208,
+              "min": 0.8351688385009766,
+              "max": 0.838452935218811,
+              "range": 0.0032840967178344727
+            }
+          },
+          {
+            "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 14.861694816636124,
+              "sample_std": 0.5496956725291056,
+              "min": 14.336252003723597,
+              "max": 15.432795405538535,
+              "range": 1.0965434018149374
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.675166646639506,
+              "sample_std": 0.014750446555827853,
+              "min": 0.663953423500061,
+              "max": 0.6918761134147644,
+              "range": 0.02792268991470337
+            }
+          }
+        ],
+        "gaussians": {
+          "count": 3,
+          "mean": 11607.666666666666,
+          "sample_std": 43.385865593915874,
+          "min": 11568,
+          "max": 11654,
+          "range": 86
+        },
+        "model_bytes": {
+          "count": 3,
+          "mean": 2740959.3333333335,
+          "sample_std": 10239.064280164146,
+          "min": 2731598,
+          "max": 2751894,
+          "range": 20296
+        },
+        "interpretation": "Observed same-seed variation only; not a confidence interval, causal test or quality acceptance threshold."
+      },
+      "pooled": {
+        "identity": {
+          "config": {
+            "backend": "brush",
+            "steps": 3000,
+            "max_points": 150000,
+            "resolution": 512,
+            "camera_mode": "shared",
+            "evaluation_mode": "holdout"
+          },
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42,
+          "inputs_sha256": "2e814d722802634f809834565adc285903738757bc3489d6b39df2d200687d82",
+          "scene_sha256": "eb73afec964543196d2480d779d0f6c5b1f10ddc5431df8c183ef99f0abd5056",
+          "cameras_sha256": "f0192a1c921693aada3ea43f23347a09e58c574ec175555c54cb451cac79701a",
+          "training_views": 12,
+          "evaluation_views": 2
+        },
+        "requested_size": 512,
+        "runs": [
+          {
+            "job_id": "25db943c3f0d4e9193cd6086080815d5",
+            "gaussians": 11654,
+            "model_bytes": 2751894,
+            "timings": {
+              "input_validation_seconds": 0.0148,
+              "sfm_seconds": 0.0312,
+              "training_and_model_export_seconds": 23.0952
+            },
+            "task_seconds": 23.21,
+            "scores": {
+              "psnr": 19.426018728389742,
+              "ssim": 0.7651645243167877
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.419242051240946,
+                "ssim": 0.838452935218811
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 15.432795405538535,
+                "ssim": 0.6918761134147644
+              }
+            ]
+          },
+          {
+            "job_id": "761b5d8842a046099949b7ea182df339",
+            "gaussians": 11601,
+            "model_bytes": 2739386,
+            "timings": {
+              "input_validation_seconds": 0.01,
+              "sfm_seconds": 0.0214,
+              "training_and_model_export_seconds": 22.7414
+            },
+            "task_seconds": 22.81,
+            "scores": {
+              "psnr": 18.91475086248021,
+              "ssim": 0.7524196207523346
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.01346468431418,
+                "ssim": 0.8351688385009766
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 14.81603704064624,
+                "ssim": 0.6696704030036926
+              }
+            ]
+          },
+          {
+            "job_id": "e77425109faf41d3813a9e638139d65c",
+            "gaussians": 11568,
+            "model_bytes": 2731598,
+            "timings": {
+              "input_validation_seconds": 0.0093,
+              "sfm_seconds": 0.0249,
+              "training_and_model_export_seconds": 22.7936
+            },
+            "task_seconds": 22.86,
+            "scores": {
+              "psnr": 18.500024385876216,
+              "ssim": 0.7503946423530579
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.66379676802883,
+                "ssim": 0.8368358612060547
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 14.336252003723597,
+                "ssim": 0.663953423500061
+              }
+            ]
+          },
+          {
+            "job_id": "a2229147134a4332b75c2f0dc91681ee",
+            "gaussians": 11630,
+            "model_bytes": 2746230,
+            "timings": {
+              "input_validation_seconds": 0.0097,
+              "sfm_seconds": 0.035,
+              "training_and_model_export_seconds": 22.9918
+            },
+            "task_seconds": 23.07,
+            "scores": {
+              "psnr": 18.966296337224655,
+              "ssim": 0.7569559216499329
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.211023721103835,
+                "ssim": 0.8430847525596619
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 14.721568953345477,
+                "ssim": 0.6708270907402039
+              }
+            ]
+          },
+          {
+            "job_id": "ca14d9ea5323449b85271ed3ce6f3e1b",
+            "gaussians": 11585,
+            "model_bytes": 2735610,
+            "timings": {
+              "input_validation_seconds": 0.0105,
+              "sfm_seconds": 0.0301,
+              "training_and_model_export_seconds": 22.8062
+            },
+            "task_seconds": 22.9,
+            "scores": {
+              "psnr": 19.140341787815622,
+              "ssim": 0.7616322636604309
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.18961953780997,
+                "ssim": 0.8427965641021729
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 15.091064037821273,
+                "ssim": 0.680467963218689
+              }
+            ]
+          },
+          {
+            "job_id": "dc5da8009bc846baaa5ed7f3f821145b",
+            "gaussians": 11580,
+            "model_bytes": 2734430,
+            "timings": {
+              "input_validation_seconds": 0.0072,
+              "sfm_seconds": 0.022,
+              "training_and_model_export_seconds": 22.6797
+            },
+            "task_seconds": 22.75,
+            "scores": {
+              "psnr": 19.155015161824615,
+              "ssim": 0.7632572054862976
+            },
+            "views": [
+              {
+                "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.64721021083,
+                "ssim": 0.8382043838500977
+              },
+              {
+                "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1066
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 15.662820112819231,
+                "ssim": 0.6883100271224976
+              }
+            ]
+          }
+        ],
+        "score_summary": {
+          "psnr": {
+            "count": 6,
+            "mean": 19.017074543935177,
+            "sample_std": 0.3104342769375961,
+            "min": 18.500024385876216,
+            "max": 19.426018728389742,
+            "range": 0.9259943425135262
+          },
+          "ssim": {
+            "count": 6,
+            "mean": 0.7583040297031403,
+            "sample_std": 0.0060279275084276305,
+            "min": 0.7503946423530579,
+            "max": 0.7651645243167877,
+            "range": 0.014769881963729858
+          }
+        },
+        "view_summary": [
+          {
+            "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 6,
+              "mean": 23.024059495554628,
+              "sample_std": 0.3131938274655447,
+              "min": 22.64721021083,
+              "max": 23.419242051240946,
+              "range": 0.7720318404109463
+            },
+            "ssim": {
+              "count": 6,
+              "mean": 0.8390905559062958,
+              "sample_std": 0.003204480622704489,
+              "min": 0.8351688385009766,
+              "max": 0.8430847525596619,
+              "range": 0.007915914058685303
+            }
+          },
+          {
+            "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1066
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 6,
+              "mean": 15.010089592315726,
+              "sample_std": 0.4870835340010906,
+              "min": 14.336252003723597,
+              "max": 15.662820112819231,
+              "range": 1.3265681090956338
+            },
+            "ssim": {
+              "count": 6,
+              "mean": 0.6775175034999847,
+              "sample_std": 0.011150572476052334,
+              "min": 0.663953423500061,
+              "max": 0.6918761134147644,
+              "range": 0.02792268991470337
+            }
+          }
+        ],
+        "gaussians": {
+          "count": 6,
+          "mean": 11603,
+          "sample_std": 32.8998480239651,
+          "min": 11568,
+          "max": 11654,
+          "range": 86
+        },
+        "model_bytes": {
+          "count": 6,
+          "mean": 2739858,
+          "sample_std": 7764.364133655762,
+          "min": 2731598,
+          "max": 2751894,
+          "range": 20296
+        },
+        "interpretation": "Observed same-seed variation only; not a confidence interval, causal test or quality acceptance threshold."
+      },
+      "new_summary_seconds": 2.1526151672005653
+    },
+    "office": {
+      "new": {
+        "identity": {
+          "config": {
+            "backend": "brush",
+            "steps": 3000,
+            "max_points": 150000,
+            "resolution": 512,
+            "camera_mode": "shared",
+            "evaluation_mode": "holdout"
+          },
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42,
+          "inputs_sha256": "bca85b9d3452fb68633e30bec8920344f9d94a728d047f7be79defb24972bc9e",
+          "scene_sha256": "ed6fad4c70d9ca2c07049ee9e9689c18b7913e6d66e1f10ea71ba15cfd398e5f",
+          "cameras_sha256": "8e5f522b4c82256a014f2f50d37956c9457d3309fe38957c31a0e9c662faa439",
+          "training_views": 22,
+          "evaluation_views": 4
+        },
+        "requested_size": 512,
+        "runs": [
+          {
+            "job_id": "37fe989c3f7e4d48a70623b7f3db466e",
+            "gaussians": 14559,
+            "model_bytes": 3437474,
+            "timings": {
+              "input_validation_seconds": 0.0138,
+              "sfm_seconds": 0.0481,
+              "training_and_model_export_seconds": 23.5685
+            },
+            "task_seconds": 23.69,
+            "scores": {
+              "psnr": 22.61752019398691,
+              "ssim": 0.8843637555837631
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 24.58942212367431,
+                "ssim": 0.9165158867835999
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.93687213798917,
+                "ssim": 0.9474782943725586
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 18.536387822529477,
+                "ssim": 0.8177710771560669
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.407398691754683,
+                "ssim": 0.8556897640228271
+              }
+            ]
+          },
+          {
+            "job_id": "d5d9ca3e59b544d7af7dbba6f86c24b0",
+            "gaussians": 14506,
+            "model_bytes": 3424966,
+            "timings": {
+              "input_validation_seconds": 0.0137,
+              "sfm_seconds": 0.0474,
+              "training_and_model_export_seconds": 23.6
+            },
+            "task_seconds": 23.71,
+            "scores": {
+              "psnr": 21.227447042283544,
+              "ssim": 0.8738773912191391
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.12777595981423,
+                "ssim": 0.9174422025680542
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 21.936366180419938,
+                "ssim": 0.9375059008598328
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 17.033165376810764,
+                "ssim": 0.792618989944458
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.81248065208924,
+                "ssim": 0.8479424715042114
+              }
+            ]
+          },
+          {
+            "job_id": "9aa6b584c61c4d779c0ce392fb594861",
+            "gaussians": 14428,
+            "model_bytes": 3406558,
+            "timings": {
+              "input_validation_seconds": 0.0125,
+              "sfm_seconds": 0.0355,
+              "training_and_model_export_seconds": 23.488
+            },
+            "task_seconds": 23.57,
+            "scores": {
+              "psnr": 21.055448391710122,
+              "ssim": 0.8734452575445175
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.53606542611619,
+                "ssim": 0.909637987613678
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.537123709013258,
+                "ssim": 0.9402589201927185
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 16.971975098778223,
+                "ssim": 0.7946687936782837
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.176629332932812,
+                "ssim": 0.8492153286933899
+              }
+            ]
+          }
+        ],
+        "score_summary": {
+          "psnr": {
+            "count": 3,
+            "mean": 21.633471875993525,
+            "sample_std": 0.856539084373256,
+            "min": 21.055448391710122,
+            "max": 22.61752019398691,
+            "range": 1.5620718022767868
+          },
+          "ssim": {
+            "count": 3,
+            "mean": 0.87722880144914,
+            "sample_std": 0.006182828054827994,
+            "min": 0.8734452575445175,
+            "max": 0.8843637555837631,
+            "range": 0.010918498039245605
+          }
+        },
+        "view_summary": [
+          {
+            "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 23.417754503201575,
+              "sample_std": 1.0569456459868147,
+              "min": 22.53606542611619,
+              "max": 24.58942212367431,
+              "range": 2.0533566975581223
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.9145320256551107,
+              "sample_std": 0.004263592557500672,
+              "min": 0.909637987613678,
+              "max": 0.9174422025680542,
+              "range": 0.007804214954376221
+            }
+          },
+          {
+            "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 22.80345400914079,
+              "sample_std": 1.0265012874526813,
+              "min": 21.936366180419938,
+              "max": 23.93687213798917,
+              "range": 2.0005059575692314
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.9417477051417033,
+              "sample_std": 0.005150195973106924,
+              "min": 0.9375059008598328,
+              "max": 0.9474782943725586,
+              "range": 0.00997239351272583
+            }
+          },
+          {
+            "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 17.513842766039488,
+              "sample_std": 0.8860783582423795,
+              "min": 16.971975098778223,
+              "max": 18.536387822529477,
+              "range": 1.5644127237512535
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.8016862869262695,
+              "sample_std": 0.013967490160699593,
+              "min": 0.792618989944458,
+              "max": 0.8177710771560669,
+              "range": 0.025152087211608887
+            }
+          },
+          {
+            "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 3,
+              "mean": 22.798836225592243,
+              "sample_std": 0.6154981165158212,
+              "min": 22.176629332932812,
+              "max": 23.407398691754683,
+              "range": 1.2307693588218704
+            },
+            "ssim": {
+              "count": 3,
+              "mean": 0.8509491880734762,
+              "sample_std": 0.004154495950736338,
+              "min": 0.8479424715042114,
+              "max": 0.8556897640228271,
+              "range": 0.007747292518615723
+            }
+          }
+        ],
+        "gaussians": {
+          "count": 3,
+          "mean": 14497.666666666666,
+          "sample_std": 65.89638330996121,
+          "min": 14428,
+          "max": 14559,
+          "range": 131
+        },
+        "model_bytes": {
+          "count": 3,
+          "mean": 3422999.3333333335,
+          "sample_std": 15551.546461150843,
+          "min": 3406558,
+          "max": 3437474,
+          "range": 30916
+        },
+        "interpretation": "Observed same-seed variation only; not a confidence interval, causal test or quality acceptance threshold."
+      },
+      "previous": {
+        "identity": {
+          "config": {
+            "backend": "brush",
+            "steps": 3000,
+            "max_points": 150000,
+            "resolution": 512,
+            "camera_mode": "shared",
+            "evaluation_mode": "holdout"
+          },
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42,
+          "inputs_sha256": "bca85b9d3452fb68633e30bec8920344f9d94a728d047f7be79defb24972bc9e",
+          "scene_sha256": "ed6fad4c70d9ca2c07049ee9e9689c18b7913e6d66e1f10ea71ba15cfd398e5f",
+          "cameras_sha256": "8e5f522b4c82256a014f2f50d37956c9457d3309fe38957c31a0e9c662faa439",
+          "training_views": 22,
+          "evaluation_views": 4
+        },
+        "requested_size": 512,
+        "runs": [
+          {
+            "job_id": "9c211f32cd6a48aa85beba8379febd48",
+            "gaussians": 14322,
+            "model_bytes": 3381542,
+            "timings": {
+              "input_validation_seconds": 0.013,
+              "sfm_seconds": 0.0476,
+              "training_and_model_export_seconds": 23.4749
+            },
+            "task_seconds": 23.58,
+            "scores": {
+              "psnr": 20.953690691957547,
+              "ssim": 0.8730836659669876
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.60068766769888,
+                "ssim": 0.9101723432540894
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 20.22274919307914,
+                "ssim": 0.9283534288406372
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 18.3871668754862,
+                "ssim": 0.8094831109046936
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 21.604159031565978,
+                "ssim": 0.8443257808685303
+              }
+            ]
+          },
+          {
+            "job_id": "9d2e88aa95964c3e910cc9851da17dc2",
+            "gaussians": 14306,
+            "model_bytes": 3377766,
+            "timings": {
+              "input_validation_seconds": 0.0132,
+              "sfm_seconds": 0.0427,
+              "training_and_model_export_seconds": 23.5285
+            },
+            "task_seconds": 23.63,
+            "scores": {
+              "psnr": 21.430993509484765,
+              "ssim": 0.8756568878889084
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.746997904718647,
+                "ssim": 0.9171261787414551
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.580162366101156,
+                "ssim": 0.9404790997505188
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 17.186818535647422,
+                "ssim": 0.7886367440223694
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.20999523147183,
+                "ssim": 0.8563855290412903
+              }
+            ]
+          }
+        ],
+        "score_summary": {
+          "psnr": {
+            "count": 2,
+            "mean": 21.192342100721156,
+            "sample_std": 0.3375040589529407,
+            "min": 20.953690691957547,
+            "max": 21.430993509484765,
+            "range": 0.47730281752721737
+          },
+          "ssim": {
+            "count": 2,
+            "mean": 0.874370276927948,
+            "sample_std": 0.0018195426704880617,
+            "min": 0.8730836659669876,
+            "max": 0.8756568878889084,
+            "range": 0.0025732219219207764
+          }
+        },
+        "view_summary": [
+          {
+            "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 2,
+              "mean": 23.673842786208766,
+              "sample_std": 0.1034569607536871,
+              "min": 23.60068766769888,
+              "max": 23.746997904718647,
+              "range": 0.1463102370197653
+            },
+            "ssim": {
+              "count": 2,
+              "mean": 0.9136492609977722,
+              "sample_std": 0.004917104228371963,
+              "min": 0.9101723432540894,
+              "max": 0.9171261787414551,
+              "range": 0.006953835487365723
+            }
+          },
+          {
+            "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 2,
+              "mean": 21.401455779590147,
+              "sample_std": 1.6669428407023643,
+              "min": 20.22274919307914,
+              "max": 22.580162366101156,
+              "range": 2.3574131730220174
+            },
+            "ssim": {
+              "count": 2,
+              "mean": 0.934416264295578,
+              "sample_std": 0.008574144126813727,
+              "min": 0.9283534288406372,
+              "max": 0.9404790997505188,
+              "range": 0.012125670909881592
+            }
+          },
+          {
+            "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 2,
+              "mean": 17.78699270556681,
+              "sample_std": 0.8487744508860153,
+              "min": 17.186818535647422,
+              "max": 18.3871668754862,
+              "range": 1.2003483398387793
+            },
+            "ssim": {
+              "count": 2,
+              "mean": 0.7990599274635315,
+              "sample_std": 0.014740607385594122,
+              "min": 0.7886367440223694,
+              "max": 0.8094831109046936,
+              "range": 0.02084636688232422
+            }
+          },
+          {
+            "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 2,
+              "mean": 21.907077131518903,
+              "sample_std": 0.4283908852417167,
+              "min": 21.604159031565978,
+              "max": 22.20999523147183,
+              "range": 0.6058361999058519
+            },
+            "ssim": {
+              "count": 2,
+              "mean": 0.8503556549549103,
+              "sample_std": 0.008527529712360678,
+              "min": 0.8443257808685303,
+              "max": 0.8563855290412903,
+              "range": 0.01205974817276001
+            }
+          }
+        ],
+        "gaussians": {
+          "count": 2,
+          "mean": 14314,
+          "sample_std": 11.313708498984761,
+          "min": 14306,
+          "max": 14322,
+          "range": 16
+        },
+        "model_bytes": {
+          "count": 2,
+          "mean": 3379654,
+          "sample_std": 2670.0352057604036,
+          "min": 3377766,
+          "max": 3381542,
+          "range": 3776
+        },
+        "interpretation": "Observed same-seed variation only; not a confidence interval, causal test or quality acceptance threshold."
+      },
+      "pooled": {
+        "identity": {
+          "config": {
+            "backend": "brush",
+            "steps": 3000,
+            "max_points": 150000,
+            "resolution": 512,
+            "camera_mode": "shared",
+            "evaluation_mode": "holdout"
+          },
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "training_seed": 42,
+          "inputs_sha256": "bca85b9d3452fb68633e30bec8920344f9d94a728d047f7be79defb24972bc9e",
+          "scene_sha256": "ed6fad4c70d9ca2c07049ee9e9689c18b7913e6d66e1f10ea71ba15cfd398e5f",
+          "cameras_sha256": "8e5f522b4c82256a014f2f50d37956c9457d3309fe38957c31a0e9c662faa439",
+          "training_views": 22,
+          "evaluation_views": 4
+        },
+        "requested_size": 512,
+        "runs": [
+          {
+            "job_id": "9c211f32cd6a48aa85beba8379febd48",
+            "gaussians": 14322,
+            "model_bytes": 3381542,
+            "timings": {
+              "input_validation_seconds": 0.013,
+              "sfm_seconds": 0.0476,
+              "training_and_model_export_seconds": 23.4749
+            },
+            "task_seconds": 23.58,
+            "scores": {
+              "psnr": 20.953690691957547,
+              "ssim": 0.8730836659669876
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.60068766769888,
+                "ssim": 0.9101723432540894
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 20.22274919307914,
+                "ssim": 0.9283534288406372
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 18.3871668754862,
+                "ssim": 0.8094831109046936
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 21.604159031565978,
+                "ssim": 0.8443257808685303
+              }
+            ]
+          },
+          {
+            "job_id": "9d2e88aa95964c3e910cc9851da17dc2",
+            "gaussians": 14306,
+            "model_bytes": 3377766,
+            "timings": {
+              "input_validation_seconds": 0.0132,
+              "sfm_seconds": 0.0427,
+              "training_and_model_export_seconds": 23.5285
+            },
+            "task_seconds": 23.63,
+            "scores": {
+              "psnr": 21.430993509484765,
+              "ssim": 0.8756568878889084
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.746997904718647,
+                "ssim": 0.9171261787414551
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.580162366101156,
+                "ssim": 0.9404790997505188
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 17.186818535647422,
+                "ssim": 0.7886367440223694
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.20999523147183,
+                "ssim": 0.8563855290412903
+              }
+            ]
+          },
+          {
+            "job_id": "37fe989c3f7e4d48a70623b7f3db466e",
+            "gaussians": 14559,
+            "model_bytes": 3437474,
+            "timings": {
+              "input_validation_seconds": 0.0138,
+              "sfm_seconds": 0.0481,
+              "training_and_model_export_seconds": 23.5685
+            },
+            "task_seconds": 23.69,
+            "scores": {
+              "psnr": 22.61752019398691,
+              "ssim": 0.8843637555837631
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 24.58942212367431,
+                "ssim": 0.9165158867835999
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.93687213798917,
+                "ssim": 0.9474782943725586
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 18.536387822529477,
+                "ssim": 0.8177710771560669
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.407398691754683,
+                "ssim": 0.8556897640228271
+              }
+            ]
+          },
+          {
+            "job_id": "d5d9ca3e59b544d7af7dbba6f86c24b0",
+            "gaussians": 14506,
+            "model_bytes": 3424966,
+            "timings": {
+              "input_validation_seconds": 0.0137,
+              "sfm_seconds": 0.0474,
+              "training_and_model_export_seconds": 23.6
+            },
+            "task_seconds": 23.71,
+            "scores": {
+              "psnr": 21.227447042283544,
+              "ssim": 0.8738773912191391
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 23.12777595981423,
+                "ssim": 0.9174422025680542
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 21.936366180419938,
+                "ssim": 0.9375059008598328
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 17.033165376810764,
+                "ssim": 0.792618989944458
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.81248065208924,
+                "ssim": 0.8479424715042114
+              }
+            ]
+          },
+          {
+            "job_id": "9aa6b584c61c4d779c0ce392fb594861",
+            "gaussians": 14428,
+            "model_bytes": 3406558,
+            "timings": {
+              "input_validation_seconds": 0.0125,
+              "sfm_seconds": 0.0355,
+              "training_and_model_export_seconds": 23.488
+            },
+            "task_seconds": 23.57,
+            "scores": {
+              "psnr": 21.055448391710122,
+              "ssim": 0.8734452575445175
+            },
+            "views": [
+              {
+                "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.53606542611619,
+                "ssim": 0.909637987613678
+              },
+              {
+                "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.537123709013258,
+                "ssim": 0.9402589201927185
+              },
+              {
+                "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 16.971975098778223,
+                "ssim": 0.7946687936782837
+              },
+              {
+                "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+                "dimensions": {
+                  "width": 512,
+                  "height": 341,
+                  "reference_native": [
+                    1600,
+                    1067
+                  ],
+                  "quick_native": [
+                    512,
+                    341
+                  ],
+                  "detail_native": [
+                    512,
+                    341
+                  ]
+                },
+                "psnr": 22.176629332932812,
+                "ssim": 0.8492153286933899
+              }
+            ]
+          }
+        ],
+        "score_summary": {
+          "psnr": {
+            "count": 5,
+            "mean": 21.457019965884577,
+            "sample_std": 0.6735617956590699,
+            "min": 20.953690691957547,
+            "max": 22.61752019398691,
+            "range": 1.6638295020293619
+          },
+          "ssim": {
+            "count": 5,
+            "mean": 0.8760853916406631,
+            "sample_std": 0.004732094038762586,
+            "min": 0.8730836659669876,
+            "max": 0.8843637555837631,
+            "range": 0.011280089616775513
+          }
+        },
+        "view_summary": [
+          {
+            "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 5,
+              "mean": 23.52018981640445,
+              "sample_std": 0.7621792752203453,
+              "min": 22.53606542611619,
+              "max": 24.58942212367431,
+              "range": 2.0533566975581223
+            },
+            "ssim": {
+              "count": 5,
+              "mean": 0.9141789197921752,
+              "sample_std": 0.0039201238855972,
+              "min": 0.909637987613678,
+              "max": 0.9174422025680542,
+              "range": 0.007804214954376221
+            }
+          },
+          {
+            "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 5,
+              "mean": 22.242654717320534,
+              "sample_std": 1.3458108209596782,
+              "min": 20.22274919307914,
+              "max": 23.93687213798917,
+              "range": 3.714122944910031
+            },
+            "ssim": {
+              "count": 5,
+              "mean": 0.9388151288032531,
+              "sample_std": 0.006911313451263604,
+              "min": 0.9283534288406372,
+              "max": 0.9474782943725586,
+              "range": 0.019124865531921387
+            }
+          },
+          {
+            "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 5,
+              "mean": 17.623102741850417,
+              "sample_std": 0.771398219100293,
+              "min": 16.971975098778223,
+              "max": 18.536387822529477,
+              "range": 1.5644127237512535
+            },
+            "ssim": {
+              "count": 5,
+              "mean": 0.8006357431411744,
+              "sample_std": 0.012407098630499077,
+              "min": 0.7886367440223694,
+              "max": 0.8177710771560669,
+              "range": 0.02913433313369751
+            }
+          },
+          {
+            "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+            "dimensions": {
+              "width": 512,
+              "height": 341,
+              "reference_native": [
+                1600,
+                1067
+              ],
+              "quick_native": [
+                512,
+                341
+              ],
+              "detail_native": [
+                512,
+                341
+              ]
+            },
+            "psnr": {
+              "count": 5,
+              "mean": 22.44213258796291,
+              "sample_std": 0.6883813898672442,
+              "min": 21.604159031565978,
+              "max": 23.407398691754683,
+              "range": 1.803239660188705
+            },
+            "ssim": {
+              "count": 5,
+              "mean": 0.8507117748260498,
+              "sample_std": 0.005187995134923627,
+              "min": 0.8443257808685303,
+              "max": 0.8563855290412903,
+              "range": 0.01205974817276001
+            }
+          }
+        ],
+        "gaussians": {
+          "count": 5,
+          "mean": 14424.2,
+          "sample_std": 111.00990946757861,
+          "min": 14306,
+          "max": 14559,
+          "range": 253
+        },
+        "model_bytes": {
+          "count": 5,
+          "mean": 3405661.2,
+          "sample_std": 26198.338634348554,
+          "min": 3377766,
+          "max": 3437474,
+          "range": 59708
+        },
+        "interpretation": "Observed same-seed variation only; not a confidence interval, causal test or quality acceptance threshold."
+      },
+      "new_summary_seconds": 3.092546666972339
+    }
+  },
+  "runs": [
+    {
+      "engine": "Brush 0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "training_views": 12,
+      "evaluation_views": 2,
+      "steps": 3000,
+      "resolution": 512,
+      "gaussians": 11630,
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0097,
+        "sfm_seconds": 0.035,
+        "training_and_model_export_seconds": 22.9918
+      },
+      "seconds": 23.07,
+      "evaluation_images": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "1f9876e5f635628860ef7e0bf4fce5f5ba60a671f6264887612eb0b00388f980",
+          "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "c33a45654f775d63896fc67d93ae78114a33a8a94f306563ec29b21d0c94de3d",
+          "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+        }
+      ],
+      "scene": "pipes",
+      "repeat": 1,
+      "job_id": "a2229147134a4332b75c2f0dc91681ee",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.091435630405,
+          800.0,
+          533.5,
+          -0.10091385666317157,
+          0.06728544184812109
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1066
+      ],
+      "model_bytes": 2746230,
+      "health_and_history_checks": 24,
+      "request_to_observed_completion_seconds": 23.340526333078742
+    },
+    {
+      "engine": "Brush 0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "training_views": 22,
+      "evaluation_views": 4,
+      "steps": 3000,
+      "resolution": 512,
+      "gaussians": 14559,
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0138,
+        "sfm_seconds": 0.0481,
+        "training_and_model_export_seconds": 23.5685
+      },
+      "seconds": 23.69,
+      "evaluation_images": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "2207329d0dece312cf7a86be7f896a3f12dc491e2495924c2cdea4d75c15e55b",
+          "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "8c95423324c2672ea674cdce2977f350243817785dfb148cd1736d9d1bc7ef8f",
+          "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "150f1345a9008b7957311136f19393e4db2cf017fc2727c85bdd5328cf0b62d8",
+          "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "befb2f029d8e8a1835488ba170956bbaea64735d802483809c414adbf9403d96",
+          "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+        }
+      ],
+      "scene": "office",
+      "repeat": 1,
+      "job_id": "37fe989c3f7e4d48a70623b7f3db466e",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.4381085295956,
+          800.0,
+          533.5,
+          -0.10327691090226823,
+          0.06959028672322837
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1067
+      ],
+      "model_bytes": 3437474,
+      "health_and_history_checks": 25,
+      "request_to_observed_completion_seconds": 24.352368792518973
+    },
+    {
+      "engine": "Brush 0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "training_views": 22,
+      "evaluation_views": 4,
+      "steps": 3000,
+      "resolution": 512,
+      "gaussians": 14506,
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0137,
+        "sfm_seconds": 0.0474,
+        "training_and_model_export_seconds": 23.6
+      },
+      "seconds": 23.71,
+      "evaluation_images": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "3872457527f5850f8cd8325be09c20a3d8ad780fa4416e469971f4d56cd7ced6",
+          "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "0cd11f15c1edc24289a808a0145764710bcef99a85ff0b672f32942f865529f6",
+          "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "719a56ac21296cbbfce954ae5afe75974e2554aecc654bd8396186d1077b770b",
+          "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "b187297467378abc84a22307854bb58050ad5d1a2edc9b2247d28dcdf01d635a",
+          "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+        }
+      ],
+      "scene": "office",
+      "repeat": 2,
+      "job_id": "d5d9ca3e59b544d7af7dbba6f86c24b0",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.4381085295956,
+          800.0,
+          533.5,
+          -0.10327691090226823,
+          0.06959028672322837
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1067
+      ],
+      "model_bytes": 3424966,
+      "health_and_history_checks": 25,
+      "request_to_observed_completion_seconds": 24.375889416784048
+    },
+    {
+      "engine": "Brush 0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "training_views": 12,
+      "evaluation_views": 2,
+      "steps": 3000,
+      "resolution": 512,
+      "gaussians": 11585,
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0105,
+        "sfm_seconds": 0.0301,
+        "training_and_model_export_seconds": 22.8062
+      },
+      "seconds": 22.9,
+      "evaluation_images": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "0b7815ddea43f824a24078771f05138310ec26a1e5afae12a7f3dddae86b2e59",
+          "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "19df222477a216953378860772bbc27745db9879674aeb04eeab1982f48dd788",
+          "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+        }
+      ],
+      "scene": "pipes",
+      "repeat": 2,
+      "job_id": "ca14d9ea5323449b85271ed3ce6f3e1b",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.091435630405,
+          800.0,
+          533.5,
+          -0.10091385666317157,
+          0.06728544184812109
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1066
+      ],
+      "model_bytes": 2735610,
+      "health_and_history_checks": 25,
+      "request_to_observed_completion_seconds": 24.399117291904986
+    },
+    {
+      "engine": "Brush 0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "training_views": 12,
+      "evaluation_views": 2,
+      "steps": 3000,
+      "resolution": 512,
+      "gaussians": 11580,
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0072,
+        "sfm_seconds": 0.022,
+        "training_and_model_export_seconds": 22.6797
+      },
+      "seconds": 22.75,
+      "evaluation_images": [
+        {
+          "name": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "7d6b04176bc1cde535ef52b8e5aacb2da9ade7b656c01cf9ba1126a1bfdcec06",
+          "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24"
+        },
+        {
+          "name": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "0da94a5dca355899f32b462d4eaf1e769d15655f4f5a7ca0ef68fb2befde5411",
+          "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+        }
+      ],
+      "scene": "pipes",
+      "repeat": 3,
+      "job_id": "dc5da8009bc846baaa5ed7f3f821145b",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.091435630405,
+          800.0,
+          533.5,
+          -0.10091385666317157,
+          0.06728544184812109
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1066
+      ],
+      "model_bytes": 2734430,
+      "health_and_history_checks": 24,
+      "request_to_observed_completion_seconds": 23.354692041873932
+    },
+    {
+      "engine": "Brush 0.3.0",
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "training_views": 22,
+      "evaluation_views": 4,
+      "steps": 3000,
+      "resolution": 512,
+      "gaussians": 14428,
+      "sfm_reused": true,
+      "timings": {
+        "input_validation_seconds": 0.0125,
+        "sfm_seconds": 0.0355,
+        "training_and_model_export_seconds": 23.488
+      },
+      "seconds": 23.57,
+      "evaluation_images": [
+        {
+          "name": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "0993d9d13bedba362f786c921a99bc4fcb7aa709c38381333b62d64d4799bed2",
+          "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1"
+        },
+        {
+          "name": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "537662713a6e63de9536d02950598e46a823487814471e2ff91fdda7aaa1c864",
+          "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674"
+        },
+        {
+          "name": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "f4d6663619ebd954fea6a654fde2b713308bb9919779aa7cc66809b0da2e7e88",
+          "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5"
+        },
+        {
+          "name": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "width": 512,
+          "height": 341,
+          "sha256": "42697a746dad8b72f3c52c5974c6bb79e635055aa5daebc0c294e204a7e2ea73",
+          "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+        }
+      ],
+      "scene": "office",
+      "repeat": 3,
+      "job_id": "9aa6b584c61c4d779c0ce392fb594861",
+      "config": {
+        "backend": "brush",
+        "steps": 3000,
+        "max_points": 150000,
+        "resolution": 512,
+        "camera_mode": "shared",
+        "evaluation_mode": "holdout"
+      },
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.4381085295956,
+          800.0,
+          533.5,
+          -0.10327691090226823,
+          0.06959028672322837
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1067
+      ],
+      "model_bytes": 3406558,
+      "health_and_history_checks": 25,
+      "request_to_observed_completion_seconds": 24.37939816713333
+    }
+  ],
+  "validation": {
+    "backend_tests": 325,
+    "frontend_tests": 18,
+    "typecheck": "passed",
+    "build": "passed",
+    "sh_degree_readback": 3,
+    "health_and_history_checks": 148,
+    "browser": {
+      "checked": [
+        {
+          "name": "pipes-1",
+          "state": "已加载"
+        },
+        {
+          "name": "pipes-2",
+          "state": "已加载"
+        },
+        {
+          "name": "pipes-3",
+          "state": "已加载"
+        },
+        {
+          "name": "office-1",
+          "state": "已加载"
+        },
+        {
+          "name": "office-2",
+          "state": "已加载"
+        },
+        {
+          "name": "office-3",
+          "state": "已加载"
+        }
+      ],
+      "errors": [],
+      "responses": []
+    },
+    "warnings": [
+      "Existing Starlette TestClient deprecation warning",
+      "Existing Vite large bundle warning"
+    ]
+  }
+}

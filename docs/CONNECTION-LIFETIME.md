@@ -4,6 +4,8 @@
 
 保留此修复。它解决的是已复现的连接生命周期问题，**尚未证明是此前访问失效的根因**，也不代表训练显存、画质或速度提升。
 
+2026-11-19 后续：[六次同配置重复测量](REPEATABILITY.md)确认逐次与逐视角存在明显波动，但仍未确定本轮 pipes 下降的原因。
+
 ## 依据与适用范围
 
 - [Python 3.12 官方说明](https://docs.python.org/3.12/library/sqlite3.html#how-to-use-the-connection-context-manager)明确区分事务上下文与连接关闭；实现用外层 `contextlib.closing` 包住原生事务，保留提交、回滚和异常传播。API、Store 和队列启动的连接均覆盖；领取任务仍使用零等待及原来的取消竞争检查。
