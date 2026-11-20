@@ -106,3 +106,44 @@ def test_error_grid_rejects_empty_or_oversized_tiles(divisions):
     image = Image.new('RGB', (17, 13))
     with pytest.raises(ValueError, match='grid'):
         ReferenceMetrics(image).score(image, error_grid=divisions)
+
+
+def test_tile_constant_rgb_bias_preserves_sign_and_has_no_centered_error():
+    reference = Image.new('RGB', (17, 13), (100, 100, 100))
+    render = Image.new('RGB', reference.size, (151, 49, 100))
+    measured = ReferenceMetrics(reference).score(render, error_grid=4)
+    for tile in measured['error_tiles']:
+        assert tile['mean_rgb_error'] == pytest.approx([0.2, -0.2, 0])
+        assert tile['bias_mse'] == pytest.approx(0.08 / 3)
+        assert tile['centered_mse'] == pytest.approx(0, abs=1e-28)
+        assert tile['mse'] == pytest.approx(tile['bias_mse'])
+
+
+def test_zero_mean_spatial_error_is_not_explained_by_rgb_bias():
+    reference = Image.new('RGB', (16, 12), (100, 100, 100))
+    pixels = np.full((12, 16, 3), 100, dtype=np.uint8)
+    pixels[:, :8, 0] = 151
+    pixels[:, 8:, 0] = 49
+    tile = ReferenceMetrics(reference).score(Image.fromarray(pixels), error_grid=1)['error_tiles'][0]
+    assert tile['mean_rgb_error'] == pytest.approx([0, 0, 0], abs=1e-15)
+    assert tile['bias_mse'] == pytest.approx(0, abs=1e-28)
+    assert tile['centered_mse'] == pytest.approx(0.04 / 3)
+    assert tile['mse'] == pytest.approx(tile['centered_mse'])
+
+
+def test_bias_decomposition_partitions_nondivisible_frame_without_mutating_scores():
+    rng = np.random.default_rng(19)
+    reference = Image.fromarray(rng.integers(0, 256, (13, 17, 3), dtype=np.uint8))
+    render = Image.fromarray(rng.integers(0, 256, (13, 17, 3), dtype=np.uint8))
+    scorer = ReferenceMetrics(reference)
+    expected = scorer.score(render)
+    scored = scorer.score(render, error_grid=4)
+    tiles = scored.pop('error_tiles')
+    assert scored == expected
+    decomposed = 0
+    for tile in tiles:
+        x0, y0, x1, y1 = tile['xyxy']
+        assert tile['mse'] == pytest.approx(tile['bias_mse'] + tile['centered_mse'], abs=1e-14)
+        decomposed += (x1-x0) * (y1-y0) * (tile['bias_mse'] + tile['centered_mse'])
+    assert decomposed / (13*17) == pytest.approx(10 ** (-expected['psnr']/10))
+    assert scorer.score(render) == expected

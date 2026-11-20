@@ -38,7 +38,7 @@ class ReferenceMetrics:
         a = np.asarray(render).astype(np.float64) / 255
         squared_error = (a - self.reference) ** 2
         mse = squared_error.mean()
-        tiles = error_tiles(squared_error, error_grid) if error_grid is not None else None
+        tiles = error_tiles(squared_error, error_grid, residual=a - self.reference) if error_grid is not None else None
         del squared_error
         psnr = float(-10 * np.log10(max(mse, 1e-12)))
         x = torch.tensor(a.transpose(2, 0, 1)[None], dtype=torch.float32)
@@ -56,8 +56,12 @@ class ReferenceMetrics:
         return result
 
 
-def error_tiles(squared_error, divisions):
-    """Tile bounds are half-open on the scoring grid; MSE uses RGB in [0, 1]."""
+def error_tiles(squared_error, divisions, *, residual=None):
+    """Half-open tiles in RGB [0, 1]; optional signed render-minus-reference error.
+
+    Mean RGB bias and spatially centered error partition MSE. This is a
+    descriptive decomposition, not exposure correction or a geometry metric.
+    """
     height, width = squared_error.shape[:2]
     if not 1 <= divisions <= min(16, height, width):
         raise ValueError("Error grid must fit the scoring image and be between 1 and 16")
@@ -66,10 +70,17 @@ def error_tiles(squared_error, divisions):
         top, bottom = row * height // divisions, (row + 1) * height // divisions
         for col in range(divisions):
             left, right = col * width // divisions, (col + 1) * width // divisions
-            tiles.append({
+            tile = {
                 "xyxy": [left, top, right, bottom],
                 "mse": float(squared_error[top:bottom, left:right].mean()),
-            })
+            }
+            if residual is not None:
+                region = residual[top:bottom, left:right]
+                mean_rgb = region.mean(axis=(0, 1))
+                tile.update(mean_rgb_error=mean_rgb.tolist(),
+                            bias_mse=float(np.mean(mean_rgb ** 2)),
+                            centered_mse=float(np.mean((region - mean_rgb) ** 2)))
+            tiles.append(tile)
     return tiles
 
 
@@ -287,7 +298,7 @@ def main():
         "--lpips-scorer", type=Path, help="Optional offline Brush LPIPS scorer executable"
     )
     p.add_argument("--error-grid", type=int, metavar="N",
-                   help="Also report RGB MSE for N by N tiles per scored view (1–16)")
+                   help="Report RGB MSE, signed mean bias and centered MSE for N by N tiles (1–16)")
     args = p.parse_args()
     torch.set_num_threads(4)
     result = compare(args.data, args.quick, args.detail, args.size, args.lpips_scorer, error_grid=args.error_grid)

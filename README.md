@@ -89,7 +89,7 @@ DSP-SIFT 两次对照改善 pipes，但 office 的 SSIM 两次回退，因此仍
 
 同配置重复重建可用 `scripts/compare_repeats.py --jobs ID1 ID2 ID3 --output 结果.json` 汇总均值、样本标准差与极差，并查看逐视角波动。需通过项目虚拟环境运行、设置 `PYTHONPATH=.`；工具会拒绝输入、相机、引擎、种子或配置不一致的任务。[完整命令与实拍结果](docs/REPEATABILITY.md)
 
-同一相机下比较两份模型时，可给 `scripts/compare_quality.py` 加 `--error-grid 4`，查看每张留出照片 16 个区域的 RGB 均方误差，定位需要放大复查的位置。[示例与实拍对照](docs/HOLDOUT-GRID.md)
+同一相机下比较两份模型时，可给 `scripts/compare_quality.py` 加 `--error-grid 4`，查看每张留出照片 16 个区域的 RGB 均方误差、有符号平均色偏及中心化误差，定位需要放大复查的位置。分解不校色，也不把剩余项当成几何误差。[分区示例](docs/HOLDOUT-GRID.md) · [色偏实测](docs/PHOTOMETRIC-BIAS.md)
 
 离线共同网格评分会复用同一参考照片的局部统计；四组固定模型实测耗时减少约 15%–21%，验证照片的新旧 PSNR / SSIM 完全一致。这只加快评分，不改变重建质量。[范围与复现](docs/REFERENCE-METRICS.md)
 
