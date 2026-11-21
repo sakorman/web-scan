@@ -91,6 +91,8 @@ DSP-SIFT 两次对照改善 pipes，但 office 的 SSIM 两次回退，因此仍
 
 同一相机下比较两份模型时，可给 `scripts/compare_quality.py` 加 `--error-grid 4`，查看每张留出照片 16 个区域的 RGB 均方误差、有符号平均色偏及中心化误差，定位需要放大复查的位置。分解不校色，也不把剩余项当成几何误差。[分区示例](docs/HOLDOUT-GRID.md) · [色偏实测](docs/PHOTOMETRIC-BIAS.md)
 
+训练照片的对应颜色可用 `scripts/benchmark_track_color.py --job ID --output 结果.json` 离线核验，先通过项目虚拟环境运行并设置 `PYTHONPATH=.`。工具排除留出颜色、重复照片关联及大重投影误差，报告实际覆盖范围；结果不代表曝光或几何真值。[使用与实测](docs/TRACK-COLOR.md)
+
 离线共同网格评分会复用同一参考照片的局部统计；四组固定模型实测耗时减少约 15%–21%，验证照片的新旧 PSNR / SSIM 完全一致。这只加快评分，不改变重建质量。[范围与复现](docs/REFERENCE-METRICS.md)
 
 新任务会保存原始内参与照片身份清单，复用 SfM 缓存的任务也可进行原始域评测；原图被改动或丢失时拒绝评分。历史缓存任务若缺少原始内参，需要重新重建。[验证与兼容范围](docs/RAW-CACHE-EVALUATION.md)
