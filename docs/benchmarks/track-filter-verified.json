@@ -1,0 +1,18 @@
+{
+  "pipes": {
+    "original": 1881,
+    "candidate": 1860,
+    "removed": 21,
+    "cameras_and_xy_exact": true,
+    "retained_xyz_rgb_exact": true,
+    "reciprocal_associations_valid": true
+  },
+  "office": {
+    "original": 2482,
+    "candidate": 2394,
+    "removed": 88,
+    "cameras_and_xy_exact": true,
+    "retained_xyz_rgb_exact": true,
+    "reciprocal_associations_valid": true
+  }
+}
