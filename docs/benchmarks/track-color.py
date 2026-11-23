@@ -23,7 +23,8 @@ def main():
         for jid in [plan['sources'][scene], run['job_id']]:
             out = args.work_dir/f'{jid}.json'
             subprocess.run([sys.executable, 'scripts/benchmark_track_color.py', '--job', jid,
-                            '--focus-index', str(plan['focus_index']), '--output', str(out)], check=True)
+                            '--focus-index', str(plan['focus_index']), '--duplicate-policy', 'reject-track',
+                            '--output', str(out)], check=True)
             audits[scene].append(json.loads(out.read_text()))
         a, b = [{k:v for k,v in d.items() if k not in ('job','analysis_seconds')} for d in audits[scene]]
         assert a == b, 'Cached camera, input or color statistics changed'

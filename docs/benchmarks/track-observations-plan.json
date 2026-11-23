@@ -1,0 +1,27 @@
+{
+  "baseline_commit": "8786fd3ea4413e762d141cf60a07e6040b3ca16c",
+  "sources": {
+    "pipes": "5e45df7c1bfa4af6ba342326ca2fe407",
+    "office": "4533f0aa28a448bd9afb5983e6472de2"
+  },
+  "config": {
+    "backend": "brush",
+    "steps": 3000,
+    "max_points": 150000,
+    "resolution": 512,
+    "camera_mode": "shared",
+    "evaluation_mode": "holdout"
+  },
+  "hypothesis": "Ambiguous image groups can be excluded from sparse color auditing without discarding clean observations in the rest of each track.",
+  "acceptance": "Keep one vote per track/distinct training-image pair; reject every ambiguous image group; never decode holdout colors; old unambiguous contributions unchanged; source/new cached audits identical. No training quality or speed claim.",
+  "policies": [
+    "reject-track",
+    "exclude-image"
+  ],
+  "focus_index": 8,
+  "new_order": [
+    "pipes",
+    "office"
+  ],
+  "limits": "Point error <4px, per-observation residual <=2px, at least 2 clean training images, minimum 20 tracks per reported eligible camera pair; sparse support is not surface truth."
+}

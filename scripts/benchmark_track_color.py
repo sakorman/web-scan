@@ -56,9 +56,20 @@ def summarize_pairs(pairs, names, minimum=20):
                 median_of_pair_median_abs_rgb=float(np.median([r['median_abs_rgb'] for r in eligible])) if eligible else None)
 
 
-def measure(data, job, focus_index=8):
+def unique_camera_elements(elements):
+    """Exclude every observation from an ambiguous image, retain other images."""
+    counts = Counter(e.image_id for e in elements)
+    return sorted((e for e in elements if counts[e.image_id] == 1),
+                  key=lambda e: e.image_id), {
+        iid for iid, count in counts.items() if count > 1
+    }
+
+
+def measure(data, job, focus_index=8, duplicate_policy='exclude-image'):
     import pycolmap
 
+    if duplicate_policy not in ('exclude-image', 'reject-track'):
+        raise ValueError('Unknown duplicate policy')
     start = time.perf_counter()
     work = data/'jobs'/job
     report = json.loads((work/'artifacts/report.json').read_text())
@@ -100,18 +111,25 @@ def measure(data, job, focus_index=8):
     if recorded != expected:
         raise ValueError('Held-out reference identity mismatch')
     focus_id, focus_image = images[focus_index]
-    focus_tracks = {o.point3D_id:o.xy for o in focus_image.points2D if o.has_point3D()}
+    focus_counts = Counter(o.point3D_id for o in focus_image.points2D if o.has_point3D())
+    focus_tracks = {o.point3D_id:o.xy for o in focus_image.points2D
+                    if o.has_point3D() and focus_counts[o.point3D_id] == 1}
     pairs,focus_pairs=defaultdict(list),defaultdict(list)
-    counts=Counter();focus_points=[]
+    counts=Counter();focus_points=[];recovered=[]
     for pid,point in sorted(model.points3D.items()):
-        camera_ids = [e.image_id for e in point.track.elements]
-        if len(camera_ids) != len(set(camera_ids)):
+        elements, ambiguous = unique_camera_elements(point.track.elements)
+        if ambiguous and duplicate_policy == 'reject-track':
             counts['ambiguous_camera_track_rejected'] += 1
             continue
+        if ambiguous:
+            counts['tracks_with_ambiguous_images'] += 1
+            counts['ambiguous_training_images_excluded'] += len(ambiguous & training)
+            counts['ambiguous_training_observations_excluded'] += sum(
+                e.image_id in ambiguous & training for e in point.track.elements)
         if not np.isfinite(point.error) or point.error>=4:
             counts['point_error_rejected']+=1;continue
-        observed=[];seen=set()
-        for elem in point.track.elements:
+        observed=[];seen=set();geometry=[]
+        for elem in elements:
             iid=elem.image_id
             if iid not in training:
                 continue
@@ -126,20 +144,30 @@ def measure(data, job, focus_index=8):
             if not np.isfinite(xyz).all() or xyz[2]<=0:
                 counts['behind_camera']+=1;continue
             projected=camera.calibration_matrix()@xyz;projected=projected[:2]/projected[2]
-            if not np.isfinite(obs.xy).all() or np.linalg.norm(projected-obs.xy)>2:
+            residual = float(np.linalg.norm(projected-obs.xy))
+            if not np.isfinite(obs.xy).all() or not np.isfinite(residual) or residual>2:
                 counts['observation_error_rejected']+=1;continue
             color=sample_rgb(pixels[iid],obs.xy)
             if color is None:
                 counts['sample_boundary_rejected']+=1;continue
             counts['sampled_training_observations']+=1
             observed.append((iid,color))
+            if ambiguous:
+                geometry.append(dict(image_name=im.name,point2D_index=int(elem.point2D_idx),
+                                     residual_px=residual))
         if len(observed)<2:
             counts['insufficient_training_observations']+=1;continue
         counts['accepted_tracks']+=1
+        if ambiguous:
+            counts['recovered_tracks'] += 1
+            recovered.append(dict(point_id=int(pid),point_error_px=float(point.error),
+                                  excluded_images=sorted(names[i] for i in ambiguous),
+                                  observations=geometry))
         in_focus = pid in focus_tracks
         if in_focus:
             elem = next((e for e in point.track.elements if e.image_id == focus_id), None)
-            if elem is None or focus_image.points2D[elem.point2D_idx].point3D_id != pid:
+            if (elem is None or focus_image.points2D[elem.point2D_idx].point3D_id != pid
+                    or not np.array_equal(focus_image.points2D[elem.point2D_idx].xy, focus_tracks[pid])):
                 raise ValueError('Broken focus reciprocal track')
             xyz = focus_image.cam_from_world() * point.xyz
             camera = model.cameras[focus_image.camera_id]
@@ -160,9 +188,11 @@ def measure(data, job, focus_index=8):
     return dict(job=job,focus_image=focus_image.name,focus_dimensions=[views[focus_index]['width'],views[focus_index]['height']],
         training_images=[names[i] for i in sorted(training)],holdout_color_samples=0,
         counts=dict(counts),all_training=summarize_pairs(pairs,names),focus_training=summarize_pairs(focus_pairs,names),
+        recovered_tracks=recovered,ambiguous_focus_tracks_excluded=sum(n>1 for n in focus_counts.values()),
         focus_points=focus_points,photo_sha256=identity,
         sparse_sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((folder/'sparse').glob('*.bin'))},
-        settings=dict(point_error_exclusive=4,observation_error_max=2,min_pair_tracks=20,units='encoded RGB / 255',direction='second image minus first'),
+        settings=dict(point_error_exclusive=4,observation_error_max=2,min_pair_tracks=20,
+                      duplicate_policy=duplicate_policy,units='encoded RGB / 255',direction='second image minus first'),
         analysis_seconds=time.perf_counter()-start,pycolmap_version=pycolmap.__version__,
         limitation='Sparse feature colors mix illumination, reflectance, image processing and sampling errors; not an exposure or geometry estimate.')
 
@@ -172,9 +202,10 @@ def main():
     p.add_argument('--data',type=Path,default=Path('.data'))
     p.add_argument('--job',required=True)
     p.add_argument('--focus-index',type=int,default=8)
+    p.add_argument('--duplicate-policy',choices=['exclude-image','reject-track'],default='exclude-image')
     p.add_argument('--output',type=Path,required=True)
     args=p.parse_args()
-    result=measure(args.data,args.job,args.focus_index)
+    result=measure(args.data,args.job,args.focus_index,args.duplicate_policy)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({k:result[k] for k in ['job','counts','analysis_seconds']}))

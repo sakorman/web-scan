@@ -82,8 +82,9 @@ def test_measure_rejects_ambiguous_tracks_and_never_decodes_holdout(tmp_path, mo
     points = {}
     # A valid match, an ambiguous duplicate, a point behind the camera,
     # and a feature with excessive per-observation reprojection error.
-    for pid, ids, xyz, xy in [(1,[1,2,8],[1,1,1],[1,1]), (2,[1,1,2],[1,1,1],[1,1]),
-                              (3,[1,2],[1,1,-1],[1,1]), (4,[1,2],[10,10,1],[1,1])]:
+    for pid, ids, xyz, xy in [(1,[1,2,8],[1,1,1],[1,1]), (2,[1,1,2,3],[1,1,1],[1,1]),
+                              (3,[1,2],[1,1,-1],[1,1]), (4,[1,2],[10,10,1],[1,1]),
+                              (5,[1,2,8,8],[1,1,1],[1,1])]:
         elements = []
         for iid in ids:
             elements.append(NS(image_id=iid, point2D_idx=len(images[iid].points2D)))
@@ -105,16 +106,43 @@ def test_measure_rejects_ambiguous_tracks_and_never_decodes_holdout(tmp_path, mo
         return original_open(path)
 
     monkeypatch.setattr(Image, 'open', training_open)
-    result = measure(tmp_path, 'fixture')
+    result = measure(tmp_path, 'fixture', duplicate_policy='reject-track')
     assert len(opened) == 7
     assert result['counts']['accepted_tracks'] == 1
-    assert result['counts']['ambiguous_camera_track_rejected'] == 1
+    assert result['counts']['ambiguous_camera_track_rejected'] == 2
     assert result['counts']['behind_camera'] == 2
     assert result['counts']['observation_error_rejected'] == 2
     pair = result['focus_training']['pairs'][0]
     assert pair['tracks'] == 1
     assert pair['median_rgb_delta'] == pytest.approx([20/255]*3)
+    updated = measure(tmp_path, 'fixture')
+    assert updated['settings']['duplicate_policy'] == 'exclude-image'
+    assert updated['counts']['accepted_tracks'] == 3
+    assert updated['counts']['recovered_tracks'] == 2
+    assert updated['counts']['ambiguous_training_images_excluded'] == 1
+    assert updated['counts']['ambiguous_training_observations_excluded'] == 2
+    assert updated['ambiguous_focus_tracks_excluded'] == 1
+    assert [p['point_id'] for p in updated['focus_points']] == [1]
+    assert [p['image_name'] for p in updated['recovered_tracks'][0]['observations']] == ['0002.png','0003.png']
+    assert updated['all_training']['pairs'][0]['tracks'] == 2
+    assert updated['all_training']['pairs'][1]['tracks'] == 1
+    assert updated['all_training']['pairs'][1]['median_rgb_delta'] == pytest.approx([20/255]*3)
+    assert updated['focus_training'] == result['focus_training']
+    # Input track order cannot change which clean observations contribute.
+    for point in points.values():point.track.elements.reverse()
+    again = measure(tmp_path, 'fixture')
+    for key in ('counts','recovered_tracks','all_training','focus_training','focus_points'):
+        assert again[key] == updated[key]
     report['evaluation_images'][0]['reference_sha256'] = 'changed'
     report_path.write_text(json.dumps(report))
     with pytest.raises(ValueError, match='reference identity'):
         measure(tmp_path, 'fixture')
+
+
+def test_ambiguous_image_is_excluded_even_for_identical_repeated_element():
+    from types import SimpleNamespace as NS
+    from scripts.benchmark_track_color import unique_camera_elements
+    track = [NS(image_id=i,point2D_idx=j) for i,j in [(5,1),(2,0),(5,1),(7,0),(7,1)]]
+    elements, ambiguous = unique_camera_elements(track)
+    assert [(e.image_id,e.point2D_idx) for e in elements] == [(2,0)]
+    assert ambiguous == {5,7}
