@@ -1,0 +1,1527 @@
+{
+  "pipes": {
+    "source_job": "5d626cd8463d461596b69c7c07fdd4b8",
+    "new_job": "1136e72db1f043a283f04f43fc08fb8c",
+    "views": [
+      {
+        "index": 0,
+        "focus_image": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+        "size": [
+          512,
+          341
+        ],
+        "track_count": 577,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 1,
+            "tracks": 1
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 322
+          }
+        },
+        "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+        "energy_quartiles": [
+          0.0010232861677650362,
+          0.012197546195238829
+        ],
+        "analysis_seconds": 0.020588417537510395
+      },
+      {
+        "index": 8,
+        "focus_image": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+        "size": [
+          512,
+          341
+        ],
+        "track_count": 198,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 0,
+            "tracks": 0
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 15,
+            "tracks": 110
+          }
+        },
+        "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+        "energy_quartiles": [
+          0.0006151317938929424,
+          0.01225375384092331
+        ],
+        "analysis_seconds": 0.008899584412574768
+      }
+    ],
+    "quality": {
+      "requested_comparison_size": 512,
+      "comparison_size": 512,
+      "resize_policy": "never_upscale",
+      "resampling": "Lanczos",
+      "quick_job": "pipes-old",
+      "detail_job": "pipes-new",
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "quick": {
+            "psnr": 22.28164772864993,
+            "ssim": 0.8405247926712036
+          },
+          "detail": {
+            "psnr": 23.447896060275607,
+            "ssim": 0.8481232523918152
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "quick": {
+            "psnr": 14.348118567140666,
+            "ssim": 0.6759398579597473
+          },
+          "detail": {
+            "psnr": 15.66915073541766,
+            "ssim": 0.690915584564209
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.314883147895298,
+          "ssim": 0.7582323253154755
+        },
+        "detail": {
+          "psnr": 19.558523397846635,
+          "ssim": 0.7695194184780121
+        }
+      }
+    },
+    "models": [
+      {
+        "engine": "Brush 0.3.0",
+        "steps": 3000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "resolution": 512,
+        "gaussians": 11494,
+        "timings": {
+          "input_validation_seconds": 0.01,
+          "sfm_seconds": 0.0335,
+          "training_and_model_export_seconds": 22.6945
+        },
+        "sfm_reused": true,
+        "seconds": 22.78,
+        "color_model": "SH3",
+        "registered_images": 14,
+        "input_images": 14,
+        "camera_mode": "shared",
+        "unregistered_images": [],
+        "ply_bytes": 2714134,
+        "camera": {
+          "view": [
+            [
+              0.8424919843673706,
+              0.21670222282409668,
+              0.4932011663913727,
+              0.05657519772648811
+            ],
+            [
+              -0.11239713430404663,
+              0.9660850167274475,
+              -0.23247933387756348,
+              -0.2261296659708023
+            ],
+            [
+              -0.5268530249595642,
+              0.1404275745153427,
+              0.8382756114006042,
+              0.7119624018669128
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "K": [
+            [
+              883.9916445174683,
+              0.0,
+              800.0
+            ],
+            [
+              0.0,
+              883.7085730850977,
+              533.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "width": 1600,
+          "height": 1066,
+          "image_name": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          }
+        },
+        "model_sha256": "d7dfe1eed3b5e334c4b378e2195ab815401c40d6cce11257518cf34ae760034c"
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "steps": 3000,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "resolution": 512,
+        "gaussians": 11599,
+        "timings": {
+          "input_validation_seconds": 0.0115,
+          "sfm_seconds": 0.0352,
+          "training_and_model_export_seconds": 22.9751
+        },
+        "sfm_reused": true,
+        "seconds": 23.06,
+        "color_model": "SH3",
+        "registered_images": 14,
+        "input_images": 14,
+        "camera_mode": "shared",
+        "unregistered_images": [],
+        "ply_bytes": 2738914,
+        "camera": {
+          "view": [
+            [
+              0.8424919843673706,
+              0.21670222282409668,
+              0.4932011663913727,
+              0.05657519772648811
+            ],
+            [
+              -0.11239713430404663,
+              0.9660850167274475,
+              -0.23247933387756348,
+              -0.2261296659708023
+            ],
+            [
+              -0.5268530249595642,
+              0.1404275745153427,
+              0.8382756114006042,
+              0.7119624018669128
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "K": [
+            [
+              883.9916445174683,
+              0.0,
+              800.0
+            ],
+            [
+              0.0,
+              883.7085730850977,
+              533.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "width": 1600,
+          "height": 1066,
+          "image_name": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          }
+        },
+        "model_sha256": "1901ac196e151af28bc628a3863defafd7746314ec73584023270da232276577"
+      }
+    ]
+  },
+  "office": {
+    "source_job": "cca441de3f4643d6a2e0773a27990f34",
+    "new_job": "85ce36c5411d4923a132b11a85cd327c",
+    "views": [
+      {
+        "index": 0,
+        "focus_image": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+        "size": [
+          512,
+          341
+        ],
+        "track_count": 555,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 0,
+            "tracks": 0
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 15,
+            "tracks": 346
+          }
+        },
+        "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+        "energy_quartiles": [
+          9.048295032698661e-05,
+          0.0070085510378703475
+        ],
+        "analysis_seconds": 0.010018584318459034
+      },
+      {
+        "index": 8,
+        "focus_image": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+        "size": [
+          512,
+          341
+        ],
+        "track_count": 95,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 0,
+            "tracks": 0
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 14,
+            "tracks": 85
+          }
+        },
+        "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+        "energy_quartiles": [
+          1.7491418475401588e-05,
+          0.00045302884973352775
+        ],
+        "analysis_seconds": 0.007275666110217571
+      },
+      {
+        "index": 16,
+        "focus_image": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+        "size": [
+          512,
+          341
+        ],
+        "track_count": 434,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 1,
+            "tracks": 2
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 13,
+            "tracks": 340
+          }
+        },
+        "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+        "energy_quartiles": [
+          0.0006213512097019702,
+          0.01589233847334981
+        ],
+        "analysis_seconds": 0.009529832750558853
+      },
+      {
+        "index": 24,
+        "focus_image": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+        "size": [
+          512,
+          341
+        ],
+        "track_count": 118,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 2,
+            "tracks": 4
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 10,
+            "tracks": 61
+          }
+        },
+        "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629",
+        "energy_quartiles": [
+          0.0004680139463744126,
+          0.011834761593490839
+        ],
+        "analysis_seconds": 0.008012542501091957
+      }
+    ],
+    "quality": {
+      "requested_comparison_size": 512,
+      "comparison_size": 512,
+      "resize_policy": "never_upscale",
+      "resampling": "Lanczos",
+      "quick_job": "office-old",
+      "detail_job": "office-new",
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "quick": {
+            "psnr": 24.898277328697716,
+            "ssim": 0.9186891317367554
+          },
+          "detail": {
+            "psnr": 23.935231170252017,
+            "ssim": 0.9187884330749512
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "quick": {
+            "psnr": 22.416670264060446,
+            "ssim": 0.943958044052124
+          },
+          "detail": {
+            "psnr": 21.97835465209801,
+            "ssim": 0.9419512152671814
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "quick": {
+            "psnr": 16.688402557856104,
+            "ssim": 0.7813634872436523
+          },
+          "detail": {
+            "psnr": 16.889796167153712,
+            "ssim": 0.8014091849327087
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "quick": {
+            "psnr": 22.786988551861874,
+            "ssim": 0.8513946533203125
+          },
+          "detail": {
+            "psnr": 22.26184423814244,
+            "ssim": 0.8347338438034058
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 21.697584675619034,
+          "ssim": 0.8738513290882111
+        },
+        "detail": {
+          "psnr": 21.266306556911545,
+          "ssim": 0.8742206692695618
+        }
+      }
+    },
+    "models": [
+      {
+        "engine": "Brush 0.3.0",
+        "steps": 3000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "resolution": 512,
+        "gaussians": 14318,
+        "timings": {
+          "input_validation_seconds": 0.0133,
+          "sfm_seconds": 0.0468,
+          "training_and_model_export_seconds": 23.6221
+        },
+        "sfm_reused": true,
+        "seconds": 23.73,
+        "color_model": "SH3",
+        "registered_images": 26,
+        "input_images": 26,
+        "camera_mode": "shared",
+        "unregistered_images": [],
+        "ply_bytes": 3380598,
+        "camera": {
+          "view": [
+            [
+              0.6294058561325073,
+              0.00328779686242342,
+              -0.7770698070526123,
+              -0.41314592957496643
+            ],
+            [
+              0.25391820073127747,
+              0.94422847032547,
+              0.2096620500087738,
+              0.26333069801330566
+            ],
+            [
+              0.7344207167625427,
+              -0.3292746841907501,
+              0.5934680700302124,
+              0.2752653956413269
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "K": [
+            [
+              884.8694165023509,
+              0.0,
+              800.0
+            ],
+            [
+              0.0,
+              884.8759943285257,
+              533.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "width": 1600,
+          "height": 1067,
+          "image_name": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          }
+        },
+        "model_sha256": "f1639478b4b38384589fc80c257dac6faaacdaefddd4b23bff59b951fea15e29"
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "steps": 3000,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "resolution": 512,
+        "gaussians": 14746,
+        "timings": {
+          "input_validation_seconds": 0.012,
+          "sfm_seconds": 0.0441,
+          "training_and_model_export_seconds": 23.6696
+        },
+        "sfm_reused": true,
+        "seconds": 23.77,
+        "color_model": "SH3",
+        "registered_images": 26,
+        "input_images": 26,
+        "camera_mode": "shared",
+        "unregistered_images": [],
+        "ply_bytes": 3481606,
+        "camera": {
+          "view": [
+            [
+              0.6294058561325073,
+              0.00328779686242342,
+              -0.7770698070526123,
+              -0.41314592957496643
+            ],
+            [
+              0.25391820073127747,
+              0.94422847032547,
+              0.2096620500087738,
+              0.26333069801330566
+            ],
+            [
+              0.7344207167625427,
+              -0.3292746841907501,
+              0.5934680700302124,
+              0.2752653956413269
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "K": [
+            [
+              884.8694165023509,
+              0.0,
+              800.0
+            ],
+            [
+              0.0,
+              884.8759943285257,
+              533.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "width": 1600,
+          "height": 1067,
+          "image_name": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          }
+        },
+        "model_sha256": "0b42c4c72b7eb3cb35ae005d6410306273521e086b5be1ca335277568011a3f7"
+      }
+    ]
+  },
+  "desk": {
+    "source_job": "ae5482d0811e46c0bd7d77099158344f",
+    "new_job": "desk-new",
+    "views": [
+      {
+        "index": 0,
+        "focus_image": "0000-939c3ec52fb94b248a079d5a9bca37a9.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 357,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 5,
+            "tracks": 15
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 15,
+            "tracks": 96
+          }
+        },
+        "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e",
+        "energy_quartiles": [
+          0.0009701253438834101,
+          0.010798744857311249
+        ],
+        "analysis_seconds": 0.003246207721531391
+      },
+      {
+        "index": 8,
+        "focus_image": "0008-0296b6fad6524c28bdf086827f716c93.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 689,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 8,
+            "tracks": 60
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 228
+          }
+        },
+        "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded",
+        "energy_quartiles": [
+          0.002395410556346178,
+          0.0120680199470371
+        ],
+        "analysis_seconds": 0.0035743340849876404
+      },
+      {
+        "index": 16,
+        "focus_image": "0016-dc73133b6ebd42808d62be192a7085ae.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 1062,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 10,
+            "tracks": 83
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 468
+          }
+        },
+        "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55",
+        "energy_quartiles": [
+          0.003416281018871814,
+          0.012981753563508391
+        ],
+        "analysis_seconds": 0.00417262502014637
+      },
+      {
+        "index": 24,
+        "focus_image": "0024-f47a2fcd0e95400fb44e1241b592f79a.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 1306,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 15,
+            "tracks": 229
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 483
+          }
+        },
+        "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887",
+        "energy_quartiles": [
+          0.01285038935020566,
+          0.022475442849099636
+        ],
+        "analysis_seconds": 0.004741332493722439
+      },
+      {
+        "index": 32,
+        "focus_image": "0032-5a6bb2e4866f4bab939a631df9c12c01.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 417,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 5,
+            "tracks": 23
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 195
+          }
+        },
+        "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770",
+        "energy_quartiles": [
+          0.004779595648869872,
+          0.01551867718808353
+        ],
+        "analysis_seconds": 0.003258415497839451
+      },
+      {
+        "index": 40,
+        "focus_image": "0040-138c12a85ca0417aac43161fbe5ccb7e.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 882,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 5,
+            "tracks": 44
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 392
+          }
+        },
+        "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218",
+        "energy_quartiles": [
+          0.002797970606479794,
+          0.023001896683126688
+        ],
+        "analysis_seconds": 0.003879750147461891
+      },
+      {
+        "index": 48,
+        "focus_image": "0048-a77505f3ae9c478d98024b69168783ac.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 348,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 0,
+            "tracks": 0
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 13,
+            "tracks": 270
+          }
+        },
+        "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba",
+        "energy_quartiles": [
+          8.721291487745475e-05,
+          0.005671656574122608
+        ],
+        "analysis_seconds": 0.0029266662895679474
+      },
+      {
+        "index": 56,
+        "focus_image": "0056-24e814376ef542aa9330ed6ae6e5394f.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 242,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 5,
+            "tracks": 14
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 12,
+            "tracks": 127
+          }
+        },
+        "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a",
+        "energy_quartiles": [
+          0.0049874583492055535,
+          0.012521313037723303
+        ],
+        "analysis_seconds": 0.0029715411365032196
+      },
+      {
+        "index": 64,
+        "focus_image": "0064-fe7f1c96df17410995fb2921f38cfbd3.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 465,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 11,
+            "tracks": 23
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 15,
+            "tracks": 199
+          }
+        },
+        "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd",
+        "energy_quartiles": [
+          0.005615170928649604,
+          0.014222117839381099
+        ],
+        "analysis_seconds": 0.0032819174230098724
+      },
+      {
+        "index": 72,
+        "focus_image": "0072-f724da7448144cd3a72e269ad988e910.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 573,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 8,
+            "tracks": 35
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 277
+          }
+        },
+        "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874",
+        "energy_quartiles": [
+          0.004095583106391132,
+          0.015057747717946768
+        ],
+        "analysis_seconds": 0.003359749913215637
+      },
+      {
+        "index": 80,
+        "focus_image": "0080-2e64893a45de4f478831f4029c100eef.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 580,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 14,
+            "tracks": 63
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 128
+          }
+        },
+        "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3",
+        "energy_quartiles": [
+          0.0007961106166476384,
+          0.008255949476733804
+        ],
+        "analysis_seconds": 0.003253624774515629
+      },
+      {
+        "index": 88,
+        "focus_image": "0088-9335b242d1b14852bbf42f5ad574baa0.jpg",
+        "size": [
+          512,
+          384
+        ],
+        "track_count": 1686,
+        "groups": {
+          "low": {
+            "tiles": 16,
+            "occupied": 13,
+            "tracks": 127
+          },
+          "high": {
+            "tiles": 16,
+            "occupied": 16,
+            "tracks": 685
+          }
+        },
+        "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103",
+        "energy_quartiles": [
+          0.0038982928381301463,
+          0.015756273176521063
+        ],
+        "analysis_seconds": 0.004948999732732773
+      }
+    ],
+    "quality": {
+      "requested_comparison_size": 512,
+      "comparison_size": 512,
+      "resize_policy": "never_upscale",
+      "resampling": "Lanczos",
+      "quick_job": "desk-old",
+      "detail_job": "desk-new",
+      "views": [
+        {
+          "view": "0000-939c3ec52fb94b248a079d5a9bca37a9.png",
+          "quick": {
+            "psnr": 22.90648275573721,
+            "ssim": 0.8280836939811707
+          },
+          "detail": {
+            "psnr": 22.52235843995372,
+            "ssim": 0.816876232624054
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0008-0296b6fad6524c28bdf086827f716c93.png",
+          "quick": {
+            "psnr": 20.36761012868088,
+            "ssim": 0.8171548843383789
+          },
+          "detail": {
+            "psnr": 19.83871679777146,
+            "ssim": 0.8084607720375061
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0016-dc73133b6ebd42808d62be192a7085ae.png",
+          "quick": {
+            "psnr": 24.569172566984086,
+            "ssim": 0.8517813086509705
+          },
+          "detail": {
+            "psnr": 24.413289090374853,
+            "ssim": 0.8527049422264099
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0024-f47a2fcd0e95400fb44e1241b592f79a.png",
+          "quick": {
+            "psnr": 20.61303865415315,
+            "ssim": 0.8112687468528748
+          },
+          "detail": {
+            "psnr": 20.418769374069804,
+            "ssim": 0.808907687664032
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0032-5a6bb2e4866f4bab939a631df9c12c01.png",
+          "quick": {
+            "psnr": 22.566781074191326,
+            "ssim": 0.8064669966697693
+          },
+          "detail": {
+            "psnr": 22.236707569116586,
+            "ssim": 0.8040353655815125
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0040-138c12a85ca0417aac43161fbe5ccb7e.png",
+          "quick": {
+            "psnr": 23.610136916543148,
+            "ssim": 0.8390518426895142
+          },
+          "detail": {
+            "psnr": 23.82804399888233,
+            "ssim": 0.8404218554496765
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0048-a77505f3ae9c478d98024b69168783ac.png",
+          "quick": {
+            "psnr": 26.345985851866786,
+            "ssim": 0.8880542516708374
+          },
+          "detail": {
+            "psnr": 25.53875910412421,
+            "ssim": 0.8900279998779297
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0056-24e814376ef542aa9330ed6ae6e5394f.png",
+          "quick": {
+            "psnr": 15.414562854374516,
+            "ssim": 0.7564696669578552
+          },
+          "detail": {
+            "psnr": 16.41033506591934,
+            "ssim": 0.7590634822845459
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0064-fe7f1c96df17410995fb2921f38cfbd3.png",
+          "quick": {
+            "psnr": 22.950696246446817,
+            "ssim": 0.8220458030700684
+          },
+          "detail": {
+            "psnr": 22.105465775315842,
+            "ssim": 0.8134174346923828
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0072-f724da7448144cd3a72e269ad988e910.png",
+          "quick": {
+            "psnr": 21.153539904144797,
+            "ssim": 0.8162215352058411
+          },
+          "detail": {
+            "psnr": 21.24467678515041,
+            "ssim": 0.8159467577934265
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0080-2e64893a45de4f478831f4029c100eef.png",
+          "quick": {
+            "psnr": 24.494766079854667,
+            "ssim": 0.8657343983650208
+          },
+          "detail": {
+            "psnr": 24.312164737468432,
+            "ssim": 0.860162079334259
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        },
+        {
+          "view": "0088-9335b242d1b14852bbf42f5ad574baa0.png",
+          "quick": {
+            "psnr": 26.72535294955849,
+            "ssim": 0.8945931196212769
+          },
+          "detail": {
+            "psnr": 26.79872686370652,
+            "ssim": 0.8959189057350159
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 384,
+            "reference_native": [
+              626,
+              469
+            ],
+            "quick_native": [
+              512,
+              384
+            ],
+            "detail_native": [
+              512,
+              384
+            ]
+          }
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 22.643177165211323,
+          "ssim": 0.8330771873394648
+        },
+        "detail": {
+          "psnr": 22.472334466821128,
+          "ssim": 0.8304952929417292
+        }
+      }
+    },
+    "models": [
+      {
+        "engine": "Brush 0.3.0",
+        "steps": 3000,
+        "training_views": 84,
+        "evaluation_views": 12,
+        "resolution": 512,
+        "gaussians": 72150,
+        "timings": {
+          "input_validation_seconds": 0.0046,
+          "sfm_seconds": 40.4621,
+          "cache_publish_seconds": 0.1106,
+          "training_and_model_export_seconds": 40.2677
+        },
+        "sfm_reused": false,
+        "seconds": 80.89,
+        "color_model": "SH3",
+        "registered_images": 96,
+        "input_images": 96,
+        "camera_mode": "shared",
+        "unregistered_images": [],
+        "ply_bytes": 17028950,
+        "camera": {
+          "view": [
+            [
+              0.766525149345398,
+              -0.5259488224983215,
+              0.36853352189064026,
+              -0.17359375953674316
+            ],
+            [
+              0.3333367705345154,
+              0.8163273930549622,
+              0.4716950058937073,
+              0.14188063144683838
+            ],
+            [
+              -0.5489314794540405,
+              -0.23872032761573792,
+              0.8010535836219788,
+              0.9279975295066833
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "K": [
+            [
+              549.4642165384331,
+              0.0,
+              313.0
+            ],
+            [
+              0.0,
+              549.4642165384331,
+              234.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "width": 626,
+          "height": 469,
+          "image_name": "0008-0296b6fad6524c28bdf086827f716c93.jpg"
+        },
+        "model_sha256": "d7cbfab90d6267bbfe12ae6a4338426481481f3ae4a9c16334fb8dfea532bde4"
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "steps": 3000,
+        "training_views": 84,
+        "evaluation_views": 12,
+        "resolution": 512,
+        "gaussians": 72195,
+        "timings": {
+          "sfm_seconds": 0,
+          "prepare_seconds": 0.07433024980127811,
+          "training_and_model_export_seconds": 38.54132091626525
+        },
+        "sfm_reused": true,
+        "seconds": 38.61565150041133,
+        "color_model": "SH3",
+        "registered_images": 96,
+        "input_images": 96,
+        "camera_mode": "shared",
+        "unregistered_images": [],
+        "ply_bytes": 17039570,
+        "camera": {
+          "view": [
+            [
+              0.766525149345398,
+              -0.5259488224983215,
+              0.36853352189064026,
+              -0.17359375953674316
+            ],
+            [
+              0.3333367705345154,
+              0.8163273930549622,
+              0.4716950058937073,
+              0.14188063144683838
+            ],
+            [
+              -0.5489314794540405,
+              -0.23872032761573792,
+              0.8010535836219788,
+              0.9279975295066833
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "K": [
+            [
+              549.4642165384331,
+              0.0,
+              313.0
+            ],
+            [
+              0.0,
+              549.4642165384331,
+              234.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "width": 626,
+          "height": 469,
+          "image_name": "0008-0296b6fad6524c28bdf086827f716c93.jpg"
+        },
+        "model_sha256": "6d24c8a6c04aa6fbbb777e055445df45e41f096fdb57f558ccbce4da477cc109"
+      }
+    ]
+  }
+}
