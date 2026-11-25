@@ -93,6 +93,8 @@ DSP-SIFT 两次对照改善 pipes，但 office 的 SSIM 两次回退，因此仍
 
 查看墙面等弱纹理区域时，可将留出视角的轨迹审计 JSON 与对应去畸变照片传给 `scripts/benchmark_texture_support.py`，得到每格纹理强度和跨照片轨迹数。[命令与实拍示例](docs/TEXTURE-SUPPORT.md)
 
+要检查缺少轨迹的区域是否更容易渲染出错，可用 `python -m scripts.benchmark_support_error` 对同相机、同照片的两份留出重建比较分区误差。[命令与实拍对照](docs/SUPPORT-ERROR.md)
+
 训练照片的对应颜色可用 `scripts/benchmark_track_color.py --job ID --output 结果.json` 离线核验，先通过项目虚拟环境运行并设置 `PYTHONPATH=.`。工具排除留出颜色、同一轨迹中有重复关联的照片组及大重投影误差，保留其他照片的独立观测；结果不代表曝光或几何真值。`--duplicate-policy reject-track` 可复现旧版整轨迹排除。[当前方法与实测](docs/TRACK-OBSERVATIONS.md) 重复照片关联已追溯到原始 SfM；整条删去初始化点未改善双场景质量，默认不采用。[筛选实验与复现](docs/TRACK-FILTER.md)
 
 离线共同网格评分会复用同一参考照片的局部统计；四组固定模型实测耗时减少约 15%–21%，验证照片的新旧 PSNR / SSIM 完全一致。这只加快评分，不改变重建质量。[范围与复现](docs/REFERENCE-METRICS.md)

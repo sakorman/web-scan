@@ -1,0 +1,3059 @@
+{
+  "baseline_commit": "d9666ee4cff180109819701091a09244d2f9f819",
+  "steps": 3000,
+  "resolution": 512,
+  "max_points": 150000,
+  "scenes": {
+    "pipes": [
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 11494,
+        "timings": {
+          "input_validation_seconds": 0.01,
+          "sfm_seconds": 0.0335,
+          "training_and_model_export_seconds": 22.6945
+        },
+        "seconds": 22.78,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "5d626cd8463d461596b69c7c07fdd4b8",
+        "location": ".data/jobs/5d626cd8463d461596b69c7c07fdd4b8",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 2714134,
+        "ply_sha256": "d7dfe1eed3b5e334c4b378e2195ab815401c40d6cce11257518cf34ae760034c",
+        "mean": {
+          "psnr": 18.314883147895298,
+          "ssim": 0.7582323253154755
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 22.28164772864993,
+            "ssim": 0.8405247926712036,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 73728,
+                  "mse": 0.0067000019245624905
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 100864,
+                  "mse": 0.0053383741025025515
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.0062115798645786665
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.001070404868133604
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.00525540456902768
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 14.348118567140666,
+            "ssim": 0.6759398579597473,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90176,
+                  "mse": 0.029963617646922396
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84416,
+                  "mse": 0.04398733102060142
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43904,
+                  "mse": 0.037318283756079464
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.09945615170372754
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40768,
+                  "mse": 0.036085677232179945
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 11599,
+        "timings": {
+          "input_validation_seconds": 0.0115,
+          "sfm_seconds": 0.0352,
+          "training_and_model_export_seconds": 22.9751
+        },
+        "seconds": 23.06,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "1136e72db1f043a283f04f43fc08fb8c",
+        "location": ".data/jobs/1136e72db1f043a283f04f43fc08fb8c",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 2738914,
+        "ply_sha256": "1901ac196e151af28bc628a3863defafd7746314ec73584023270da232276577",
+        "mean": {
+          "psnr": 19.558523397846635,
+          "ssim": 0.7695194184780121
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 23.447896060275607,
+            "ssim": 0.8481232523918152,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 73728,
+                  "mse": 0.004885186428363556
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 100864,
+                  "mse": 0.004254358172634369
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.004507519958622258
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.0022236527990129023
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.003987407516236668
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 15.66915073541766,
+            "ssim": 0.690915584564209,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90176,
+                  "mse": 0.02194722369342213
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84416,
+                  "mse": 0.032619293992503226
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43904,
+                  "mse": 0.025994443295525492
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.05812918928021124
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40768,
+                  "mse": 0.03203212657612064
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 11614,
+        "timings": {
+          "input_validation_seconds": 0.0092,
+          "sfm_seconds": 0.0282,
+          "training_and_model_export_seconds": 22.8107
+        },
+        "seconds": 22.88,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "d394f921cede42e4a6b85e36e1080eea",
+        "location": ".data/jobs/d394f921cede42e4a6b85e36e1080eea",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 2742454,
+        "ply_sha256": "fbaf6e1732b7d4477d17b3baab8690556acd335c68d3fa2074d86ba15446fcfc",
+        "mean": {
+          "psnr": 17.5948622856059,
+          "ssim": 0.7516818940639496
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 21.121108700399244,
+            "ssim": 0.8225541710853577,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 73728,
+                  "mse": 0.007747132109867823
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 100864,
+                  "mse": 0.007708534085061648
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.005296720125244841
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.0025877271413201246
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.007623195193349255
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 14.068615870812557,
+            "ssim": 0.6808096170425415,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90176,
+                  "mse": 0.03131731001079001
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84416,
+                  "mse": 0.04759299399047256
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43904,
+                  "mse": 0.04270034390973943
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.06162713766917314
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40768,
+                  "mse": 0.038046143545402075
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 11498,
+        "timings": {
+          "input_validation_seconds": 0.0092,
+          "sfm_seconds": 0.0363,
+          "training_and_model_export_seconds": 22.5916
+        },
+        "seconds": 22.67,
+        "training_views": 12,
+        "evaluation_views": 2,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "255a45de16f44daca1771d4a8dfeaaa4",
+        "location": ".data/jobs/255a45de16f44daca1771d4a8dfeaaa4",
+        "input_images": 14,
+        "registered_images": 14,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 2715078,
+        "ply_sha256": "73db75eddeee55a2da04ea5186bd67fed125ea3326b34b7c57bd89830993d010",
+        "mean": {
+          "psnr": 18.54144830766913,
+          "ssim": 0.7506885528564453
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-1f12d10234be42b5a5567735dd15fbf7.jpg",
+            "reference_sha256": "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 22.411973579899648,
+            "ssim": 0.8286234736442566,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 73728,
+                  "mse": 0.00594705849813373
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 100864,
+                  "mse": 0.00558614849260762
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.00568876765066758
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.0037796528019932705
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.006209803302367655
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-9a76c2d0778d48ee9916c29248b0476b.jpg",
+            "reference_sha256": "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 14.670923035438609,
+            "ssim": 0.672753632068634,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90176,
+                  "mse": 0.031036409287177952
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84416,
+                  "mse": 0.03739753247302775
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43904,
+                  "mse": 0.038901356877951924
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.04496426724664634
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40768,
+                  "mse": 0.029328909416959342
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "office": [
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 14318,
+        "timings": {
+          "input_validation_seconds": 0.0133,
+          "sfm_seconds": 0.0468,
+          "training_and_model_export_seconds": 23.6221
+        },
+        "seconds": 23.73,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "cca441de3f4643d6a2e0773a27990f34",
+        "location": ".data/jobs/cca441de3f4643d6a2e0773a27990f34",
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 3380598,
+        "ply_sha256": "f1639478b4b38384589fc80c257dac6faaacdaefddd4b23bff59b951fea15e29",
+        "mean": {
+          "psnr": 21.697584675619034,
+          "ssim": 0.8738513290882111
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 24.898277328697716,
+            "ssim": 0.9186891317367554,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 25,
+                  "pixels": 68288,
+                  "mse": 0.0019981174333856887
+                },
+                "supported": {
+                  "tiles": 39,
+                  "pixels": 106304,
+                  "mse": 0.004033200434341043
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43584,
+                  "mse": 0.002013891241235392
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.005008624440808395
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40960,
+                  "mse": 0.002877922303521082
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 22.416670264060446,
+            "ssim": 0.943958044052124,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 48,
+                  "pixels": 130880,
+                  "mse": 0.004493337933156547
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.009442144370834585
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43776,
+                  "mse": 0.0035408021065896833
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 2,
+                  "pixels": 5440,
+                  "mse": 0.0027127669599173766
+                },
+                "supported": {
+                  "tiles": 14,
+                  "pixels": 38208,
+                  "mse": 0.00785400930278287
+                }
+              }
+            }
+          },
+          {
+            "index": 16,
+            "image": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 16.688402557856104,
+            "ssim": 0.7813634872436523,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90112,
+                  "mse": 0.016425119877589333
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84480,
+                  "mse": 0.026782570514836953
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.011454413559087537
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.014497925291107477
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 8256,
+                  "mse": 0.06927824544723905
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 35520,
+                  "mse": 0.032777168460271115
+                }
+              }
+            }
+          },
+          {
+            "index": 24,
+            "image": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 22.786988551861874,
+            "ssim": 0.8513946533203125,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 38,
+                  "pixels": 103808,
+                  "mse": 0.00437453739061125
+                },
+                "supported": {
+                  "tiles": 26,
+                  "pixels": 70784,
+                  "mse": 0.00656799739007045
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 14,
+                  "pixels": 38272,
+                  "mse": 0.0013529522133027474
+                },
+                "supported": {
+                  "tiles": 2,
+                  "pixels": 5376,
+                  "mse": 0.0012582281006084353
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 16320,
+                  "mse": 0.011066370903096596
+                },
+                "supported": {
+                  "tiles": 10,
+                  "pixels": 27392,
+                  "mse": 0.009555751756753033
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 14746,
+        "timings": {
+          "input_validation_seconds": 0.012,
+          "sfm_seconds": 0.0441,
+          "training_and_model_export_seconds": 23.6696
+        },
+        "seconds": 23.77,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "85ce36c5411d4923a132b11a85cd327c",
+        "location": ".data/jobs/85ce36c5411d4923a132b11a85cd327c",
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 3481606,
+        "ply_sha256": "0b42c4c72b7eb3cb35ae005d6410306273521e086b5be1ca335277568011a3f7",
+        "mean": {
+          "psnr": 21.266306556911545,
+          "ssim": 0.8742206692695618
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 23.935231170252017,
+            "ssim": 0.9187884330749512,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 25,
+                  "pixels": 68288,
+                  "mse": 0.0030975012944700455
+                },
+                "supported": {
+                  "tiles": 39,
+                  "pixels": 106304,
+                  "mse": 0.004646905688491197
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43584,
+                  "mse": 0.003130457796739573
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.0023755454074014465
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40960,
+                  "mse": 0.0031852258596453283
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 21.97835465209801,
+            "ssim": 0.9419512152671814,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 48,
+                  "pixels": 130880,
+                  "mse": 0.0048203272000268225
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.010894508043889715
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43776,
+                  "mse": 0.0025325888678293623
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 2,
+                  "pixels": 5440,
+                  "mse": 0.004431308471100858
+                },
+                "supported": {
+                  "tiles": 14,
+                  "pixels": 38208,
+                  "mse": 0.007396583122799266
+                }
+              }
+            }
+          },
+          {
+            "index": 16,
+            "image": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 16.889796167153712,
+            "ssim": 0.8014091849327087,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90112,
+                  "mse": 0.015286744476738261
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84480,
+                  "mse": 0.025989313429372544
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.012885906016786615
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.005198390079546029
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 8256,
+                  "mse": 0.06175147366794922
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 35520,
+                  "mse": 0.03060324237155265
+                }
+              }
+            }
+          },
+          {
+            "index": 24,
+            "image": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 22.26184423814244,
+            "ssim": 0.8347338438034058,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 38,
+                  "pixels": 103808,
+                  "mse": 0.005201717989445079
+                },
+                "supported": {
+                  "tiles": 26,
+                  "pixels": 70784,
+                  "mse": 0.007023707410489637
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 14,
+                  "pixels": 38272,
+                  "mse": 0.002286330947663128
+                },
+                "supported": {
+                  "tiles": 2,
+                  "pixels": 5376,
+                  "mse": 0.0005436420210785839
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 16320,
+                  "mse": 0.010500789352008905
+                },
+                "supported": {
+                  "tiles": 10,
+                  "pixels": 27392,
+                  "mse": 0.010353773553126583
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 14462,
+        "timings": {
+          "input_validation_seconds": 0.0127,
+          "sfm_seconds": 0.0444,
+          "training_and_model_export_seconds": 23.3134
+        },
+        "seconds": 23.41,
+        "training_views": 22,
+        "evaluation_views": 4,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "0e39c98bfeca4928b26413b47d1db5c6",
+        "location": ".data/jobs/0e39c98bfeca4928b26413b47d1db5c6",
+        "input_images": 26,
+        "registered_images": 26,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 3414582,
+        "ply_sha256": "5c9d938a12973964cd4b2f819f0557561ad6e679afb6a2477d8fbec073f0b174",
+        "mean": {
+          "psnr": 21.86779389852613,
+          "ssim": 0.881086528301239
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-fb0957d3f08b497c97ad3120db509705.jpg",
+            "reference_sha256": "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 23.05884072129041,
+            "ssim": 0.9109944105148315,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 25,
+                  "pixels": 68288,
+                  "mse": 0.0034517616533232057
+                },
+                "supported": {
+                  "tiles": 39,
+                  "pixels": 106304,
+                  "mse": 0.005903290719395579
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43584,
+                  "mse": 0.003383735650451095
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.002218172646775688
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 40960,
+                  "mse": 0.004553451747324747
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-94a3485567114808a05c4a658ee90ee2.jpg",
+            "reference_sha256": "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 23.970172504440303,
+            "ssim": 0.9439083933830261,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 48,
+                  "pixels": 130880,
+                  "mse": 0.003178701839333941
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 43712,
+                  "mse": 0.006493066520572764
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 43776,
+                  "mse": 0.0010792063500093306
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 2,
+                  "pixels": 5440,
+                  "mse": 0.0007022694891105229
+                },
+                "supported": {
+                  "tiles": 14,
+                  "pixels": 38208,
+                  "mse": 0.005635985284403993
+                }
+              }
+            }
+          },
+          {
+            "index": 16,
+            "image": "0016-8bab0f5f398a45bfa9f797c44625e3c5.jpg",
+            "reference_sha256": "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 17.652639713635725,
+            "ssim": 0.8137251138687134,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 33,
+                  "pixels": 90112,
+                  "mse": 0.01176770555267933
+                },
+                "supported": {
+                  "tiles": 31,
+                  "pixels": 84480,
+                  "mse": 0.022929647724360097
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 15,
+                  "pixels": 41024,
+                  "mse": 0.007497670677684471
+                },
+                "supported": {
+                  "tiles": 1,
+                  "pixels": 2752,
+                  "mse": 0.010625964894241629
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 8256,
+                  "mse": 0.05646754142960321
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 35520,
+                  "mse": 0.0288180846648263
+                }
+              }
+            }
+          },
+          {
+            "index": 24,
+            "image": "0024-babe0fdf2b664c9c913779d4e7279812.jpg",
+            "reference_sha256": "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629",
+            "dimensions": [
+              512,
+              341
+            ],
+            "psnr": 22.7895226547381,
+            "ssim": 0.855718195438385,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 38,
+                  "pixels": 103808,
+                  "mse": 0.004243661945206505
+                },
+                "supported": {
+                  "tiles": 26,
+                  "pixels": 70784,
+                  "mse": 0.006752358643879493
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 14,
+                  "pixels": 38272,
+                  "mse": 0.0015913705581036704
+                },
+                "supported": {
+                  "tiles": 2,
+                  "pixels": 5376,
+                  "mse": 0.0036054013108511385
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 16320,
+                  "mse": 0.008529500657112775
+                },
+                "supported": {
+                  "tiles": 10,
+                  "pixels": 27392,
+                  "mse": 0.00817545162955537
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "desk": [
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": null,
+        "training_seed": null,
+        "gaussians": 72150,
+        "timings": {
+          "input_validation_seconds": 0.0046,
+          "sfm_seconds": 40.4621,
+          "cache_publish_seconds": 0.1106,
+          "training_and_model_export_seconds": 40.2677
+        },
+        "seconds": 80.89,
+        "training_views": 84,
+        "evaluation_views": 12,
+        "sfm_reused": false,
+        "color_model": "SH3",
+        "job": "ae5482d0811e46c0bd7d77099158344f",
+        "location": ".data/benchmarks/tum-desk-20261019/jobs/ae5482d0811e46c0bd7d77099158344f",
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 17028950,
+        "ply_sha256": "d7cbfab90d6267bbfe12ae6a4338426481481f3ae4a9c16334fb8dfea532bde4",
+        "mean": {
+          "psnr": 22.643177165211323,
+          "ssim": 0.8330771873394648
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-939c3ec52fb94b248a079d5a9bca37a9.jpg",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.90648275573721,
+            "ssim": 0.8280836939811707,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 20,
+                  "pixels": 61440,
+                  "mse": 0.0029015576274082615
+                },
+                "supported": {
+                  "tiles": 44,
+                  "pixels": 135168,
+                  "mse": 0.006129785106568374
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0005253072584747903
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.00017895794619590764
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.019092648327032335
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.0073856732008344365
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-0296b6fad6524c28bdf086827f716c93.jpg",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 20.36761012868088,
+            "ssim": 0.8171548843383789,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 14,
+                  "pixels": 43008,
+                  "mse": 0.0036542620350155314
+                },
+                "supported": {
+                  "tiles": 50,
+                  "pixels": 153600,
+                  "mse": 0.010737934094525609
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.0025711452626393694
+                },
+                "supported": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.00762493483742898
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010927594308846225
+                }
+              }
+            }
+          },
+          {
+            "index": 16,
+            "image": "0016-dc73133b6ebd42808d62be192a7085ae.jpg",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 24.569172566984086,
+            "ssim": 0.8517813086509705,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 12,
+                  "pixels": 36864,
+                  "mse": 0.0056809470594020115
+                },
+                "supported": {
+                  "tiles": 52,
+                  "pixels": 159744,
+                  "mse": 0.002986942570884143
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 18432,
+                  "mse": 0.0009448197341300354
+                },
+                "supported": {
+                  "tiles": 10,
+                  "pixels": 30720,
+                  "mse": 0.001188127763360246
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.003288926626444423
+                }
+              }
+            }
+          },
+          {
+            "index": 24,
+            "image": "0024-f47a2fcd0e95400fb44e1241b592f79a.jpg",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 20.61303865415315,
+            "ssim": 0.8112687468528748,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.011185679007895823
+                },
+                "supported": {
+                  "tiles": 61,
+                  "pixels": 187392,
+                  "mse": 0.008560469831861994
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.0030670295078815846
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.005410201137917041
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.009440105001014566
+                }
+              }
+            }
+          },
+          {
+            "index": 32,
+            "image": "0032-5a6bb2e4866f4bab939a631df9c12c01.jpg",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.566781074191326,
+            "ssim": 0.8064669966697693,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 19,
+                  "pixels": 58368,
+                  "mse": 0.004161715031443147
+                },
+                "supported": {
+                  "tiles": 45,
+                  "pixels": 138240,
+                  "mse": 0.0061185348420716625
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0012540993787839953
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0012860495028621472
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010347891994999253
+                }
+              }
+            }
+          },
+          {
+            "index": 40,
+            "image": "0040-138c12a85ca0417aac43161fbe5ccb7e.jpg",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 23.610136916543148,
+            "ssim": 0.8390518426895142,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0015098525431925223
+                },
+                "supported": {
+                  "tiles": 48,
+                  "pixels": 147456,
+                  "mse": 0.005303357737175072
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.00023147859918873476
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0021554760588876074
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.00812601811302544
+                }
+              }
+            }
+          },
+          {
+            "index": 48,
+            "image": "0048-a77505f3ae9c478d98024b69168783ac.jpg",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 26.345985851866786,
+            "ssim": 0.8880542516708374,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 40,
+                  "pixels": 122880,
+                  "mse": 0.002137905985344846
+                },
+                "supported": {
+                  "tiles": 24,
+                  "pixels": 73728,
+                  "mse": 0.0026222569283137188
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0003952920292742642
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.007327874028151564
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.003654803215068498
+                }
+              }
+            }
+          },
+          {
+            "index": 56,
+            "image": "0056-24e814376ef542aa9330ed6ae6e5394f.jpg",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 15.414562854374516,
+            "ssim": 0.7564696669578552,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 82944,
+                  "mse": 0.05521061648001006
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 113664,
+                  "mse": 0.009430123606882546
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0637021766953464
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.005544129327929429
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 4,
+                  "pixels": 12288,
+                  "mse": 0.030049569860283443
+                },
+                "supported": {
+                  "tiles": 12,
+                  "pixels": 36864,
+                  "mse": 0.009340727074122134
+                }
+              }
+            }
+          },
+          {
+            "index": 64,
+            "image": "0064-fe7f1c96df17410995fb2921f38cfbd3.jpg",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.950696246446817,
+            "ssim": 0.8220458030700684,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 10,
+                  "pixels": 30720,
+                  "mse": 0.0027632946663142385
+                },
+                "supported": {
+                  "tiles": 54,
+                  "pixels": 165888,
+                  "mse": 0.005496094300051578
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.001881421475180486
+                },
+                "supported": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.002566353109623727
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.0026893902986031017
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.007778542485440073
+                }
+              }
+            }
+          },
+          {
+            "index": 72,
+            "image": "0072-f724da7448144cd3a72e269ad988e910.jpg",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 21.153539904144797,
+            "ssim": 0.8162215352058411,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.008158312302631794
+                },
+                "supported": {
+                  "tiles": 51,
+                  "pixels": 156672,
+                  "mse": 0.007542218723588799
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.0024036192593527065
+                },
+                "supported": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.002079000356099684
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010189859619297066
+                }
+              }
+            }
+          },
+          {
+            "index": 80,
+            "image": "0080-2e64893a45de4f478831f4029c100eef.jpg",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 24.494766079854667,
+            "ssim": 0.8657343983650208,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 18432,
+                  "mse": 0.004541875976743276
+                },
+                "supported": {
+                  "tiles": 58,
+                  "pixels": 178176,
+                  "mse": 0.0034500542314626994
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 2,
+                  "pixels": 6144,
+                  "mse": 0.0026499156307403134
+                },
+                "supported": {
+                  "tiles": 14,
+                  "pixels": 43008,
+                  "mse": 0.0005274427990150309
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.007113872552356998
+                }
+              }
+            }
+          },
+          {
+            "index": 88,
+            "image": "0088-9335b242d1b14852bbf42f5ad574baa0.jpg",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 26.72535294955849,
+            "ssim": 0.8945931196212769,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.00212289243720364
+                },
+                "supported": {
+                  "tiles": 59,
+                  "pixels": 181248,
+                  "mse": 0.0021257400694159353
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.0002793246587850827
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.0007349400974148667
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0029288020482907216
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 72195,
+        "timings": {
+          "sfm_seconds": 0,
+          "prepare_seconds": 0.07433024980127811,
+          "training_and_model_export_seconds": 38.54132091626525
+        },
+        "seconds": 38.61565150041133,
+        "training_views": 84,
+        "evaluation_views": 12,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "desk-new",
+        "location": ".data/benchmarks/texture-support-20261124/jobs/desk-new",
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 17039570,
+        "ply_sha256": "6d24c8a6c04aa6fbbb777e055445df45e41f096fdb57f558ccbce4da477cc109",
+        "mean": {
+          "psnr": 22.472334466821128,
+          "ssim": 0.8304952929417292
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-939c3ec52fb94b248a079d5a9bca37a9.jpg",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.52235843995372,
+            "ssim": 0.816876232624054,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 20,
+                  "pixels": 61440,
+                  "mse": 0.003325369649493784
+                },
+                "supported": {
+                  "tiles": 44,
+                  "pixels": 135168,
+                  "mse": 0.00662597680901188
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0010077077969234832
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.00021391011469947482
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.019028481967405697
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.009280257348491321
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-0296b6fad6524c28bdf086827f716c93.jpg",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 19.83871679777146,
+            "ssim": 0.8084607720375061,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 14,
+                  "pixels": 43008,
+                  "mse": 0.003759074367764535
+                },
+                "supported": {
+                  "tiles": 50,
+                  "pixels": 153600,
+                  "mse": 0.012231747404844291
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.002808753569340318
+                },
+                "supported": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.010089827563650733
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.01231005423428222
+                }
+              }
+            }
+          },
+          {
+            "index": 16,
+            "image": "0016-dc73133b6ebd42808d62be192a7085ae.jpg",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 24.413289090374853,
+            "ssim": 0.8527049422264099,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 12,
+                  "pixels": 36864,
+                  "mse": 0.0062681791892274345
+                },
+                "supported": {
+                  "tiles": 52,
+                  "pixels": 159744,
+                  "mse": 0.0030084972429037806
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 18432,
+                  "mse": 0.0013261481517080325
+                },
+                "supported": {
+                  "tiles": 10,
+                  "pixels": 30720,
+                  "mse": 0.001218583797898244
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.003227922445360225
+                }
+              }
+            }
+          },
+          {
+            "index": 24,
+            "image": "0024-f47a2fcd0e95400fb44e1241b592f79a.jpg",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 20.418769374069804,
+            "ssim": 0.808907687664032,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.013273322582482521
+                },
+                "supported": {
+                  "tiles": 61,
+                  "pixels": 187392,
+                  "mse": 0.008874587372561974
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.0013511096159596738
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.005165570333525567
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.009536694328636956
+                }
+              }
+            }
+          },
+          {
+            "index": 32,
+            "image": "0032-5a6bb2e4866f4bab939a631df9c12c01.jpg",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.236707569116586,
+            "ssim": 0.8040353655815125,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 19,
+                  "pixels": 58368,
+                  "mse": 0.005123349554461735
+                },
+                "supported": {
+                  "tiles": 45,
+                  "pixels": 138240,
+                  "mse": 0.00633441616857951
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0023219440900741363
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0017531585074116794
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.01017849945116595
+                }
+              }
+            }
+          },
+          {
+            "index": 40,
+            "image": "0040-138c12a85ca0417aac43161fbe5ccb7e.jpg",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 23.82804399888233,
+            "ssim": 0.8404218554496765,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0013398545756640075
+                },
+                "supported": {
+                  "tiles": 48,
+                  "pixels": 147456,
+                  "mse": 0.00507586416054144
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.00026343169657940414
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0019384965451322142
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.008154115925799106
+                }
+              }
+            }
+          },
+          {
+            "index": 48,
+            "image": "0048-a77505f3ae9c478d98024b69168783ac.jpg",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 25.53875910412421,
+            "ssim": 0.8900279998779297,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 40,
+                  "pixels": 122880,
+                  "mse": 0.002563134271273869
+                },
+                "supported": {
+                  "tiles": 24,
+                  "pixels": 73728,
+                  "mse": 0.0031770211744147547
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0013015269275772675
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.006685455625151295
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.0042059772888961185
+                }
+              }
+            }
+          },
+          {
+            "index": 56,
+            "image": "0056-24e814376ef542aa9330ed6ae6e5394f.jpg",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 16.41033506591934,
+            "ssim": 0.7590634822845459,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 82944,
+                  "mse": 0.04237400586520617
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 113664,
+                  "mse": 0.008610060103355953
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.05233488194371627
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.004849650174612328
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 4,
+                  "pixels": 12288,
+                  "mse": 0.021756768730776626
+                },
+                "supported": {
+                  "tiles": 12,
+                  "pixels": 36864,
+                  "mse": 0.009268672650387314
+                }
+              }
+            }
+          },
+          {
+            "index": 64,
+            "image": "0064-fe7f1c96df17410995fb2921f38cfbd3.jpg",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.105465775315842,
+            "ssim": 0.8134174346923828,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 10,
+                  "pixels": 30720,
+                  "mse": 0.0031060220895275325
+                },
+                "supported": {
+                  "tiles": 54,
+                  "pixels": 165888,
+                  "mse": 0.0067234119652460345
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0024579128219915417
+                },
+                "supported": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0027808838274614657
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.0032907498851937286
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.009623874075320034
+                }
+              }
+            }
+          },
+          {
+            "index": 72,
+            "image": "0072-f724da7448144cd3a72e269ad988e910.jpg",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 21.24467678515041,
+            "ssim": 0.8159467577934265,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.008222833581019134
+                },
+                "supported": {
+                  "tiles": 51,
+                  "pixels": 156672,
+                  "mse": 0.007325962324434878
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.002278024452734525
+                },
+                "supported": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.0019708993219087743
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010230961682739546
+                }
+              }
+            }
+          },
+          {
+            "index": 80,
+            "image": "0080-2e64893a45de4f478831f4029c100eef.jpg",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 24.312164737468432,
+            "ssim": 0.860162079334259,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 18432,
+                  "mse": 0.004059697425402623
+                },
+                "supported": {
+                  "tiles": 58,
+                  "pixels": 178176,
+                  "mse": 0.0036682630503980197
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 2,
+                  "pixels": 6144,
+                  "mse": 0.0023992349697231834
+                },
+                "supported": {
+                  "tiles": 14,
+                  "pixels": 43008,
+                  "mse": 0.0005501550599815089
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.007263520253127803
+                }
+              }
+            }
+          },
+          {
+            "index": 88,
+            "image": "0088-9335b242d1b14852bbf42f5ad574baa0.jpg",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 26.79872686370652,
+            "ssim": 0.8959189057350159,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0015453691689093936
+                },
+                "supported": {
+                  "tiles": 59,
+                  "pixels": 181248,
+                  "mse": 0.002136056116554114
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.0002127998757600353
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.0007414205417377274
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0029985104595521487
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "engine": "Brush 0.3.0",
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "training_seed": 42,
+        "gaussians": 71838,
+        "timings": {
+          "sfm_seconds": 0,
+          "prepare_seconds": 0.07808354124426842,
+          "training_and_model_export_seconds": 38.37112454138696
+        },
+        "seconds": 38.44920854084194,
+        "training_views": 84,
+        "evaluation_views": 12,
+        "sfm_reused": true,
+        "color_model": "SH3",
+        "job": "desk-new",
+        "location": ".data/benchmarks/support-error-20261125/jobs/desk-new",
+        "input_images": 96,
+        "registered_images": 96,
+        "unregistered_images": [],
+        "camera_mode": "shared",
+        "ply_bytes": 16955318,
+        "ply_sha256": "94a4e71e785fdc5505cf6afefd363987c36f66d766af50f0637fb2713b917971",
+        "mean": {
+          "psnr": 22.55783570360173,
+          "ssim": 0.8316486179828644
+        },
+        "views": [
+          {
+            "index": 0,
+            "image": "0000-939c3ec52fb94b248a079d5a9bca37a9.jpg",
+            "reference_sha256": "22b9ec5bc667ea844e5bf5dff8ebd2562552ccc035cf93c327f9517417e32a2e",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.886747559616374,
+            "ssim": 0.821366548538208,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 20,
+                  "pixels": 61440,
+                  "mse": 0.002960788485464992
+                },
+                "supported": {
+                  "tiles": 44,
+                  "pixels": 135168,
+                  "mse": 0.0061367872575476025
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0007399811807521583
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.00013680101670297758
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.0172919703693024
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.0076656510984023235
+                }
+              }
+            }
+          },
+          {
+            "index": 8,
+            "image": "0008-0296b6fad6524c28bdf086827f716c93.jpg",
+            "reference_sha256": "952714665b898b900ce0352e9e565a648481ef2e0098ca76fe2513184bd67ded",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 20.73454876451904,
+            "ssim": 0.8185929656028748,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 14,
+                  "pixels": 43008,
+                  "mse": 0.0035887791935946497
+                },
+                "supported": {
+                  "tiles": 50,
+                  "pixels": 153600,
+                  "mse": 0.0098033846490666
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.00247345793318008
+                },
+                "supported": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.006332513878542976
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.01118336720368635
+                }
+              }
+            }
+          },
+          {
+            "index": 16,
+            "image": "0016-dc73133b6ebd42808d62be192a7085ae.jpg",
+            "reference_sha256": "4d2eea154565013ccb8614aef2be8bcf8939f69b07da9f27e958fe861a3a2b55",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 24.488882646897668,
+            "ssim": 0.8533651232719421,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 12,
+                  "pixels": 36864,
+                  "mse": 0.006214365001174762
+                },
+                "supported": {
+                  "tiles": 52,
+                  "pixels": 159744,
+                  "mse": 0.0029440428727999916
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 18432,
+                  "mse": 0.0011101702447954493
+                },
+                "supported": {
+                  "tiles": 10,
+                  "pixels": 30720,
+                  "mse": 0.00120777765763168
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0033345656651821948
+                }
+              }
+            }
+          },
+          {
+            "index": 24,
+            "image": "0024-f47a2fcd0e95400fb44e1241b592f79a.jpg",
+            "reference_sha256": "36bc8bcf548d3c6247049fcf60047ac03c0bcba47f0117d7200fa1f7f44f1887",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 20.23750472406784,
+            "ssim": 0.8092202544212341,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.01146818976319649
+                },
+                "supported": {
+                  "tiles": 61,
+                  "pixels": 187392,
+                  "mse": 0.009369430522597446
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.004259849977572729
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.005987146592478676
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010035362375648789
+                }
+              }
+            }
+          },
+          {
+            "index": 32,
+            "image": "0032-5a6bb2e4866f4bab939a631df9c12c01.jpg",
+            "reference_sha256": "506c01328f9dd41ba4c37dcc2554e8a3103e10c193a6b808d2f45183505bc770",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.21426494374188,
+            "ssim": 0.8044559955596924,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 19,
+                  "pixels": 58368,
+                  "mse": 0.004889656172783297
+                },
+                "supported": {
+                  "tiles": 45,
+                  "pixels": 138240,
+                  "mse": 0.006477112650464446
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0018921226393112205
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.001855157204493998
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010486809251716753
+                }
+              }
+            }
+          },
+          {
+            "index": 40,
+            "image": "0040-138c12a85ca0417aac43161fbe5ccb7e.jpg",
+            "reference_sha256": "f5d1613785a3c28e1f364c12789d317665ff8d608eb5894924323fafd832d218",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 23.840859496631435,
+            "ssim": 0.8395058512687683,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0017347545657185805
+                },
+                "supported": {
+                  "tiles": 48,
+                  "pixels": 147456,
+                  "mse": 0.004927958682480118
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0003727752644185025
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.002048868090264428
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.007906182459537463
+                }
+              }
+            }
+          },
+          {
+            "index": 48,
+            "image": "0048-a77505f3ae9c478d98024b69168783ac.jpg",
+            "reference_sha256": "c494dc8f54e0496744e25b7fef316eb4dce82ecb7295d28d33f0c541d3b4c0ba",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 26.639560025797024,
+            "ssim": 0.8879389762878418,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 40,
+                  "pixels": 122880,
+                  "mse": 0.0019525272314467725
+                },
+                "supported": {
+                  "tiles": 24,
+                  "pixels": 73728,
+                  "mse": 0.0025269178710200495
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.0002712249136616793
+                },
+                "supported": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.006610093985397354
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.003535733554566455
+                }
+              }
+            }
+          },
+          {
+            "index": 56,
+            "image": "0056-24e814376ef542aa9330ed6ae6e5394f.jpg",
+            "reference_sha256": "25f126967ba9f750e7a8b08435b228e18f29f5032bec1f973b70dfe81b92945a",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 15.312604553894754,
+            "ssim": 0.7456904053688049,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 27,
+                  "pixels": 82944,
+                  "mse": 0.056041557707011254
+                },
+                "supported": {
+                  "tiles": 37,
+                  "pixels": 113664,
+                  "mse": 0.010004810669594045
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.07290660063849763
+                },
+                "supported": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.005525051462578495
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 4,
+                  "pixels": 12288,
+                  "mse": 0.021796411519741345
+                },
+                "supported": {
+                  "tiles": 12,
+                  "pixels": 36864,
+                  "mse": 0.009330333046095164
+                }
+              }
+            }
+          },
+          {
+            "index": 64,
+            "image": "0064-fe7f1c96df17410995fb2921f38cfbd3.jpg",
+            "reference_sha256": "122a47a3342c133a58197ead9e8318bcd74315646a6fe5c2190b13340a70c1fd",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 22.465398611516115,
+            "ssim": 0.82154780626297,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 10,
+                  "pixels": 30720,
+                  "mse": 0.0029912782276581653
+                },
+                "supported": {
+                  "tiles": 54,
+                  "pixels": 165888,
+                  "mse": 0.0061641578690551915
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0019951541073945913
+                },
+                "supported": {
+                  "tiles": 11,
+                  "pixels": 33792,
+                  "mse": 0.0032266111348976116
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 1,
+                  "pixels": 3072,
+                  "mse": 0.0029504560879362635
+                },
+                "supported": {
+                  "tiles": 15,
+                  "pixels": 46080,
+                  "mse": 0.00827923021060276
+                }
+              }
+            }
+          },
+          {
+            "index": 72,
+            "image": "0072-f724da7448144cd3a72e269ad988e910.jpg",
+            "reference_sha256": "4a1aca72fcf04d3451cf1d19d3397cab2f1d2b709b2ed0e50f216335bf613874",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 21.173630453475603,
+            "ssim": 0.81717848777771,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.008415209818215875
+                },
+                "supported": {
+                  "tiles": 51,
+                  "pixels": 156672,
+                  "mse": 0.007432327252422605
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.0023791021548870096
+                },
+                "supported": {
+                  "tiles": 8,
+                  "pixels": 24576,
+                  "mse": 0.0018134653822381352
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.010213622056086868
+                }
+              }
+            }
+          },
+          {
+            "index": 80,
+            "image": "0080-2e64893a45de4f478831f4029c100eef.jpg",
+            "reference_sha256": "dac39f3702c88c57a505eeeedf860c2cd1fa3c17650d3c8a96928112f913a3b3",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 24.100704897559098,
+            "ssim": 0.866525411605835,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 6,
+                  "pixels": 18432,
+                  "mse": 0.004126365994382503
+                },
+                "supported": {
+                  "tiles": 58,
+                  "pixels": 178176,
+                  "mse": 0.0038653497768228696
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 2,
+                  "pixels": 6144,
+                  "mse": 0.0032949808633965572
+                },
+                "supported": {
+                  "tiles": 14,
+                  "pixels": 43008,
+                  "mse": 0.0005106818224294074
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.007222020727204281
+                }
+              }
+            }
+          },
+          {
+            "index": 88,
+            "image": "0088-9335b242d1b14852bbf42f5ad574baa0.jpg",
+            "reference_sha256": "c59e8c862aa4e76017f36ab4cfdb25e75f50ec5679727363f5d316089f1ea103",
+            "dimensions": [
+              512,
+              384
+            ],
+            "psnr": 26.599321765503923,
+            "ssim": 0.8943955898284912,
+            "support_error": {
+              "all": {
+                "empty": {
+                  "tiles": 5,
+                  "pixels": 15360,
+                  "mse": 0.0020504339944038617
+                },
+                "supported": {
+                  "tiles": 59,
+                  "pixels": 181248,
+                  "mse": 0.002199770203052787
+                }
+              },
+              "low": {
+                "empty": {
+                  "tiles": 3,
+                  "pixels": 9216,
+                  "mse": 0.0002789453086063765
+                },
+                "supported": {
+                  "tiles": 13,
+                  "pixels": 39936,
+                  "mse": 0.0007293681937749122
+                }
+              },
+              "high": {
+                "empty": {
+                  "tiles": 0,
+                  "pixels": 0,
+                  "mse": null
+                },
+                "supported": {
+                  "tiles": 16,
+                  "pixels": 49152,
+                  "mse": 0.003020733628759238
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

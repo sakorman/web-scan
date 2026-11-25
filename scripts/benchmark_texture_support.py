@@ -8,7 +8,7 @@ import numpy as np
 from PIL import Image
 
 
-def texture_support(audit, reference):
+def texture_support(audit, reference, *, scoring_size=None):
     name = audit["focus_image"]
     if name in audit["training_images"] or audit["holdout_color_samples"] != 0:
         raise ValueError("Expected a held-out focus image and training-only track colors")
@@ -22,7 +22,15 @@ def texture_support(audit, reference):
             if list(native) != audit["focus_dimensions"]:
                 raise ValueError("Focus reference dimensions differ from audit")
             image = source.convert("L")
-    image.thumbnail((512, 512), Image.Resampling.BILINEAR)
+    if scoring_size is None:
+        image.thumbnail((512, 512), Image.Resampling.BILINEAR)
+    else:
+        # Use the exact grid chosen by the paired scorer, including rounded short edges.
+        width, height = scoring_size
+        if (not 0 < width <= native[0] or not 0 < height <= native[1]
+                or abs(width * native[1] - height * native[0]) > max(native)):
+            raise ValueError("Scoring dimensions do not preserve the reference frame")
+        image = image.resize(scoring_size, Image.Resampling.BILINEAR, reducing_gap=2.0)
     width, height = image.size
     if min(width, height) < 24:
         raise ValueError("Each of the 8 x 8 tiles needs at least three pixels per axis")

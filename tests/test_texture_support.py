@@ -58,3 +58,16 @@ def test_wrong_reference_or_track_rejected(tmp_path, problem):
         point["xy"] = [float("nan"), 10]
     with pytest.raises(ValueError):
         texture_support(audit, path)
+
+
+def test_exact_scoring_grid_including_rounded_short_edge(tmp_path):
+    audit, path = fixture(tmp_path)
+    # Fitting office into this box a second time would yield a 511 px width.
+    Image.new("L", (1600, 1067)).save(path)
+    audit["focus_dimensions"] = [1600, 1067]
+    audit["photo_sha256"][path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    result = texture_support(audit, path, scoring_size=(512, 341))
+    assert result["size"] == [512, 341]
+    assert result["track_count"] == 1
+    with pytest.raises(ValueError, match="reference frame"):
+        texture_support(audit, path, scoring_size=(512, 320))
