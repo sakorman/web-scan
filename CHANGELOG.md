@@ -2,6 +2,12 @@
 
 按日期倒序记录每轮改动、验证结果和已知限制。未采用的实验也保留结论，详细配置、截图与测量数据链接到对应报告。历史条目依据提交和当时的测试记录补录，不补造没有测过的结果。
 
+## 2026-11-26
+
+### 旋转学习率减半后，office 局部误差仍会升高
+
+用历史重建预选高误差区域，再做八次实拍训练。旋转学习率从 0.001 降至 0.0005 后，pipes、office 两次配对的整图 PSNR 平均提高 0.72、1.12 dB，office 第一组预选区域的 MSE 却上升 30.7%。保留默认 0.001。复用位姿的单次重建耗时 22.61–24.04 秒，每场景仅两组配对。下一步回查 office 第 25 张两次局部误差均上升的四格。[实测、同视角图与复现](docs/ROTATION-RATE.md) · [基线提交](https://github.com/sakorman/web-scan/commit/268b4c6) · [GC-GS](https://arxiv.org/abs/2611.28111v1) · [Brush 实现](https://github.com/ArthurBrussee/brush/blob/v0.3.0/crates/brush-train/src/train.rs)
+
 ## 2026-11-25
 
 ### 对齐稀疏轨迹与留出渲染误差

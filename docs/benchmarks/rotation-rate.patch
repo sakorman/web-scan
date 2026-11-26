@@ -1,0 +1,25 @@
+--- driver.py
++++ driver.py
+@@ -1 +1 @@
+-"""Serial SH learning-rate experiment using frozen, already registered photographs.
++"""Serial rotation learning-rate experiment using frozen, already registered photographs.
+@@ -4,2 +4,2 @@
+-PYTHONPATH=. .venv/bin/python docs/benchmarks/sh-slow-learning.py --root OUTPUT
+-Only the higher-order SH learning-rate divisor differs (20 vs 40).
++PYTHONPATH=. .venv/bin/python driver.py --root OUTPUT
++Only the rotation learning rate differs (0.001 vs 0.0005).
+@@ -16,2 +16,2 @@
+-    'pipes': '9b99bf8268944f1bba8ede3c2cd4b240',
+-    'office': '9b61678793164e06b9c37a617bfd46dd',
++    'pipes': 'd394f921cede42e4a6b85e36e1080eea',
++    'office': '0e39c98bfeca4928b26413b47d1db5c6',
+@@ -50,3 +50,3 @@
+-                baseline_sh_divisor=20, candidate_sh_divisor=40,
+-                threshold=dict(min_psnr_delta=-0.2, min_ssim_delta=-0.005),
+-                required='Both scenes pass thresholds; target pipes view 8 tile 12 improves in both repeats',
++                baseline_rotation_rate=0.001, candidate_rotation_rate=0.0005,
++                threshold=dict(min_psnr_delta=-0.2, min_ssim_delta=-0.005, min_scene_mean_psnr_gain=0.2),
++                required='Every pair passes both floors; both scenes gain at least 0.2 dB on average; pixel-weighted MSE of frozen recurrent regions decreases in both repeats in each scene.',
+@@ -64 +64 @@
+-                '    args += ["--lr-coeffs-sh-scale", "40"]\n' + anchor))
++                '    args += ["--lr-rotation", "0.0005"]\n' + anchor))

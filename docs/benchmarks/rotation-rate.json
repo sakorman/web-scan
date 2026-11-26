@@ -1,0 +1,646 @@
+{
+  "plan": {
+    "config": {
+      "backend": "brush",
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "camera_mode": "shared",
+      "evaluation_mode": "holdout"
+    },
+    "sources": {
+      "pipes": "d394f921cede42e4a6b85e36e1080eea",
+      "office": "0e39c98bfeca4928b26413b47d1db5c6"
+    },
+    "order": [
+      [
+        "pipes",
+        "baseline",
+        1
+      ],
+      [
+        "office",
+        "baseline",
+        1
+      ],
+      [
+        "pipes",
+        "candidate",
+        1
+      ],
+      [
+        "office",
+        "candidate",
+        1
+      ],
+      [
+        "office",
+        "candidate",
+        2
+      ],
+      [
+        "pipes",
+        "candidate",
+        2
+      ],
+      [
+        "office",
+        "baseline",
+        2
+      ],
+      [
+        "pipes",
+        "baseline",
+        2
+      ]
+    ],
+    "seed": 42,
+    "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "baseline_adapter_sha256": "72c4d6bf19b5b4306627e5f1eb434af1d48633b68e017888b49662239697de06",
+    "baseline_rotation_rate": 0.001,
+    "candidate_rotation_rate": 0.0005,
+    "threshold": {
+      "min_psnr_delta": -0.2,
+      "min_ssim_delta": -0.005,
+      "min_scene_mean_psnr_gain": 0.2
+    },
+    "required": "Every pair passes both floors; both scenes gain at least 0.2 dB on average; pixel-weighted MSE of frozen recurrent regions decreases in both repeats in each scene.",
+    "cache": "Frozen SfM reused. Metal disk cache not flushed; fresh Brush process per run."
+  },
+  "regions": {
+    "pipes": {
+      "jobs": [
+        "5d626cd8463d461596b69c7c07fdd4b8",
+        "1136e72db1f043a283f04f43fc08fb8c",
+        "d394f921cede42e4a6b85e36e1080eea",
+        "255a45de16f44daca1771d4a8dfeaaa4"
+      ],
+      "tiles": {
+        "0000-1f12d10234be42b5a5567735dd15fbf7.png": [
+          8,
+          16,
+          62
+        ],
+        "0008-9a76c2d0778d48ee9916c29248b0476b.png": [
+          0
+        ]
+      }
+    },
+    "office": {
+      "jobs": [
+        "cca441de3f4643d6a2e0773a27990f34",
+        "85ce36c5411d4923a132b11a85cd327c",
+        "0e39c98bfeca4928b26413b47d1db5c6"
+      ],
+      "tiles": {
+        "0000-fb0957d3f08b497c97ad3120db509705.png": [
+          39,
+          40,
+          47,
+          48,
+          55,
+          56,
+          63
+        ],
+        "0008-94a3485567114808a05c4a658ee90ee2.png": [
+          0,
+          8,
+          48,
+          56
+        ],
+        "0016-8bab0f5f398a45bfa9f797c44625e3c5.png": [
+          19,
+          26,
+          27,
+          33,
+          34
+        ],
+        "0024-babe0fdf2b664c9c913779d4e7279812.png": [
+          40,
+          45,
+          53,
+          54
+        ]
+      }
+    }
+  },
+  "pairs": [
+    {
+      "scene": "pipes",
+      "repeat": 1,
+      "models": {
+        "baseline": {
+          "name": "pipes-baseline-1",
+          "inputs_sha256": "ed7db6f1ece71bc1e0720736a1bb2fc54001af939fb4293eed6116963adbc8c1",
+          "cameras_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+          "source_job": "d394f921cede42e4a6b85e36e1080eea",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          },
+          "model_bytes": 2750478,
+          "model_sha256": "bd6a7f4e7584c36a6bd8835026cca7a6c2e5f98425ed9d99c4db464586a8771a",
+          "input_images": 14,
+          "registered_images": 14,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 22.964889958500862,
+          "reuse_pipeline_seconds": 23.010204625315964,
+          "gaussians": 11648,
+          "training_views": 12,
+          "evaluation_views": 2,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 18.165773440821244,
+          "ssim": 0.7537292540073395,
+          "views": [
+            {
+              "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+              "psnr": 21.789182206725396,
+              "ssim": 0.8360850811004639,
+              "region_pixels": 8192,
+              "region_mse": 0.03635332501822215
+            },
+            {
+              "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+              "psnr": 14.54236467491709,
+              "ssim": 0.6713734269142151,
+              "region_pixels": 2688,
+              "region_mse": 0.0771527320078358
+            }
+          ],
+          "region_mse": 0.046433178509773756
+        },
+        "candidate": {
+          "name": "pipes-candidate-1",
+          "inputs_sha256": "ed7db6f1ece71bc1e0720736a1bb2fc54001af939fb4293eed6116963adbc8c1",
+          "cameras_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+          "source_job": "d394f921cede42e4a6b85e36e1080eea",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          },
+          "model_bytes": 2714370,
+          "model_sha256": "42313a07f66f38abb3bd0dafd3aa403d722b532cce47a5b27a449f7a1a151ac8",
+          "input_images": 14,
+          "registered_images": 14,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 22.690403874963522,
+          "reuse_pipeline_seconds": 22.72362649999559,
+          "gaussians": 11495,
+          "training_views": 12,
+          "evaluation_views": 2,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 19.26215900517018,
+          "ssim": 0.757474809885025,
+          "views": [
+            {
+              "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+              "psnr": 23.386101445930002,
+              "ssim": 0.8345826268196106,
+              "region_pixels": 8192,
+              "region_mse": 0.01584816824758907
+            },
+            {
+              "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+              "psnr": 15.138216564410358,
+              "ssim": 0.6803669929504395,
+              "region_pixels": 2688,
+              "region_mse": 0.07800409106997917
+            }
+          ],
+          "region_mse": 0.031204337415473682
+        }
+      },
+      "deltas": {
+        "psnr": 1.0963855643489353,
+        "ssim": 0.003745555877685547,
+        "region_mse": -0.015228841094300075
+      }
+    },
+    {
+      "scene": "pipes",
+      "repeat": 2,
+      "models": {
+        "baseline": {
+          "name": "pipes-baseline-2",
+          "inputs_sha256": "ed7db6f1ece71bc1e0720736a1bb2fc54001af939fb4293eed6116963adbc8c1",
+          "cameras_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+          "source_job": "d394f921cede42e4a6b85e36e1080eea",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          },
+          "model_bytes": 2735138,
+          "model_sha256": "0ce01cf708189510bc7ef3a3ddfbfc3b4b77cd0769ed9a5fc921ee4d1dc6dbba",
+          "input_images": 14,
+          "registered_images": 14,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 22.74618550017476,
+          "reuse_pipeline_seconds": 22.777271084487438,
+          "gaussians": 11583,
+          "training_views": 12,
+          "evaluation_views": 2,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 18.158485465442357,
+          "ssim": 0.747743159532547,
+          "views": [
+            {
+              "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+              "psnr": 22.220887643898273,
+              "ssim": 0.8235710263252258,
+              "region_pixels": 8192,
+              "region_mse": 0.02145838652301198
+            },
+            {
+              "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+              "psnr": 14.096083286986442,
+              "ssim": 0.6719152927398682,
+              "region_pixels": 2688,
+              "region_mse": 0.111865020245571
+            }
+          ],
+          "region_mse": 0.04379414308976186
+        },
+        "candidate": {
+          "name": "pipes-candidate-2",
+          "inputs_sha256": "ed7db6f1ece71bc1e0720736a1bb2fc54001af939fb4293eed6116963adbc8c1",
+          "cameras_sha256": "9dbd35fc2d4195952f3d3fab5d5ed1eb2ac8b65b0d59363b5d837528288329dd",
+          "source_job": "d394f921cede42e4a6b85e36e1080eea",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.091435630405,
+              800.0,
+              533.5,
+              -0.10091385666317157,
+              0.06728544184812109
+            ]
+          },
+          "model_bytes": 2710358,
+          "model_sha256": "67ecdf488c37a192c4ce3613d42a698cd257aeeffb95441028600b88df7f8f75",
+          "input_images": 14,
+          "registered_images": 14,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 22.5737322922796,
+          "reuse_pipeline_seconds": 22.604998500086367,
+          "gaussians": 11478,
+          "training_views": 12,
+          "evaluation_views": 2,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 18.507899631360424,
+          "ssim": 0.757366269826889,
+          "views": [
+            {
+              "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+              "psnr": 22.09520271166461,
+              "ssim": 0.8249056935310364,
+              "region_pixels": 8192,
+              "region_mse": 0.023716198272098872
+            },
+            {
+              "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+              "psnr": 14.920596551056242,
+              "ssim": 0.6898268461227417,
+              "region_pixels": 2688,
+              "region_mse": 0.06846167225059957
+            }
+          ],
+          "region_mse": 0.03477096243149316
+        }
+      },
+      "deltas": {
+        "psnr": 0.3494141659180663,
+        "ssim": 0.009623110294342041,
+        "region_mse": -0.009023180658268695
+      }
+    },
+    {
+      "scene": "office",
+      "repeat": 1,
+      "models": {
+        "baseline": {
+          "name": "office-baseline-1",
+          "inputs_sha256": "ca92a03dd04bb20840b4ddae80f42196a7720e5ff6c106d883dc0a0cc915317e",
+          "cameras_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+          "source_job": "0e39c98bfeca4928b26413b47d1db5c6",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          },
+          "model_bytes": 3440778,
+          "model_sha256": "30a7b12fcf75e2352694304f3574c29f4c9a11c6fcebedcb182fb5ba7dcf26cd",
+          "input_images": 26,
+          "registered_images": 26,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 23.42407662514597,
+          "reuse_pipeline_seconds": 23.47048454079777,
+          "gaussians": 14573,
+          "training_views": 22,
+          "evaluation_views": 4,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 21.070228561926033,
+          "ssim": 0.8732464760541916,
+          "views": [
+            {
+              "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+              "psnr": 22.33609164692197,
+              "ssim": 0.9040892124176025,
+              "region_pixels": 19136,
+              "region_mse": 0.02281509352161526
+            },
+            {
+              "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+              "psnr": 21.62801180375653,
+              "ssim": 0.9327682256698608,
+              "region_pixels": 10944,
+              "region_mse": 0.012117420163035209
+            },
+            {
+              "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+              "psnr": 17.39597789859762,
+              "ssim": 0.8105794191360474,
+              "region_pixels": 13696,
+              "region_mse": 0.056094841607768876
+            },
+            {
+              "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+              "psnr": 22.92083289842801,
+              "ssim": 0.8455490469932556,
+              "region_pixels": 10880,
+              "region_mse": 0.013072692158370461
+            }
+          ],
+          "region_mse": 0.027073121290196137
+        },
+        "candidate": {
+          "name": "office-candidate-1",
+          "inputs_sha256": "ca92a03dd04bb20840b4ddae80f42196a7720e5ff6c106d883dc0a0cc915317e",
+          "cameras_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+          "source_job": "0e39c98bfeca4928b26413b47d1db5c6",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          },
+          "model_bytes": 3380834,
+          "model_sha256": "4d9e0f814cb28322b3e236a2cc979b41c763db4321996c5061846576f053b670",
+          "input_images": 26,
+          "registered_images": 26,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 23.342569541186094,
+          "reuse_pipeline_seconds": 23.391475000418723,
+          "gaussians": 14319,
+          "training_views": 22,
+          "evaluation_views": 4,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 21.595218039239178,
+          "ssim": 0.8720071464776993,
+          "views": [
+            {
+              "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+              "psnr": 22.88164486420364,
+              "ssim": 0.9040666818618774,
+              "region_pixels": 19136,
+              "region_mse": 0.022034802882177636
+            },
+            {
+              "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+              "psnr": 24.686697147206775,
+              "ssim": 0.9456093907356262,
+              "region_pixels": 10944,
+              "region_mse": 0.018219701355678915
+            },
+            {
+              "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+              "psnr": 15.84326249018603,
+              "ssim": 0.7830982804298401,
+              "region_pixels": 13696,
+              "region_mse": 0.08498978346454333
+            },
+            {
+              "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+              "psnr": 22.969267655360262,
+              "ssim": 0.8552542328834534,
+              "region_pixels": 10880,
+              "region_mse": 0.013670779903656963
+            }
+          ],
+          "region_mse": 0.03538152369862549
+        }
+      },
+      "deltas": {
+        "psnr": 0.5249894773131452,
+        "ssim": -0.0012393295764923096,
+        "region_mse": 0.008308402408429352
+      }
+    },
+    {
+      "scene": "office",
+      "repeat": 2,
+      "models": {
+        "baseline": {
+          "name": "office-baseline-2",
+          "inputs_sha256": "ca92a03dd04bb20840b4ddae80f42196a7720e5ff6c106d883dc0a0cc915317e",
+          "cameras_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+          "source_job": "0e39c98bfeca4928b26413b47d1db5c6",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          },
+          "model_bytes": 3417178,
+          "model_sha256": "b1e0f5accf8a6487c7a4485b4be726fd395a831c04ba55d5f50dacc524db47de",
+          "input_images": 26,
+          "registered_images": 26,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 23.991806416772306,
+          "reuse_pipeline_seconds": 24.036463541910052,
+          "gaussians": 14473,
+          "training_views": 22,
+          "evaluation_views": 4,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 20.48036829134699,
+          "ssim": 0.8700298070907593,
+          "views": [
+            {
+              "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+              "psnr": 21.847031718920103,
+              "ssim": 0.9082802534103394,
+              "region_pixels": 19136,
+              "region_mse": 0.02205459979803669
+            },
+            {
+              "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+              "psnr": 21.12161415889577,
+              "ssim": 0.9375560283660889,
+              "region_pixels": 10944,
+              "region_mse": 0.033152679037826954
+            },
+            {
+              "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+              "psnr": 16.71627371413392,
+              "ssim": 0.7802082300186157,
+              "region_pixels": 13696,
+              "region_mse": 0.058883337091173896
+            },
+            {
+              "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+              "psnr": 22.236553573438172,
+              "ssim": 0.8540747165679932,
+              "region_pixels": 10880,
+              "region_mse": 0.012657268414863062
+            }
+          ],
+          "region_mse": 0.03163489838772753
+        },
+        "candidate": {
+          "name": "office-candidate-2",
+          "inputs_sha256": "ca92a03dd04bb20840b4ddae80f42196a7720e5ff6c106d883dc0a0cc915317e",
+          "cameras_sha256": "088a7cd83876da0e09943b546210a7a786e3f7a02eeb7997c435af044f1380b8",
+          "source_job": "0e39c98bfeca4928b26413b47d1db5c6",
+          "original_camera": {
+            "model": "RADIAL",
+            "width": 1600,
+            "height": 1067,
+            "params": [
+              906.4381085295956,
+              800.0,
+              533.5,
+              -0.10327691090226823,
+              0.06959028672322837
+            ]
+          },
+          "model_bytes": 3428506,
+          "model_sha256": "4522d9db40bcf385001572c2834a999d840d5e8015245e92c145c2ea0c2466bf",
+          "input_images": 26,
+          "registered_images": 26,
+          "unregistered_images": [],
+          "sfm_seconds": 0,
+          "training_export_seconds": 23.228017792105675,
+          "reuse_pipeline_seconds": 23.274973625317216,
+          "gaussians": 14521,
+          "training_views": 22,
+          "evaluation_views": 4,
+          "training_seed": 42,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "evaluation_verified": true,
+          "color_model": "SH3",
+          "psnr": 22.194242643962284,
+          "ssim": 0.8763768821954727,
+          "views": [
+            {
+              "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+              "psnr": 24.052207678951994,
+              "ssim": 0.9114953875541687,
+              "region_pixels": 19136,
+              "region_mse": 0.016693908086547624
+            },
+            {
+              "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+              "psnr": 24.361320811784232,
+              "ssim": 0.944489061832428,
+              "region_pixels": 10944,
+              "region_mse": 0.02094393425680481
+            },
+            {
+              "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+              "psnr": 17.330898207767152,
+              "ssim": 0.7948133945465088,
+              "region_pixels": 13696,
+              "region_mse": 0.04896545676177746
+            },
+            {
+              "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+              "psnr": 23.032543877345756,
+              "ssim": 0.8547096848487854,
+              "region_pixels": 10880,
+              "region_mse": 0.013891638585461098
+            }
+          ],
+          "region_mse": 0.02507386133763481
+        }
+      },
+      "deltas": {
+        "psnr": 1.7138743526152922,
+        "ssim": 0.00634707510471344,
+        "region_mse": -0.006561037050092724
+      }
+    }
+  ],
+  "passed": false
+}
