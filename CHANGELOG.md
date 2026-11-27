@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 固定深度采样后检验 COLMAP 外参
+
+同一批 96 张实拍照片上，固定 12,604 个训练深度像素，交叉比较两套训练外参与两套初始几何。保留 RGB-D 默认针孔相机时，RGB-D 外参比直接移植 COLMAP 外参高 0.95–1.09 dB。四次训练导出各用 9.45–9.70 秒。放弃单独移植外参，下一步验证相机成像模型。当前结果限于一条轨迹、每组一次。[实测、截图与复现](docs/RGBD-EXTRINSICS.md) · [基线提交](https://github.com/sakorman/web-scan/commit/0e09dad) · [TUM 标定说明](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/file_formats)
+
 ### 用独立平移序列复测快速位姿
 
 新增 TUM 官方归档的实拍重建入口。xyz 的 96 张全部定位，95 张有可评分的运动捕捉参考。保持 desk 参数后，跨帧精化用 2.55 秒完成求姿，位置 RMSE 从 5.42 降到 1.91 厘米。相同有效像素上仍落后纯照片 COLMAP 1.32 dB，每种方法只训练一次。采用离线测量入口，下一步核验外参与初始化对画质差距的影响。[轨迹、耗时与同视角图](docs/RGBD-XYZ.md) · [基线](https://github.com/sakorman/web-scan/commit/e672f33) · [TUM 官方数据](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/download)

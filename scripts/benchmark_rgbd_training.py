@@ -13,9 +13,11 @@ from scripts.benchmark_sfm_matching import train_scene
 from webscan.reconstruction import normalize_scene
 
 
-def prepare(work, frames, depths, poses, indices):
+def prepare(work, frames, depths, poses, indices, *, seed_poses=None):
     import pycolmap
 
+    if seed_poses is None:
+        seed_poses = poses
     root = work / "sfm/undistorted"
     sparse = root / "sparse"
     images = root / "images"
@@ -41,7 +43,8 @@ def prepare(work, frames, depths, poses, indices):
                 valid = (z > .25) & (z < 5)
                 x, y, z = xx[valid], yy[valid], z[valid]
                 local = np.column_stack(((x-K[0, 2])*z/K[0, 0], (y-K[1, 2])*z/K[1, 1], z))
-                world = local @ world_from_camera[:3, :3].T + world_from_camera[:3, 3]
+                seed_pose = seed_poses[index]
+                world = local @ seed_pose[:3, :3].T + seed_pose[:3, 3]
                 with Image.open(image) as rgb:
                     colors = np.asarray(rgb.convert("RGB"))[y, x]
                 for j, (center, color) in enumerate(zip(world, colors)):
