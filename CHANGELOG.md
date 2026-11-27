@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 跳过 SIFT 首层放大会损失定位覆盖
+
+office 提取从 6.30 降到 1.55 秒，定位从 26 张降到 21 张；pipes 从 3.73 降到 0.97 秒，定位从 14 张降到 8 张。三张共有留出照片的 PSNR 均下降 1.10–2.08 dB。继续使用默认起始倍频程，下一步检查缺失照片的匹配支持。[四次实拍与同视角评分](docs/SIFT-OCTAVE.md) · [线程基线提交](https://github.com/sakorman/web-scan/commit/5314eac) · [COLMAP 3.13.0](https://github.com/colmap/colmap/tree/3.13.0)
+
 ### 首轮 SIFT 六线程缩短提取时间，峰值内存增加约 960 MiB
 
 office 和 pipes 上的特征、描述子逐字节一致，六线程提取分别用 5.04–5.06 秒和 3.06–3.09 秒。两组实拍均全部定位，但进程内存峰值从约 1.95 GiB 增至 2.89 GiB，默认采用四线程。两组留出画质变化方向不同，下一步单独检验首层采样尺度。[计时、内存与四次重建](docs/SIFT-THREADS.md) · [前次匹配优化](https://github.com/sakorman/web-scan/commit/6443aba) · [COLMAP 参考实现](https://github.com/colmap/colmap/tree/3.13.0)
