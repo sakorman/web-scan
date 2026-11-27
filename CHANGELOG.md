@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 首轮 SIFT 六线程缩短提取时间，峰值内存增加约 960 MiB
+
+office 和 pipes 上的特征、描述子逐字节一致，六线程提取分别用 5.04–5.06 秒和 3.06–3.09 秒。两组实拍均全部定位，但进程内存峰值从约 1.95 GiB 增至 2.89 GiB，默认采用四线程。两组留出画质变化方向不同，下一步单独检验首层采样尺度。[计时、内存与四次重建](docs/SIFT-THREADS.md) · [前次匹配优化](https://github.com/sakorman/web-scan/commit/6443aba) · [COLMAP 参考实现](https://github.com/colmap/colmap/tree/3.13.0)
+
 ### 同镜头重试复用原始匹配，重新估计几何
 
 照片 ID 与名称完全一致时，纯照片重试可跳过已完成的描述子匹配。office 的 325 对、pipes 的 91 对照片几何表与重新计算逐字节一致，匹配阶段两场景均缩短。office 从重试至导出由 9.83 降到 9.69 秒，pipes 由 8.98 变为 9.06 秒。pipes 四线程位姿有波动，单线程复核三次相同。下一步定位首次提取的时间开销。[等价性、四份模型与截图](docs/RETRY-FEATURES.md#复用原始特征匹配) · [先前重试提交](https://github.com/sakorman/web-scan/commit/d6079c8) · [COLMAP 匹配表](https://colmap.github.io/database.html)

@@ -1,0 +1,518 @@
+{
+  "isolated": [
+    {
+      "scene": "office",
+      "threads": 4,
+      "rep": 0,
+      "frames": 26,
+      "points": 36280,
+      "sha256": "723bde2c4fc3c6e56bed250a7b39c42bcf6a8cf7390c77bec7dd3110d0b63519",
+      "seconds": 6.299168207682669
+    },
+    {
+      "scene": "office",
+      "threads": 6,
+      "rep": 1,
+      "frames": 26,
+      "points": 36280,
+      "sha256": "723bde2c4fc3c6e56bed250a7b39c42bcf6a8cf7390c77bec7dd3110d0b63519",
+      "seconds": 5.057179999537766
+    },
+    {
+      "scene": "office",
+      "threads": 6,
+      "rep": 2,
+      "frames": 26,
+      "points": 36280,
+      "sha256": "723bde2c4fc3c6e56bed250a7b39c42bcf6a8cf7390c77bec7dd3110d0b63519",
+      "seconds": 5.036563084460795
+    },
+    {
+      "scene": "office",
+      "threads": 4,
+      "rep": 3,
+      "frames": 26,
+      "points": 36280,
+      "sha256": "723bde2c4fc3c6e56bed250a7b39c42bcf6a8cf7390c77bec7dd3110d0b63519",
+      "seconds": 6.235782916657627
+    },
+    {
+      "scene": "pipes",
+      "threads": 6,
+      "rep": 0,
+      "frames": 14,
+      "points": 40440,
+      "sha256": "d9ae1719675ca7f4425284571c7551e5f7ab05ebf0cab12b05b00dfdcfc73535",
+      "seconds": 3.0913137923926115
+    },
+    {
+      "scene": "pipes",
+      "threads": 4,
+      "rep": 1,
+      "frames": 14,
+      "points": 40440,
+      "sha256": "d9ae1719675ca7f4425284571c7551e5f7ab05ebf0cab12b05b00dfdcfc73535",
+      "seconds": 3.706366208381951
+    },
+    {
+      "scene": "pipes",
+      "threads": 4,
+      "rep": 2,
+      "frames": 14,
+      "points": 40440,
+      "sha256": "d9ae1719675ca7f4425284571c7551e5f7ab05ebf0cab12b05b00dfdcfc73535",
+      "seconds": 3.760837291367352
+    },
+    {
+      "scene": "pipes",
+      "threads": 6,
+      "rep": 3,
+      "frames": 14,
+      "points": 40440,
+      "sha256": "d9ae1719675ca7f4425284571c7551e5f7ab05ebf0cab12b05b00dfdcfc73535",
+      "seconds": 3.0589067908003926
+    }
+  ],
+  "rss": [
+    {
+      "scene": "office",
+      "threads": 4,
+      "rep": "rss",
+      "frames": 26,
+      "points": 36280,
+      "sha256": "723bde2c4fc3c6e56bed250a7b39c42bcf6a8cf7390c77bec7dd3110d0b63519",
+      "seconds": 6.255255250260234,
+      "peak_rss_bytes": 2091008000
+    },
+    {
+      "scene": "office",
+      "threads": 6,
+      "rep": "rss",
+      "frames": 26,
+      "points": 36280,
+      "sha256": "723bde2c4fc3c6e56bed250a7b39c42bcf6a8cf7390c77bec7dd3110d0b63519",
+      "seconds": 4.9560345420613885,
+      "peak_rss_bytes": 3099492352
+    },
+    {
+      "scene": "pipes",
+      "threads": 4,
+      "rep": "rss",
+      "frames": 14,
+      "points": 40440,
+      "sha256": "d9ae1719675ca7f4425284571c7551e5f7ab05ebf0cab12b05b00dfdcfc73535",
+      "seconds": 3.694252209737897,
+      "peak_rss_bytes": 2086141952
+    },
+    {
+      "scene": "pipes",
+      "threads": 6,
+      "rep": "rss",
+      "frames": 14,
+      "points": 40440,
+      "sha256": "d9ae1719675ca7f4425284571c7551e5f7ab05ebf0cab12b05b00dfdcfc73535",
+      "seconds": 3.021945958957076,
+      "peak_rss_bytes": 3090956288
+    }
+  ],
+  "reconstructions": {
+    "office-4": {
+      "mode": "exhaustive",
+      "seconds": 10.9636,
+      "camera_mode_effective": "auto",
+      "camera_mode_retry": {
+        "attempted": false,
+        "selected": false,
+        "reason": "auto_coverage_sufficient",
+        "focal_length_35mm": [],
+        "auto": {
+          "input_images": 26,
+          "registered_images": 26,
+          "features_reused": false,
+          "sparse_points": 2492,
+          "reprojection_error": 0.918509412037589,
+          "unregistered_images": [],
+          "seconds": 10.4995
+        }
+      },
+      "registered_images": 26,
+      "input_images": 26,
+      "sparse_points": 2492,
+      "reprojection_error": 0.918509412037589,
+      "unregistered_images": [],
+      "matching": {
+        "mode": "exhaustive",
+        "ransac_seed": 42
+      },
+      "training": {
+        "seconds": 7.3389,
+        "gaussians": 4042,
+        "evaluation": {
+          "psnr": 19.448486,
+          "ssim": 0.8095513
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 955461
+      },
+      "total_seconds": 18.302623124793172
+    },
+    "office-6": {
+      "mode": "exhaustive",
+      "seconds": 9.6098,
+      "camera_mode_effective": "auto",
+      "camera_mode_retry": {
+        "attempted": false,
+        "selected": false,
+        "reason": "auto_coverage_sufficient",
+        "focal_length_35mm": [],
+        "auto": {
+          "input_images": 26,
+          "registered_images": 26,
+          "features_reused": false,
+          "sparse_points": 2526,
+          "reprojection_error": 0.9259485484237305,
+          "unregistered_images": [],
+          "seconds": 9.1425
+        }
+      },
+      "registered_images": 26,
+      "input_images": 26,
+      "sparse_points": 2526,
+      "reprojection_error": 0.9259485484237305,
+      "unregistered_images": [],
+      "matching": {
+        "mode": "exhaustive",
+        "ransac_seed": 42
+      },
+      "training": {
+        "seconds": 7.3414,
+        "gaussians": 4143,
+        "evaluation": {
+          "psnr": 20.032871,
+          "ssim": 0.8194326
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 979297
+      },
+      "total_seconds": 16.951211667619646
+    },
+    "pipes-6": {
+      "mode": "exhaustive",
+      "seconds": 5.2279,
+      "camera_mode_effective": "auto",
+      "camera_mode_retry": {
+        "attempted": false,
+        "selected": false,
+        "reason": "auto_coverage_sufficient",
+        "focal_length_35mm": [],
+        "auto": {
+          "input_images": 14,
+          "registered_images": 14,
+          "features_reused": false,
+          "sparse_points": 1877,
+          "reprojection_error": 0.8416856595584005,
+          "unregistered_images": [],
+          "seconds": 4.9039
+        }
+      },
+      "registered_images": 14,
+      "input_images": 14,
+      "sparse_points": 1877,
+      "reprojection_error": 0.8416856595584005,
+      "unregistered_images": [],
+      "matching": {
+        "mode": "exhaustive",
+        "ransac_seed": 42
+      },
+      "training": {
+        "seconds": 7.3443,
+        "gaussians": 2916,
+        "evaluation": {
+          "psnr": 16.984962,
+          "ssim": 0.69714725
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 689725
+      },
+      "total_seconds": 12.57232604175806
+    },
+    "pipes-4": {
+      "mode": "exhaustive",
+      "seconds": 5.9601,
+      "camera_mode_effective": "auto",
+      "camera_mode_retry": {
+        "attempted": false,
+        "selected": false,
+        "reason": "auto_coverage_sufficient",
+        "focal_length_35mm": [],
+        "auto": {
+          "input_images": 14,
+          "registered_images": 14,
+          "features_reused": false,
+          "sparse_points": 1877,
+          "reprojection_error": 0.8416856595584005,
+          "unregistered_images": [],
+          "seconds": 5.6618
+        }
+      },
+      "registered_images": 14,
+      "input_images": 14,
+      "sparse_points": 1877,
+      "reprojection_error": 0.8416856595584005,
+      "unregistered_images": [],
+      "matching": {
+        "mode": "exhaustive",
+        "ransac_seed": 42
+      },
+      "training": {
+        "seconds": 7.7882,
+        "gaussians": 2911,
+        "evaluation": {
+          "psnr": 18.449028,
+          "ssim": 0.7203094
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 688545
+      },
+      "total_seconds": 13.748400582931936
+    }
+  },
+  "raw_evaluation": {
+    "office": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "SIMPLE_RADIAL"
+        ],
+        "candidate": [
+          "SIMPLE_RADIAL"
+        ]
+      },
+      "baseline_job": "office-baseline",
+      "candidate_job": "office-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "raw_input_sha256": "c1c7d99a708d2eeee748c535c862f902e04d74a7d5ea62999d2920aea97740e5",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9750847690615836,
+          "common_valid_pixels": 170242,
+          "common_valid_ssim_windows": 161852,
+          "baseline": {
+            "psnr": 21.415870393602265,
+            "ssim": 0.8175956240082543
+          },
+          "candidate": {
+            "psnr": 22.536079319121193,
+            "ssim": 0.8301600751929917
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "raw_input_sha256": "3c1e9e99639a998634ec88938be2f24b2fbbf572dd46cb718c9a1fa59e0b2996",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9823474156891495,
+          "common_valid_pixels": 171510,
+          "common_valid_ssim_windows": 163120,
+          "baseline": {
+            "psnr": 21.37742984716931,
+            "ssim": 0.917054703491074
+          },
+          "candidate": {
+            "psnr": 22.16146368591746,
+            "ssim": 0.9176181874133458
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "raw_input_sha256": "0f379ebb60655216cb8da9d30fb2b7a9fc98dd4eb771b5971091e4df91afd622",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9653706928152492,
+          "common_valid_pixels": 168546,
+          "common_valid_ssim_windows": 160156,
+          "baseline": {
+            "psnr": 14.942464362197406,
+            "ssim": 0.676955700736028
+          },
+          "candidate": {
+            "psnr": 16.49835706854101,
+            "ssim": 0.7171666783600562
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "raw_input_sha256": "b359cc398ffe0dd8987e3069148b62731ba4653d83b310c8ce9984643e7c2bb5",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.981476814516129,
+          "common_valid_pixels": 171358,
+          "common_valid_ssim_windows": 162968,
+          "baseline": {
+            "psnr": 19.672236612247048,
+            "ssim": 0.7551018854225967
+          },
+          "candidate": {
+            "psnr": 18.54712379651511,
+            "ssim": 0.738134671100569
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 19.352000303804004,
+          "ssim": 0.7916769784144883
+        },
+        "candidate": {
+          "psnr": 19.935755967523693,
+          "ssim": 0.8007699030167407
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 0.583755663719689,
+        "ssim": 0.009092924602252417
+      }
+    },
+    "pipes": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "SIMPLE_RADIAL"
+        ],
+        "candidate": [
+          "SIMPLE_RADIAL"
+        ]
+      },
+      "baseline_job": "pipes-baseline",
+      "candidate_job": "pipes-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "raw_input_sha256": "03fe64a41dab0e1cfb3c3a6314830662cd5f1e17214d284f5e2ce59cd58a32ef",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9780173203812317,
+          "common_valid_pixels": 170754,
+          "common_valid_ssim_windows": 162364,
+          "baseline": {
+            "psnr": 19.665390728710047,
+            "ssim": 0.7332192092917708
+          },
+          "candidate": {
+            "psnr": 19.415220315225394,
+            "ssim": 0.7300019493427311
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "raw_input_sha256": "642a2dd3c1c618d0545d730a0098c1504730ef7aaa151fa8840945aa075e6c6e",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9767572397360704,
+          "common_valid_pixels": 170534,
+          "common_valid_ssim_windows": 162144,
+          "baseline": {
+            "psnr": 16.722703517442685,
+            "ssim": 0.645145582332637
+          },
+          "candidate": {
+            "psnr": 14.156192774189586,
+            "ssim": 0.6070420072846592
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 18.194047123076366,
+          "ssim": 0.6891823958122039
+        },
+        "candidate": {
+          "psnr": 16.78570654470749,
+          "ssim": 0.6685219783136951
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": -1.4083405783688754,
+        "ssim": -0.020660417498508776
+      }
+    }
+  }
+}
