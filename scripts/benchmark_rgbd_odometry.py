@@ -207,7 +207,7 @@ def main():
     parser.add_argument("--job", required=True)
     parser.add_argument("--archive", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
-    parser.add_argument("--mode", choices=("forward", "recover", "hybrid"), required=True)
+    parser.add_argument("--mode", choices=("forward", "recover", "hybrid", "graph"), required=True)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     frames = rgb_sequence(args.data, args.job)
@@ -215,7 +215,16 @@ def main():
     depths = load_depths(args.archive, frames)
     prep = time.perf_counter() - start
     timed = time.perf_counter()
-    poses, links, initial = odometry(frames, depths, args.mode)
+    poses, links, initial = odometry(frames, depths, "hybrid" if args.mode == "graph" else args.mode)
+    graph = None
+    if args.mode == "graph":
+        import cv2
+        from scripts.rgbd_pose_graph import refine
+
+        cv2.setRNGSeed(42)
+        graph_started = time.perf_counter()
+        poses, graph = refine(frames, depths, poses, links, solve_relative)
+        graph["seconds"] = time.perf_counter() - graph_started
     seconds = time.perf_counter() - timed
     saved = {"frames": frame_identity(frames), "world_from_camera": {str(i): pose.tolist() for i, pose in poses.items()}}
     (args.out / "poses.json").write_text(json.dumps(saved))
@@ -236,6 +245,8 @@ def main():
         rgbd=trajectory_score({i: poses[i] for i in common}, gt, frames, False),
         rgb_only=trajectory_score({i: sfm[i] for i in common}, gt, frames, True),
     )
+    if graph is not None:
+        result["graph"] = graph
     (args.out / "results.json").write_text(json.dumps(result, indent=2))
     for key in ("rgbd", "rgb_only"):
         print(key, {k: v for k, v in result[key].items() if k != "indices"})

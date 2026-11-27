@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 用跨帧匹配校正 RGB-D 位姿漂移
+
+96 帧 TUM desk 的 69 对跨帧候选中有 33 对通过几何验证。全序列位置 RMSE 从 3.81 降到 2.51 厘米；加约 1.51 秒精化，完整求姿 2.60 秒。两组反序训练的同视角 PSNR 提升 1.52、1.55 dB。保留离线精化，盒面小字仍模糊，长轨迹开销尚未测量。下一步在独立序列验证。[实测与复现](docs/RGBD-POSE-GRAPH.md) · [基线](https://github.com/sakorman/web-scan/commit/6edee2d) · [相关研究](https://arxiv.org/abs/2506.00970)
+
 ### RGB-D 弱跟踪时用 SIFT 重新定位
 
 TUM desk 的双向光流注册 94/96 张，加入 SIFT 后约 1 秒注册 96/96 张。对同一批 94 张，位置均方根误差由 12.40 降至 3.79 厘米；四次 Metal 重建中，两组相同留出视角的 PSNR 提高 0.95–1.00 dB。深度归档读取另需约 2 秒。保留离线 RGB-D 路线，纯照片沿用 COLMAP。单场景仍有明显纹理模糊，下一步测试跨帧精化。[实测、同视角图与复现](docs/RGBD-ODOMETRY.md) · [基线提交](https://github.com/sakorman/web-scan/commit/d6079c8) · [RGB-D 重定位研究](https://arxiv.org/abs/2506.00970)

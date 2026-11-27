@@ -41,3 +41,21 @@ def test_pose_identity_and_orientation(tmp_path):
     write()
     with pytest.raises(ValueError, match="Invalid metric pose"):
         read_poses(p, frame)
+
+
+def test_pose_graph_preserves_rotated_reference_and_skipped_frame_ids():
+    from scripts.rgbd_pose_graph import align_graph, propose_pairs
+
+    poses = {}
+    for i, theta in zip((3, 1, 9), (.4, -.1, .3)):
+        matrix = np.eye(4)
+        co, si = np.cos(theta), np.sin(theta)
+        matrix[:2, :2] = [[co, -si], [si, co]]
+        matrix[:3, 3] = [i / 100, 2, 1]
+        poses[i] = matrix
+    edges = [(i, j, np.linalg.inv(poses[j]) @ poses[i], 80)
+             for i, j in ((3, 1), (3, 9), (1, 9))]
+    result = align_graph(poses, edges)
+    for i in poses:
+        np.testing.assert_allclose(result[i], poses[i], atol=1e-10)
+    assert propose_pairs(poses, {1}) == [(1, 9)]
