@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 固定 RGB-D 位姿后单独校正彩照会降低画质
+
+在 desk 与 xyz 各训练两份模型。位姿和初始点完全相同，仅在训练端套用 Freiburg 1 彩色镜头标定，两序列的原图留出 PSNR 分别下降 1.08 和 1.23 dB，24 张均下降。保留原有输入方式，后处理方案仅保留为复现实验。两组都使用配准深度，每个配置训练一次，求姿阶段沿用缓存。下一步验证带已知位姿的数据如何直接进入重建流程。[测试与对照图](docs/RGBD-COLOR-CAMERA.md) · [基线提交](https://github.com/sakorman/web-scan/commit/5a43b3a) · [TUM 相机标定](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/file_formats)
+
 ### 固定深度采样后检验 COLMAP 外参
 
 同一批 96 张实拍照片上，固定 12,604 个训练深度像素，交叉比较两套训练外参与两套初始几何。保留 RGB-D 默认针孔相机时，RGB-D 外参比直接移植 COLMAP 外参高 0.95–1.09 dB。四次训练导出各用 9.45–9.70 秒。放弃单独移植外参，下一步验证相机成像模型。当前结果限于一条轨迹、每组一次。[实测、截图与复现](docs/RGBD-EXTRINSICS.md) · [基线提交](https://github.com/sakorman/web-scan/commit/0e09dad) · [TUM 标定说明](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/file_formats)

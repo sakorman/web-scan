@@ -1,0 +1,446 @@
+{
+  "desk": {
+    "order": [
+      "color",
+      "default"
+    ],
+    "rectified_k_cv": [
+      [
+        546.7549413076727,
+        0.0,
+        320.084442624896
+      ],
+      [
+        0.0,
+        543.0868636620319,
+        251.85480117342556
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "points_sha256": "af31e7c52d2b570efbf748aef0a97f4faabae1959097c9613b5e1d42e183b3fc",
+    "runs": {
+      "color": {
+        "preparation": 0.7066622087731957,
+        "initial_points": 12068,
+        "seconds": 9.8634,
+        "gaussians": 20995,
+        "evaluation": {
+          "psnr": 18.254549,
+          "ssim": 0.68294793
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 4956370,
+        "raw": {
+          "psnr": 17.944260068118368,
+          "ssim": 0.6498415123557812,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      "default": {
+        "preparation": 0.6975729586556554,
+        "initial_points": 12068,
+        "seconds": 9.6941,
+        "gaussians": 21581,
+        "evaluation": {
+          "psnr": 19.178846,
+          "ssim": 0.7259272
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 5094666,
+        "raw": {
+          "psnr": 19.025027074790334,
+          "ssim": 0.7058558418393946,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      }
+    },
+    "views": [
+      {
+        "index": 0,
+        "default": {
+          "psnr": 19.17346864196426,
+          "ssim": 0.7000126797458578,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 18.317210707971874,
+          "ssim": 0.6655159866480713,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 8,
+        "default": {
+          "psnr": 17.58259512541785,
+          "ssim": 0.6748653045875415,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 17.576468640957646,
+          "ssim": 0.6595948764911665,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 16,
+        "default": {
+          "psnr": 21.419502923276802,
+          "ssim": 0.7555749997721897,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 19.897309678833622,
+          "ssim": 0.6565425359715877,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 24,
+        "default": {
+          "psnr": 17.188337138301353,
+          "ssim": 0.6143472551143463,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 16.52787202007523,
+          "ssim": 0.5461037130266116,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 32,
+        "default": {
+          "psnr": 19.648077875124006,
+          "ssim": 0.6793414771192305,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 17.462095680242374,
+          "ssim": 0.5925117470370828,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 40,
+        "default": {
+          "psnr": 17.53619099057383,
+          "ssim": 0.6444754384268885,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 16.87609506661791,
+          "ssim": 0.6124757208586462,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 48,
+        "default": {
+          "psnr": 20.615649810891696,
+          "ssim": 0.8233138361894277,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 19.939513044270143,
+          "ssim": 0.7882520647160213,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 56,
+        "default": {
+          "psnr": 11.905334873819646,
+          "ssim": 0.6468684214247774,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 11.455125249427006,
+          "ssim": 0.5953834744826103,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 64,
+        "default": {
+          "psnr": 20.098250134230277,
+          "ssim": 0.7299411283021764,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 19.18353935033555,
+          "ssim": 0.6702055057098855,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 72,
+        "default": {
+          "psnr": 19.08815697241249,
+          "ssim": 0.708532610738239,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 18.527975820143542,
+          "ssim": 0.6739443022039665,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 80,
+        "default": {
+          "psnr": 21.377017191889088,
+          "ssim": 0.7500357275542503,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 19.35689328459589,
+          "ssim": 0.6910667222521594,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 88,
+        "default": {
+          "psnr": 22.66774321958268,
+          "ssim": 0.7429612230978113,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 20.21102227394966,
+          "ssim": 0.6465014988715659,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      }
+    ]
+  },
+  "xyz": {
+    "order": [
+      "default",
+      "color"
+    ],
+    "rectified_k_cv": [
+      [
+        546.7549413076727,
+        0.0,
+        320.084442624896
+      ],
+      [
+        0.0,
+        543.0868636620319,
+        251.85480117342556
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "points_sha256": "c29ca53fc5a02b22acec3018fccc8aa68f0767d4c7860771a70c5035bb4339dd",
+    "runs": {
+      "default": {
+        "preparation": 0.6126449164003134,
+        "initial_points": 12604,
+        "seconds": 9.4701,
+        "gaussians": 20512,
+        "evaluation": {
+          "psnr": 22.103518,
+          "ssim": 0.803803
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 4842382,
+        "raw": {
+          "psnr": 21.789797349872774,
+          "ssim": 0.782119573024076,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      "color": {
+        "preparation": 0.6432428751140833,
+        "initial_points": 12604,
+        "seconds": 9.5332,
+        "gaussians": 20166,
+        "evaluation": {
+          "psnr": 21.009226,
+          "ssim": 0.77223164
+        },
+        "training_views": 84,
+        "evaluation_views": 12,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 4760726,
+        "raw": {
+          "psnr": 20.558114279796552,
+          "ssim": 0.737837538099572,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      }
+    },
+    "views": [
+      {
+        "index": 0,
+        "default": {
+          "psnr": 20.127405703901,
+          "ssim": 0.7336509320693463,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 18.24510472016432,
+          "ssim": 0.6702007389586695,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 8,
+        "default": {
+          "psnr": 21.099430297119255,
+          "ssim": 0.7683983678895708,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 18.583809943598585,
+          "ssim": 0.6655089433523457,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 16,
+        "default": {
+          "psnr": 23.13457625393081,
+          "ssim": 0.8016842967539324,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 20.73304971848468,
+          "ssim": 0.6992402145897815,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 24,
+        "default": {
+          "psnr": 18.998152177944277,
+          "ssim": 0.7099611073937616,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 18.32955348920123,
+          "ssim": 0.6910298163172032,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 32,
+        "default": {
+          "psnr": 22.130815669163788,
+          "ssim": 0.7527348068585834,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 20.852628091457145,
+          "ssim": 0.6987304795297736,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 40,
+        "default": {
+          "psnr": 20.618297295037927,
+          "ssim": 0.797428570910103,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 19.985458011521892,
+          "ssim": 0.7622339278462066,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 48,
+        "default": {
+          "psnr": 21.32047454220812,
+          "ssim": 0.7528426443616482,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 21.0235053506014,
+          "ssim": 0.742285371012246,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 56,
+        "default": {
+          "psnr": 22.39883529116785,
+          "ssim": 0.7809719585154513,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 21.759586518099795,
+          "ssim": 0.7613413807396902,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 64,
+        "default": {
+          "psnr": 23.959780568222794,
+          "ssim": 0.8102306326234444,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 21.73369210680413,
+          "ssim": 0.742539316870566,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 72,
+        "default": {
+          "psnr": 23.525596010446176,
+          "ssim": 0.7992105524981225,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 23.05601980218606,
+          "ssim": 0.7967088990423327,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 80,
+        "default": {
+          "psnr": 20.1581649504748,
+          "ssim": 0.8428585531561344,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 19.934311189916837,
+          "ssim": 0.8395361472304781,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      },
+      {
+        "index": 88,
+        "default": {
+          "psnr": 24.006039438856487,
+          "ssim": 0.8354624532588141,
+          "valid_pixel_fraction": 0.9471435546875
+        },
+        "color": {
+          "psnr": 22.460652415522524,
+          "ssim": 0.7846952217055702,
+          "valid_pixel_fraction": 0.9471435546875
+        }
+      }
+    ]
+  }
+}
