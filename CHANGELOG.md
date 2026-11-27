@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 第三视图校验三角点未改善两组 ETH3D 留出画质
+
+在相同照片、相机和初始点数下，第三张训练照片的光流校验额外用了 0.04–0.09 秒。office 与 pipes 的留出 PSNR 分别下降 0.82、0.75 dB。ARKit 的 1,697 个共同深度像素中位误差约为 3 厘米，第 90 百分位略升。每种配置一次，放弃将此方法设为默认，继续检查点的位置与覆盖。[六次重建及同视角截图](docs/THIRD-VIEW.md) · [两视图基线提交](https://github.com/sakorman/web-scan/commit/02f2667) · [多视图精化论文](https://arxiv.org/abs/2108.08291)
+
 ### 等点数比较无深度三角化和设备深度初始化
 
 ARKitScenes 实拍的 84 张训练图在已有位姿下用 0.50 秒生成 2,913 个三角点。两组固定点数、相机和留出画幅，三角化模型为 16.27 dB，深度模型为 17.62 dB。能在不读取深度文件时重建，画质仍低 1.35 dB，每组一次。保留为离线实验，下一步检验多帧匹配与低纹理覆盖。[配置和逐帧报告](docs/ARKITSCENES.md#固定位姿去掉输入深度) · [设备实拍基线](https://github.com/sakorman/web-scan/commit/9477f6b) · [COLMAP 已知位姿流程](https://colmap.github.io/faq.html#reconstruct-sparse-dense-model-from-known-camera-poses)

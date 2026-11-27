@@ -1,0 +1,636 @@
+{
+  "office": {
+    "geometry": {
+      "frames": 26,
+      "points": 1630,
+      "tested": 1096,
+      "updated": 79,
+      "baseline_prep_seconds": 0.23378312587738037,
+      "extra_refine_seconds": 0.05080975033342838
+    },
+    "two": {
+      "views": [
+        {
+          "index": 0,
+          "width": 512,
+          "height": 341,
+          "psnr": 21.687887889903102,
+          "ssim": 0.8103355765342712
+        },
+        {
+          "index": 8,
+          "width": 512,
+          "height": 341,
+          "psnr": 22.586546750374,
+          "ssim": 0.9199090003967285
+        },
+        {
+          "index": 16,
+          "width": 512,
+          "height": 341,
+          "psnr": 14.697174259484775,
+          "ssim": 0.6789812445640564
+        },
+        {
+          "index": 24,
+          "width": 512,
+          "height": 341,
+          "psnr": 17.59013539406697,
+          "ssim": 0.7067285776138306
+        }
+      ],
+      "mean": {
+        "psnr": 19.140436073457213,
+        "ssim": 0.7789885997772217
+      },
+      "gaussians": 2708,
+      "ply_bytes": 640637,
+      "timings": {
+        "provided_pose_load_seconds": 0.0332,
+        "training_and_model_export_seconds": 7.292
+      },
+      "from_import_seconds": 8.024221832863986,
+      "training_views": 22,
+      "registered": 26,
+      "unregistered": [],
+      "engine": "0.3.0",
+      "seed": 42
+    },
+    "three": {
+      "views": [
+        {
+          "index": 0,
+          "width": 512,
+          "height": 341,
+          "psnr": 19.034604654196727,
+          "ssim": 0.7826915383338928
+        },
+        {
+          "index": 8,
+          "width": 512,
+          "height": 341,
+          "psnr": 20.536759995382813,
+          "ssim": 0.909016489982605
+        },
+        {
+          "index": 16,
+          "width": 512,
+          "height": 341,
+          "psnr": 15.756966888736837,
+          "ssim": 0.6862649321556091
+        },
+        {
+          "index": 24,
+          "width": 512,
+          "height": 341,
+          "psnr": 17.967764261534587,
+          "ssim": 0.7103104591369629
+        }
+      ],
+      "mean": {
+        "psnr": 18.32402394996274,
+        "ssim": 0.7720708549022675
+      },
+      "gaussians": 2699,
+      "ply_bytes": 638513,
+      "timings": {
+        "provided_pose_load_seconds": 0.0287,
+        "training_and_model_export_seconds": 7.1838
+      },
+      "from_import_seconds": 7.93899658229202,
+      "training_views": 22,
+      "registered": 26,
+      "unregistered": [],
+      "engine": "0.3.0",
+      "seed": 42
+    }
+  },
+  "pipes": {
+    "geometry": {
+      "frames": 14,
+      "points": 1481,
+      "tested": 1056,
+      "updated": 116,
+      "baseline_prep_seconds": 0.14096249919384718,
+      "extra_refine_seconds": 0.037743291817605495
+    },
+    "two": {
+      "views": [
+        {
+          "index": 0,
+          "width": 512,
+          "height": 335,
+          "psnr": 19.626820381620895,
+          "ssim": 0.7157303690910339
+        },
+        {
+          "index": 8,
+          "width": 512,
+          "height": 334,
+          "psnr": 15.660172871916757,
+          "ssim": 0.6372845768928528
+        }
+      ],
+      "mean": {
+        "psnr": 17.643496626768826,
+        "ssim": 0.6765074729919434
+      },
+      "gaussians": 2378,
+      "ply_bytes": 562757,
+      "timings": {
+        "provided_pose_load_seconds": 0.0195,
+        "training_and_model_export_seconds": 7.0395
+      },
+      "from_import_seconds": 7.377880540676415,
+      "training_views": 12,
+      "registered": 14,
+      "unregistered": [],
+      "engine": "0.3.0",
+      "seed": 42
+    },
+    "three": {
+      "views": [
+        {
+          "index": 0,
+          "width": 512,
+          "height": 335,
+          "psnr": 18.65441270804944,
+          "ssim": 0.7254312038421631
+        },
+        {
+          "index": 8,
+          "width": 512,
+          "height": 334,
+          "psnr": 15.1238335635882,
+          "ssim": 0.6338615417480469
+        }
+      ],
+      "mean": {
+        "psnr": 16.88912313581882,
+        "ssim": 0.679646372795105
+      },
+      "gaussians": 2401,
+      "ply_bytes": 568185,
+      "timings": {
+        "provided_pose_load_seconds": 0.0209,
+        "training_and_model_export_seconds": 7.0784
+      },
+      "from_import_seconds": 7.900440249592066,
+      "training_views": 12,
+      "registered": 14,
+      "unregistered": [],
+      "engine": "0.3.0",
+      "seed": 42
+    }
+  },
+  "arkit": {
+    "geometry": {
+      "frames": 96,
+      "points": 2913,
+      "tested": 2384,
+      "updated": 1125,
+      "baseline_prep_seconds": 0.11259058304131031,
+      "extra_refine_seconds": 0.086795125156641
+    },
+    "two": {
+      "views": [
+        {
+          "index": 0,
+          "width": 256,
+          "height": 192,
+          "psnr": 19.787769784196758,
+          "ssim": 0.7232951521873474
+        },
+        {
+          "index": 8,
+          "width": 256,
+          "height": 192,
+          "psnr": 16.56045402477549,
+          "ssim": 0.6480682492256165
+        },
+        {
+          "index": 16,
+          "width": 256,
+          "height": 192,
+          "psnr": 17.00472182295083,
+          "ssim": 0.7066717743873596
+        },
+        {
+          "index": 24,
+          "width": 256,
+          "height": 192,
+          "psnr": 16.513993935997927,
+          "ssim": 0.8208677768707275
+        },
+        {
+          "index": 32,
+          "width": 256,
+          "height": 192,
+          "psnr": 19.531621310332387,
+          "ssim": 0.5662420392036438
+        },
+        {
+          "index": 40,
+          "width": 256,
+          "height": 192,
+          "psnr": 13.598451760347404,
+          "ssim": 0.7120336890220642
+        },
+        {
+          "index": 48,
+          "width": 256,
+          "height": 192,
+          "psnr": 13.532515799971307,
+          "ssim": 0.47558000683784485
+        },
+        {
+          "index": 56,
+          "width": 256,
+          "height": 192,
+          "psnr": 13.451920544248363,
+          "ssim": 0.4934452474117279
+        },
+        {
+          "index": 64,
+          "width": 256,
+          "height": 192,
+          "psnr": 15.46711106509036,
+          "ssim": 0.6527498364448547
+        },
+        {
+          "index": 72,
+          "width": 256,
+          "height": 192,
+          "psnr": 16.075827114506126,
+          "ssim": 0.5839830040931702
+        },
+        {
+          "index": 80,
+          "width": 256,
+          "height": 192,
+          "psnr": 16.359174398684903,
+          "ssim": 0.659733772277832
+        },
+        {
+          "index": 88,
+          "width": 256,
+          "height": 192,
+          "psnr": 13.3637513607388,
+          "ssim": 0.6208974719047546
+        }
+      ],
+      "mean": {
+        "psnr": 15.937276076820055,
+        "ssim": 0.6386306683222452
+      },
+      "gaussians": 5601,
+      "ply_bytes": 1323385,
+      "timings": {
+        "provided_pose_load_seconds": 0.0422,
+        "training_and_model_export_seconds": 2.9393
+      },
+      "from_import_seconds": 3.566998125053942,
+      "training_views": 84,
+      "registered": 96,
+      "unregistered": [],
+      "engine": "0.3.0",
+      "seed": 42
+    },
+    "three": {
+      "views": [
+        {
+          "index": 0,
+          "width": 256,
+          "height": 192,
+          "psnr": 20.594349991263563,
+          "ssim": 0.7310167551040649
+        },
+        {
+          "index": 8,
+          "width": 256,
+          "height": 192,
+          "psnr": 17.065089668391874,
+          "ssim": 0.6562831997871399
+        },
+        {
+          "index": 16,
+          "width": 256,
+          "height": 192,
+          "psnr": 17.02553491637466,
+          "ssim": 0.6947083473205566
+        },
+        {
+          "index": 24,
+          "width": 256,
+          "height": 192,
+          "psnr": 17.008357312674672,
+          "ssim": 0.8069753646850586
+        },
+        {
+          "index": 32,
+          "width": 256,
+          "height": 192,
+          "psnr": 19.451386753204844,
+          "ssim": 0.5653600096702576
+        },
+        {
+          "index": 40,
+          "width": 256,
+          "height": 192,
+          "psnr": 11.725539266141903,
+          "ssim": 0.6850214600563049
+        },
+        {
+          "index": 48,
+          "width": 256,
+          "height": 192,
+          "psnr": 13.322069064280331,
+          "ssim": 0.4801456928253174
+        },
+        {
+          "index": 56,
+          "width": 256,
+          "height": 192,
+          "psnr": 12.990818072231455,
+          "ssim": 0.46815231442451477
+        },
+        {
+          "index": 64,
+          "width": 256,
+          "height": 192,
+          "psnr": 15.556963048673957,
+          "ssim": 0.657394528388977
+        },
+        {
+          "index": 72,
+          "width": 256,
+          "height": 192,
+          "psnr": 15.948004979123503,
+          "ssim": 0.5703422427177429
+        },
+        {
+          "index": 80,
+          "width": 256,
+          "height": 192,
+          "psnr": 17.910919634427223,
+          "ssim": 0.6697351336479187
+        },
+        {
+          "index": 88,
+          "width": 256,
+          "height": 192,
+          "psnr": 13.198643282320406,
+          "ssim": 0.6206732392311096
+        }
+      ],
+      "mean": {
+        "psnr": 15.983139665759031,
+        "ssim": 0.6338173573215803
+      },
+      "gaussians": 5599,
+      "ply_bytes": 1322913,
+      "timings": {
+        "provided_pose_load_seconds": 0.0416,
+        "training_and_model_export_seconds": 2.8974
+      },
+      "from_import_seconds": 3.308754915371537,
+      "training_views": 84,
+      "registered": 96,
+      "unregistered": [],
+      "engine": "0.3.0",
+      "seed": 42
+    }
+  },
+  "heldout_depth": {
+    "two": {
+      "overall": {
+        "count": 1993,
+        "median_abs_m": 0.02952657993337615,
+        "p90_abs_m": 0.12321450402036581,
+        "in_front_10cm": 0.06171600602107376,
+        "behind_10cm": 0.06573005519317611
+      },
+      "views": [
+        {
+          "index": 0,
+          "count": 67,
+          "median_abs_m": 0.06158855111648465,
+          "p90_abs_m": 0.09212681304177858,
+          "in_front_10cm": 0.029850746268656716,
+          "behind_10cm": 0.04477611940298507
+        },
+        {
+          "index": 8,
+          "count": 99,
+          "median_abs_m": 0.04967426383935525,
+          "p90_abs_m": 0.08272433464993874,
+          "in_front_10cm": 0.020202020202020204,
+          "behind_10cm": 0.030303030303030304
+        },
+        {
+          "index": 16,
+          "count": 107,
+          "median_abs_m": 0.016668953022775268,
+          "p90_abs_m": 0.12182707481033617,
+          "in_front_10cm": 0.028037383177570093,
+          "behind_10cm": 0.102803738317757
+        },
+        {
+          "index": 24,
+          "count": 166,
+          "median_abs_m": 0.023943974062047957,
+          "p90_abs_m": 0.11019565460822522,
+          "in_front_10cm": 0.07228915662650602,
+          "behind_10cm": 0.04819277108433735
+        },
+        {
+          "index": 32,
+          "count": 673,
+          "median_abs_m": 0.02447870929779672,
+          "p90_abs_m": 0.10289914545899266,
+          "in_front_10cm": 0.04903417533432392,
+          "behind_10cm": 0.05646359583952452
+        },
+        {
+          "index": 40,
+          "count": 16,
+          "median_abs_m": 0.024344067368648137,
+          "p90_abs_m": 0.09749488008880691,
+          "in_front_10cm": 0.0625,
+          "behind_10cm": 0.0
+        },
+        {
+          "index": 48,
+          "count": 51,
+          "median_abs_m": 0.051533698601177846,
+          "p90_abs_m": 0.22135379264372812,
+          "in_front_10cm": 0.29411764705882354,
+          "behind_10cm": 0.0196078431372549
+        },
+        {
+          "index": 56,
+          "count": 179,
+          "median_abs_m": 0.04077859579845455,
+          "p90_abs_m": 0.6633459335222714,
+          "in_front_10cm": 0.08379888268156424,
+          "behind_10cm": 0.2569832402234637
+        },
+        {
+          "index": 64,
+          "count": 104,
+          "median_abs_m": 0.03895058757717518,
+          "p90_abs_m": 0.09851977600471905,
+          "in_front_10cm": 0.09615384615384616,
+          "behind_10cm": 0.0
+        },
+        {
+          "index": 72,
+          "count": 111,
+          "median_abs_m": 0.03141239757465075,
+          "p90_abs_m": 0.06537696949157956,
+          "in_front_10cm": 0.009009009009009009,
+          "behind_10cm": 0.018018018018018018
+        },
+        {
+          "index": 80,
+          "count": 375,
+          "median_abs_m": 0.030679333347497284,
+          "p90_abs_m": 0.11149226694711976,
+          "in_front_10cm": 0.07733333333333334,
+          "behind_10cm": 0.048
+        },
+        {
+          "index": 88,
+          "count": 45,
+          "median_abs_m": 0.014674302140520012,
+          "p90_abs_m": 0.05471217295051494,
+          "in_front_10cm": 0.0,
+          "behind_10cm": 0.022222222222222223
+        }
+      ]
+    },
+    "three": {
+      "overall": {
+        "count": 1957,
+        "median_abs_m": 0.02876682503582484,
+        "p90_abs_m": 0.12450173282994001,
+        "in_front_10cm": 0.0628513030148186,
+        "behind_10cm": 0.06540623403168115
+      },
+      "views": [
+        {
+          "index": 0,
+          "count": 66,
+          "median_abs_m": 0.05960889396393443,
+          "p90_abs_m": 0.08951677361478,
+          "in_front_10cm": 0.030303030303030304,
+          "behind_10cm": 0.030303030303030304
+        },
+        {
+          "index": 8,
+          "count": 98,
+          "median_abs_m": 0.049432050855707066,
+          "p90_abs_m": 0.08199768037082894,
+          "in_front_10cm": 0.02040816326530612,
+          "behind_10cm": 0.02040816326530612
+        },
+        {
+          "index": 16,
+          "count": 105,
+          "median_abs_m": 0.0172221547384801,
+          "p90_abs_m": 0.13003264518454735,
+          "in_front_10cm": 0.0380952380952381,
+          "behind_10cm": 0.10476190476190476
+        },
+        {
+          "index": 24,
+          "count": 160,
+          "median_abs_m": 0.024348617568402897,
+          "p90_abs_m": 0.10926863678486448,
+          "in_front_10cm": 0.0625,
+          "behind_10cm": 0.05
+        },
+        {
+          "index": 32,
+          "count": 654,
+          "median_abs_m": 0.02158468388861834,
+          "p90_abs_m": 0.10205342761518094,
+          "in_front_10cm": 0.05198776758409786,
+          "behind_10cm": 0.05504587155963303
+        },
+        {
+          "index": 40,
+          "count": 17,
+          "median_abs_m": 0.02712973587909895,
+          "p90_abs_m": 0.097047989803196,
+          "in_front_10cm": 0.058823529411764705,
+          "behind_10cm": 0.0
+        },
+        {
+          "index": 48,
+          "count": 51,
+          "median_abs_m": 0.051533698601177846,
+          "p90_abs_m": 0.27920200050305555,
+          "in_front_10cm": 0.29411764705882354,
+          "behind_10cm": 0.0196078431372549
+        },
+        {
+          "index": 56,
+          "count": 177,
+          "median_abs_m": 0.04244473641444346,
+          "p90_abs_m": 0.6601210924594639,
+          "in_front_10cm": 0.0847457627118644,
+          "behind_10cm": 0.2655367231638418
+        },
+        {
+          "index": 64,
+          "count": 101,
+          "median_abs_m": 0.03733570343423054,
+          "p90_abs_m": 0.09990230757812579,
+          "in_front_10cm": 0.09900990099009901,
+          "behind_10cm": 0.0
+        },
+        {
+          "index": 72,
+          "count": 112,
+          "median_abs_m": 0.030586728995295964,
+          "p90_abs_m": 0.06448015127360195,
+          "in_front_10cm": 0.008928571428571428,
+          "behind_10cm": 0.017857142857142856
+        },
+        {
+          "index": 80,
+          "count": 371,
+          "median_abs_m": 0.030584335331594437,
+          "p90_abs_m": 0.1132996722920172,
+          "in_front_10cm": 0.07816711590296496,
+          "behind_10cm": 0.04851752021563342
+        },
+        {
+          "index": 88,
+          "count": 45,
+          "median_abs_m": 0.014674302140520012,
+          "p90_abs_m": 0.05471217295051494,
+          "in_front_10cm": 0.0,
+          "behind_10cm": 0.022222222222222223
+        }
+      ]
+    },
+    "common_pixels": {
+      "two": {
+        "count": 1697,
+        "median_abs_m": 0.030073364711355577,
+        "p90_abs_m": 0.1329998069496132,
+        "in_front_10cm": 0.06540954625810254,
+        "behind_10cm": 0.07248084855627578
+      },
+      "three": {
+        "count": 1697,
+        "median_abs_m": 0.029776716730048447,
+        "p90_abs_m": 0.13397866310477294,
+        "in_front_10cm": 0.06658809664113141,
+        "behind_10cm": 0.07189157336476135
+      }
+    }
+  }
+}
