@@ -445,6 +445,15 @@ def _reuse_retry_features(source, target, expected_images):
                 if copied != expected_images:
                     db.rollback()
                     return False
+            # COLMAP pair IDs encode the image IDs and the order of the two feature columns.
+            # Keep remapped features, but let the matcher rebuild pairs when IDs differ.
+            image_ids = db.execute("SELECT image_id, name FROM main.images ORDER BY image_id").fetchall()
+            prior_ids = db.execute("SELECT image_id, name FROM prior.images ORDER BY image_id").fetchall()
+            if image_ids == prior_ids:
+                db.execute("""
+                    INSERT INTO main.matches(pair_id, rows, cols, data)
+                    SELECT pair_id, rows, cols, data FROM prior.matches
+                """)
     except sqlite3.Error:
         # An incomplete transfer rolls back both tables. COLMAP can extract anew.
         return False

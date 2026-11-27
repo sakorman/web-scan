@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 同镜头重试复用原始匹配，重新估计几何
+
+照片 ID 与名称完全一致时，纯照片重试可跳过已完成的描述子匹配。office 的 325 对、pipes 的 91 对照片几何表与重新计算逐字节一致，匹配阶段两场景均缩短。office 从重试至导出由 9.83 降到 9.69 秒，pipes 由 8.98 变为 9.06 秒。pipes 四线程位姿有波动，单线程复核三次相同。下一步定位首次提取的时间开销。[等价性、四份模型与截图](docs/RETRY-FEATURES.md#复用原始特征匹配) · [先前重试提交](https://github.com/sakorman/web-scan/commit/d6079c8) · [COLMAP 匹配表](https://colmap.github.io/database.html)
+
 ### 规则网格缩短限额深度选点时间
 
 相同的 2,612 个点预算下，将最远点的候选限制到 16 像素网格，68 帧 CPU 选点中位耗时从 657.2 降到 13.2 毫秒。12 张留出图的两轮 PSNR 分别低 0.155、0.084 dB，导入后的完成时间有波动。保留为离线限额选点方案，继续检查预算与画质的关系。[四次重建和六轮计时](docs/ARKITSCENES.md#在-16-像素网格上选择相同数量的深度点) · [覆盖基线](https://github.com/sakorman/web-scan/commit/ab976f4) · [设备数据论文](https://arxiv.org/abs/2111.08897)
