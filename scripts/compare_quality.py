@@ -135,6 +135,18 @@ def _lpips_scores(scorer, directory, count):
     }
 
 
+def scoring_reference(path, common_size, bounds):
+    with Image.open(path) as source:
+        reference = source.convert("RGB")
+        native = list(reference.size)
+        reference.thumbnail((common_size, common_size), Image.Resampling.LANCZOS)
+        # The renderer may round down the short edge. Keep the original frame.
+        if any(actual > limit for actual, limit in zip(reference.size, bounds)):
+            reference = source.convert("RGB")
+            reference.thumbnail(tuple(min(limit, common_size) for limit in bounds), Image.Resampling.LANCZOS)
+    return reference, native
+
+
 def compare(data, quick, detail, size=512, lpips_scorer=None, *, error_grid=None):
     if error_grid is not None and not 1 <= error_grid <= 16:
         raise ValueError("Error grid must be between 1 and 16")
@@ -199,21 +211,9 @@ def compare(data, quick, detail, size=512, lpips_scorer=None, *, error_grid=None
         for view_index, name in enumerate(names):
             quick_native = [records[0][view_index][axis] for axis in ["width", "height"]]
             detail_native = [records[1][view_index][axis] for axis in ["width", "height"]]
-            with Image.open(
-                qa / "sfm/undistorted/images" / (Path(name).stem + ".jpg")
-            ) as source:
-                reference = source.convert("RGB")
-                reference_native = list(reference.size)
-                reference.thumbnail((common_size, common_size), Image.Resampling.LANCZOS)
-                # A renderer may round the short edge down by one pixel. Preserve
-                # the usual grid when it fits; otherwise shrink within both outputs.
-                bounds = tuple(min(a, b) for a, b in zip(quick_native, detail_native))
-                if any(actual > limit for actual, limit in zip(reference.size, bounds)):
-                    reference = source.convert("RGB")
-                    reference.thumbnail(
-                        tuple(min(limit, common_size) for limit in bounds),
-                        Image.Resampling.LANCZOS,
-                    )
+            path = qa / "sfm/undistorted/images" / (Path(name).stem + ".jpg")
+            bounds = tuple(min(a, b) for a, b in zip(quick_native, detail_native))
+            reference, reference_native = scoring_reference(path, common_size, bounds)
             if min(reference.size) < 11:
                 raise ValueError("SSIM needs image dimensions of at least 11 pixels")
             if lpips_scorer and min(reference.size) < 16:

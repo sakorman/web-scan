@@ -1,0 +1,637 @@
+{
+  "office": {
+    "history": [
+      "office-baseline-1",
+      "office-baseline-2"
+    ],
+    "check": "fe0f85e26772440ead01b7b2085d21b4",
+    "mean": {
+      "psnr": 20.89915418255776,
+      "ssim": 0.8717590719461441
+    },
+    "views": [
+      {
+        "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+        "grid": [
+          512,
+          341
+        ],
+        "psnr": 22.292882375691697,
+        "ssim": 0.9024941921234131,
+        "tiles": [
+          {
+            "index": 39,
+            "xyxy": [
+              448,
+              170,
+              512,
+              213
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 153,
+            "frozen_sha256": "d9a1536ba4190a25e7a31a2c8064ada73a3634da590787d6865b658adb480371",
+            "check_top_pixels": 222,
+            "in_both": 86,
+            "frozen_rgb_sse": 393996,
+            "all_rgb_sse": 4071122
+          },
+          {
+            "index": 40,
+            "xyxy": [
+              0,
+              213,
+              64,
+              255
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 81,
+            "frozen_sha256": "bdd887c9cde407507984cabd0c637fc38894abe4cf8ce4ab07d610647a8b12ff",
+            "check_top_pixels": 269,
+            "in_both": 43,
+            "frozen_rgb_sse": 790311,
+            "all_rgb_sse": 14279786
+          },
+          {
+            "index": 47,
+            "xyxy": [
+              448,
+              213,
+              512,
+              255
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 126,
+            "frozen_sha256": "ee1684f974ff1332e36f7d0955ad4218f748f46a14402a4642b664e3b06860c4",
+            "check_top_pixels": 253,
+            "in_both": 91,
+            "frozen_rgb_sse": 348135,
+            "all_rgb_sse": 4407003
+          },
+          {
+            "index": 48,
+            "xyxy": [
+              0,
+              255,
+              64,
+              298
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 140,
+            "frozen_sha256": "cb119acd3e5873ef9e842a377a75c701c6f35ee9bead089256e9880e9a5084ca",
+            "check_top_pixels": 276,
+            "in_both": 140,
+            "frozen_rgb_sse": 980338,
+            "all_rgb_sse": 9698675
+          },
+          {
+            "index": 55,
+            "xyxy": [
+              448,
+              255,
+              512,
+              298
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 150,
+            "frozen_sha256": "34115ab3383aa7727344b89745d4902d5f6ddf2125ae0d312a87f3996962399d",
+            "check_top_pixels": 276,
+            "in_both": 95,
+            "frozen_rgb_sse": 832035,
+            "all_rgb_sse": 7281072
+          },
+          {
+            "index": 56,
+            "xyxy": [
+              0,
+              298,
+              64,
+              341
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 216,
+            "frozen_sha256": "c4eee0cf0ddf93739fe3a16bdbe5589036768ed041579f374ab0b0f312f4b38a",
+            "check_top_pixels": 271,
+            "in_both": 115,
+            "frozen_rgb_sse": 1708605,
+            "all_rgb_sse": 12473461
+          },
+          {
+            "index": 63,
+            "xyxy": [
+              448,
+              298,
+              512,
+              341
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 182,
+            "frozen_sha256": "b3449f9e7dc7e259a0e5f4e197e3d26ff41c99b97c207c99ca32b92b73bf5943",
+            "check_top_pixels": 276,
+            "in_both": 149,
+            "frozen_rgb_sse": 2697355,
+            "all_rgb_sse": 16215824
+          }
+        ]
+      },
+      {
+        "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+        "grid": [
+          512,
+          341
+        ],
+        "psnr": 21.181249919540686,
+        "ssim": 0.9348755478858948,
+        "tiles": [
+          {
+            "index": 0,
+            "xyxy": [
+              0,
+              0,
+              64,
+              42
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 125,
+            "frozen_sha256": "236ec102cb9e0b2595bb1c93da63a53e1e125d7e7d3b0a2b84fa0b1865b1a5cb",
+            "check_top_pixels": 269,
+            "in_both": 115,
+            "frozen_rgb_sse": 2914876,
+            "all_rgb_sse": 10000079
+          },
+          {
+            "index": 8,
+            "xyxy": [
+              0,
+              42,
+              64,
+              85
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 154,
+            "frozen_sha256": "4e23e24946f813a6feb78e74f9028978fc4a7bd4e54bdfeccfd3d264a4705d9b",
+            "check_top_pixels": 276,
+            "in_both": 124,
+            "frozen_rgb_sse": 2676450,
+            "all_rgb_sse": 9444936
+          },
+          {
+            "index": 48,
+            "xyxy": [
+              0,
+              255,
+              64,
+              298
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 221,
+            "frozen_sha256": "3d34494f4cc979a22e1f70af17ceeb898bdf639554827a18c42ac7dd9dd61b06",
+            "check_top_pixels": 276,
+            "in_both": 163,
+            "frozen_rgb_sse": 3134601,
+            "all_rgb_sse": 18955316
+          },
+          {
+            "index": 56,
+            "xyxy": [
+              0,
+              298,
+              64,
+              341
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 152,
+            "frozen_sha256": "aec678bd95084a04497b69e8bc46bc8ef9e17b2e9070fa311545487ba6a57118",
+            "check_top_pixels": 275,
+            "in_both": 140,
+            "frozen_rgb_sse": 2889234,
+            "all_rgb_sse": 24022778
+          }
+        ]
+      },
+      {
+        "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+        "grid": [
+          512,
+          341
+        ],
+        "psnr": 17.382337113472023,
+        "ssim": 0.7970726490020752,
+        "tiles": [
+          {
+            "index": 19,
+            "xyxy": [
+              192,
+              85,
+              256,
+              127
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 161,
+            "frozen_sha256": "03697d3f1e86a03972ce2b5f84f8b762f978e8633d23feafad730310cd57ac20",
+            "check_top_pixels": 269,
+            "in_both": 145,
+            "frozen_rgb_sse": 4232283,
+            "all_rgb_sse": 15717385
+          },
+          {
+            "index": 26,
+            "xyxy": [
+              128,
+              127,
+              192,
+              170
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 136,
+            "frozen_sha256": "c91c62ef4da1f56c0d1ef45d02b09667b703a8d6b37b308c06b9ebb125b5566b",
+            "check_top_pixels": 273,
+            "in_both": 113,
+            "frozen_rgb_sse": 2059810,
+            "all_rgb_sse": 17492579
+          },
+          {
+            "index": 27,
+            "xyxy": [
+              192,
+              127,
+              256,
+              170
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 200,
+            "frozen_sha256": "6144b6f5b3276708e3d0edab0a419bd0b50113f13690aea6484690d4c981caaf",
+            "check_top_pixels": 276,
+            "in_both": 120,
+            "frozen_rgb_sse": 3209157,
+            "all_rgb_sse": 23883840
+          },
+          {
+            "index": 33,
+            "xyxy": [
+              64,
+              170,
+              128,
+              213
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 102,
+            "frozen_sha256": "b2a983099a9777c92d8ce852551eef359a9be0d1c59b2c7358928e684474e211",
+            "check_top_pixels": 276,
+            "in_both": 51,
+            "frozen_rgb_sse": 3676132,
+            "all_rgb_sse": 33109301
+          },
+          {
+            "index": 34,
+            "xyxy": [
+              128,
+              170,
+              192,
+              213
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 126,
+            "frozen_sha256": "1f34313ef1acece6f10bbead61c4b3dd87f92ca177de4daa3a07972fd1db337e",
+            "check_top_pixels": 276,
+            "in_both": 88,
+            "frozen_rgb_sse": 4993060,
+            "all_rgb_sse": 30616159
+          }
+        ]
+      },
+      {
+        "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+        "grid": [
+          512,
+          341
+        ],
+        "psnr": 22.740147321526628,
+        "ssim": 0.8525938987731934,
+        "tiles": [
+          {
+            "index": 40,
+            "xyxy": [
+              0,
+              213,
+              64,
+              255
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 150,
+            "frozen_sha256": "e19d562cb27f0780b0d30bb999bfc39d47d3ea5fa11378c6dc3c3d8d4507edc8",
+            "check_top_pixels": 269,
+            "in_both": 79,
+            "frozen_rgb_sse": 759915,
+            "all_rgb_sse": 5351080
+          },
+          {
+            "index": 45,
+            "xyxy": [
+              320,
+              213,
+              384,
+              255
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 211,
+            "frozen_sha256": "8c4d6f73616234ddc5d2e8a3b56f065f408ccdc0b024da2e41727d2c2cb01ca5",
+            "check_top_pixels": 269,
+            "in_both": 189,
+            "frozen_rgb_sse": 4822646,
+            "all_rgb_sse": 7210971
+          },
+          {
+            "index": 53,
+            "xyxy": [
+              320,
+              255,
+              384,
+              298
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 203,
+            "frozen_sha256": "2733581704a22a6f40be49eb473ac69b06e54e35fc7e0ab43d2654d5c2dad870",
+            "check_top_pixels": 276,
+            "in_both": 177,
+            "frozen_rgb_sse": 2865769,
+            "all_rgb_sse": 6073281
+          },
+          {
+            "index": 54,
+            "xyxy": [
+              384,
+              255,
+              448,
+              298
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 227,
+            "frozen_sha256": "b8a5bbac75e05ee795a0924cfce32dc66c2786dff2b0b9f7122cf2a5477db288",
+            "check_top_pixels": 276,
+            "in_both": 177,
+            "frozen_rgb_sse": 3269162,
+            "all_rgb_sse": 7213358
+          }
+        ]
+      }
+    ],
+    "scoring_seconds": 2.373,
+    "model_bytes": 3412458,
+    "model_sha256": "0bde9a68351ef9e8c3e9a6d7323cb7a8ae0bba346e9d9ff0a37e207ace3c06a3",
+    "baseline_metrics": {
+      "quick": {
+        "psnr": 21.070228561926033,
+        "ssim": 0.8732464760541916
+      },
+      "detail": {
+        "psnr": 20.48036829134699,
+        "ssim": 0.8700298070907593
+      }
+    },
+    "config": {
+      "backend": "brush",
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "camera_mode": "shared",
+      "evaluation_mode": "holdout"
+    },
+    "report": {
+      "seconds": 23.76,
+      "timings": {
+        "input_validation_seconds": 0.0125,
+        "sfm_seconds": 0.0424,
+        "training_and_model_export_seconds": 23.6721
+      },
+      "sfm_reused": true,
+      "input_images": 26,
+      "registered_images": 26,
+      "unregistered_images": [],
+      "gaussians": 14453,
+      "training_views": 22,
+      "evaluation_views": 4,
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "color_model": "SH3",
+      "resolution": 512
+    },
+    "request_to_completion_s": 24.34044925030321,
+    "view_0024_prior_rotation_deltas": {
+      "1": [
+        {
+          "tile": 40,
+          "pixels": 2688,
+          "sse_delta": 890585,
+          "frozen_sse_delta": -111529
+        },
+        {
+          "tile": 45,
+          "pixels": 2688,
+          "sse_delta": -998926,
+          "frozen_sse_delta": 151090
+        },
+        {
+          "tile": 53,
+          "pixels": 2752,
+          "sse_delta": -113658,
+          "frozen_sse_delta": 267934
+        },
+        {
+          "tile": 54,
+          "pixels": 2752,
+          "sse_delta": 1491390,
+          "frozen_sse_delta": 1139764
+        }
+      ],
+      "2": [
+        {
+          "tile": 40,
+          "pixels": 2688,
+          "sse_delta": -570355,
+          "frozen_sse_delta": -386895
+        },
+        {
+          "tile": 45,
+          "pixels": 2688,
+          "sse_delta": 2031014,
+          "frozen_sse_delta": 1207755
+        },
+        {
+          "tile": 53,
+          "pixels": 2752,
+          "sse_delta": 2007251,
+          "frozen_sse_delta": 692950
+        },
+        {
+          "tile": 54,
+          "pixels": 2752,
+          "sse_delta": -848063,
+          "frozen_sse_delta": -244529
+        }
+      ]
+    },
+    "view_0024_sparse_tracks": {
+      "40": {
+        "tracks_in_tile": 11,
+        "nearest_mask_px": 1.225,
+        "point_id": 2055,
+        "training_obs": 2
+      },
+      "45": {
+        "tracks_in_tile": 2,
+        "nearest_mask_px": 0.718,
+        "point_id": 63,
+        "training_obs": 9
+      },
+      "53": {
+        "tracks_in_tile": 3,
+        "nearest_mask_px": 0.3,
+        "point_id": 178,
+        "training_obs": 2
+      },
+      "54": {
+        "tracks_in_tile": 0
+      }
+    }
+  },
+  "pipes": {
+    "history": [
+      "pipes-baseline-1",
+      "pipes-baseline-2"
+    ],
+    "check": "56e10ac3f625492d92abc171da4ae46a",
+    "mean": {
+      "psnr": 18.793431335510718,
+      "ssim": 0.7601554989814758
+    },
+    "views": [
+      {
+        "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+        "grid": [
+          512,
+          341
+        ],
+        "psnr": 22.576137555331304,
+        "ssim": 0.8379934430122375,
+        "tiles": [
+          {
+            "index": 8,
+            "xyxy": [
+              0,
+              42,
+              64,
+              85
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 148,
+            "frozen_sha256": "5e90304f00c6765d7a7bf0f29c6f74b6749686c3221b7c83dba86319718ec3af",
+            "check_top_pixels": 276,
+            "in_both": 110,
+            "frozen_rgb_sse": 3058776,
+            "all_rgb_sse": 9802874
+          },
+          {
+            "index": 16,
+            "xyxy": [
+              0,
+              85,
+              64,
+              127
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 168,
+            "frozen_sha256": "5abfc4cc6cceabcbce774a6447dfd6f095351d3e37a001a524c5483665a9ecf0",
+            "check_top_pixels": 268,
+            "in_both": 101,
+            "frozen_rgb_sse": 3602644,
+            "all_rgb_sse": 13108097
+          },
+          {
+            "index": 62,
+            "xyxy": [
+              384,
+              298,
+              448,
+              341
+            ],
+            "pixels": 2752,
+            "frozen_pixels": 28,
+            "frozen_sha256": "3cacd804029c7426da8a091e1efe3b9cee02d1f8963abffdd4cc513a2c06b2a9",
+            "check_top_pixels": 276,
+            "in_both": 8,
+            "frozen_rgb_sse": 139385,
+            "all_rgb_sse": 11214611
+          }
+        ]
+      },
+      {
+        "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+        "grid": [
+          512,
+          341
+        ],
+        "psnr": 15.010725115690128,
+        "ssim": 0.6823175549507141,
+        "tiles": [
+          {
+            "index": 0,
+            "xyxy": [
+              0,
+              0,
+              64,
+              42
+            ],
+            "pixels": 2688,
+            "frozen_pixels": 142,
+            "frozen_sha256": "4a131e583cbc3dfcb1e0c95d37b8fe7880e993adf6e6585f5607c32a3aa2d305",
+            "check_top_pixels": 269,
+            "in_both": 133,
+            "frozen_rgb_sse": 6395988,
+            "all_rgb_sse": 30420667
+          }
+        ]
+      }
+    ],
+    "scoring_seconds": 1.1246,
+    "model_bytes": 2702098,
+    "model_sha256": "47eb37bc58c6f752bfdb9c19199375d9fd204ad6bff5ac672ca7fe40bfeebdec",
+    "baseline_metrics": {
+      "quick": {
+        "psnr": 18.165773440821244,
+        "ssim": 0.7537292540073395
+      },
+      "detail": {
+        "psnr": 18.158485465442357,
+        "ssim": 0.747743159532547
+      }
+    },
+    "config": {
+      "backend": "brush",
+      "steps": 3000,
+      "max_points": 150000,
+      "resolution": 512,
+      "camera_mode": "shared",
+      "evaluation_mode": "holdout"
+    },
+    "report": {
+      "seconds": 22.89,
+      "timings": {
+        "input_validation_seconds": 0.0103,
+        "sfm_seconds": 0.0298,
+        "training_and_model_export_seconds": 22.7943
+      },
+      "sfm_reused": true,
+      "input_images": 14,
+      "registered_images": 14,
+      "unregistered_images": [],
+      "gaussians": 11443,
+      "training_views": 12,
+      "evaluation_views": 2,
+      "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+      "training_seed": 42,
+      "color_model": "SH3",
+      "resolution": 512
+    },
+    "request_to_completion_s": 23.361308208666742
+  }
+}
