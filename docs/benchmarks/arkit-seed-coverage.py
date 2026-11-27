@@ -42,7 +42,7 @@ def spatial_samples(valid, count):
     return np.array(chosen)
 
 
-def prepare(source, assets, destination):
+def prepare(source, assets, destination, lattice=False):
     model = pycolmap.Reconstruction(source/"sparse")
     header = (source/"sparse/images.txt").read_text().splitlines()[::2]
     indexed_names = {int(h.split()[0]):h.split()[-1] for h in header}
@@ -86,7 +86,13 @@ def prepare(source, assets, destination):
                 if not found:
                     views.write("\n")
                     continue
-                xy = np.array(found) if method=="features" else spatial_samples(ok,len(found))
+                candidates = ok
+                if method == "spatial" and lattice:
+                    candidates = np.zeros_like(ok)
+                    candidates[8::16, 8::16] = ok[8::16, 8::16]
+                    if np.count_nonzero(candidates) < len(found):
+                        raise ValueError("The 16-pixel grid cannot satisfy this frame budget")
+                xy = np.array(found) if method == "features" else spatial_samples(candidates, len(found))
                 cam = model.cameras[im.camera_id]
                 grid = xy*np.array([8,6])//[cam.width,cam.height]
                 by_frame[iid] = dict(points=len(xy),tiles=len(set(map(tuple,grid))))
@@ -113,6 +119,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("source", "assets", "destination"):
         parser.add_argument(name, type=Path)
+    parser.add_argument("--lattice", action="store_true", help="Use native 16-pixel grid candidates")
     args = parser.parse_args()
     args.destination.mkdir()
-    prepare(args.source, args.assets, args.destination)
+    prepare(args.source, args.assets, args.destination, args.lattice)
