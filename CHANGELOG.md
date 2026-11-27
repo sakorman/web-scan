@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### RGB-D 弱跟踪时用 SIFT 重新定位
+
+TUM desk 的双向光流注册 94/96 张，加入 SIFT 后约 1 秒注册 96/96 张。对同一批 94 张，位置均方根误差由 12.40 降至 3.79 厘米；四次 Metal 重建中，两组相同留出视角的 PSNR 提高 0.95–1.00 dB。深度归档读取另需约 2 秒。保留离线 RGB-D 路线，纯照片沿用 COLMAP。单场景仍有明显纹理模糊，下一步测试跨帧精化。[实测、同视角图与复现](docs/RGBD-ODOMETRY.md) · [基线提交](https://github.com/sakorman/web-scan/commit/d6079c8) · [RGB-D 重定位研究](https://arxiv.org/abs/2506.00970)
+
 ### 同镜头重试复用同一批照片的 SIFT
 
 触发内参回退时按照片名复制本次已提取的关键点和描述子，再用新相机做几何验证。office 固定映射种子的同镜头阶段由 8.28 降至 2.02 秒，26 张全部定位，六张数据库表及相机解一致。完整冷启动中触发回退的两次求姿由 20.58–21.06 降到 13.93–15.76 秒。未触发回退的任务没有这项收益。保留正式路径，增加一次短暂的数据库复制；office 两组模型的留出 PSNR 差值在复训后变号，画质波动仍待追踪。下一步用独立轨迹真值检验快速求姿。[实测与配置](docs/RETRY-FEATURES.md) · [基线](https://github.com/sakorman/web-scan/commit/ee48f8a) · [COLMAP 数据库格式](https://colmap.github.io/database.html)

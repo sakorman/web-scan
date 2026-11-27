@@ -24,7 +24,7 @@ Web Scan 是一个在本地运行的三维重建工具。导入同一处空间�
 
 ## 重建示例
 
-没有现成的照片，可以点 **示例项目**。目前提供 [ETH3D](https://www.eth3d.net/datasets) 办公室 26 张、管道房 14 张，以及 [TUM RGB-D](https://cvg.cit.tum.de/data/datasets/rgbd-dataset) 连续桌面 96 帧。每组都是同一空间的多视角实拍，导入后计算相机位姿、训练高斯，再下载模型。TUM 示例只使用彩色照片，原生分辨率为 640×480。
+没有现成的照片，可以点 **示例项目**。目前提供 [ETH3D](https://www.eth3d.net/datasets) 办公室 26 张、管道房 14 张，以及 [TUM RGB-D](https://cvg.cit.tum.de/data/datasets/rgbd-dataset) 连续桌面 96 帧。每组都是同一空间的多视角实拍，导入后计算相机位姿、训练高斯，再下载模型。TUM 示例只使用彩色照片，原生分辨率为 640×480。另有可用配准深度的[离线求姿与训练对照](docs/RGBD-ODOMETRY.md)。
 
 ![办公室、管道房和连续桌面三组实拍示例](docs/screenshots/35-three-photo-samples.jpg)
 
