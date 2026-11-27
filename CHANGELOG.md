@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 分区轨迹数无法充分解释补算后的画质损失
+
+将六张共有留出照片划为 96 格，41 格的支持轨迹持平或增加，其中 26 格的 PSNR 仍下降。分区误差汇总复现全部整图评分。暂不按轨迹数量决定局部补算，下一步固定相机检查种子布局。[分区方法与数据](docs/SIFT-OCTAVE.md#留出照片内的稀疏轨迹覆盖) · [实拍模型提交](https://github.com/sakorman/web-scan/commit/e1ea2e4)
+
 ### 局部补算找回全部相机，六张留出照片中五张画质下降
 
 office 补算 8/26 张、pipes 补算 13/14 张，分别找回 5 和 6 个视角。计入粗定位后，端到端用时分别从 18.23 降到 14.44 秒、从 13.04 增到 15.53 秒。相同留出照片上的平均 PSNR 分别下降 1.13 和 1.60 dB。保留全量细尺度提取，下一步核对图像分区的稀疏点覆盖。[实拍数据与对照图](docs/SIFT-OCTAVE.md#按匹配内点选择细尺度补算照片) · [基线提交](https://github.com/sakorman/web-scan/commit/455e79a) · [视图图采样研究](https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Long-Tail_Internet_Photo_Reconstruction_CVPR_2026_paper.pdf)
