@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 96 帧 ARKitScenes 采集可直接训练完整 SH3
+
+修复 Brush 0.3 读取较小 JPEG 时中止的问题。96 帧实拍中有 16 张触发，临时训练副本共增加 28,247 字节，像素和冻结原图保真。使用数据集已有轨迹与训练视角深度，4.83 秒完成本地归档到模型及下载校验，12 张留出图为 18.53 dB / 0.709 SSIM；同照片纯 RGB 基线只定位 20 张，未完成重建。计时不含设备采集和上游求姿，单场景仍有细节模糊。下一步验证缺少深度时的初始点。[实测与复现](docs/ARKITSCENES.md) · [导入功能](https://github.com/sakorman/web-scan/commit/a01d2c4) · [数据论文](https://arxiv.org/abs/2111.08897)
+
 ### 已知相机与初始点可直接导入工作台
 
 新增本地 COLMAP 格式采集导入。office、pipes、RGB-D xyz 的 26、14、96 张实拍照片均进入正式训练与下载流程，从导入到生成 SH3 模型分别为 8.04、7.97、10.17 秒，上游求姿另计。保留原 JPEG 与稀疏文件字节，代价是本机需要保留冻结副本；只有轨迹的采集还需初始化三维点。下一步验证真实设备轨迹的尺度与点初始化。[命令、画质与同视角图](docs/POSED-IMPORT.md) · [上轮对照](https://github.com/sakorman/web-scan/commit/2b752e0) · [COLMAP 格式](https://colmap.github.io/format.html)

@@ -61,6 +61,8 @@ Web Scan 是一个在本地运行的三维重建工具。导入同一处空间�
 .venv/bin/python -m webscan.import_poses /path/to/undistorted --name "已定位的房间"
 ```
 
+ARKitScenes 的彩照、逐帧内参、轨迹与配准深度可先转换为这一格式。[设备实拍示例与准备命令](docs/ARKITSCENES.md)
+
 ### 日常查看和手机页面
 
 左边可以随时切换项目，项目首页分页显示之前的采集、照片数量和重建状态。失败的任务也会留下，方便回头查原因。

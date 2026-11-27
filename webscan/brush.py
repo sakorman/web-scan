@@ -5,8 +5,11 @@ from __future__ import annotations
 import hashlib
 import os
 import re
+import shutil
 import subprocess
+import tempfile
 import time
+from contextlib import contextmanager
 from pathlib import Path
 
 import numpy as np
@@ -230,6 +233,48 @@ def prune_intermediate_exports(exports, steps):
     return removed_bytes, errors
 
 
+@contextmanager
+def training_inputs(source, version):
+    """Give the 0.3 JPEG header reader a complete buffer on naturally small images."""
+    header_bytes = 16387
+    images = source / "images"
+    small = {
+        p for p in images.glob("*")
+        if p.suffix.lower() in (".jpg", ".jpeg") and p.stat().st_size < header_bytes
+    } if version == "0.3.0" else set()
+    if not small:
+        yield source, 0
+        return
+
+    with tempfile.TemporaryDirectory(prefix=".brush-images-", dir=source.parent) as temporary:
+        dataset = Path(temporary)
+        shutil.copytree(source / "sparse", dataset / "sparse")
+        copies = dataset / "images"
+        copies.mkdir()
+        for photo in images.iterdir():
+            target = copies / photo.name
+            if photo not in small:
+                try:
+                    os.link(photo, target)
+                except OSError:
+                    shutil.copy2(photo, target)
+                continue
+            data = photo.read_bytes()
+            if not data.startswith(b"\xff\xd8"):
+                raise ValueError(f"照片缺少 JPEG 文件头：{photo.name}")
+            # Retain the leading JFIF / Exif metadata and the original scan data.
+            offset = 2
+            while offset + 4 <= len(data) and data[offset] == 0xff and 0xe0 <= data[offset + 1] <= 0xef:
+                length = int.from_bytes(data[offset + 2:offset + 4], "big")
+                if length < 2 or offset + 2 + length > len(data):
+                    raise ValueError(f"照片 JPEG 元数据不完整：{photo.name}")
+                offset += 2 + length
+            length = max(2, header_bytes - len(data) - 2)
+            comment = b"\xff\xfe" + length.to_bytes(2, "big") + bytes(length - 2)
+            target.write_bytes(data[:offset] + comment + data[offset:])
+        yield dataset, len(small)
+
+
 def train(scene, work, output, config, progress):
     binary = executable()
     if not binary:
@@ -246,8 +291,6 @@ def train(scene, work, output, config, progress):
     interval = min(500, steps)
     holdout = config.get("evaluation_mode", "holdout") == "holdout"
     args = [
-        str(binary),
-        str(work / "sfm/undistorted"),
         "--seed",
         str(TRAINING_SEED),
         "--total-steps",
@@ -277,9 +320,12 @@ def train(scene, work, output, config, progress):
         ]
     log_path = work / "brush.log"
     tracker = TrainingProgress(steps)
-    with log_path.open("wb") as log:
+    with (
+        training_inputs(work / "sfm/undistorted", identity.get("engine_version")) as (dataset, small_images),
+        log_path.open("wb") as log,
+    ):
         process = subprocess.Popen(
-            args,
+            [str(binary), str(dataset), *args],
             stdout=log,
             stderr=subprocess.STDOUT,
             env={**os.environ, "RUST_LOG": "info"},
@@ -335,6 +381,7 @@ def train(scene, work, output, config, progress):
         "backend": "brush",
         **identity,
         "engine_identity_seconds": round(identity_seconds, 4),
+        "short_jpeg_training_copies": small_images,
         "training_seed": TRAINING_SEED,
         "determinism_guaranteed": False,
         "export_policy": "periodic_final_retained",
