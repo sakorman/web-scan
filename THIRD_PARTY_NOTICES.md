@@ -71,7 +71,7 @@ Dataset photos and generated models are excluded from Git and are not covered by
 
 ## TUM RGB-D desk sample
 
-TUM RGB-D `freiburg1_desk`: https://cvg.cit.tum.de/data/datasets/rgbd-dataset . Attribution: Jürgen Sturm, Nikolas Engelhard, Felix Endres, Wolfram Burgard, and Daniel Cremers, *A Benchmark for the Evaluation of RGB-D SLAM Systems*, IROS 2012.
+TUM RGB-D `freiburg1_desk` and the offline `freiburg1_xyz` experiment: https://cvg.cit.tum.de/data/datasets/rgbd-dataset . Attribution: Jürgen Sturm, Nikolas Engelhard, Felix Endres, Wolfram Burgard, and Daniel Cremers, *A Benchmark for the Evaluation of RGB-D SLAM Systems*, IROS 2012.
 
 The official dataset page currently licenses benchmark data under CC BY 4.0 unless stated otherwise: https://cvg.cit.tum.de/data/datasets/rgbd-dataset#license ; license: https://creativecommons.org/licenses/by/4.0/ . This is distinct from the ETH3D dataset's noncommercial/share-alike terms.
 

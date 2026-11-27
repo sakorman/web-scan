@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 用独立平移序列复测快速位姿
+
+新增 TUM 官方归档的实拍重建入口。xyz 的 96 张全部定位，95 张有可评分的运动捕捉参考。保持 desk 参数后，跨帧精化用 2.55 秒完成求姿，位置 RMSE 从 5.42 降到 1.91 厘米。相同有效像素上仍落后纯照片 COLMAP 1.32 dB，每种方法只训练一次。采用离线测量入口，下一步核验外参与初始化对画质差距的影响。[轨迹、耗时与同视角图](docs/RGBD-XYZ.md) · [基线](https://github.com/sakorman/web-scan/commit/e672f33) · [TUM 官方数据](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/download)
+
 ### 用跨帧匹配校正 RGB-D 位姿漂移
 
 96 帧 TUM desk 的 69 对跨帧候选中有 33 对通过几何验证。全序列位置 RMSE 从 3.81 降到 2.51 厘米；加约 1.51 秒精化，完整求姿 2.60 秒。两组反序训练的同视角 PSNR 提升 1.52、1.55 dB。保留离线精化，盒面小字仍模糊，长轨迹开销尚未测量。下一步在独立序列验证。[实测与复现](docs/RGBD-POSE-GRAPH.md) · [基线](https://github.com/sakorman/web-scan/commit/6edee2d) · [相关研究](https://arxiv.org/abs/2506.00970)
