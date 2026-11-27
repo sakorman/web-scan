@@ -1,0 +1,670 @@
+{
+  "office": {
+    "1": {
+      "runs": [
+        {
+          "fit_observations": 0,
+          "check_observations": 0,
+          "check_mean_abs_rgb_before_after": null,
+          "prepare_seconds": 0.7158717093989253,
+          "training_export_seconds": 24.410693832673132,
+          "reuse_total_seconds": 25.137253125198185,
+          "variant": "control",
+          "source_job": "fe0f85e26772440ead01b7b2085d21b4",
+          "ply_bytes": 3355818,
+          "gaussians": 14213,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "0006e83957cb59b9ebcf0b407e6f349042dc7e6db309ccc32ae19f880c066585",
+          "model_sha256": "89eaa5ba291404d7a0988df4c28509dd3c21e2afcb6a56dbf650d92ecb267d9f",
+          "holdout_references": [
+            "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          ]
+        },
+        {
+          "fit_observations": 4114,
+          "check_observations": 978,
+          "check_mean_abs_rgb_before_after": [
+            0.0762547559890422,
+            0.06838059575951178
+          ],
+          "prepare_seconds": 7.39431625045836,
+          "training_export_seconds": 24.022430625744164,
+          "reuse_total_seconds": 31.427226583473384,
+          "variant": "grid",
+          "source_job": "fe0f85e26772440ead01b7b2085d21b4",
+          "ply_bytes": 3387206,
+          "gaussians": 14346,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "0006e83957cb59b9ebcf0b407e6f349042dc7e6db309ccc32ae19f880c066585",
+          "model_sha256": "c146d2d4768333feaf6bcbc9cb14b57c77329df25113eda343d7c813b9847e07",
+          "holdout_references": [
+            "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          ]
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 21.949280897319923,
+          "ssim": 0.8751720637083054
+        },
+        "detail": {
+          "psnr": 21.71510721156747,
+          "ssim": 0.8789187222719193
+        }
+      },
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "quick": {
+            "psnr": 25.310601987843697,
+            "ssim": 0.9170642495155334,
+            "area_weighted_4x4_bias_mse": 0.0008712127169812373
+          },
+          "detail": {
+            "psnr": 23.68835762307629,
+            "ssim": 0.9153017401695251,
+            "area_weighted_4x4_bias_mse": 0.0021087901773244174
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "quick": {
+            "psnr": 22.555419390828174,
+            "ssim": 0.9341117739677429,
+            "area_weighted_4x4_bias_mse": 0.0032582227375723602
+          },
+          "detail": {
+            "psnr": 22.15065728473073,
+            "ssim": 0.9389002323150635,
+            "area_weighted_4x4_bias_mse": 0.004392143703516501
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "quick": {
+            "psnr": 17.846364550304813,
+            "ssim": 0.8043975234031677,
+            "area_weighted_4x4_bias_mse": 0.011133957584877185
+          },
+          "detail": {
+            "psnr": 17.80809478389797,
+            "ssim": 0.8056026101112366,
+            "area_weighted_4x4_bias_mse": 0.010633562112043467
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "quick": {
+            "psnr": 22.084737660303,
+            "ssim": 0.8451147079467773,
+            "area_weighted_4x4_bias_mse": 0.0025604947975425827
+          },
+          "detail": {
+            "psnr": 23.213319154564896,
+            "ssim": 0.8558703064918518,
+            "area_weighted_4x4_bias_mse": 0.0017109275367837558
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "input_images": 26,
+      "registered_images": 26,
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.4381085295956,
+          800.0,
+          533.5,
+          -0.10327691090226823,
+          0.06959028672322837
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1067
+      ]
+    },
+    "2": {
+      "runs": [
+        {
+          "fit_observations": 0,
+          "check_observations": 0,
+          "check_mean_abs_rgb_before_after": null,
+          "prepare_seconds": 0.6841715415939689,
+          "training_export_seconds": 23.92572266701609,
+          "reuse_total_seconds": 24.62030070926994,
+          "variant": "control",
+          "source_job": "fe0f85e26772440ead01b7b2085d21b4",
+          "ply_bytes": 3419066,
+          "gaussians": 14481,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "0006e83957cb59b9ebcf0b407e6f349042dc7e6db309ccc32ae19f880c066585",
+          "model_sha256": "5b6f2346fd2116a3555d28a4f788c8905df22ba690fd1d30252d4a0a40680e83",
+          "holdout_references": [
+            "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          ]
+        },
+        {
+          "fit_observations": 4114,
+          "check_observations": 978,
+          "check_mean_abs_rgb_before_after": [
+            0.0762547559890422,
+            0.06838059575951178
+          ],
+          "prepare_seconds": 7.057348375208676,
+          "training_export_seconds": 24.032510915771127,
+          "reuse_total_seconds": 31.10034833289683,
+          "variant": "grid",
+          "source_job": "fe0f85e26772440ead01b7b2085d21b4",
+          "ply_bytes": 3425910,
+          "gaussians": 14510,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "0006e83957cb59b9ebcf0b407e6f349042dc7e6db309ccc32ae19f880c066585",
+          "model_sha256": "cde1a224f520e5ff5fab1bdac1fd3b9de7096ec4e3c0023472c52d350002fb91",
+          "holdout_references": [
+            "0d8978b605ec5d5708e70a5e07866f103b53e0a3a2da5c42ed91b873178bdfd1",
+            "b41b1ace09bbf3c65eb940ef6141106fbe8842e14b99783f81a0ef0877a43674",
+            "c512c9d21d5931ff3125a21ed8302d5579660f72bfe3fac366264f61c5d49ee5",
+            "bef8af001691728e08681de270329b12ca80fbd0152c6af11b7ba737da595629"
+          ]
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 20.93703085797918,
+          "ssim": 0.8734439462423325
+        },
+        "detail": {
+          "psnr": 21.960403369768915,
+          "ssim": 0.8768320530653
+        }
+      },
+      "views": [
+        {
+          "view": "0000-fb0957d3f08b497c97ad3120db509705.png",
+          "quick": {
+            "psnr": 23.714395154066462,
+            "ssim": 0.9165318012237549,
+            "area_weighted_4x4_bias_mse": 0.001527176376932011
+          },
+          "detail": {
+            "psnr": 24.29292073653638,
+            "ssim": 0.9093855619430542,
+            "area_weighted_4x4_bias_mse": 0.0015847280549756964
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-94a3485567114808a05c4a658ee90ee2.png",
+          "quick": {
+            "psnr": 20.579736581914375,
+            "ssim": 0.9348587989807129,
+            "area_weighted_4x4_bias_mse": 0.007218217394085202
+          },
+          "detail": {
+            "psnr": 24.24211681500241,
+            "ssim": 0.948615550994873,
+            "area_weighted_4x4_bias_mse": 0.001950667195703381
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0016-8bab0f5f398a45bfa9f797c44625e3c5.png",
+          "quick": {
+            "psnr": 16.407575573114233,
+            "ssim": 0.786811113357544,
+            "area_weighted_4x4_bias_mse": 0.016516550739985602
+          },
+          "detail": {
+            "psnr": 17.04256275863304,
+            "ssim": 0.8001351356506348,
+            "area_weighted_4x4_bias_mse": 0.012890794168087279
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0024-babe0fdf2b664c9c913779d4e7279812.png",
+          "quick": {
+            "psnr": 23.046416122821654,
+            "ssim": 0.8555740714073181,
+            "area_weighted_4x4_bias_mse": 0.0017395258519043442
+          },
+          "detail": {
+            "psnr": 22.26401316890383,
+            "ssim": 0.8491919636726379,
+            "area_weighted_4x4_bias_mse": 0.0021439775895913033
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1067
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "input_images": 26,
+      "registered_images": 26,
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.4381085295956,
+          800.0,
+          533.5,
+          -0.10327691090226823,
+          0.06959028672322837
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1067
+      ]
+    }
+  },
+  "pipes": {
+    "1": {
+      "runs": [
+        {
+          "fit_observations": 0,
+          "check_observations": 0,
+          "check_mean_abs_rgb_before_after": null,
+          "prepare_seconds": 0.40067445766180754,
+          "training_export_seconds": 24.761438290588558,
+          "reuse_total_seconds": 25.170438290573657,
+          "variant": "control",
+          "source_job": "56e10ac3f625492d92abc171da4ae46a",
+          "ply_bytes": 2666226,
+          "gaussians": 11291,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "d4a05b0adfac80532855511fed2f8cfb291da996425aadf183d2bf7430fe083d",
+          "model_sha256": "f76631c03d67b8c7eb7fd6c6219ee017c0d8cb2aee94f7514f2e972d15adeb54",
+          "holdout_references": [
+            "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          ]
+        },
+        {
+          "fit_observations": 2414,
+          "check_observations": 554,
+          "check_mean_abs_rgb_before_after": [
+            0.07240235487106335,
+            0.06344044203037656
+          ],
+          "prepare_seconds": 3.788950165733695,
+          "training_export_seconds": 23.266905250027776,
+          "reuse_total_seconds": 27.064146541059017,
+          "variant": "grid",
+          "source_job": "56e10ac3f625492d92abc171da4ae46a",
+          "ply_bytes": 2762986,
+          "gaussians": 11701,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "d4a05b0adfac80532855511fed2f8cfb291da996425aadf183d2bf7430fe083d",
+          "model_sha256": "14d4deed6ca6b90c25b0f12f4dc206e81abbc2fd6b6b3859554c2ed91674f962",
+          "holdout_references": [
+            "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          ]
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.81765246782912,
+          "ssim": 0.7612304985523224
+        },
+        "detail": {
+          "psnr": 18.712174964047318,
+          "ssim": 0.7601275742053986
+        }
+      },
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "quick": {
+            "psnr": 22.12540261594521,
+            "ssim": 0.8359516263008118,
+            "area_weighted_4x4_bias_mse": 0.0025580652412462205
+          },
+          "detail": {
+            "psnr": 22.90358380127006,
+            "ssim": 0.8488770127296448,
+            "area_weighted_4x4_bias_mse": 0.0019649428220326164
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "quick": {
+            "psnr": 15.509902319713028,
+            "ssim": 0.686509370803833,
+            "area_weighted_4x4_bias_mse": 0.019025924020275736
+          },
+          "detail": {
+            "psnr": 14.520766126824578,
+            "ssim": 0.6713781356811523,
+            "area_weighted_4x4_bias_mse": 0.026694038044045024
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "input_images": 14,
+      "registered_images": 14,
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.091435630405,
+          800.0,
+          533.5,
+          -0.10091385666317157,
+          0.06728544184812109
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1066
+      ]
+    },
+    "2": {
+      "runs": [
+        {
+          "fit_observations": 0,
+          "check_observations": 0,
+          "check_mean_abs_rgb_before_after": null,
+          "prepare_seconds": 0.39789316710084677,
+          "training_export_seconds": 23.061069374904037,
+          "reuse_total_seconds": 23.46655833441764,
+          "variant": "control",
+          "source_job": "56e10ac3f625492d92abc171da4ae46a",
+          "ply_bytes": 2663630,
+          "gaussians": 11280,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "d4a05b0adfac80532855511fed2f8cfb291da996425aadf183d2bf7430fe083d",
+          "model_sha256": "6b2ec932b0a5ad47ddbeff2f4bdd292dc4e99381500e706d7cc306482a5ebe0d",
+          "holdout_references": [
+            "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          ]
+        },
+        {
+          "fit_observations": 2414,
+          "check_observations": 554,
+          "check_mean_abs_rgb_before_after": [
+            0.07240235487106335,
+            0.06344044203037656
+          ],
+          "prepare_seconds": 3.8090576669201255,
+          "training_export_seconds": 23.320956334471703,
+          "reuse_total_seconds": 27.138095167465508,
+          "variant": "grid",
+          "source_job": "56e10ac3f625492d92abc171da4ae46a",
+          "ply_bytes": 2721686,
+          "gaussians": 11526,
+          "engine": "Brush 0.3.0",
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "camera_sha256": "d4a05b0adfac80532855511fed2f8cfb291da996425aadf183d2bf7430fe083d",
+          "model_sha256": "b63dc4ca942970f60b06f2289cb21b809666df9d9fc7c3d5a0e6ba74bc52531d",
+          "holdout_references": [
+            "ea4f148eb2640669f1cb50f943497887982bd545697b154d319b61f1763f8d24",
+            "0a7c1c761ad8f53aed486e4d9a697b0a0c2caf78fdab1722428dc4d22de1a828"
+          ]
+        }
+      ],
+      "mean": {
+        "quick": {
+          "psnr": 18.141433245280897,
+          "ssim": 0.754324197769165
+        },
+        "detail": {
+          "psnr": 18.981276300177175,
+          "ssim": 0.753991961479187
+        }
+      },
+      "views": [
+        {
+          "view": "0000-1f12d10234be42b5a5567735dd15fbf7.png",
+          "quick": {
+            "psnr": 21.692674673731823,
+            "ssim": 0.8384037613868713,
+            "area_weighted_4x4_bias_mse": 0.0032211580248344344
+          },
+          "detail": {
+            "psnr": 23.709662019806828,
+            "ssim": 0.8408187627792358,
+            "area_weighted_4x4_bias_mse": 0.0011592459798372458
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        },
+        {
+          "view": "0008-9a76c2d0778d48ee9916c29248b0476b.png",
+          "quick": {
+            "psnr": 14.59019181682997,
+            "ssim": 0.6702446341514587,
+            "area_weighted_4x4_bias_mse": 0.024988914830774197
+          },
+          "detail": {
+            "psnr": 14.252890580547524,
+            "ssim": 0.6671651601791382,
+            "area_weighted_4x4_bias_mse": 0.029438479754271225
+          },
+          "scoring_dimensions": {
+            "width": 512,
+            "height": 341,
+            "reference_native": [
+              1600,
+              1066
+            ],
+            "quick_native": [
+              512,
+              341
+            ],
+            "detail_native": [
+              512,
+              341
+            ]
+          }
+        }
+      ],
+      "input_images": 14,
+      "registered_images": 14,
+      "original_camera": {
+        "model": "RADIAL",
+        "width": 1600,
+        "height": 1067,
+        "params": [
+          906.091435630405,
+          800.0,
+          533.5,
+          -0.10091385666317157,
+          0.06728544184812109
+        ]
+      },
+      "undistorted_dimensions": [
+        1600,
+        1066
+      ]
+    }
+  }
+}

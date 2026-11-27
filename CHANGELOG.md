@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 双边网格降低轨迹色差，pipes 留出图的分区色偏上升
+
+实现基于训练照片对应点的局部校色。八次 Metal 重建中，office / pipes 保留轨迹的 RGB 误差下降 10.3% / 12.4%，但 pipes 留出图的分区色偏两次分别上升 32.8% / 8.5%，因此保留离线实验。准备训练图额外耗时约 3.4–6.7 秒，每个场景只有两组对照。下一步验证训练时逐视角外观补偿对原色留出图的影响。[实测、截图与复现](docs/BILATERAL-COLOR.md) · [基线提交](https://github.com/sakorman/web-scan/commit/a797f8c) · [双边网格论文与实现](https://bilarfpro.github.io/) · [WildAnySplat](https://arxiv.org/abs/2611.31023v1)
+
 ### 定位重复重建中持续失真的像素
 
 新增同视角离线误差掩码。office 第 25 张预选的 791 个像素占四格面积的 7.27%，在新实拍重建中占四格 RGB 平方误差的 45.33%。纸边与桌面物件轮廓最明显，第 54 格缺少可核验的稀疏点。保留局部诊断，现有证据不足以选择增密位置。office / pipes 离线评分分别约 2.37 / 1.12 秒，各只新增一次默认训练。下一步核对第 45 格纸边在训练视角中的可见范围。[实测、截图与复现](docs/PIXEL-RECURRENCE.md) · [基线](https://github.com/sakorman/web-scan/commit/285c687) · [QuantileGS](https://arxiv.org/abs/2611.21253v1) · [FastGS 实现](https://github.com/fastgs/FastGS/blob/97910adf0214080e715111052d7679fa27c36ff9/utils/fast_utils.py)
