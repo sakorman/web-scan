@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 局部补算找回全部相机，六张留出照片中五张画质下降
+
+office 补算 8/26 张、pipes 补算 13/14 张，分别找回 5 和 6 个视角。计入粗定位后，端到端用时分别从 18.23 降到 14.44 秒、从 13.04 增到 15.53 秒。相同留出照片上的平均 PSNR 分别下降 1.13 和 1.60 dB。保留全量细尺度提取，下一步核对图像分区的稀疏点覆盖。[实拍数据与对照图](docs/SIFT-OCTAVE.md#按匹配内点选择细尺度补算照片) · [基线提交](https://github.com/sakorman/web-scan/commit/455e79a) · [视图图采样研究](https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Long-Tail_Internet_Photo_Reconstruction_CVPR_2026_paper.pdf)
+
 ### 跳过 SIFT 首层放大会损失定位覆盖
 
 office 提取从 6.30 降到 1.55 秒，定位从 26 张降到 21 张；pipes 从 3.73 降到 0.97 秒，定位从 14 张降到 8 张。三张共有留出照片的 PSNR 均下降 1.10–2.08 dB。继续使用默认起始倍频程，下一步检查缺失照片的匹配支持。[四次实拍与同视角评分](docs/SIFT-OCTAVE.md) · [线程基线提交](https://github.com/sakorman/web-scan/commit/5314eac) · [COLMAP 3.13.0](https://github.com/colmap/colmap/tree/3.13.0)

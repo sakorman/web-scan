@@ -1,0 +1,292 @@
+{
+  "config": {
+    "pycolmap": "3.13.0",
+    "camera": "auto",
+    "matching": "exhaustive guided",
+    "threads": 4,
+    "mapper_seed": 42,
+    "image_long_edge": 1600,
+    "max_features": 8192,
+    "pilot_octave": 0,
+    "selected_octave": -1,
+    "neighbors": 2,
+    "recompute_all_pairs": true,
+    "brush": "0.3 Metal",
+    "steps": 1000,
+    "train_long_edge": 512,
+    "max_gaussians": 150000,
+    "score_domain": "original photo, intersection of valid pixels, 512x341"
+  },
+  "scenes": {
+    "office": {
+      "pilot": {
+        "registered_images": 21,
+        "input_images": 26,
+        "sparse_points": 1119,
+        "reprojection_error": 1.0552386702773278,
+        "seconds": 3.6574,
+        "camera_mode_effective": "auto",
+        "failed": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "selected": [
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "mixed": {
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 1583,
+        "reprojection_error": 0.9586509724990967,
+        "seconds": 3.4323,
+        "camera_mode_effective": "auto",
+        "failed": []
+      },
+      "baseline": {
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2492,
+        "reprojection_error": 0.918509412037589,
+        "seconds": 10.988,
+        "camera_mode_effective": "auto",
+        "failed": []
+      },
+      "feature_images_verified": 26,
+      "extraction_seconds": [
+        1.6008575418964028,
+        1.93288579210639
+      ],
+      "candidate_wall_seconds": 14.436989832669497,
+      "baseline_wall_seconds": 18.226765874773264,
+      "baseline_training": {
+        "seconds": 7.2387,
+        "gaussians": 4027,
+        "evaluation": {
+          "psnr": 19.895662,
+          "ssim": 0.80512846
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 951921
+      },
+      "candidate_training": {
+        "seconds": 7.3446,
+        "gaussians": 2712,
+        "evaluation": {
+          "psnr": 18.771147,
+          "ssim": 0.79158986
+        },
+        "training_views": 22,
+        "evaluation_views": 4,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 641581
+      },
+      "holdouts": {
+        "default": [
+          0,
+          8,
+          16,
+          24
+        ],
+        "mixed": [
+          0,
+          8,
+          16,
+          24
+        ]
+      },
+      "common_scores": [
+        {
+          "index": 0,
+          "width": 512,
+          "height": 341,
+          "common_pixels": 169898,
+          "default": {
+            "psnr": 21.859105298532732,
+            "ssim": 0.8149002297755528
+          },
+          "mixed": {
+            "psnr": 21.077428054910442,
+            "ssim": 0.7956156642753572
+          }
+        },
+        {
+          "index": 8,
+          "width": 512,
+          "height": 341,
+          "common_pixels": 170794,
+          "default": {
+            "psnr": 22.50288383646819,
+            "ssim": 0.9195818858497835
+          },
+          "mixed": {
+            "psnr": 20.17009448489646,
+            "ssim": 0.9097169511304954
+          }
+        },
+        {
+          "index": 16,
+          "width": 512,
+          "height": 341,
+          "common_pixels": 168122,
+          "default": {
+            "psnr": 14.299206586080755,
+            "ssim": 0.6548195524988494
+          },
+          "mixed": {
+            "psnr": 15.849361500794865,
+            "ssim": 0.6812765802366542
+          }
+        },
+        {
+          "index": 24,
+          "width": 512,
+          "height": 341,
+          "common_pixels": 171366,
+          "default": {
+            "psnr": 20.399909267652163,
+            "ssim": 0.7584887819541062
+          },
+          "mixed": {
+            "psnr": 17.452219451880683,
+            "ssim": 0.7059628529486033
+          }
+        }
+      ]
+    },
+    "pipes": {
+      "pilot": {
+        "registered_images": 8,
+        "input_images": 14,
+        "sparse_points": 799,
+        "reprojection_error": 0.9049066390479139,
+        "seconds": 2.39,
+        "camera_mode_effective": "auto",
+        "failed": [
+          3,
+          5,
+          6,
+          7,
+          12,
+          13
+        ]
+      },
+      "selected": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "mixed": {
+        "registered_images": 14,
+        "input_images": 14,
+        "sparse_points": 1654,
+        "reprojection_error": 0.8670681597010095,
+        "seconds": 5.6866,
+        "camera_mode_effective": "auto",
+        "failed": []
+      },
+      "baseline": {
+        "registered_images": 14,
+        "input_images": 14,
+        "sparse_points": 1877,
+        "reprojection_error": 0.8416856595584005,
+        "seconds": 5.878,
+        "camera_mode_effective": "auto",
+        "failed": []
+      },
+      "feature_images_verified": 14,
+      "extraction_seconds": [
+        1.0349567085504532,
+        3.7008042503148317
+      ],
+      "candidate_wall_seconds": 15.530728000216186,
+      "baseline_wall_seconds": 13.043238458223641,
+      "baseline_training": {
+        "seconds": 7.1652,
+        "gaussians": 2953,
+        "evaluation": {
+          "psnr": 18.151241,
+          "ssim": 0.71655595
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 698457
+      },
+      "candidate_training": {
+        "seconds": 7.4503,
+        "gaussians": 2622,
+        "evaluation": {
+          "psnr": 16.495008,
+          "ssim": 0.6892433
+        },
+        "training_views": 12,
+        "evaluation_views": 2,
+        "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+        "model_bytes": 620341
+      },
+      "holdouts": {
+        "default": [
+          0,
+          8
+        ],
+        "mixed": [
+          0,
+          8
+        ]
+      },
+      "common_scores": [
+        {
+          "index": 0,
+          "width": 512,
+          "height": 341,
+          "common_pixels": 170618,
+          "default": {
+            "psnr": 20.327319848505997,
+            "ssim": 0.7315760967374538
+          },
+          "mixed": {
+            "psnr": 17.65150723916366,
+            "ssim": 0.6969973657579124
+          }
+        },
+        {
+          "index": 8,
+          "width": 512,
+          "height": 341,
+          "common_pixels": 170526,
+          "default": {
+            "psnr": 15.593233947201487,
+            "ssim": 0.639677386579654
+          },
+          "mixed": {
+            "psnr": 15.0683712488303,
+            "ssim": 0.6241928520150839
+          }
+        }
+      ]
+    }
+  }
+}
