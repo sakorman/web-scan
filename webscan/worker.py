@@ -43,6 +43,17 @@ def run(root: Path, jid: str):
         progress("prepare", 0.03, "读取已冻结的采集数据")
         if session["kind"] == "fixture":
             scene = fixture_scene(source / "images", source / "fixture.json")
+        elif session["kind"] == "posed":
+            from .raw_inputs import snapshot_inputs
+
+            phase = time.monotonic()
+            manifest = json.loads((source / "manifest.json").read_text())
+            validate_inputs(source, manifest)
+            snapshot_inputs(work, session["id"], manifest)
+            progress("sfm", 0.28, "读取导入的相机位姿与初始点")
+            if not restore_snapshot(source / "posed", manifest["posed_key"], work / "sfm"):
+                raise ValueError("导入的位姿或初始点校验失败，请从原始模型重新导入。")
+            timings["provided_pose_load_seconds"] = time.monotonic() - phase
         else:
             manifest = json.loads((source / "manifest.json").read_text())
             phase = time.monotonic()
@@ -96,6 +107,7 @@ def run(root: Path, jid: str):
                 phase = time.monotonic()
                 publish_snapshot(work / "sfm", cache, snapshot_key)
                 timings["cache_publish_seconds"] = time.monotonic() - phase
+        if session["kind"] != "fixture":
             import numpy as np
 
             scene = json.loads((work / "sfm" / "scene.json").read_text())

@@ -1,0 +1,353 @@
+{
+  "office": {
+    "camera_model": "PINHOLE",
+    "registered_images": 26,
+    "input_images": 26,
+    "sparse_points": 2475,
+    "training_views": 22,
+    "evaluation_views": 4,
+    "gaussians": 4067,
+    "steps": 1000,
+    "resolution": 512,
+    "training_seed": 42,
+    "engine_version": "0.3.0",
+    "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "timings": {
+      "provided_pose_load_seconds": 0.0325,
+      "training_and_model_export_seconds": 7.3274
+    },
+    "import_seconds": 0.26020974945276976,
+    "to_model_seconds": 8.04409849923104,
+    "failed": [],
+    "model_bytes": 961361,
+    "scores": [
+      {
+        "index": 0,
+        "size": [
+          512,
+          341
+        ],
+        "direct": {
+          "psnr": 20.74990347466064,
+          "ssim": 0.8333914069235336
+        },
+        "import": {
+          "psnr": 22.16712780886606,
+          "ssim": 0.8355039273874252
+        }
+      },
+      {
+        "index": 8,
+        "size": [
+          512,
+          341
+        ],
+        "direct": {
+          "psnr": 22.856608028140496,
+          "ssim": 0.9214263368962176
+        },
+        "import": {
+          "psnr": 22.211688398666254,
+          "ssim": 0.9156306457671721
+        }
+      },
+      {
+        "index": 16,
+        "size": [
+          512,
+          341
+        ],
+        "direct": {
+          "psnr": 16.382771931693185,
+          "ssim": 0.7194803808819974
+        },
+        "import": {
+          "psnr": 16.597029987205183,
+          "ssim": 0.7087587551150576
+        }
+      },
+      {
+        "index": 24,
+        "size": [
+          512,
+          341
+        ],
+        "direct": {
+          "psnr": 20.018456335388493,
+          "ssim": 0.7611008504000046
+        },
+        "import": {
+          "psnr": 19.932351776503673,
+          "ssim": 0.7679613362487208
+        }
+      }
+    ],
+    "source_gaussians": 4061,
+    "source_train_seconds": 7.2734,
+    "source_model_bytes": 959945
+  },
+  "pipes": {
+    "camera_model": "PINHOLE",
+    "registered_images": 14,
+    "input_images": 14,
+    "sparse_points": 1877,
+    "training_views": 12,
+    "evaluation_views": 2,
+    "gaussians": 2908,
+    "steps": 1000,
+    "resolution": 512,
+    "training_seed": 42,
+    "engine_version": "0.3.0",
+    "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "timings": {
+      "provided_pose_load_seconds": 0.0245,
+      "training_and_model_export_seconds": 7.1304
+    },
+    "import_seconds": 0.19374983292073011,
+    "to_model_seconds": 7.971146708354354,
+    "failed": [],
+    "model_bytes": 687837,
+    "scores": [
+      {
+        "index": 0,
+        "size": [
+          512,
+          335
+        ],
+        "direct": {
+          "psnr": 20.80763930309891,
+          "ssim": 0.7428806402110859
+        },
+        "import": {
+          "psnr": 20.25302709004763,
+          "ssim": 0.7264276035743918
+        }
+      },
+      {
+        "index": 8,
+        "size": [
+          512,
+          334
+        ],
+        "direct": {
+          "psnr": 14.898388857871282,
+          "ssim": 0.6318789857161812
+        },
+        "import": {
+          "psnr": 16.83177951004723,
+          "ssim": 0.6358157392446415
+        }
+      }
+    ],
+    "source_gaussians": 2982,
+    "source_train_seconds": 7.1092,
+    "source_model_bytes": 705301
+  },
+  "xyz": {
+    "camera_model": "PINHOLE",
+    "registered_images": 96,
+    "input_images": 96,
+    "sparse_points": 12604,
+    "training_views": 84,
+    "evaluation_views": 12,
+    "gaussians": 20501,
+    "steps": 1000,
+    "resolution": 512,
+    "training_seed": 42,
+    "engine_version": "0.3.0",
+    "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+    "timings": {
+      "provided_pose_load_seconds": 0.0821,
+      "training_and_model_export_seconds": 9.4231
+    },
+    "import_seconds": 0.3272067504003644,
+    "to_model_seconds": 10.165797208435833,
+    "failed": [],
+    "model_bytes": 4839786,
+    "scores": [
+      {
+        "index": 0,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 20.054871187369365,
+          "ssim": 0.7331296022812254
+        },
+        "import": {
+          "psnr": 20.10180992545209,
+          "ssim": 0.7330257307894744
+        }
+      },
+      {
+        "index": 8,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 21.169796661714884,
+          "ssim": 0.7690251606063493
+        },
+        "import": {
+          "psnr": 21.241085064928594,
+          "ssim": 0.7701903520886423
+        }
+      },
+      {
+        "index": 16,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 23.247618885738355,
+          "ssim": 0.8024274888807532
+        },
+        "import": {
+          "psnr": 23.052077441138877,
+          "ssim": 0.8017089019991422
+        }
+      },
+      {
+        "index": 24,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 17.971045036297795,
+          "ssim": 0.700983964869127
+        },
+        "import": {
+          "psnr": 18.462777360156448,
+          "ssim": 0.7039629336980072
+        }
+      },
+      {
+        "index": 32,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 22.234880783799348,
+          "ssim": 0.7526347738938829
+        },
+        "import": {
+          "psnr": 22.086618597931146,
+          "ssim": 0.7509917651505663
+        }
+      },
+      {
+        "index": 40,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 20.353583518982845,
+          "ssim": 0.7927647182741687
+        },
+        "import": {
+          "psnr": 20.549751350082964,
+          "ssim": 0.7981061965135573
+        }
+      },
+      {
+        "index": 48,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 21.340300236492517,
+          "ssim": 0.7531318980783214
+        },
+        "import": {
+          "psnr": 21.27995248293864,
+          "ssim": 0.7535967498118584
+        }
+      },
+      {
+        "index": 56,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 22.44325155662413,
+          "ssim": 0.7819914950554113
+        },
+        "import": {
+          "psnr": 22.43277875174458,
+          "ssim": 0.7835062422494106
+        }
+      },
+      {
+        "index": 64,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 23.768351846016017,
+          "ssim": 0.802007989404621
+        },
+        "import": {
+          "psnr": 23.719889944762148,
+          "ssim": 0.8035406055845621
+        }
+      },
+      {
+        "index": 72,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 23.27528297506523,
+          "ssim": 0.7972721954496671
+        },
+        "import": {
+          "psnr": 23.256541564214714,
+          "ssim": 0.7970189456619554
+        }
+      },
+      {
+        "index": 80,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 19.85024141707854,
+          "ssim": 0.8344819008147167
+        },
+        "import": {
+          "psnr": 19.774982998453154,
+          "ssim": 0.836393693430923
+        }
+      },
+      {
+        "index": 88,
+        "size": [
+          512,
+          384
+        ],
+        "direct": {
+          "psnr": 23.85350323114764,
+          "ssim": 0.8330117880003357
+        },
+        "import": {
+          "psnr": 23.832456053313848,
+          "ssim": 0.8331168382000914
+        }
+      }
+    ],
+    "source_gaussians": 20513,
+    "source_train_seconds": 9.4542,
+    "source_model_bytes": 4842618
+  }
+}

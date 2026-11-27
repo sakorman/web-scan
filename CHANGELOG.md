@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 已知相机与初始点可直接导入工作台
+
+新增本地 COLMAP 格式采集导入。office、pipes、RGB-D xyz 的 26、14、96 张实拍照片均进入正式训练与下载流程，从导入到生成 SH3 模型分别为 8.04、7.97、10.17 秒，上游求姿另计。保留原 JPEG 与稀疏文件字节，代价是本机需要保留冻结副本；只有轨迹的采集还需初始化三维点。下一步验证真实设备轨迹的尺度与点初始化。[命令、画质与同视角图](docs/POSED-IMPORT.md) · [上轮对照](https://github.com/sakorman/web-scan/commit/2b752e0) · [COLMAP 格式](https://colmap.github.io/format.html)
+
 ### 固定 RGB-D 位姿后单独校正彩照会降低画质
 
 在 desk 与 xyz 各训练两份模型。位姿和初始点完全相同，仅在训练端套用 Freiburg 1 彩色镜头标定，两序列的原图留出 PSNR 分别下降 1.08 和 1.23 dB，24 张均下降。保留原有输入方式，后处理方案仅保留为复现实验。两组都使用配准深度，每个配置训练一次，求姿阶段沿用缓存。下一步验证带已知位姿的数据如何直接进入重建流程。[测试与对照图](docs/RGBD-COLOR-CAMERA.md) · [基线提交](https://github.com/sakorman/web-scan/commit/5a43b3a) · [TUM 相机标定](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/file_formats)

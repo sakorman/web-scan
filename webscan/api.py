@@ -518,7 +518,8 @@ def create_app(
                 )
         session = store.session(body.session_id)
         if (
-            body.camera_mode == "shared"
+            session["kind"] == "photos"
+            and body.camera_mode == "shared"
             and len({(f["width"], f["height"]) for f in session["frames"]}) > 1
         ):
             raise HTTPException(

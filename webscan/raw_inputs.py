@@ -13,7 +13,7 @@ def snapshot_inputs(work: Path, session_id: str, manifest: dict) -> None:
         "version": 1,
         "session_id": session_id,
         "frames": [
-            {key: frame[key] for key in ("id", "sha", "width", "height")}
+            {key: frame[key] for key in ("id", "sha", "width", "height", "image_name") if key in frame}
             for frame in manifest["frames"]
         ],
     }
@@ -42,7 +42,7 @@ def resolve_raw_input(data: Path, work: Path, image_name: str):
         raise ValueError("原始照片清单的采集 ID 无效")
     matches = [
         frame for index, frame in enumerate(source["frames"])
-        if f"{index:04d}-{frame['id']}.jpg" == image_name
+        if frame.get("image_name", f"{index:04d}-{frame['id']}.jpg") == image_name
     ]
     if len(matches) != 1:
         raise ValueError(f"原始照片不在任务冻结清单中：{image_name}")
