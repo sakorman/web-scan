@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 等点数比较无深度三角化和设备深度初始化
+
+ARKitScenes 实拍的 84 张训练图在已有位姿下用 0.50 秒生成 2,913 个三角点。两组固定点数、相机和留出画幅，三角化模型为 16.27 dB，深度模型为 17.62 dB。能在不读取深度文件时重建，画质仍低 1.35 dB，每组一次。保留为离线实验，下一步检验多帧匹配与低纹理覆盖。[配置和逐帧报告](docs/ARKITSCENES.md#固定位姿去掉输入深度) · [设备实拍基线](https://github.com/sakorman/web-scan/commit/9477f6b) · [COLMAP 已知位姿流程](https://colmap.github.io/faq.html#reconstruct-sparse-dense-model-from-known-camera-poses)
+
 ### 96 帧 ARKitScenes 采集可直接训练完整 SH3
 
 修复 Brush 0.3 读取较小 JPEG 时中止的问题。96 帧实拍中有 16 张触发，临时训练副本共增加 28,247 字节，像素和冻结原图保真。使用数据集已有轨迹与训练视角深度，4.83 秒完成本地归档到模型及下载校验，12 张留出图为 18.53 dB / 0.709 SSIM；同照片纯 RGB 基线只定位 20 张，未完成重建。计时不含设备采集和上游求姿，单场景仍有细节模糊。下一步验证缺少深度时的初始点。[实测与复现](docs/ARKITSCENES.md) · [导入功能](https://github.com/sakorman/web-scan/commit/a01d2c4) · [数据论文](https://arxiv.org/abs/2111.08897)
