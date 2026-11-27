@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import json
 import shutil
+import sqlite3
 import time
+from contextlib import closing
 from pathlib import Path
 
 import numpy as np
@@ -427,6 +429,28 @@ def _image_metadata(image_paths):
     return sizes, focal_lengths
 
 
+def _reuse_retry_features(source, target, expected_images):
+    """Transfer SIFT for the same frozen files within a single camera retry."""
+    try:
+        with closing(sqlite3.connect(target.resolve().as_uri(), uri=True)) as db, db:
+            db.execute("ATTACH DATABASE ? AS prior", (source.resolve().as_uri() + "?mode=ro",))
+            for table in ("keypoints", "descriptors"):
+                copied = db.execute(f"""
+                    INSERT INTO main.{table}(image_id, rows, cols, data)
+                    SELECT dst.image_id, f.rows, f.cols, f.data
+                    FROM main.images AS dst
+                    JOIN prior.images AS src ON src.name = dst.name
+                    JOIN prior.{table} AS f ON f.image_id = src.image_id
+                """).rowcount
+                if copied != expected_images:
+                    db.rollback()
+                    return False
+    except sqlite3.Error:
+        # An incomplete transfer rolls back both tables. COLMAP can extract anew.
+        return False
+    return True
+
+
 def _map_scene(
     images,
     work,
@@ -436,6 +460,7 @@ def _map_scene(
     camera_mode,
     matching_mode,
     sequential_overlap,
+    feature_source=None,
 ):
     """Build one sparse COLMAP model without committing it as the chosen model."""
     import pycolmap
@@ -458,19 +483,23 @@ def _map_scene(
         image_names=image_names,
         options={"camera_model": camera_model},
     )
-    progress("sfm", 0.08, "提取照片特征")
-    pycolmap.extract_features(
-        database_path=db,
-        image_path=images,
-        camera_mode=mode,
-        image_names=image_names,
-        device=pycolmap.Device.cpu,
-        extraction_options={
-            "max_image_size": 1600,
-            "sift": {"max_num_features": 8192},
-            "num_threads": 4,
-        },
+    reused = feature_source is not None and _reuse_retry_features(
+        feature_source, db, len(image_names)
     )
+    if not reused:
+        progress("sfm", 0.08, "提取照片特征")
+        pycolmap.extract_features(
+            database_path=db,
+            image_path=images,
+            camera_mode=mode,
+            image_names=image_names,
+            device=pycolmap.Device.cpu,
+            extraction_options={
+                "max_image_size": 1600,
+                "sift": {"max_num_features": 8192},
+                "num_threads": 4,
+            },
+        )
     progress("sfm", 0.17, "匹配视角与几何验证")
     matching = match_images(
         db, mode=matching_mode, sequential_overlap=sequential_overlap
@@ -493,6 +522,7 @@ def _map_scene(
             "summary": {
                 "input_images": len(image_names),
                 "registered_images": 0,
+                "features_reused": reused,
                 "sparse_points": 0,
                 "reprojection_error": None,
                 "unregistered_images": image_names,
@@ -504,6 +534,7 @@ def _map_scene(
     summary = {
         "input_images": len(image_names),
         "registered_images": best.num_reg_images(),
+        "features_reused": reused,
         "sparse_points": best.num_points3D(),
         "reprojection_error": best.compute_mean_reprojection_error(),
         "unregistered_images": sorted(set(image_names) - registered),
@@ -574,6 +605,7 @@ def estimate_scene(
                 retry_progress,
                 image_names,
                 camera_mode="shared",
+                feature_source=work / "database.db",
                 matching_mode=matching_mode,
                 sequential_overlap=sequential_overlap,
             )

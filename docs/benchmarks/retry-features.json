@@ -1,0 +1,1057 @@
+{
+  "runs": {
+    "office-baseline-1": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 21.0569,
+        "camera_mode_effective": "shared",
+        "camera_mode_retry": {
+          "attempted": true,
+          "selected": true,
+          "reason": "shared_model_selected",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 26,
+            "registered_images": 20,
+            "sparse_points": 1806,
+            "reprojection_error": 0.9529911241288461,
+            "unregistered_images": [
+              "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+              "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+              "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+              "0013-4255902de37d49e1867d81798d8399f7.jpg",
+              "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+              "0015-506681db8e634fe3bfe4ca862fa113b5.jpg"
+            ],
+            "seconds": 11.7331
+          },
+          "shared": {
+            "input_images": 26,
+            "registered_images": 26,
+            "sparse_points": 2475,
+            "reprojection_error": 0.7649464792376742,
+            "unregistered_images": [],
+            "seconds": 8.8249
+          }
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2475,
+        "reprojection_error": 0.7649464792376742,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        },
+        "training": {
+          "seconds": 25.1268,
+          "gaussians": 14588,
+          "evaluation": {
+            "psnr": 22.298449,
+            "ssim": 0.90134263
+          },
+          "training_views": 22,
+          "evaluation_views": 4,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "model_bytes": 3444318
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 6.678673124872148
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.7407965417951345
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 4.214951707981527
+        },
+        {
+          "stage": "extract_features",
+          "seconds": 6.584409874863923
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.6576646249741316
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 1.4312412096187472
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.22539579216390848
+        }
+      ],
+      "audits": [
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        },
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        }
+      ]
+    },
+    "office-baseline-2": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 20.5763,
+        "camera_mode_effective": "shared",
+        "camera_mode_retry": {
+          "attempted": true,
+          "selected": true,
+          "reason": "shared_model_selected",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 26,
+            "registered_images": 20,
+            "sparse_points": 1806,
+            "reprojection_error": 0.9529911241288461,
+            "unregistered_images": [
+              "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+              "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+              "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+              "0013-4255902de37d49e1867d81798d8399f7.jpg",
+              "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+              "0015-506681db8e634fe3bfe4ca862fa113b5.jpg"
+            ],
+            "seconds": 11.5315
+          },
+          "shared": {
+            "input_images": 26,
+            "registered_images": 26,
+            "sparse_points": 2475,
+            "reprojection_error": 0.7649464793414541,
+            "unregistered_images": [],
+            "seconds": 8.5603
+          }
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2475,
+        "reprojection_error": 0.7649464793414541,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 6.486533999443054
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.6837914995849133
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 4.264598958194256
+        },
+        {
+          "stage": "extract_features",
+          "seconds": 6.430305041372776
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.6985238753259182
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 1.334592125378549
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.21942637488245964
+        }
+      ],
+      "audits": [
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        },
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        }
+      ]
+    },
+    "office-baseline-3": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 10.1692,
+        "camera_mode_effective": "auto",
+        "camera_mode_retry": {
+          "attempted": false,
+          "selected": false,
+          "reason": "auto_coverage_sufficient",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 26,
+            "registered_images": 26,
+            "sparse_points": 2387,
+            "reprojection_error": 0.9130725711574932,
+            "unregistered_images": [],
+            "seconds": 9.6652
+          }
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2387,
+        "reprojection_error": 0.9130725711574932,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 6.4762457916513085
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.7445430420339108
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 2.341052875854075
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.23861383367329836
+        }
+      ],
+      "audits": [
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        }
+      ]
+    },
+    "office-candidate-1": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 15.7609,
+        "camera_mode_effective": "shared",
+        "camera_mode_retry": {
+          "attempted": true,
+          "selected": true,
+          "reason": "shared_model_selected",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 26,
+            "registered_images": 20,
+            "features_reused": false,
+            "sparse_points": 1806,
+            "reprojection_error": 0.9529911241288461,
+            "unregistered_images": [
+              "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+              "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+              "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+              "0013-4255902de37d49e1867d81798d8399f7.jpg",
+              "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+              "0015-506681db8e634fe3bfe4ca862fa113b5.jpg"
+            ],
+            "seconds": 12.864
+          },
+          "shared": {
+            "input_images": 26,
+            "registered_images": 26,
+            "features_reused": true,
+            "sparse_points": 2475,
+            "reprojection_error": 0.7585324665936979,
+            "unregistered_images": [],
+            "seconds": 2.3715
+          }
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2475,
+        "reprojection_error": 0.7585324665936979,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        },
+        "training": {
+          "seconds": 23.7988,
+          "gaussians": 14414,
+          "evaluation": {
+            "psnr": 21.26655,
+            "ssim": 0.88566035
+          },
+          "training_views": 22,
+          "evaluation_views": 4,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "model_bytes": 3403254
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 7.606283124536276
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.9382004998624325
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 4.215877999551594
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.9762515425682068
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 1.2812207089737058
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.2459096247330308
+        }
+      ],
+      "audits": [
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        },
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        }
+      ]
+    },
+    "office-candidate-2": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 10.7638,
+        "camera_mode_effective": "auto",
+        "camera_mode_retry": {
+          "attempted": false,
+          "selected": false,
+          "reason": "auto_coverage_sufficient",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 26,
+            "registered_images": 26,
+            "features_reused": false,
+            "sparse_points": 2387,
+            "reprojection_error": 0.9130725711574932,
+            "unregistered_images": [],
+            "seconds": 10.217
+          }
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2387,
+        "reprojection_error": 0.9130725711574932,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 6.983219500631094
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.7264496246352792
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 2.374411999247968
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.25592166651040316
+        }
+      ],
+      "audits": [
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        }
+      ]
+    },
+    "office-candidate-3": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 13.9336,
+        "camera_mode_effective": "shared",
+        "camera_mode_retry": {
+          "attempted": true,
+          "selected": true,
+          "reason": "shared_model_selected",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 26,
+            "registered_images": 20,
+            "features_reused": false,
+            "sparse_points": 1806,
+            "reprojection_error": 0.9529911241288461,
+            "unregistered_images": [
+              "0010-e3057f32cb4542e3b56c24cfdac98d01.jpg",
+              "0011-aaf30dcd8f1441b4a74af5e3ff4e6888.jpg",
+              "0012-22b0bdf6f8ca428c922cd4c57d64c842.jpg",
+              "0013-4255902de37d49e1867d81798d8399f7.jpg",
+              "0014-44dffaee9557413ca251bd6b50221fe7.jpg",
+              "0015-506681db8e634fe3bfe4ca862fa113b5.jpg"
+            ],
+            "seconds": 11.4912
+          },
+          "shared": {
+            "input_images": 26,
+            "registered_images": 26,
+            "features_reused": true,
+            "sparse_points": 2476,
+            "reprojection_error": 0.759965555927565,
+            "unregistered_images": [],
+            "seconds": 1.9672
+          }
+        },
+        "registered_images": 26,
+        "input_images": 26,
+        "sparse_points": 2476,
+        "reprojection_error": 0.759965555927565,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 6.767071416601539
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.6803421247750521
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 3.9411182906478643
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.7685417914763093
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 1.0853417497128248
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.21229599975049496
+        }
+      ],
+      "audits": [
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        },
+        {
+          "count": 26,
+          "feature_sha": "4d26ffcb8bd9b107daec32fa55c220d04c1d96d8aa4380390df3526a661e0e36",
+          "preverified": 0
+        }
+      ]
+    },
+    "pipes-baseline-1": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 6.426,
+        "camera_mode_effective": "auto",
+        "camera_mode_retry": {
+          "attempted": false,
+          "selected": false,
+          "reason": "auto_coverage_sufficient",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 14,
+            "registered_images": 14,
+            "sparse_points": 1877,
+            "reprojection_error": 0.8428877364672615,
+            "unregistered_images": [],
+            "seconds": 6.08
+          }
+        },
+        "registered_images": 14,
+        "input_images": 14,
+        "sparse_points": 1877,
+        "reprojection_error": 0.8428877364672615,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        },
+        "training": {
+          "seconds": 25.5113,
+          "gaussians": 11276,
+          "evaluation": {
+            "psnr": 18.734583,
+            "ssim": 0.77482355
+          },
+          "training_views": 12,
+          "evaluation_views": 2,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "model_bytes": 2662686
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 3.9265915425494313
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 1.259021708741784
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 0.8304348327219486
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.15526641625910997
+        }
+      ],
+      "audits": [
+        {
+          "count": 14,
+          "feature_sha": "11234ab0e724163f7a8a5cc195a3086c40e808c0bb07d5035399d59fee27b29f",
+          "preverified": 0
+        }
+      ]
+    },
+    "pipes-candidate-1": {
+      "result": {
+        "mode": "exhaustive",
+        "seconds": 5.9483,
+        "camera_mode_effective": "auto",
+        "camera_mode_retry": {
+          "attempted": false,
+          "selected": false,
+          "reason": "auto_coverage_sufficient",
+          "focal_length_35mm": [],
+          "auto": {
+            "input_images": 14,
+            "registered_images": 14,
+            "features_reused": false,
+            "sparse_points": 1877,
+            "reprojection_error": 0.8428877364672615,
+            "unregistered_images": [],
+            "seconds": 5.6274
+          }
+        },
+        "registered_images": 14,
+        "input_images": 14,
+        "sparse_points": 1877,
+        "reprojection_error": 0.8428877364672615,
+        "unregistered_images": [],
+        "matching": {
+          "mode": "exhaustive",
+          "ransac_seed": 42
+        },
+        "training": {
+          "seconds": 23.345,
+          "gaussians": 11158,
+          "evaluation": {
+            "psnr": 18.670513,
+            "ssim": 0.7709677
+          },
+          "training_views": 12,
+          "evaluation_views": 2,
+          "engine_sha256": "8380ed40cce870025393e1ea0257e0752351c67a409d827b76dc75ec3a999a71",
+          "model_bytes": 2634838
+        }
+      },
+      "times": [
+        {
+          "stage": "extract_features",
+          "seconds": 3.818346834741533
+        },
+        {
+          "stage": "match_exhaustive",
+          "seconds": 0.9703577505424619
+        },
+        {
+          "stage": "incremental_mapping",
+          "seconds": 0.778414124622941
+        },
+        {
+          "stage": "undistort_images",
+          "seconds": 0.13747008424252272
+        }
+      ],
+      "audits": [
+        {
+          "count": 14,
+          "feature_sha": "11234ab0e724163f7a8a5cc195a3086c40e808c0bb07d5035399d59fee27b29f",
+          "preverified": 0
+        }
+      ]
+    }
+  },
+  "fixed_shared": {
+    "runs": [
+      {
+        "variant": "baseline",
+        "seconds": 8.278429416939616,
+        "checks": {
+          "images": "334d514b8598b4726cc644edd3cd2d04f94c36c6452e013ea19629cd3ac46cd7",
+          "cameras": "02922e948e490a2902117c140d98aa86233176db4e555d0cf6c64212bc2bd46e",
+          "keypoints": "7f61ec3dc0053182fd297d849a156b472a439a992567c6887ee2714b32f5e880",
+          "descriptors": "5be6fbd3d904b2a11ba26bc7a179c89da6e33a61eb3cfe2db1a54fcb2fcd3cff",
+          "matches": "8750ab9f19b0ccc846e61e8f618dbf926bf94c849765c6c9c40351dd008a23e4",
+          "two_view_geometries": "039c610edbddbcb06483c8818e3f9e2468d4d459d20e963b772e1316ad226a21"
+        },
+        "summary": {
+          "input_images": 26,
+          "registered_images": 26,
+          "features_reused": false,
+          "sparse_points": 2479,
+          "reprojection_error": 0.76052416514413,
+          "unregistered_images": [],
+          "seconds": 8.2784
+        }
+      },
+      {
+        "variant": "candidate",
+        "seconds": 2.019096666947007,
+        "checks": {
+          "images": "334d514b8598b4726cc644edd3cd2d04f94c36c6452e013ea19629cd3ac46cd7",
+          "cameras": "02922e948e490a2902117c140d98aa86233176db4e555d0cf6c64212bc2bd46e",
+          "keypoints": "7f61ec3dc0053182fd297d849a156b472a439a992567c6887ee2714b32f5e880",
+          "descriptors": "5be6fbd3d904b2a11ba26bc7a179c89da6e33a61eb3cfe2db1a54fcb2fcd3cff",
+          "matches": "8750ab9f19b0ccc846e61e8f618dbf926bf94c849765c6c9c40351dd008a23e4",
+          "two_view_geometries": "039c610edbddbcb06483c8818e3f9e2468d4d459d20e963b772e1316ad226a21"
+        },
+        "summary": {
+          "input_images": 26,
+          "registered_images": 26,
+          "features_reused": true,
+          "sparse_points": 2479,
+          "reprojection_error": 0.76052416514413,
+          "unregistered_images": [],
+          "seconds": 2.0191
+        }
+      }
+    ],
+    "max_extrinsic_matrix_delta": 0.0,
+    "max_intrinsic_delta": 0.0
+  },
+  "raw_scores": {
+    "office": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "office-baseline",
+      "candidate_job": "office-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "raw_input_sha256": "c1c7d99a708d2eeee748c535c862f902e04d74a7d5ea62999d2920aea97740e5",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 23.578295638715158,
+            "ssim": 0.9180397318464395
+          },
+          "candidate": {
+            "psnr": 20.075373660805944,
+            "ssim": 0.8894490402014504
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "raw_input_sha256": "3c1e9e99639a998634ec88938be2f24b2fbbf572dd46cb718c9a1fa59e0b2996",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 23.3917181917535,
+            "ssim": 0.9462542820604782
+          },
+          "candidate": {
+            "psnr": 24.172472220389103,
+            "ssim": 0.9452988483524223
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "raw_input_sha256": "0f379ebb60655216cb8da9d30fb2b7a9fc98dd4eb771b5971091e4df91afd622",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 18.231969356004967,
+            "ssim": 0.819936495548977
+          },
+          "candidate": {
+            "psnr": 17.684987629095048,
+            "ssim": 0.7897766731908887
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "raw_input_sha256": "b359cc398ffe0dd8987e3069148b62731ba4653d83b310c8ce9984643e7c2bb5",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 23.25083786011875,
+            "ssim": 0.8626512105912535
+          },
+          "candidate": {
+            "psnr": 22.809225724162122,
+            "ssim": 0.8619530604653753
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 22.113205261648094,
+          "ssim": 0.886720430011787
+        },
+        "candidate": {
+          "psnr": 21.185514808613053,
+          "ssim": 0.8716194055525341
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": -0.9276904530350407,
+        "ssim": -0.015101024459252876
+      }
+    },
+    "pipes": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "SIMPLE_RADIAL"
+        ],
+        "candidate": [
+          "SIMPLE_RADIAL"
+        ]
+      },
+      "baseline_job": "pipes-baseline",
+      "candidate_job": "pipes-candidate",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-2bd85cc2e3134090b614199e2671400c.png",
+          "raw_input_sha256": "03fe64a41dab0e1cfb3c3a6314830662cd5f1e17214d284f5e2ce59cd58a32ef",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9775361986803519,
+          "common_valid_pixels": 170670,
+          "common_valid_ssim_windows": 162280,
+          "baseline": {
+            "psnr": 22.077575402164488,
+            "ssim": 0.8248893591189842
+          },
+          "candidate": {
+            "psnr": 21.82993788474659,
+            "ssim": 0.8152196616013275
+          }
+        },
+        {
+          "view": "0008-c7b3f806b12a4caf9962b87c64e03392.png",
+          "raw_input_sha256": "642a2dd3c1c618d0545d730a0098c1504730ef7aaa151fa8840945aa075e6c6e",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9753596957478006,
+          "common_valid_pixels": 170290,
+          "common_valid_ssim_windows": 161900,
+          "baseline": {
+            "psnr": 14.861251505841695,
+            "ssim": 0.6650091268782923
+          },
+          "candidate": {
+            "psnr": 14.978257650842101,
+            "ssim": 0.6691229206542791
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 18.469413454003092,
+          "ssim": 0.7449492429986382
+        },
+        "candidate": {
+          "psnr": 18.404097767794347,
+          "ssim": 0.7421712911278033
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": -0.06531568620874495,
+        "ssim": -0.0027779518708348494
+      }
+    },
+    "office-repeat": {
+      "method": "original_photo_domain",
+      "camera_models": {
+        "baseline": [
+          "RADIAL"
+        ],
+        "candidate": [
+          "RADIAL"
+        ]
+      },
+      "baseline_job": "office-baseline-repeat",
+      "candidate_job": "office-candidate-repeat",
+      "requested_long_edge": 512,
+      "resampling": "raw reference Lanczos; render bilinear after COLMAP inverse distortion",
+      "validity": "metrics use the intersection of both model-specific valid warp masks; SSIM uses only complete 11x11 windows inside it",
+      "not_independent": "holdout photos still participated in upstream SfM",
+      "views": [
+        {
+          "view": "0000-d6b9e20971974066a4e7b9aa5a6d7dbf.png",
+          "raw_input_sha256": "c1c7d99a708d2eeee748c535c862f902e04d74a7d5ea62999d2920aea97740e5",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 21.458298777082558,
+            "ssim": 0.9030307912787264
+          },
+          "candidate": {
+            "psnr": 23.91549520007548,
+            "ssim": 0.9143583579695161
+          }
+        },
+        {
+          "view": "0008-1c6da61406eb4744893572435799058c.png",
+          "raw_input_sha256": "3c1e9e99639a998634ec88938be2f24b2fbbf572dd46cb718c9a1fa59e0b2996",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 21.66413866081362,
+            "ssim": 0.93893256517278
+          },
+          "candidate": {
+            "psnr": 23.685222371985056,
+            "ssim": 0.9448612042364403
+          }
+        },
+        {
+          "view": "0016-69c038bffab749d38aa143d9c0f0d1fe.png",
+          "raw_input_sha256": "0f379ebb60655216cb8da9d30fb2b7a9fc98dd4eb771b5971091e4df91afd622",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 17.107889137925195,
+            "ssim": 0.8013333966526465
+          },
+          "candidate": {
+            "psnr": 16.69275790423114,
+            "ssim": 0.782735035349274
+          }
+        },
+        {
+          "view": "0024-3c37121ca00f4afb9fe71c76daf95848.png",
+          "raw_input_sha256": "b359cc398ffe0dd8987e3069148b62731ba4653d83b310c8ce9984643e7c2bb5",
+          "raw_identity": {
+            "baseline": "legacy_job_input",
+            "candidate": "legacy_job_input"
+          },
+          "original_size": {
+            "width": 1600,
+            "height": 1067
+          },
+          "scoring_size": {
+            "width": 512,
+            "height": 341
+          },
+          "common_valid_pixel_fraction": 0.9738132331378299,
+          "common_valid_pixels": 170020,
+          "common_valid_ssim_windows": 161490,
+          "baseline": {
+            "psnr": 22.429559003234726,
+            "ssim": 0.8559350850960649
+          },
+          "candidate": {
+            "psnr": 22.556614219077076,
+            "ssim": 0.8615892297416483
+          }
+        }
+      ],
+      "mean_per_view": {
+        "baseline": {
+          "psnr": 20.664971394764027,
+          "ssim": 0.8748079595500544
+        },
+        "candidate": {
+          "psnr": 21.712522423842188,
+          "ssim": 0.8758859568242197
+        }
+      },
+      "candidate_minus_baseline": {
+        "psnr": 1.0475510290781607,
+        "ssim": 0.0010779972741652433
+      }
+    }
+  },
+  "repeat": {
+    "baseline": {
+      "seconds": 23.419139666482806,
+      "gaussians": 14618,
+      "ply_bytes": 3451398,
+      "evaluation": {
+        "psnr": 20.726042,
+        "ssim": 0.8885411
+      }
+    },
+    "candidate": {
+      "seconds": 23.43698662519455,
+      "gaussians": 14733,
+      "ply_bytes": 3478538,
+      "evaluation": {
+        "psnr": 21.81221,
+        "ssim": 0.89034224
+      }
+    }
+  }
+}

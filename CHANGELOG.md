@@ -4,6 +4,10 @@
 
 ## 2026-11-27
 
+### 同镜头重试复用同一批照片的 SIFT
+
+触发内参回退时按照片名复制本次已提取的关键点和描述子，再用新相机做几何验证。office 固定映射种子的同镜头阶段由 8.28 降至 2.02 秒，26 张全部定位，六张数据库表及相机解一致。完整冷启动中触发回退的两次求姿由 20.58–21.06 降到 13.93–15.76 秒。未触发回退的任务没有这项收益。保留正式路径，增加一次短暂的数据库复制；office 两组模型的留出 PSNR 差值在复训后变号，画质波动仍待追踪。下一步用独立轨迹真值检验快速求姿。[实测与配置](docs/RETRY-FEATURES.md) · [基线](https://github.com/sakorman/web-scan/commit/ee48f8a) · [COLMAP 数据库格式](https://colmap.github.io/database.html)
+
 ### 双边网格降低轨迹色差，pipes 留出图的分区色偏上升
 
 实现基于训练照片对应点的局部校色。八次 Metal 重建中，office / pipes 保留轨迹的 RGB 误差下降 10.3% / 12.4%，但 pipes 留出图的分区色偏两次分别上升 32.8% / 8.5%，因此保留离线实验。准备训练图额外耗时约 3.4–6.7 秒，每个场景只有两组对照。下一步验证训练时逐视角外观补偿对原色留出图的影响。[实测、截图与复现](docs/BILATERAL-COLOR.md) · [基线提交](https://github.com/sakorman/web-scan/commit/a797f8c) · [双边网格论文与实现](https://bilarfpro.github.io/) · [WildAnySplat](https://arxiv.org/abs/2611.31023v1)
